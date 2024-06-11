@@ -28,6 +28,7 @@ numPres = 1;
 numVP = 1;
 
 //Demographics of House as decimal percentages 1 = 100%
+//percentages below are from app0 - it only adds up to 0.99
 perDemHouse = 0.505;
 perRepHouse = 0.485;
 perIndHouse = 0.00;
@@ -46,6 +47,7 @@ perDemVP = 1.0;
 perRepVP = 0.0;
 perIndVP = 0.0;
 
+// helper vars - can move out of engine class
 housePercentage;
 senPercentage;
 vpPercentage;
@@ -85,7 +87,8 @@ demNayCount;
 demYayCount;
 repNayCount;
 repYayCount;
-votingBodyCounts = [];
+votingBodyCounts = []; // 2D array
+// [[chamber1 yes, chamber1, no], [chamber2 yes, chamber2 no], [vp yes, vp no], [pres yes, pres no]]
 superThreshIndex = [];
 
 //
@@ -145,9 +148,9 @@ stopVoteCount = 0;
 stopVoteArr = [];
 vpVote = false;
 
-//user input variables
+//user input variables - can move out of engine to be global where originally were
 userNumHouse;
-userPerHouseBody;
+userPerHouseBody; // percentages for each political party in House - [0] = A, [1] = B, [2] = C
 
 userNumSenate;
 userPerSenateBody;
@@ -158,7 +161,7 @@ userPerPresBody;
 userNumVP;
 userPerVPBody;
 
-userNumParties;
+userNumParties = 2; // default is 2, changed by user input
 userNumHouseRan;
 userNumSenateRan;
 userNumPresRan;
@@ -195,7 +198,8 @@ finalDisplayBool = false;
 // vpVoteRes;
 // senVoteRes;
 // houseVoteRes;
-voteResults = ["a","b","c","d","e"];
+voteResults = ["","","",""];
+// decisions: [chamber1, chamber2, vp, pres]
 
 decisionTxt = "";
 
