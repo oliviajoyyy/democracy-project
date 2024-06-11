@@ -28,7 +28,6 @@ numPres = 1;
 numVP = 1;
 
 //Demographics of House as decimal percentages 1 = 100%
-//percentages below are from app0 - it only adds up to 0.99
 perDemHouse = 0.505;
 perRepHouse = 0.485;
 perIndHouse = 0.00;
@@ -46,12 +45,6 @@ perIndPres = 0.0;
 perDemVP = 1.0;
 perRepVP = 0.0;
 perIndVP = 0.0;
-
-// helper vars - can move out of engine class
-housePercentage;
-senPercentage;
-vpPercentage;
-presPercentage;
 
 //supermajority Cutoff for override of presidential veto
 superThresh = 0.67;
@@ -148,36 +141,7 @@ stopVoteCount = 0;
 stopVoteArr = [];
 vpVote = false;
 
-//user input variables - can move out of engine to be global where originally were
-userNumHouse;
-userPerHouseBody; // percentages for each political party in House - [0] = A, [1] = B, [2] = C
-
-userNumSenate;
-userPerSenateBody;
-
-userNumPres;
-userPerPresBody;
-
-userNumVP;
-userPerVPBody;
-
-userNumParties = 2; // default is 2, changed by user input
-userNumHouseRan;
-userNumSenateRan;
-userNumPresRan;
-userNumVPRan;
-userNumHouseConn;
-
-userBodyPass;
-userSuperThresh;
-
-userRepYaythresh;
-userDemYaythresh;
-userIndYaythresh;
-prevUserNumParties;
-
-//
-
+// for canvas
 dWidth;
 dHeight;
 
@@ -194,12 +158,8 @@ forUser;
 // signal used to determine when finalDisplay() runs (finalDisplay funct is in the scenes)
 finalDisplayBool = false;
 
-// presVoteRes;
-// vpVoteRes;
-// senVoteRes;
-// houseVoteRes;
 voteResults = ["","","",""];
-// decisions: [chamber1, chamber2, vp, pres]
+// decisions for each body (bill approved/not): [chamber1, chamber2, vp, pres]
 
 decisionTxt = "";
 
@@ -387,15 +347,16 @@ decisionTxt = "";
     }
 
     // Need to make sure we are not over our number of congressional body numCon and readjusts skip if too big
-
     if (this.count < this.numCon - 1 && this.count1 < 1) {
 
       this.rotLoadImage();
       this.testSize();
-      this.count++;
-      // print('Count = ' + count); //fortesting
+      this.count += 2; // count is incremented once every draw loop until it reaches num in this body
+      print('Count = ' + this.count); //fortesting
+      print('Count1 = ' + this.count1); //fortesting
+      
     } else if (this.count >= this.numCon - 1) {
-
+      
       for (let i = 0; i < this.numBodies; i++) { // < numCon draws all squares at once for each body
         this.bodyVote();
         this.count1++;
@@ -594,7 +555,8 @@ decisionTxt = "";
     imageMode(CENTER);
     image(this.loadingImage, 0, 0, 150, 150);
     //AB: small circle to cover rotating image after
-    if (this.count == this.numCon - 2) {
+    console.log(this.numCon);
+    if (this.count >= this.numCon - 3) {
       ellipse(0, 0, 160, 160);
     }
     pop();
@@ -758,11 +720,8 @@ decisionTxt = "";
       print("new body count: " + this.bodyCount);
     }
 
-    //CALL finalDisplay() OUTSIDE OF CLASS BC DEALS W/ BUTTONS ON SCREEN
-
     if (this.bodyCount >= this.numBodies) {
       this.finalDisplayLogic();
-      //this.finalDisplayBool = true;
       print('Final Stage');
     }
 
@@ -778,46 +737,11 @@ decisionTxt = "";
    * Logic to determine the voting results run with either original configuration
    */
   finalDisplayLogic() {
-    // if (!engine.finalDisplayBool) {
-    //    return;
-    // }
-
     let currentBodyLabel;
-
-    // let columnAmount = this.numBodies - 1;
-    // let rowAmount = 4;
-
-    // let padY = 20;
-    // let padX = 10;
-    // let dispW = (this.dWidth / columnAmount);
-    // let dispH = (this.dHeight / rowAmount);
-
-    // let dispX = 0 + padX;
-    // let dispY = 0 + padY;
-
-    // var resBColor = color(0, 0, 0);
     let decisionText = "";
-    //column 1 to be yay/nay votes
-    //column 2 to be body votes
-    //textFont(helvFont);
-
     console.log("body pass: " + this.bodyPass);
 
     if (this.bodyCount == this.numBodies) {
-      //setTimeout(function() {
-        //document.body.style.backgroundColor = "black";
-        //userInput();
-        //this.decisionTxt = "usr";
-
-        // textAlign(LEFT, TOP);
-        // fill(color("#faf4d3"));
-        // noStroke();
-        // rectMode(CORNER);
-        // resBColor.setAlpha(200);
-        // fill(resBColor);
-        // rect(0, 0, this.dWidth, this.dHeight);
-        // textStyle(NORMAL);
-
 
         //NEED TO CHANGE LATER FOR MORE THAN 3 BODIES
         for (let i = 0; i < this.numBodies; i++) {
@@ -849,60 +773,35 @@ decisionTxt = "";
             print("i = " + i + " and current body label = " + currentBodyLabel);
 
             if (currentBodyLabel == 'PRESIDENCY') {
-              // textSize(22);
-              // text(currentBodyLabel, (i - 1) * dispW + padX, padY, dispW, dispH);
-              // textAlign(LEFT);
 
               // presidents has voted
               if (this.stopVoteArr[i] == false) {
-                // textSize(20);
-                // text("\n\nVOTES \n", (i - 1) * dispW + padX, padY, dispW, dispH);
-                // textSize(16);
-                // text("\n\n\n\nYES: " + this.votingBodyCounts[i][0] + "\nNO: " + this.votingBodyCounts[i][1] + "\n ", (i - 1) * dispW + padX, padY, dispW, dispH);
-
-
-                // print("President: \n\n\n\nYES: " + votingBodyCounts[3][0] + "\nNO: " + votingBodyCounts[3][1]);
-                //president veto/super
 
                 if (this.bodyPass[0] === true && this.bodyPass[1] === true && this.bodyPass[3] === false) {
                   if (this.superThreshIndex[0] === true && this.superThreshIndex[1] === true) {
-                    //text('\nVETO OVERRIDE BY SUPERMAJORITY IN ALL LEGISLATIVE CHAMBERS', (i - 1) * dispW + padX, this.dHeight / 4, dispW - padX, dispH);
                     this.voteResults[i] = "VETO OVERRIDE BY SUPERMAJORITY IN ALL LEGISLATIVE CHAMBERS";
                   } else {
-                    //text('\nPRESIDENTIAL VETO: BILL IS NOT APPROVED ', (i - 1) * dispW + padX, this.dHeight / 4, dispW - padX, dispH);
                     this.voteResults[i] = "PRESIDENTIAL VETO: BILL IS NOT APPROVED";
                   }
                 } else if (this.bodyPass[i] == true &&
                   this.superThreshIndex[0] == false ||
                   this.superThreshIndex[1] == false) {
-                  //text('\nBILL IS APPROVED', (i - 1) * dispW + padX, this.dHeight / 4, dispW - padX, dispH);
                   this.voteResults[i] = "BILL IS APPROVED";
                 } else if (this.bodyPass[i] == false) {
-                  //text('\nBILL IS NOT APPROVED ', (i - 1) * dispW + padX, this.dHeight / 4, dispW - padX, dispH);
                   this.voteResults[i] = "BILL IS NOT APPROVED";
                 }
               } else { // president has not voted
 
                 if (this.bodyPass[0] == false || this.bodyPass[1] == false) {
-                  //textSize(16);
-                  //text('\n\nBILL IS NOT APPROVED BY ALL CHAMBERS: PRESIDENT DOES NOT VOTE', (i - 1) * dispW + padX, padY, dispW - padX, dispH);
                   this.voteResults[i] = "BILL IS NOT APPROVED BY ALL CHAMBERS: PRESIDENT DOES NOT VOTE";
                 } else {
-                  //textSize(20);
-                  //text('\n\nDOES NOT VOTE', (i - 1) * dispW + padX, padY, dispW - padX, dispH);
                   this.voteResults[i] = "DOES NOT VOTE";
                 }
               }
 
             } else if (currentBodyLabel == 'VICE PRESIDENCY') {
-              // textSize(22);
-              // text(currentBodyLabel, i * dispW + padX, this.dHeight / 2, dispW, dispH);
               if (this.stopVoteArr[i] == false && this.vpVote == true) { // vp votes
-                // textSize(20);
-                // text("\n\nVOTES \n", i * dispW + padX, this.dHeight / 2, dispW, dispH);
-                // textSize(16);
-                // text("\n\n\n\nYES: " + this.votingBodyCounts[i][0] + "\nNO: " + this.votingBodyCounts[i][1] + "\n ", i * dispW + padX, this.dHeight / 2, dispW - padX, dispH);
-
+                
                 if (this.bodyPass[0] == false || this.bodyPass[1] == false) {
                   //text('\n\n\nBILL IS NOT APPROVED BY ALL CHAMBERS: NO VICE PRESIDENTIAL VOTE', i * dispW + padX, this.dHeight * (3 / 4), dispW - padX, dispH);
                   this.voteResults[i] = "BILL IS NOT APPROVED BY ALL CHAMBERS: NO VICE PRESIDENTIAL VOTE";
@@ -917,37 +816,23 @@ decisionTxt = "";
                 }
 
               } else { // vp does not vote
-                //textSize(20);
-                //text('\n\nDOES NOT VOTE', i * dispW + padX, this.dHeight / 2, dispW - padX, dispH);
                 this.voteResults[i] = "DOES NOT VOTE";
               }
 
             } else { // senate & house
-              // textSize(22);
-              // text(currentBodyLabel, i * dispW + padX, padY, dispW - padX, dispH);
               if (this.stopVoteArr[i] == false) { // body votes
-                // textSize(20);
-                // text("\n\nVOTES \n", i * dispW + padX, padY, dispW - padX, dispH);
-                // textSize(16);
-                // text("\n\n\n\nYES: " + this.votingBodyCounts[i][0] + "\nNO: " + this.votingBodyCounts[i][1] + "\n ", i * dispW + padX, padY, dispW, dispH);
-                // superthresh
+           
                 if (this.bodyPass[i] == true && this.superThreshIndex[i] == true) {
-                  //text('\nBILL IS APPROVED WITH SUPERMAJORITY', i * dispW + padX, this.dHeight / 4, dispW - padX, dispH);
                   this.voteResults[i] = "BILL IS APPROVED WITH SUPERMAJORITY";
                 } else if ((currentBodyLabel == 'SENATE' || currentBodyLabel == 'LEGISLATIVE CHAMBER 2') 
                               && this.bodyPass[0] == true && this.bodyPass[1] == true && this.vpVote == true) {
-                  //text('\nTIE-BREAKER VOTE INITIATED', i * dispW + padX, this.dHeight / 4, dispW - padX, dispH);
                   this.voteResults[i] = "TIE-BREAKER VOTE INITIATED";
                 } else if (this.bodyPass[i] == false) {
-                  //text('\nBILL IS NOT APPROVED', i * dispW + padX, this.dHeight / 4, dispW - padX, dispH);
                   this.voteResults[i] = "BILL IS NOT APPROVED";
                 } else if (this.bodyPass[i] == true && this.superThreshIndex[i] == false) {
-                  //text('\nBILL IS APPROVED', i * dispW + padX, this.dHeight / 4, dispW - padX, dispH);
                   this.voteResults[i] = "BILL IS APPROVED";
                 }
               } else { // body does not vote
-                //textSize(20);
-                //text('\n\nDOES NOT VOTE', i * dispW + padX, padY, dispW - padX, dispH);
                 this.voteResults[i] = "DOES NOT VOTE";
               }
             }
@@ -969,21 +854,13 @@ decisionTxt = "";
 
             }
           } else if (this.bodyPass[0] == false || this.bodyPass[1] == false) {
-            //dispY = dispY + (this.dHeight / 5);
-
             decisionText = "DECISION: BILL DOES NOT BECOME LAW";
-
           }
-          //changeText(decisionText);
           this.decisionTxt = decisionText;
-          //this.decisionTxt = "";
         };
 
-      //}, 3000);
-
     }
-    //engine.finalDisplayBool = false;
-    this.finalDisplayBool = true;
+    this.finalDisplayBool = true; // signal to now display final text and buttons
   }
 
 }

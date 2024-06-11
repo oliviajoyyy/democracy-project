@@ -1,6 +1,3 @@
-var mgr;
-var engine;
-var boxes;
 
 //V1 TO DO
 //Work on Diplay Text Design (transparen overlay)
@@ -28,172 +25,25 @@ var boxes;
 // 4 * Vacancies
 // https://pressgallery.house.gov/member-data/party-breakdown
 
-/*  MOVED TO ENGINE.JS
-
-//Global Variables
-
-//******These Can be Changed by User*********
-
-//Voter Stress Variables
-//assumes a stress level 0-10, stress level 5 is neither stressed nor not stressed and does not change likelihood of yay/nay vote.  Change stressLow & stressHigh to reflect sensor values.  
-var stressSensorval = 5; //connect this to sensor reading
-var stressLow = 0; //change this to the low stress minimum
-var stressHigh = 10; //change this to the low stress masimum
-
-//Planet Stress Variables
-//assumes a stress level 0-10, stress level 5 is neither stressed nor not stressed and does not change likelihood of yay/nay vote.  Change stressLow & stressHigh to reflect sensor values.  
-var stressPlanet = 5; //connect this to sensor reading
-var stressPlanetLow = 0; //change this to the low stress minimum
-var stressPlanetHigh = 10; //change this to the low stress masimum
-
-//Offset of combined stress levels that will increase likelyhood of yes vote on any given bill (state change)
-var stressOffset;
-
-//Number voting members
-var numHouse = 435;
-var numSenate = 100;
-var numPres = 1;
-var numVP = 1;
-
-//Demographics of House as decimal percentages 1 = 100%
-var perDemHouse = 0.505;
-var perRepHouse = 0.485;
-var perIndHouse = 0.00;
-
-//Demographics of Senate as decimal percentages 1 = 100%
-var perDemSenate = 0.48;
-var perRepSenate = 0.50;
-var perIndSenate = 0.02;
-
-//Demographics of President as decimal percentages 1 = 100%
-var perDemPres = 1.0;
-var perRepPres = 0.0;
-var perIndPres = 0.0;
-
-var perDemVP = 1.0;
-var perRepVP = 0.0;
-var perIndVP = 0.0;
-
-var housePercentage, senPercentage, vpPercentage, presPercentage;
-
-//supermajority Cutoff for override of presidential veto
-var superThresh = 0.67;
-var perPass = .5;
-
-//Historical Likelihood of party affiliation & likelihood of 'yay' vote
-var demYaythresh = 0.7;
-var repYaythresh = 0.3;
-var indYaythresh = 0.5;
-
-//How Many Voting Bodies (house, senate, president = 3) *see to DO at top of code
-var numBodies = 4;
-//var defNumBody;//delete?
-
-//******These are NOT user determined*********
-
-//We will use these in the setup function to map the sensor value to stress index
-var stress = stressSensorval;
-var stressMap;
-var stressPlanetMap;
-
-//which body is voting
-var bodyCount = 0;
-let bodyPass = [];
-
-//The number of voting memebers for each body
-var numCon;
-
-//initialize tally of votes
-var yay = 0;
-var nay = 0;
-var demNayCount, demYayCount, repNayCount, repYayCount;
-var votingBodyCounts = [];
-let superThreshIndex = []; 
-
-*/
-
-/*  MOVED TO BOXES.JS
-
-//The count variables are updated every time a circle is drawn
-var count = 0;
-var count1 = 0;
-var count2 = 0;
-var countR = 0;
-
-//The yCount variables
-var xCount = 1;
-var yCount = 1;
-var yCountT = 1;
-
-//Determines size of circle & spacing
-var skip; //taking the square root of the area of the drawing
-var skip2;
-// var skipR; strange artifact from Rhonda
-
-//Location Circle is Drawn
-var x;
-var y;
-var x2;
-var y2;
-
-//Diameter or circle
-var diam;
-
-//Splits the Screen into 'sections' based on number of voting bodies
-var offSet;
-
-//test state variable - 0 if untested 1 if tested
-var test;
-
-//test state variable - 0 if moving through voting body 1 if all body members have votes
-var endBody;
-
-//how many times has the user run the vote in a signle session
-var passCount = 0; //artifact from Rhonda
-
-*/
+var mgr;
+var engine;
 
 //fortesting
 let senateResult;
 let houseResult;
 let presidentResult;
 
-/* MOVED TO BOXES.JS
-var bodyLabel;
-
-// colors
-var bColor = "#012244";
-var pColor = "#3c1b36";
-
-let tranVal = 255;
-// let fadeOpac = 255;
-var partyNum = 0;
-var moveArrow = 0;
-
-var rot = 0;
-
-*/
-
+// text display
 let mainText;
 let headerText;
 let subHeaderText;
 let simInfoText;
 let userOutputText;
 
-/*  MOVED TO BOXES.JS
-//checks for voting bodies and sees if they will actually vote or not
-let stopVoteBool = false;
-let stopVoteCount = 0;
-let stopVoteArr = [];
-let vpVote = false;
-*/
-
 //loaded assets
 var helvFont;
 var loadingImage;
 var enterImage;
-
-//let dWidth, dHeight;
 
 let nextButton;
 var buttonRC, buttonRes, dispBtn, recalBtn, buttonDef, emailBtn;
@@ -202,7 +52,6 @@ var userPaddingX = 20;
 var userInputY = 20;
 var userInputX = 20;
 
-/* MOVED TO ENGINE.JS
 
 //user input variables
 var userNumHouse;
@@ -230,14 +79,14 @@ var userSuperThresh;
 var userRepYaythresh;
 var userDemYaythresh;
 var userIndYaythresh;
-var prevUserNumParties;*/
+var prevUserNumParties;
 var userEditCount = 0;
-
 
 //user inputs are enabled
 var userEdits = false;
 var reconfigBool = false;
 var onePartyBool = false;
+
 
 function preload() {
   helvFont = loadFont('/democracy-engine-congressional-simulator/assets/font/HelveticaNeue-Regular.otf');
@@ -285,7 +134,7 @@ function nextScene() {
     mgr.showScene(sLegislative);
   } else if (mgr.isCurrent(sLegislative)) {
     mgr.showScene(sParties);
-  } else if (mgr.isCurrent(sParties) && engine.userNumParties <= 1) {
+  } else if (mgr.isCurrent(sParties) && userNumParties <= 1) {
     mgr.showScene(sBodyPass);
   } else if (mgr.isCurrent(sParties)) {
     mgr.showScene(sMembers);
@@ -300,6 +149,8 @@ function nextScene() {
   }  else if (mgr.isCurrent(sInfo) && userEdits == true) {
     mgr.showScene(democracyEngineUser);
   } else if (mgr.isCurrent(democracyEngineUser)) {
+    mgr.showScene(sLegislative);
+  } else if (mgr.isCurrent(sDefault)) {
     mgr.showScene(sLegislative);
   }
 
@@ -386,47 +237,47 @@ function inputVar() {
 
 
   //Number voting members
-  engine.numHouse = engine.userNumHouse;
-  engine.numSenate = engine.userNumSenate;
-  engine.numPres = engine.userNumPres;
-  engine.numVP = engine.userNumVP;
+  engine.numHouse = userNumHouse;
+  engine.numSenate = userNumSenate;
+  engine.numPres = userNumPres;
+  engine.numVP = userNumVP;
 
 
   //Demographics of House as decimal percentages 1 = 100%
-  engine.perDemHouse = engine.userPerHouseBody[0];
-  engine.perRepHouse = engine.userPerHouseBody[1];
-  engine.perIndHouse = engine.userPerHouseBody[2];
+  engine.perDemHouse = userPerHouseBody[0];
+  engine.perRepHouse = userPerHouseBody[1];
+  engine.perIndHouse = userPerHouseBody[2];
 
   //Demographics of Senate as decimal percentages 1 = 100%
-  engine.perDemSenate = engine.userPerSenateBody[0];
-  engine.perRepSenate = engine.userPerSenateBody[1];
-  engine.perIndSenate = engine.userPerSenateBody[2];
+  engine.perDemSenate = userPerSenateBody[0];
+  engine.perRepSenate = userPerSenateBody[1];
+  engine.perIndSenate = userPerSenateBody[2];
 
   //Demographics of President as decimal percentages 1 = 100%
-  engine.perDemPres = engine.userPerPresBody[0];
-  engine.perRepPres = engine.userPerPresBody[1];
-  engine.perIndPres = engine.userPerPresBody[2];
+  engine.perDemPres = userPerPresBody[0];
+  engine.perRepPres = userPerPresBody[1];
+  engine.perIndPres = userPerPresBody[2];
 
   //Demographics of President as decimal percentages
-  engine.perDemVP = engine.userPerVPBody[0];
-  engine.perRepVP = engine.userPerVPBody[1];
-  engine.perIndVP = engine.userPerVPBody[2];
+  engine.perDemVP = userPerVPBody[0];
+  engine.perRepVP = userPerVPBody[1];
+  engine.perIndVP = userPerVPBody[2];
 
   //Historical Likelihood of party affiliation & likelihood of 'yay' vote
-  engine.repYaythresh = parseFloat(engine.userRepYaythresh) / 100.0;
+  engine.repYaythresh = parseFloat(userRepYaythresh) / 100.0;
   console.log("rep yay thresh: " + engine.repYaythresh);
-  engine.demYaythresh = parseFloat(engine.userDemYaythresh) / 100.0;
+  engine.demYaythresh = parseFloat(userDemYaythresh) / 100.0;
   console.log("dem yay thresh: " + engine.demYaythresh);
-  engine.indYaythresh = parseFloat(engine.userIndYaythresh) / 100.0;
+  engine.indYaythresh = parseFloat(userIndYaythresh) / 100.0;
   console.log("ind yay thresh: " + engine.indYaythresh);
 
   //supermajority Cutoff for override of presidential veto
 
-  engine.superThresh = parseFloat(engine.userSuperThresh) / 100.0;
+  engine.superThresh = parseFloat(userSuperThresh) / 100.0;
   console.log("superThresh: " + engine.superThresh);
   //supermajority in a body
 
-  engine.perPass = parseFloat(engine.userBodyPass) / 100.0;
+  engine.perPass = parseFloat(userBodyPass) / 100.0;
   console.log("per pass: " + engine.perPass);
 
   //How Many Voting Bodies (house, senate, president, VP = 4) *for V2 - see TODO at top
@@ -479,43 +330,11 @@ function emailFunc(){
   window.location.href='mailto'+':democracy'+'.project.'+'cadre@'+'gmail.com?subject=The%20Future%20Democracies%20Laboratory%20Simulator%7C%20User%20Results%20and%20Settings&body=Please%20insert%20a%20copy%20of%20your%20user%20settings%20and%20a%20screenshot%20of%20the%20generated%20voting%20results%0D%0A';
 }
 
-/*
-function resetCount() {
-
-  print('Resetting count');
-  count = 0;
-  count1 = 0;
-  count2 = 0;
-  countR = 0;
-  xCount = 1;
-  yCount = 1;
-  yCountT = 1;
-  moveArrow = 0;
-}
-
-function resetDraw() {
-  if (yCountT * skip >= offSet) {
-    skip = offSet / (1.025 * xCount);
-  }
-  noStroke();
-  fill(bColor);
-  tranVal = 255;
-  rectMode(CORNER);
-
-  x = skip / 2;
-  y = skip / 2;
-  yay = 0;
-  nay = 0;
-  xCount = 1;
-  yCount = 1;
-  endBody = 0;
-}
-*/
-
 function roundNum(value, decimals) {
   return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
 }
 
+//changes the text on the HTML body for final voting decision
 function changeText(text) {
   document.getElementById("result").innerHTML = text;
 }

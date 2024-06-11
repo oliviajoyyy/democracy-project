@@ -46,15 +46,17 @@ function democracyEngineUser() {
 
   }
 
+  // run the simulator for user configuration
   this.draw = function() {
 
     let forUser = true;
     engine.currentCongLogic(forUser);
-    finalDisplay();
+    finalDisplay(); // display final text and buttons
 
   }
 
   // Displays the voting results as text on the screen
+  // also displays buttons
   function finalDisplay() {
 
     // only run this function when engine logic signals true for the final display of results
@@ -126,6 +128,7 @@ function democracyEngineUser() {
                 text("\n\n\nVOTES \n", (i) * dispW + padX, padY, dispW, dispH);
                 textSize(16);
                 text("\n\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", (i) * dispW + padX, padY);
+                textSize(20);
                 text('\n\n\n' + engine.voteResults[i], (i) * dispW + padX, engine.dHeight / 4, dispW - padX, dispH);
               } else { // president not voted, so adjust placement of text
                 textSize(20);
@@ -140,6 +143,7 @@ function democracyEngineUser() {
                 text("\n\n\nVOTES \n", i * dispW + padX, padY, dispW, dispH);
                 textSize(16);
                 text("\n\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", i * dispW + padX, padY);
+                textSize(20);
                 text('\n\n\n' + engine.voteResults[i], (i) * dispW + padX, engine.dHeight / 4, dispW - padX, dispH);
               } else { // did not vote
                 textSize(20);
@@ -154,6 +158,7 @@ function democracyEngineUser() {
                 text("\n\n\nVOTES \n", i * dispW + padX, padY, dispW - padX, dispH);
                 textSize(16);
                 text("\n\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", i * dispW + padX, padY);
+                textSize(20);
                 text('\n\n\n' + engine.voteResults[i], i * dispW + padX, engine.dHeight / 4, dispW - padX, dispH);
               } else { // did not vote
                 textSize(20);
@@ -163,7 +168,7 @@ function democracyEngineUser() {
           }
             changeText(engine.decisionTxt); // change final decision text at bottom of screen 
           };
-        }, 3000);
+        }, 1500); // 1.5 seconds before text overlay shows
       }
       engine.finalDisplayBool = false;
     }
@@ -332,6 +337,7 @@ function democracyEngineOrigin() {
                 text("\n\nVOTES \n", (i - 1) * dispW + padX, padY, dispW, dispH);
                 textSize(16);
                 text("\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", (i - 1) * dispW + padX, padY, dispW, dispH);
+                textSize(20);
                 text('\n' + engine.voteResults[i], (i - 1) * dispW + padX, engine.dHeight / 4, dispW - padX, dispH);
               } else { // president did not vote, so only adjust placement of text
                 textSize(20);
@@ -346,6 +352,7 @@ function democracyEngineOrigin() {
                 text("\n\nVOTES \n", i * dispW + padX, engine.dHeight / 2, dispW, dispH);
                 textSize(16);
                 text("\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", i * dispW + padX, engine.dHeight / 2, dispW - padX, dispH);
+                textSize(20);
                 text('\n' + engine.voteResults[i], (i) * dispW + padX, engine.dHeight * (3 / 4), dispW - padX, dispH);
               } else { // did not vote
                 textSize(20);
@@ -360,6 +367,7 @@ function democracyEngineOrigin() {
                 text("\n\nVOTES \n", i * dispW + padX, padY, dispW - padX, dispH);
                 textSize(16);
                 text("\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", i * dispW + padX, padY, dispW, dispH);
+                textSize(20);
                 text('\n' + engine.voteResults[i], i * dispW + padX, engine.dHeight / 4, dispW - padX, dispH);
               } else { // did not vote
                 textSize(20);
@@ -369,15 +377,10 @@ function democracyEngineOrigin() {
           }
             changeText(engine.decisionTxt); // change final decision text at bottom of screen
           };
-        }, 3000);
+        }, 1500); // 1.5 seconds before text overlay showss
       }
       engine.finalDisplayBool = false;
     }
-
-  //changes the text on the HTML body for final voting decision
-  function changeText(text) {
-    document.getElementById("result").innerHTML = text;
-  }
 
   //Once Bill Pass result has been calculated users can enter in their own variables to reconfigure congress or recalculate the vote with the same parameters
   function userInput() {
@@ -467,10 +470,6 @@ function sLegislative() {
 
   this.draw = function() {
 
-  }
-
-  function changeText(text) {
-    document.getElementById("result").innerHTML = text;
   }
 
   function sliders() {
@@ -567,19 +566,19 @@ function sLegislative() {
       // var rangeSliderValueElement = document.getElementById('slider-value');
 
       slider1.noUiSlider.on('update', function(values, handle) {
-        engine.userNumHouse = values[0]
+        userNumHouse = values[0]
         // rangeSliderValueElement.innerHTML = userNumHouse + " " + userNumSenate + " " + userNumPres + " " + userNumVP;
       });
       slider2.noUiSlider.on('update', function(values, handle) {
-        engine.userNumSenate = values[0];
+        userNumSenate = values[0];
         // rangeSliderValueElement.innerHTML = userNumHouse + " " + userNumSenate + " " + userNumPres + " " + userNumVP;
       });
       slider3.noUiSlider.on('update', function(values, handle) {
-        engine.userNumVP = values[0];
+        userNumVP = values[0];
         // rangeSliderValueElement.innerHTML = userNumHouse + " " + userNumSenate + " " + userNumPres + " " + userNumVP;
       });
       slider4.noUiSlider.on('update', function(values, handle) {
-        engine.userNumPres = values[0];
+        userNumPres = values[0];
         // rangeSliderValueElement.innerHTML = userNumHouse + " " + userNumSenate + " " + userNumPres + " " + userNumVP;
       });
 
@@ -670,18 +669,18 @@ function sParties() {
       // var rangeSliderValueElement = document.getElementById('slider-value');
 
       slider5.noUiSlider.on('update', function(values, handle) {
-        engine.userNumParties = values[0];
+        userNumParties = values[0];
         // rangeSliderValueElement.innerHTML = userNumParties;
-        if (engine.userNumParties <= 1) {
-          engine.userPerHouseBody = [];
-          engine.userPerSenateBody = [];
-          engine.userPerPresBody = [];
-          engine.userPerVPBody = [];
-          engine.userPerHouseBody[0] = 1.0;
-          engine.userPerSenateBody[0] = 1.0;
-          engine.userPerPresBody[0] = 1.0;
-          engine.userPerVPBody[0] = 1.0;
-          engine.userNumParties = parseInt(engine.userNumParties);
+        if (userNumParties <= 1) {
+          userPerHouseBody = [];
+          userPerSenateBody = [];
+          userPerPresBody = [];
+          userPerVPBody = [];
+          userPerHouseBody[0] = 1.0;
+          userPerSenateBody[0] = 1.0;
+          userPerPresBody[0] = 1.0;
+          userPerVPBody[0] = 1.0;
+          userNumParties = parseInt(userNumParties);
           onePartyBool = true;
 
         }
@@ -760,83 +759,83 @@ function sMembers() {
 
     function createSlider() {
       // NOui slider
-      engine.userNumHouse = parseInt(engine.userNumHouse);
-      engine.userNumPres = parseInt(engine.userNumPres);
-      engine.userNumVP = parseInt(engine.userNumVP);
-      engine.userNumSenate = parseInt(engine.userNumSenate);
-      engine.userNumParties = parseInt(engine.userNumParties);
-      engine.userNumHouseRan = [];
-      engine.userNumSenateRan = [];
-      engine.userNumPresRan = [];
-      engine.userNumVPRan = [];
+      userNumHouse = parseInt(userNumHouse);
+      userNumPres = parseInt(userNumPres);
+      userNumVP = parseInt(userNumVP);
+      userNumSenate = parseInt(userNumSenate);
+      userNumParties = parseInt(userNumParties);
+      userNumHouseRan = [];
+      userNumSenateRan = [];
+      userNumPresRan = [];
+      userNumVPRan = [];
 
 
-      for (var i = 0; i < engine.userNumParties - 1; i++) {
-        engine.userNumHouseRan[i] = Math.ceil(Math.random() * engine.userNumHouse)
+      for (var i = 0; i < userNumParties - 1; i++) {
+        userNumHouseRan[i] = Math.ceil(Math.random() * userNumHouse)
         if (i > 0) {
-          for (var j = 0; j < engine.userNumHouseRan.length - 1; j++) {
-            if (engine.userNumHouseRan[i] == engine.userNumHouseRan[j]) {
-              engine.userNumHouseRan[i] = parseInt(Math.ceil(Math.random() * engine.userNumHouse));
+          for (var j = 0; j < userNumHouseRan.length - 1; j++) {
+            if (userNumHouseRan[i] == userNumHouseRan[j]) {
+              userNumHouseRan[i] = parseInt(Math.ceil(Math.random() * userNumHouse));
             }
           }
         }
         // console.log("random house num: " + userNumHouseRan[i]);
       }
-      engine.userNumHouseRan.sort((a, b) => a - b);
-      console.log(engine.userNumHouseRan);
+      userNumHouseRan.sort((a, b) => a - b);
+      console.log(userNumHouseRan);
 
       // userNumHouseConn = JSON.parse(userNumHouseConn);
 
-      for (var i = 0; i < engine.userNumParties - 1; i++) {
-        engine.userNumSenateRan[i] = Math.ceil(Math.random() * engine.userNumSenate)
+      for (var i = 0; i < userNumParties - 1; i++) {
+        userNumSenateRan[i] = Math.ceil(Math.random() * userNumSenate)
         if (i > 0) {
-          for (var j = 0; j < engine.userNumSenateRan.length - 1; j++) {
-            if (engine.userNumSenateRan[i] == engine.userNumSenateRan[j]) {
-              engine.userNumSenateRan[i] = parseInt(Math.ceil(Math.random() * engine.userNumSenate));
+          for (var j = 0; j < userNumSenateRan.length - 1; j++) {
+            if (userNumSenateRan[i] == userNumSenateRan[j]) {
+              userNumSenateRan[i] = parseInt(Math.ceil(Math.random() * userNumSenate));
             }
           }
         }
         // console.log("random house num: " + userNumSenateRan[i]);
       }
-      engine.userNumSenateRan.sort((a, b) => a - b);
-      console.log(engine.userNumSenateRan);
+      userNumSenateRan.sort((a, b) => a - b);
+      console.log(userNumSenateRan);
 
 
-      for (var i = 0; i < engine.userNumParties - 1; i++) {
-        engine.userNumPresRan[i] = Math.ceil(Math.random() * engine.userNumPres)
+      for (var i = 0; i < userNumParties - 1; i++) {
+        userNumPresRan[i] = Math.ceil(Math.random() * userNumPres)
         if (i > 0) {
-          for (var j = 0; j < engine.userNumPresRan.length - 1; j++) {
-            if (engine.userNumPresRan[i] == engine.userNumPresRan[j]) {
-              engine.userNumPresRan[i] = parseInt(Math.ceil(Math.random() * engine.userNumPres));
+          for (var j = 0; j < userNumPresRan.length - 1; j++) {
+            if (userNumPresRan[i] == userNumPresRan[j]) {
+              userNumPresRan[i] = parseInt(Math.ceil(Math.random() * userNumPres));
             }
           }
         }
         // console.log("random house num: " + userNumSenateRan[i]);
       }
-      engine.userNumPresRan.sort((a, b) => a - b);
-      console.log(engine.userNumParties);
+      userNumPresRan.sort((a, b) => a - b);
+      console.log(userNumParties);
 
-      for (var i = 0; i < engine.userNumParties - 1; i++) {
-        engine.userNumVPRan[i] = Math.ceil(Math.random() * engine.userNumVP)
+      for (var i = 0; i < userNumParties - 1; i++) {
+        userNumVPRan[i] = Math.ceil(Math.random() * userNumVP)
         if (i > 0) {
-          for (var j = 0; j < engine.userNumVPRan.length - 1; j++) {
-            if (engine.userNumVPRan[i] == engine.userNumVPRan[j]) {
-              engine.userNumVPRan[i] = parseInt(Math.ceil(Math.random() * engine.userNumVP));
+          for (var j = 0; j < userNumVPRan.length - 1; j++) {
+            if (userNumVPRan[i] == userNumVPRan[j]) {
+              userNumVPRan[i] = parseInt(Math.ceil(Math.random() * userNumVP));
             }
           }
         }
         // console.log("random house num: " + userNumSenateRan[i]);
       }
 
-      engine.userNumVPRan.sort((a, b) => a - b);
-      console.log(engine.userNumVPRan);
+      userNumVPRan.sort((a, b) => a - b);
+      console.log(userNumVPRan);
 
 
       noUiSlider.create(slider6, {
-        start: engine.userNumHouseRan,
+        start: userNumHouseRan,
         range: {
           'min': [0],
-          'max': [engine.userNumHouse]
+          'max': [userNumHouse]
         },
         // connect: [true, true, true, true,true,true],
         cssPrefix: 'noUi-',
@@ -854,10 +853,10 @@ function sMembers() {
 
 
       noUiSlider.create(slider7, {
-        start: engine.userNumSenateRan,
+        start: userNumSenateRan,
         range: {
           'min': [0],
-          'max': [engine.userNumSenate]
+          'max': [userNumSenate]
         },
         cssPrefix: 'noUi-',
         tooltips: false,
@@ -872,10 +871,10 @@ function sMembers() {
       });
 
       noUiSlider.create(slider8, {
-        start: engine.userNumVPRan,
+        start: userNumVPRan,
         range: {
           'min': [0],
-          'max': [engine.userNumVP]
+          'max': [userNumVP]
         },
         cssPrefix: 'noUi-',
         tooltips: false,
@@ -891,10 +890,10 @@ function sMembers() {
 
 
       noUiSlider.create(slider9, {
-        start: engine.userNumPresRan,
+        start: userNumPresRan,
         range: {
           'min': [0],
-          'max': [engine.userNumPres]
+          'max': [userNumPres]
         },
         cssPrefix: 'noUi-',
         tooltips: false,
@@ -946,34 +945,35 @@ function sMembers() {
         handle9[i].classList.add(classes[i]);
       }
 
+      // helper vars
+      var housePercentage, senPercentage, vpPercentage, presPercentage;
 
-
-      if (engine.userNumParties > 1) {
+      if (userNumParties > 1) {
         //connecting values to html, each tab value is stored in an array
 
-        engine.userPerHouseBody = [];
+        userPerHouseBody = [];
         var numPerHouseBody = [];
         slider6.noUiSlider.on('update', function(values, handle) {
           for (var i = 0; i <= values.length; i++) {
             if (i == 0) {
-              engine.userPerHouseBody[i] = values[i];
+              userPerHouseBody[i] = values[i];
             } else if (i == values.length) {
-              engine.userPerHouseBody[i] = engine.userNumHouse - values[i - 1];
+              userPerHouseBody[i] = userNumHouse - values[i - 1];
             } else {
-              engine.userPerHouseBody[i] = values[i] - values[i - 1];
+              userPerHouseBody[i] = values[i] - values[i - 1];
             }
-            numPerHouseBody[i] = engine.userPerHouseBody[i];
-            engine.housePercentage = engine.userPerHouseBody[i] / engine.userNumHouse;
-            engine.housePercentage = roundNum(engine.housePercentage, 2);
-            engine.userPerHouseBody[i] = engine.housePercentage;
+            numPerHouseBody[i] = userPerHouseBody[i];
+            housePercentage = userPerHouseBody[i] / userNumHouse;
+            housePercentage = roundNum(housePercentage, 2);
+            userPerHouseBody[i] = housePercentage;
           }
           console.log();
 
 
           // made for up to three political parties
-          if (engine.userPerHouseBody.length == 3) {
+          if (userPerHouseBody.length == 3) {
             value1.innerHTML = "Party A: " + numPerHouseBody[0] + " Party B: " + numPerHouseBody[1] + " Party C: " + numPerHouseBody[2];
-          } else if (engine.userPerHouseBody.length == 2) {
+          } else if (userPerHouseBody.length == 2) {
             // rangeSliderValueElement.innerHTML = userPerHouseBody[0] + " " + userPerHouseBody[1];
             value1.innerHTML = "Party A: " + numPerHouseBody[0] + " Party B: " + numPerHouseBody[1];
           } else {
@@ -982,27 +982,27 @@ function sMembers() {
           mouseOver(slider6, value1);
         });
 
-        engine.userPerSenateBody = [];
+        userPerSenateBody = [];
         var numPerSenateBody = [];
         slider7.noUiSlider.on('update', function(values, handle) {
           for (var i = 0; i <= values.length; i++) {
             if (i == 0) {
-              engine.userPerSenateBody[i] = values[i];
+              userPerSenateBody[i] = values[i];
             } else if (i == values.length) {
-              engine.userPerSenateBody[i] = engine.userNumSenate - values[i - 1];
+              userPerSenateBody[i] = userNumSenate - values[i - 1];
             } else {
-              engine.userPerSenateBody[i] = values[i] - values[i - 1];
+              userPerSenateBody[i] = values[i] - values[i - 1];
             }
-            numPerSenateBody[i] = engine.userPerSenateBody[i];
-            engine.senPercentage = engine.userPerSenateBody[i] / engine.userNumSenate;
-            engine.senPercentage = roundNum(engine.senPercentage, 2);
-            engine.userPerSenateBody[i] = engine.senPercentage;
+            numPerSenateBody[i] = userPerSenateBody[i];
+            senPercentage = userPerSenateBody[i] / userNumSenate;
+            senPercentage = roundNum(senPercentage, 2);
+            userPerSenateBody[i] = senPercentage;
           }
 
           //made for up to three political parties
-          if (engine.userPerSenateBody.length == 3) {
+          if (userPerSenateBody.length == 3) {
             value2.innerHTML = "Party A: " + numPerSenateBody[0] + " Party B: " + numPerSenateBody[1] + " Party C: " + numPerSenateBody[2];
-          } else if (engine.userPerSenateBody.length == 2) {
+          } else if (userPerSenateBody.length == 2) {
             value2.innerHTML = "Party A: " + numPerSenateBody[0] + " Party B: " + numPerSenateBody[1];
           } else {
             value2.innerHTML = "Party A: " + numPerSenateBody[0];
@@ -1011,27 +1011,27 @@ function sMembers() {
         });
 
 
-        engine.userPerVPBody = [];
+        userPerVPBody = [];
         var numPerVPBody = [];
         slider8.noUiSlider.on('update', function(values, handle) {
           for (var i = 0; i <= values.length; i++) {
             if (i == 0) {
-              engine.userPerVPBody[i] = values[i];
+              userPerVPBody[i] = values[i];
             } else if (i == values.length) {
-              engine.userPerVPBody[i] = engine.userNumVP - values[i - 1];
+              userPerVPBody[i] = userNumVP - values[i - 1];
             } else {
-              engine.userPerVPBody[i] = values[i] - values[i - 1];
+              userPerVPBody[i] = values[i] - values[i - 1];
             }
-            numPerVPBody[i] = engine.userPerVPBody[i];
-            engine.vpPercentage = engine.userPerVPBody[i] / engine.userNumVP;
-            engine.vpPercentage = roundNum(engine.vpPercentage, 2);
-            engine.userPerVPBody[i] = engine.vpPercentage;
+            numPerVPBody[i] = userPerVPBody[i];
+            vpPercentage = userPerVPBody[i] / userNumVP;
+            vpPercentage = roundNum(vpPercentage, 2);
+            userPerVPBody[i] = vpPercentage;
           }
 
 
-          if (engine.userPerVPBody.length == 3) {
+          if (userPerVPBody.length == 3) {
             value3.innerHTML = "Party A: " + numPerVPBody[0] + " Party B: " + numPerVPBody[1] + " Party C: " + numPerVPBody[2];
-          } else if (engine.userPerVPBody.length == 2) {
+          } else if (userPerVPBody.length == 2) {
             value3.innerHTML = "Party A: " + numPerVPBody[0] + " Party B: " + numPerVPBody[1];
           } else {
             value3.innerHTML = "Party A: " + numPerVPBody[0];
@@ -1041,25 +1041,25 @@ function sMembers() {
 
         });
 
-        engine.userPerPresBody = [];
+        userPerPresBody = [];
         var numPerPresBody = [];
         slider9.noUiSlider.on('update', function(values, handle) {
           for (var i = 0; i <= values.length; i++) {
             if (i == 0) {
-              engine.userPerPresBody[i] = values[i];
+              userPerPresBody[i] = values[i];
             } else if (i == values.length) {
-              engine.userPerPresBody[i] = engine.userNumPres - values[i - 1];
+              userPerPresBody[i] = userNumPres - values[i - 1];
             } else {
-              engine.userPerPresBody[i] = values[i] - values[i - 1];
+              userPerPresBody[i] = values[i] - values[i - 1];
             }
-            numPerPresBody[i] = engine.userPerPresBody[i];
-            engine.presPercentage = engine.userPerPresBody[i] / engine.userNumPres;
-            engine.presPercentage = roundNum(engine.presPercentage, 2);
-            engine.userPerPresBody[i] = engine.presPercentage;
+            numPerPresBody[i] = userPerPresBody[i];
+            presPercentage = userPerPresBody[i] / userNumPres;
+            presPercentage = roundNum(presPercentage, 2);
+            userPerPresBody[i] = presPercentage;
           }
-          if (engine.userPerPresBody.length == 3) {
+          if (userPerPresBody.length == 3) {
             value4.innerHTML = "Party A: " + numPerPresBody[0] + " Party B: " + numPerPresBody[1] + " Party C: " + numPerPresBody[2];
-          } else if (engine.userPerPresBody.length == 2) {
+          } else if (userPerPresBody.length == 2) {
             value4.innerHTML = "Party A: " + numPerPresBody[0] + " Party B: " + numPerPresBody[1];
           } else {
             value4.innerHTML = "Party A: " + numPerPresBody[0];
@@ -1169,16 +1169,16 @@ function sBodyPass() {
       //connecting values to html, each tab value is stored in an array
       // var rangeSliderValueElement = document.getElementById('slider-value');
 
-      engine.userBodyPass = "";
-      engine.userSuperThresh = "";
+      userBodyPass = "";
+      userSuperThresh = "";
 
       slider10.noUiSlider.on('update', function(values, handle) {
-        engine.userBodyPass = values[0]
+        userBodyPass = values[0]
         // rangeSliderValueElement.innerHTML = userBodyPass + " " + userSuperThresh;
 
       });
       slider11.noUiSlider.on('update', function(values, handle) {
-        engine.userSuperThresh = values[0];
+        userSuperThresh = values[0];
         // rangeSliderValueElement.innerHTML = userBodyPass + " " + userSuperThresh;
 
       });
@@ -1221,12 +1221,12 @@ function sYesVotes() {
 
 
   function checkParties() {
-    if (engine.userNumParties == 1) {
+    if (userNumParties == 1) {
       document.getElementById("slider12").style.display = "block";
       document.getElementById("slider13").style.display = "none";
       document.getElementById("slider14").style.display = "none";
 
-    } else if (engine.userNumParties == 2) {
+    } else if (userNumParties == 2) {
       document.getElementById("slider12").style.display = "block";
       document.getElementById("slider13").style.display = "block";
       document.getElementById("slider14").style.display = "none";
@@ -1313,33 +1313,33 @@ function sYesVotes() {
       //connecting values to html, each tab value is stored in an array
       // var rangeSliderValueElement = document.getElementById('slider-value');
 
-      engine.userDemYaythresh = "";
-      engine.userRepYaythresh = "";
-      engine.userIndYaythresh = "";
+      userDemYaythresh = "";
+      userRepYaythresh = "";
+      userIndYaythresh = "";
 
       slider12.noUiSlider.on('update', function(values, handle) {
-        engine.userDemYaythresh = values[0];
+        userDemYaythresh = values[0];
         // rangeSliderValueElement.innerHTML = userDemYaythresh + " " + userRepYaythresh + " " + userIndYaythresh;
 
       });
-      if (engine.userNumParties >= 2) {
+      if (userNumParties >= 2) {
         slider13.noUiSlider.on('update', function(values, handle) {
-          engine.userRepYaythresh = values[0];
+          userRepYaythresh = values[0];
           // rangeSliderValueElement.innerHTML = userDemYaythresh + " " + userRepYaythresh + " " + userIndYaythresh;
 
         });
       } else {
-        engine.userRepYaythresh = 0 + "%";
+        userRepYaythresh = 0 + "%";
       }
 
-      if (engine.userNumParties == 3) {
+      if (userNumParties == 3) {
         slider14.noUiSlider.on('update', function(values, handle) {
-          engine.userIndYaythresh = values[0];
+          userIndYaythresh = values[0];
           // rangeSliderValueElement.innerHTML = userDemYaythresh + " " + userRepYaythresh + " " + userIndYaythresh;
 
         });
       } else {
-        engine.userIndYaythresh = 0 + "%";
+        userIndYaythresh = 0 + "%";
       }
 
 
@@ -1374,20 +1374,20 @@ function sResults() {
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "block";
     document.getElementById("sim-info").style.display = "none";
-    if (engine.userNumParties == 2) {
-      engine.userPerHouseBody[2] = 0.0;
-      engine.userPerSenateBody[2] = 0.0;
-      engine.userPerVPBody[2] = 0.0;
-      engine.userPerPresBody[2] = 0.0;
-    } else if (engine.userNumParties == 1) {
-      engine.userPerHouseBody[1] = 0.0;
-      engine.userPerHouseBody[2] = 0.0;
-      engine.userPerSenateBody[1] = 0.0;
-      engine.userPerSenateBody[2] = 0.0;
-      engine.userPerVPBody[1] = 0.0;
-      engine.userPerVPBody[2] = 0.0;
-      engine.userPerPresBody[1] = 0.0;
-      engine.userPerPresBody[2] = 0.0;
+    if (userNumParties == 2) {
+      userPerHouseBody[2] = 0.0;
+      userPerSenateBody[2] = 0.0;
+      userPerVPBody[2] = 0.0;
+      userPerPresBody[2] = 0.0;
+    } else if (userNumParties == 1) {
+      userPerHouseBody[1] = 0.0;
+      userPerHouseBody[2] = 0.0;
+      userPerSenateBody[1] = 0.0;
+      userPerSenateBody[2] = 0.0;
+      userPerVPBody[1] = 0.0;
+      userPerVPBody[2] = 0.0;
+      userPerPresBody[1] = 0.0;
+      userPerPresBody[2] = 0.0;
     }
     inputTxt();
   }
@@ -1400,32 +1400,32 @@ function sResults() {
 
     userOutputText.innerHTML =
       "<div><h3>First Legislative Chamber</h3>" +
-      "<p>Voting Members: " + engine.userNumHouse +
-      "<br>Members in Political Party A: " + Math.round(engine.userPerHouseBody[0] * engine.userNumHouse) +
-      "<br>Members in Political Party B: " + Math.round(engine.userPerHouseBody[1] * engine.userNumHouse) +
-      "<br>Members in Political Party C: " + Math.round(engine.userPerHouseBody[2] * engine.userNumHouse) +
+      "<p>Voting Members: " + userNumHouse +
+      "<br>Members in Political Party A: " + Math.round(userPerHouseBody[0] * userNumHouse) +
+      "<br>Members in Political Party B: " + Math.round(userPerHouseBody[1] * userNumHouse) +
+      "<br>Members in Political Party C: " + Math.round(userPerHouseBody[2] * userNumHouse) +
       "</p><h3>Second Legislative Chamber</h3>" +
-      "<p>Voting Members: " + engine.userNumSenate +
-      "<br>Members in Political Party A: " + Math.round(engine.userPerSenateBody[0] * engine.userNumSenate) +
-      "<br>Members in Political Party B: " + Math.round(engine.userPerSenateBody[1] * engine.userNumSenate) +
-      "<br>Members in Political Party C: " + Math.round(engine.userPerSenateBody[2] * engine.userNumSenate) +
+      "<p>Voting Members: " + userNumSenate +
+      "<br>Members in Political Party A: " + Math.round(userPerSenateBody[0] * userNumSenate) +
+      "<br>Members in Political Party B: " + Math.round(userPerSenateBody[1] * userNumSenate) +
+      "<br>Members in Political Party C: " + Math.round(userPerSenateBody[2] * userNumSenate) +
       "</p><h3>Vice Presidency</h3>" +
-      "<p>Voting Members: " + engine.userNumVP +
-      "<br>Members in Political Party A: " + Math.round(engine.userPerPresBody[0] * engine.userNumVP) +
-      "<br>Members in Political Party B: " + Math.round(engine.userPerPresBody[1] * engine.userNumVP) +
-      "<br>Members in Political Party C: " + Math.round(engine.userPerPresBody[2] * engine.userNumVP) +
+      "<p>Voting Members: " + userNumVP +
+      "<br>Members in Political Party A: " + Math.round(userPerPresBody[0] * userNumVP) +
+      "<br>Members in Political Party B: " + Math.round(userPerPresBody[1] * userNumVP) +
+      "<br>Members in Political Party C: " + Math.round(userPerPresBody[2] * userNumVP) +
       "</p><h3>Presidency</h3>" +
-      "<p>Voting Members: " + engine.userNumPres +
-      "<br>Members in Political Party A: " + Math.round(engine.userPerVPBody[0] * engine.userNumPres) +
-      "<br>Members in Political Party B: " + Math.round(engine.userPerVPBody[1] * engine.userNumPres) +
-      "<br>Members in Political Party C: " + Math.round(engine.userPerVPBody[2] * engine.userNumPres) +
+      "<p>Voting Members: " + userNumPres +
+      "<br>Members in Political Party A: " + Math.round(userPerVPBody[0] * userNumPres) +
+      "<br>Members in Political Party B: " + Math.round(userPerVPBody[1] * userNumPres) +
+      "<br>Members in Political Party C: " + Math.round(userPerVPBody[2] * userNumPres) +
       "</p><h3>Likelihood of Yes Vote: </h3>" +
-      "<p>Political Party A: " + engine.userDemYaythresh +
-      "<br>Political Party B: " + engine.userRepYaythresh +
-      "<br>Political Party C: " + engine.userIndYaythresh +
+      "<p>Political Party A: " + userDemYaythresh +
+      "<br>Political Party B: " + userRepYaythresh +
+      "<br>Political Party C: " + userIndYaythresh +
       "</p><h3>Percentage of votes required for approval of bill</h3>" +
-      "<p>Approval By Majority: " + engine.userBodyPass +
-      "<br> Approval By Supermajority: " + engine.userSuperThresh + "</div></p>";
+      "<p>Approval By Majority: " + userBodyPass +
+      "<br> Approval By Supermajority: " + userSuperThresh + "</div></p>";
 
     if (userEditCount >= 2) {
       nextButton.remove();
@@ -1525,32 +1525,32 @@ function sDisplay() {
   function inputTxt() {
     userOutputText.innerHTML =
       "<div><h3>First Legislative Chamber</h3>" +
-      "<p>Voting Members: " + engine.userNumHouse +
-      "<br>Members in Political Party A: " + Math.round(engine.userPerHouseBody[0] * engine.userNumHouse) +
-      "<br>Members in Political Party B: " + Math.round(engine.userPerHouseBody[1] * engine.userNumHouse) +
-      "<br>Members in Political Party C: " + Math.round(engine.userPerHouseBody[2] * engine.userNumHouse) +
+      "<p>Voting Members: " + userNumHouse +
+      "<br>Members in Political Party A: " + Math.round(userPerHouseBody[0] * userNumHouse) +
+      "<br>Members in Political Party B: " + Math.round(userPerHouseBody[1] * userNumHouse) +
+      "<br>Members in Political Party C: " + Math.round(userPerHouseBody[2] * userNumHouse) +
       "</p><h3>Second Legislative Chamber</h3>" +
-      "<p>Voting Members: " + engine.userNumSenate +
-      "<br>Members in Political Party A: " + Math.round(engine.userPerSenateBody[0] * engine.userNumSenate) +
-      "<br>Members in Political Party B: " + Math.round(engine.userPerSenateBody[1] * engine.userNumSenate) +
-      "<br>Members in Political Party C: " + Math.round(engine.userPerSenateBody[2] * engine.userNumSenate) +
+      "<p>Voting Members: " + userNumSenate +
+      "<br>Members in Political Party A: " + Math.round(userPerSenateBody[0] * userNumSenate) +
+      "<br>Members in Political Party B: " + Math.round(userPerSenateBody[1] * userNumSenate) +
+      "<br>Members in Political Party C: " + Math.round(userPerSenateBody[2] * userNumSenate) +
       "</p><h3>Vice Presidency</h3>" +
-      "<p>Voting Members: " + engine.userNumVP +
-      "<br>Members in Political Party A: " + Math.round(engine.userPerPresBody[0] * engine.userNumVP) +
-      "<br>Members in Political Party B: " + Math.round(engine.userPerPresBody[1] * engine.userNumVP) +
-      "<br>Members in Political Party C: " + Math.round(engine.userPerPresBody[2] * engine.userNumVP) +
+      "<p>Voting Members: " + userNumVP +
+      "<br>Members in Political Party A: " + Math.round(userPerPresBody[0] * userNumVP) +
+      "<br>Members in Political Party B: " + Math.round(userPerPresBody[1] * userNumVP) +
+      "<br>Members in Political Party C: " + Math.round(userPerPresBody[2] * userNumVP) +
       "</p><h3>Presidency</h3>" +
-      "<p>Voting Members: " + engine.userNumPres +
-      "<br>Members in Political Party A: " + Math.round(engine.userPerVPBody[0] * engine.userNumPres) +
-      "<br>Members in Political Party B: " + Math.round(engine.userPerVPBody[1] * engine.userNumPres) +
-      "<br>Members in Political Party C: " + Math.round(engine.userPerVPBody[2] * engine.userNumPres) +
+      "<p>Voting Members: " + userNumPres +
+      "<br>Members in Political Party A: " + Math.round(userPerVPBody[0] * userNumPres) +
+      "<br>Members in Political Party B: " + Math.round(userPerVPBody[1] * userNumPres) +
+      "<br>Members in Political Party C: " + Math.round(userPerVPBody[2] * userNumPres) +
       "</p><h3>Likelihood of Yes Vote: </h3>" +
-      "<p>Political Party A: " + engine.userDemYaythresh +
-      "<br>Political Party B: " + engine.userRepYaythresh +
-      "<br>Political Party C: " + engine.userIndYaythresh +
+      "<p>Political Party A: " + userDemYaythresh +
+      "<br>Political Party B: " + userRepYaythresh +
+      "<br>Political Party C: " + userIndYaythresh +
       "</p><h3>Percentage of votes required for approval of bill</h3>" +
-      "<p>Approval By Majority: " + engine.userBodyPass +
-      "<br> Approval By Supermajority: " + engine.userSuperThresh + "</div></p>";
+      "<p>Approval By Majority: " + userBodyPass +
+      "<br> Approval By Supermajority: " + userSuperThresh + "</div></p>";
   }
 
 
