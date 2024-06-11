@@ -40,10 +40,10 @@ const SessionSchema = new Schema({
     yayThreshPartyC: Number, // indYaythesh
 
     majorityThresh: Number, // perPass
-    superThresh: Number // superThresh
+    superThresh: Number, // superThresh
     
     // result properties
-    //result: 
+    result: ResultSchema 
 
 });
 
