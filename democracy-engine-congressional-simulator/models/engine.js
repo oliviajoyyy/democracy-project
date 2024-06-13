@@ -154,14 +154,14 @@ loadingImage;
 // forUser: bool - true if engine is running for user configuration, false if running for original config
 forUser;
 
-// finalDisplayBool: bool - will be set true when ready to display calcuation results
-// signal used to determine when finalDisplay() runs (finalDisplay funct is in the scenes)
+// OC: finalDisplayBool - will be set true when ready to display calcuation results outside of class
+// OC: signal used to determine when finalDisplay() runs (finalDisplay funct is in the scenes)
 finalDisplayBool = false;
 
 voteResults = ["","","",""];
-// decisions for each body (bill approved/not): [chamber1, chamber2, vp, pres]
+// OC: stores decisions for each body (bill approved/not): [chamber1, chamber2, vp, pres]
 
-decisionTxt = "";
+decisionTxt = ""; // OC: final decision string
 
   /**
    * Initialize democracy engine object
@@ -186,7 +186,7 @@ decisionTxt = "";
         this.test = 0;
         print('bodyCount = ')
         print(this.bodyCount);
-        background(color(this.bColor));
+        //background(color(this.bColor));
 
         //maps stress index onto percentage effecting yay/nay vote.
         this.stressMap = map(this.stress, this.stressLow, this.stressHigh, 0, 2);
@@ -351,13 +351,13 @@ decisionTxt = "";
 
       this.rotLoadImage();
       this.testSize();
-      this.count += 2; // count is incremented once every draw loop until it reaches num in this body
+      this.count += 2; // OC note: count is incremented once every draw loop until it reaches num in this body
       print('Count = ' + this.count); //fortesting
       print('Count1 = ' + this.count1); //fortesting
       
     } else if (this.count >= this.numCon - 1) {
       
-      for (let i = 0; i < this.numBodies; i++) { // < numCon draws all squares at once for each body
+      for (let i = 0; i < this.numBodies; i++) { // OC note: < numCon draws all squares at once for each body
         this.bodyVote();
         this.count1++;
       }
@@ -370,7 +370,6 @@ decisionTxt = "";
   /**
    * Draws all votes as squares
    * Diplays Voting Results
-   * note: draws 1 rect per draw loop
    */
   drawRect() {
     let noVoteBool = false;
@@ -379,7 +378,7 @@ decisionTxt = "";
     var currentPartyNum = 0;
 
     var numRepOrWild;
-    if (this.forUser) // forUser: bool - true if engine is running for user config, false if running default config
+    if (this.forUser) // OC forUser: bool - true if engine is running for user config, false if running default config
       numRepOrWild = this.numRep;
     else
       numRepOrWild = this.numWild;
@@ -414,7 +413,7 @@ decisionTxt = "";
 
     }
     //Independent is Voting
-    else if (this.countR >= this.numDem && this.countR < this.numDem + numRepOrWild) { // ADJUST FLAG so condition has + numWild
+    else if (this.countR >= this.numDem && this.countR < this.numDem + numRepOrWild) {
       currentPartyNum = this.partyNum + 1;
       currentTransVal = this.tranVal - currentPartyNum * valAdjust;
 
@@ -662,7 +661,6 @@ decisionTxt = "";
     */
    resultLogic() {
 
-    // 3 vars below not used?
     //padding & offsets for text display
     var votePadX = this.dWidth / 4;
     var votePadY = this.dHeight / 4;
