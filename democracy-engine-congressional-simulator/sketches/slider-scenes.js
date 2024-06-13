@@ -260,6 +260,7 @@ function democracyEngineOrigin() {
 
     let forUser = false;
     engine.currentCongLogic(forUser);
+    //console.log(engine.allVotes);
     finalDisplay();
 
   }
@@ -380,6 +381,8 @@ function democracyEngineOrigin() {
         }, 1500); // 1.5 seconds before text overlay showss
       }
       engine.finalDisplayBool = false;
+      for (let i=0; i<engine.numBodies; i++)
+        console.log(engine.allVotes[i]);
     }
 
   //Once Bill Pass result has been calculated users can enter in their own variables to reconfigure congress or recalculate the vote with the same parameters

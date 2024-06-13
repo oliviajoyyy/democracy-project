@@ -163,11 +163,6 @@ voteResults = ["","","",""];
 
 decisionTxt = ""; // OC: final decision string
 
-ix;
-jx;
-
-allVotes = [];
-
   /**
    * Initialize democracy engine object
    * @param {image} img - loading image that spins
@@ -183,7 +178,6 @@ allVotes = [];
   currentCongLogic(forUserBool) {
     this.forUser = forUserBool;
 
-    for (this.ix=0; this.ix<this.numBodies; this.ix++) {
     // Logic for House
     if (this.bodyCount == 0) {
 
@@ -363,13 +357,8 @@ allVotes = [];
       
     // } else 
     //if (this.count >= this.numCon - 1) {
-    this.allVotes[this.ix] = [];
-
-      for (this.jx = 0; this.jx < this.numCon; this.jx++) { // OC note: < numCon draws all squares at once for each body
-        if (this.count < this.numCon - 1 && this.count1 < 1) {
-          this.testSize();
-          this.count++;
-        }
+      
+      for (let i = 0; i < this.numCon; i++) { // OC note: < numCon draws all squares at once for each body
         this.bodyVote();
         this.count1++;
       }
@@ -377,7 +366,6 @@ allVotes = [];
       //print ('Count1 = ' + count1); //fortesting
       //print ('skip * Y = ' + (yCountT * skip));
     //}
-    }
   }
 
   /**
@@ -419,12 +407,9 @@ allVotes = [];
       if (vote <= this.demYaythresh * this.stressOffset) {
         noVoteBool = false;
         this.yay++;
-        this.allVotes[this.ix][this.jx] = "yay";
-        console.log(this.allVotes[this.ix][this.jx]);
       } else {
         noVoteBool = true;
         this.nay++;
-        this.allVotes[this.ix][this.jx] = "nay";
       }
 
     }
@@ -446,11 +431,9 @@ allVotes = [];
       if (vote <= this.repYaythresh * this.stressOffset) {
         noVoteBool = false;
         this.yay++;
-        this.allVotes[this.ix][this.jx] = "yay";
       } else {
         noVoteBool = true;
         this.nay++;
-        this.allVotes[this.ix][this.jx] = "nay";
       }
 
     }
@@ -463,11 +446,9 @@ allVotes = [];
       if (vote <= this.indYaythresh * this.stressOffset) {
         noVoteBool = false;
         this.yay++;
-        this.allVotes[this.ix][this.jx] = "yay";
       } else {
         noVoteBool = true;
         this.nay++;
-        this.allVotes[this.ix][this.jx] = "nay";
       }
       //made for just two bodies
       // if (stopVoteCount == 2) {
@@ -823,7 +804,7 @@ allVotes = [];
                 if (this.bodyPass[0] == false || this.bodyPass[1] == false) {
                   //text('\n\n\nBILL IS NOT APPROVED BY ALL CHAMBERS: NO VICE PRESIDENTIAL VOTE', i * dispW + padX, this.dHeight * (3 / 4), dispW - padX, dispH);
                   this.voteResults[i] = "BILL IS NOT APPROVED BY ALL CHAMBERS: NO VICE PRESIDENTIAL VOTE";
-                } else if (this.bodyPass[0] == true && this.bodyPass[1] == true && this.vpVote == true) {
+                } else if (this.bodyPass[0] == true && bodyPass[1] == true && vpVote == true) {
                   if (this.bodyPass[i] == false) {
                     //text('\nBILL IS NOT APPROVED', (i) * dispW + padX, this.dHeight * (3 / 4), dispW - padX, dispH);
                     this.voteResults[i] = "BILL IS NOT APPROVED";
