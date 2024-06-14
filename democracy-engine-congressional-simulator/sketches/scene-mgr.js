@@ -27,6 +27,7 @@
 
 var mgr;
 var engine;
+var v;
 
 //fortesting
 let senateResult;
@@ -99,7 +100,7 @@ function setup() {
   // createCanvas(windowWidth*.8, windowHeight*.8);
   // rectMode(CENTER);
   engine = new DemocracyEngine(loadingImage);
-  console.log("test: " + engine.numSenate);
+  v = new voteVisual(loadingImage);
 
   noStroke();
   mgr = new SceneManager();

@@ -367,18 +367,20 @@ allVotes = [];
       
     // } else 
     //if (this.count >= this.numCon - 1) {
-    //this.allVotes[this.ix] = [];
-
+    this.allVotes[this.ix] = [];
+// if (this.count < this.numCon - 1 && this.count1 < 1) {
+//           this.testSize();
+//           this.count++;
+//         } //else if (this.count >= this.numCon - 1) {
       for (this.jx = 0; this.jx < this.numCon; this.jx++) { // OC note: < numCon draws all squares at once for each body
-        if (this.count < this.numCon - 1 && this.count1 < 1) {
-          this.testSize();
-          this.count++;
-          console.log("count " + this.count);
-        }
-        console.log("count " + this.count);
+        // if (this.count < this.numCon - 1 && this.count1 < 1) {
+        //   this.testSize();
+        //   this.count++;
+        // }
         this.bodyVote();
         this.count1++;
       }
+    //}
       
       //print ('Count1 = ' + count1); //fortesting
       //print ('skip * Y = ' + (yCountT * skip));
@@ -426,6 +428,7 @@ allVotes = [];
         noVoteBool = false;
         this.yay++;
         this.allVotes[this.ix][this.jx] = "yay";
+        console.log(this.allVotes[this.ix][this.jx]);
       } else {
         noVoteBool = true;
         this.nay++;
@@ -510,7 +513,7 @@ allVotes = [];
       noStroke();
       fill(255, currentTransVal);
     }
-    //rect(this.x, this.y, this.diam, this.diam, this.diam / 8);
+    rect(this.x, this.y, this.diam, this.diam, this.diam / 8);
     //creates the x on squares that are "no votes"
     if (noVoteBool == true && this.stopVoteBool == false) {
       fill(this.bColor);
@@ -757,7 +760,7 @@ allVotes = [];
   }
 
   /**
-   * Logic to determine the voting results, run with either original configuration
+   * Logic to determine the voting results run with either original configuration
    */
   finalDisplayLogic() {
     let currentBodyLabel;

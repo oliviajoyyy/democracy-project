@@ -6,6 +6,8 @@ function democracyEngineUser() {
     textFont(helvFont);
     engine.dWidth = windowWidth * .8;
     engine.dHeight = windowHeight * .8;
+    v.dWidth = windowWidth * .8;
+    v.dHeight = windowHeight * .8;
     let canvas = createCanvas(engine.dWidth, engine.dHeight);
     let canvasDiv = document.getElementById('vote');
     canvas.parent(canvasDiv);
@@ -24,6 +26,8 @@ function democracyEngineUser() {
       // windowResized();
       engine.dWidth = windowWidth * .8;
       engine.dHeight = windowHeight * .8;
+      v.dWidth = windowWidth * .8;
+      v.dHeight = windowHeight * .8;
       canvas = createCanvas(engine.dWidth, engine.dHeight);
       let canvasDiv = document.getElementById('vote');
       canvas.parent(canvasDiv);
@@ -171,6 +175,18 @@ function democracyEngineUser() {
         }, 1500); // 1.5 seconds before text overlay shows
       }
       engine.finalDisplayBool = false;
+
+      for (let i=0; i<engine.numBodies; i++){
+        console.log(engine.allVotes[i]);
+        var yCt = 0;
+        for (let j=0; j<engine.allVotes[i].length; j++) {
+          if (engine.allVotes[i][j] == "yay") {
+            yCt++;
+          }
+        }
+          console.log("body " + i + " yay ct: " + yCt);
+        }
+
     }
 
   //Once Bill Pass result has been calculated users can enter in their own variables to reconfigure congress or recalculate the vote with the same parameters
@@ -228,6 +244,8 @@ function democracyEngineOrigin() {
     textFont(helvFont);
     engine.dWidth = windowWidth * .8;
     engine.dHeight = windowHeight * .8;
+    v.dWidth = windowWidth * .8;
+    v.dHeight = windowHeight * .8;
     let canvas = createCanvas(engine.dWidth, engine.dHeight);
     let canvasDiv = document.getElementById('vote');
     canvas.parent(canvasDiv);
@@ -260,8 +278,14 @@ function democracyEngineOrigin() {
 
     let forUser = false;
     engine.currentCongLogic(forUser);
-    //console.log(engine.allVotes);
-    finalDisplay();
+    //console.log("allvotes from engine: "+engine.allVotes);
+    if (engine.finalDisplayBool) {
+      //console.log("allvotes from engine about to call displayVoting: "+engine.allVotes);
+      v.displayVoting(engine, engine.forUser, engine.allVotes);
+      finalDisplay();
+    }
+    
+    
 
   }
 
@@ -270,7 +294,14 @@ function democracyEngineOrigin() {
   function finalDisplay() {
 
     // only run this function when engine logic signals true for the final display of results
-    if (!engine.finalDisplayBool) {
+    // if (!engine.finalDisplayBool) {
+    //   return;
+    // }
+
+    
+
+    //console.log("v final display bool" + v.finalDisplayBool);
+  if (!v.finalDisplayBool) {
       return;
     }
 
@@ -381,8 +412,18 @@ function democracyEngineOrigin() {
         }, 1500); // 1.5 seconds before text overlay showss
       }
       engine.finalDisplayBool = false;
-      for (let i=0; i<engine.numBodies; i++)
+      v.finalDisplayBool = false;
+      for (let i=0; i<engine.numBodies; i++){
         console.log(engine.allVotes[i]);
+        var yCt = 0;
+        for (let j=0; j<engine.allVotes[i].length; j++) {
+          if (engine.allVotes[i][j] == "yay") {
+            yCt++;
+          }
+        }
+          console.log("body " + i + " yay ct: " + yCt);
+        }
+        
     }
 
   //Once Bill Pass result has been calculated users can enter in their own variables to reconfigure congress or recalculate the vote with the same parameters
@@ -1086,6 +1127,8 @@ function sBodyPass() {
     noStroke();
     engine.dWidth = width;
     engine.dHeight = height;
+    v.dWidth = width;
+    v.dHeight = height;
     // background("#012244");
 
   }
