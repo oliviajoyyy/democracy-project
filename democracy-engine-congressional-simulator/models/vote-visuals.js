@@ -2,296 +2,275 @@
 
 class voteVisual {
 
-    loadingImage;
+  loadingImage;
 
-    //which body is voting
-    bodyCount = 0;
-    bodyPass = [];
+  //which body is voting
+  bodyCount = 0;
+  bodyPass = [];
 
-    //The number of voting memebers for each body
-    numCon;
+  //The number of voting memebers for each body
+  numCon;
 
-    //The count variables are updated every time a circle is drawn
-count = 0;
-count1 = 0;
-count2 = 0;
-countR = 0;
+  //The count variables are updated every time a circle is drawn
+  count = 0;
+  count1 = 0;
+  count2 = 0;
+  countR = 0;
 
-//The yCount variables
-xCount = 1;
-yCount = 1;
-yCountT = 1;
+  //The yCount variables
+  xCount = 1;
+  yCount = 1;
+  yCountT = 1;
 
-//Determines size of circle & spacing
-skip; //taking the square root of the area of the drawing
-skip2;
-// skipR; strange artifact from Rhonda
+  //Determines size of circle & spacing
+  skip; //taking the square root of the area of the drawing
+  skip2;
+  // skipR; strange artifact from Rhonda
 
-//Location Circle is Drawn
-x;
-y;
-x2;
-y2;
+  //Location Circle is Drawn
+  x;
+  y;
+  x2;
+  y2;
 
-//Diameter or circle
-diam;
+  //Diameter or circle
+  diam;
 
-//Splits the Screen into 'sections' based on number of voting bodies
-offSet;
+  //Splits the Screen into 'sections' based on number of voting bodies
+  offSet;
 
-//test state variable - 0 if untested 1 if tested
-test;
+  //test state variable - 0 if untested 1 if tested
+  test;
 
-//test state variable - 0 if moving through voting body 1 if all body members have votes
-endBody;
+  //test state variable - 0 if moving through voting body 1 if all body members have votes
+  endBody;
 
-bodyLabel;
+  bodyLabel;
 
-// colors
-bColor = "#012244";
-pColor = "#3c1b36";
+  // colors
+  bColor = "#012244";
+  pColor = "#3c1b36";
 
-tranVal = 255;
-// let fadeOpac = 255;
-partyNum = 0;
-moveArrow = 0;
+  tranVal = 255;
+  // let fadeOpac = 255;
+  partyNum = 0;
+  moveArrow = 0;
 
-rot = 0;
+  rot = 0;
 
-stopVoteBool = false;
-stopVoteCount = 0;
-stopVoteArr = [];
+  stopVoteBool = false;
+  stopVoteCount = 0;
 
-numDem;
-numRep;
-numWild;
+  numDem;
+  numRep;
+  numWild;
 
-// for canvas
-dWidth;
-dHeight;
+  // for canvas
+  dWidth;
+  dHeight;
 
-engine;
+  engine;
 
-forUser;
+  forUser;
 
-allVotes = [];
+  allVotes = [];
 
-xdrawn = 0;
+  userInputState = false;
 
-finalDisplayBool = false; 
+  /**
+   * Sets loading image and background color properties
+   * @param {image} img - loading image bitmap
+   * @param {color} bgColor - color for background
+   */
+  constructor(img, bgColor) {
+    this.loadingImage = img;
+  }
 
-    constructor (img) {
-        this.loadingImage = img;
-        // this.engine = e;
-        // this.forUser = usrBool;
-        // console.log("av: " + av);
-        // this.allVotes = av;
-    }
+  /**
+   * Draws boxes to screen to visualize voting results
+   * @param {DemocracyEngine} engineObj - the engine object to draw the votes for
+   */
+  displayVoting(engineObj) {
+    this.engine = engineObj;
+    this.forUser = this.engine.forUser;
 
-    displayVoting(e, usrBool, av) {
-        this.forUser = usrBool;
-        this.engine = e;
-
-        //console.log("in vote visual class");
     // Logic for House
     if (this.bodyCount == 0) {
 
-    // Setup variables first time we pass through the first body
-    if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
-      this.test = 0;
-      print('VISUAL CLASS logic for house bodyCount = ' + this.bodyCount);
-     // print(this.bodyCount);
-      //background(color(this.bColor));
+      // Setup variables first time we pass through the first body
+      if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
+        this.test = 0;
+        print('VISUAL CLASS logic for house bodyCount = ' + this.bodyCount);
+        print(this.bodyCount);
+        background(color(this.bColor));
 
-    //   //maps stress index onto percentage effecting yay/nay vote.
-    //   this.stressMap = map(this.stress, this.stressLow, this.stressHigh, 0, 2);
-    //   print('Voter Stress = ' + this.stressMap);
+        // Set number of voting memebers
+        this.numCon = this.engine.numHouse;
+        this.bodyLabel = 'HOUSE OF REPRESENTATIVES';
 
-    //   this.stressPlanetMap = map(this.stressPlanet, this.stressPlanetLow, this.stressPlanetHigh, 0, 2);
-    //   print('Planet Stress = ' + this.stressPlanetMap)
+        //Set Demographics for each body
+        // OC needed in this class to determine box transparency
+        this.numDem = round(this.numCon * this.engine.perDemHouse);
+        this.numRep = round(this.numCon * this.engine.perRepHouse);
+        this.numWild = round(this.numCon * this.engine.perIndHouse);
 
-    //   //create a stress offset that will effect congress' likelyhood of passing legislation to create change
-    //   this.stressOffset = (this.stressPlanetMap + this.stressMap) / 2;
+        // OC offset calculated differently between default and user config
+        if (this.forUser)
+          this.offSet = this.dWidth / (this.engine.numBodies);
+        else
+          this.offSet = this.dWidth / (this.engine.numBodies - 1);
 
-      // Set number of voting memebers
-      this.numCon = this.engine.numHouse;
-      console.log("e's numHouse: " + this.engine.numHouse);
-      this.bodyLabel = 'HOUSE OF REPRESENTATIVES';
-
-      //Set Demographics for each body
-      this.numDem = round(this.numCon * this.engine.perDemHouse);
-      this.numRep = round(this.numCon * this.engine.perRepHouse);
-      this.numWild = round(this.numCon * this.engine.perIndHouse);
-
-
-      if (this.forUser)
-        this.offSet = this.dWidth / (this.engine.numBodies);
-      else
-      this.offSet = this.dWidth / (this.engine.numBodies - 1);
-
-      //Figure out how big to draw the circles and how far to space them out
-      this.skip = floor(.97 * (sqrt((this.offSet) * this.dHeight / this.numCon)));
-      print("offset = " + this.offSet);
-      print("dheigt = " + this.dHeight);
-      print("numCon = " + this.numCon);
-      print('Skip = ' + this.skip); //testing
-      this.x = this.skip / 2;
-      this.y = this.skip / 2;
-    }
-  }
-
-  //Logic for Senate
-  if (this.bodyCount == 1) {
-    strokeWeight(10);
-    translate(this.offSet * this.bodyCount, 0);
-
-    if (this.endBody == 1) {
-      this.resetCount();
-      this.endBody = 0;
+        //Figure out how big to draw the circles and how far to space them out
+        this.skip = floor(.97 * (sqrt((this.offSet) * this.dHeight / this.numCon)));
+        print('Skip = ' + this.skip); //testing
+        this.x = this.skip / 2;
+        this.y = this.skip / 2;
+      }
     }
 
-    // Setup variables first time we pass through a new body
-    if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
-      this.test = 0;
-      print('VISUAL CLASS bodyCount = ')
-      print(this.bodyCount);
+    //Logic for Senate
+    if (this.bodyCount == 1) {
+      strokeWeight(10);
+      translate(this.offSet * this.bodyCount, 0);
 
-      ///Set number of voting memebers
-      this.numCon = this.engine.numSenate;
-      this.bodyLabel = 'SENATE';
+      if (this.endBody == 1) {
+        this.resetCount();
+        this.endBody = 0;
+      }
 
-      //Set Demographics for each body
-      this.numDem = round(this.numCon * this.engine.perDemSenate);
-      this.numRep = round(this.numCon * this.engine.perRepSenate);
-      this.numWild = round(this.numCon * this.engine.perIndSenate);
+      // Setup variables first time we pass through a new body
+      if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
+        this.test = 0;
+        print('VISUAL CLASS bodyCount = ')
+        print(this.bodyCount);
 
+        ///Set number of voting memebers
+        this.numCon = this.engine.numSenate;
+        this.bodyLabel = 'SENATE';
 
-      //Figure out how big to draw the circles and how far to space them out
-      this.skip = floor(.97 * (sqrt(this.offSet * this.dHeight / this.numCon)));
-      print('Skip = ' + this.skip); //testing
-      this.x = this.skip / 2;
-      this.y = this.skip / 2;
-
-      print('vv Count = ' + this.count); //fortesting
-      print('vv Count1 = ' + this.count1); //fortesting
-      print('vv Count2 = ' + this.count2); //fortesting
-    }
-
-  }
-
-  //AB logic for VP if Senate needs a tiebreaker
-  if (this.bodyCount == 2) {
-    //print("VISUAL CLASS votingBodyCounts[1][0]= " + this.votingBodyCounts[1][0] + "votingBodyCounts[1][1] = " + this.votingBodyCounts[1][1]);
+        //Set Demographics for each body
+        this.numDem = round(this.numCon * this.engine.perDemSenate);
+        this.numRep = round(this.numCon * this.engine.perRepSenate);
+        this.numWild = round(this.numCon * this.engine.perIndSenate);
 
 
-
-    // if (votingBodyCounts[1][0] == votingBodyCounts[1][1] && vpVote == true) {
-    //   vpVote = true;
-    // } else {
-    //   vpVote = false;
-    // }
-
-    strokeWeight(10);
-    translate(this.offSet * this.bodyCount, 0);
-
-    if (this.endBody == 1) {
-      this.resetCount();
-      this.endBody = 0;
-    }
-    // Setup variables first time we pass through a new body
-    if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
-      this.test = 0;
-      print('VISUAL CLASS bodyCount = ')
-      print(this.bodyCount);
-
-      ///Set number of voting memebers
-      this.numCon = this.engine.numVP;
-      this.bodyLabel = 'VICE PRESIDENT';
-
-      //Set Demographics for each body
-      this.numDem = round(this.numCon * this.engine.perDemVP);
-      this.numRep = round(this.numCon * this.engine.perRepVP);
-      this.numWild = round(this.numCon * this.engine.perIndVP);
-
-      //Figure out how big to draw the circles and how far to space them out
-      if (this.forUser)
+        //Figure out how big to draw the circles and how far to space them out
         this.skip = floor(.97 * (sqrt(this.offSet * this.dHeight / this.numCon)));
-      else
-        this.skip = floor(.65 * (sqrt(this.offSet * this.dHeight / this.numCon)));
-      print('Skip = ' + this.skip); //testing
-      this.x = this.skip / 2;
-      this.y = this.skip / 2;
-    }
-  }
+        print('Skip = ' + this.skip); //testing
+        this.x = this.skip / 2;
+        this.y = this.skip / 2;
 
-  //Logic for President
-  if (this.bodyCount == 3) {
-    strokeWeight(10);
+        print('v Count = ' + this.count); //fortesting
+        print('v Count1 = ' + this.count1); //fortesting
+        print('v Count2 = ' + this.count2); //fortesting
+      }
 
-    if (this.forUser)
-      translate(this.offSet * (this.bodyCount), 0);
-    else
-      translate(this.offSet * (this.bodyCount - 1), 0);
-
-    if (this.endBody == 1) {
-      this.resetCount();
-      this.endBody = 0;
     }
 
-    // Setup variables first time we pass through a new body
-    if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
-      this.test = 0;
-      print('VISUAL CLASS bodyCount = ')
-      print(this.bodyCount);
+    //AB logic for VP if Senate needs a tiebreaker
+    if (this.bodyCount == 2) {
 
-      // Set number of voting memebers
-      this.numCon = this.engine.numPres;
-      this.bodyLabel = 'PRESIDENT';
+      strokeWeight(10);
+      translate(this.offSet * this.bodyCount, 0);
 
-      //Set Demographics for each body
-      this.numDem = round(this.numCon * this.engine.perDemPres);
-      this.numRep = round(this.numCon * this.engine.perRepPres);
-      this.numWild = round(this.numCon * this.engine.perIndPres);
+      if (this.endBody == 1) {
+        this.resetCount();
+        this.endBody = 0;
+      }
+      // Setup variables first time we pass through a new body
+      if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
+        this.test = 0;
+        print('VISUAL CLASS bodyCount = ')
+        print(this.bodyCount);
 
+        ///Set number of voting memebers
+        this.numCon = this.engine.numVP;
+        this.bodyLabel = 'VICE PRESIDENT';
 
-      //Figure out how big to draw the circles and how far to space them out
+        //Set Demographics for each body
+        this.numDem = round(this.numCon * this.engine.perDemVP);
+        this.numRep = round(this.numCon * this.engine.perRepVP);
+        this.numWild = round(this.numCon * this.engine.perIndVP);
+
+        //Figure out how big to draw the circles and how far to space them out
+        if (this.forUser)
+          this.skip = floor(.97 * (sqrt(this.offSet * this.dHeight / this.numCon)));
+        else
+          this.skip = floor(.65 * (sqrt(this.offSet * this.dHeight / this.numCon)));
+        print('Skip = ' + this.skip); //testing
+        this.x = this.skip / 2;
+        this.y = this.skip / 2;
+      }
+    }
+
+    //Logic for President
+    if (this.bodyCount == 3) {
+      strokeWeight(10);
+
       if (this.forUser)
-        this.skip = floor(.97 * (sqrt(this.offSet * this.dHeight / this.numCon)));
+        translate(this.offSet * (this.bodyCount), 0);
       else
-        this.skip = floor(.65 * (sqrt(this.offSet * this.dHeight / this.numCon)));
-      print('Skip = ' + this.skip); //testing
-      this.x = this.skip / 2;
-      this.y = this.skip / 2;
+        translate(this.offSet * (this.bodyCount - 1), 0);
+
+      if (this.endBody == 1) {
+        this.resetCount();
+        this.endBody = 0;
+      }
+
+      // Setup variables first time we pass through a new body
+      if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
+        this.test = 0;
+        print('VISUAL CLASS bodyCount = ')
+        print(this.bodyCount);
+
+        // Set number of voting memebers
+        this.numCon = this.engine.numPres;
+        this.bodyLabel = 'PRESIDENT';
+
+        //Set Demographics for each body
+        this.numDem = round(this.numCon * this.engine.perDemPres);
+        this.numRep = round(this.numCon * this.engine.perRepPres);
+        this.numWild = round(this.numCon * this.engine.perIndPres);
+
+
+        //Figure out how big to draw the circles and how far to space them out
+        if (this.forUser)
+          this.skip = floor(.97 * (sqrt(this.offSet * this.dHeight / this.numCon)));
+        else
+          this.skip = floor(.65 * (sqrt(this.offSet * this.dHeight / this.numCon)));
+        print('Skip = ' + this.skip); //testing
+        this.x = this.skip / 2;
+        this.y = this.skip / 2;
+      }
     }
+
+    // Need to make sure we are not over our number of congressional body numCon and readjusts skip if too big
+    if (this.count < this.numCon - 1 && this.count1 < 1) {
+
+      for (let i = 0; i < 2; i++) { // OC loading image stays on screen for half the time it used to
+        this.rotLoadImage();
+        this.testSize();
+        this.count++;
+        // print('v Count = ' + this.count); //fortesting
+        // print('v Count1 = ' + this.count1); //fortesting
+      }
+
+    } else if (this.count >= this.numCon - 1) {
+
+      for (let i = 0; i < 3; i++) { // OC draws 4 boxes every draw loop
+        this.bodyVote();
+        this.count1++;
+        //print ('Count1 = ' + count1); //fortesting
+        //print ('skip * Y = ' + (yCountT * skip));
+      }
+
+    }
+
   }
 
-  // Need to make sure we are not over our number of congressional body numCon and readjusts skip if too big
-  if (this.count < this.numCon - 1 && this.count1 < 1) {
-
-    for (let i = 0; i < 2; i++) { // OC loading image stays on screen for half the time it used to
-      this.rotLoadImage();
-      this.testSize();
-      this.count++; // OC note: count is incremented once every draw loop until it reaches num in this body
-      print('vv Count = ' + this.count); //fortesting
-      print('vv Count1 = ' + this.count1); //fortesting
-    }
-    
-  } else if (this.count >= this.numCon - 1) {
-    
-    for (let i = 0; i < 3; i++) { // OC draws 4 boxes every draw loop
-      this.bodyVote();
-      this.count1++;
-    }
-    
-    //print ('Count1 = ' + count1); //fortesting
-    //print ('skip * Y = ' + (yCountT * skip));
-  }
-
-    }
-
-    /**
-   * loading image function, rotates image on current calculation
-   */
+  /**
+   * Rotates loading image
+  */
   rotLoadImage() {
     this.rot += 0.5;
     push();
@@ -365,7 +344,6 @@ finalDisplayBool = false;
 
   /**
    * Draws all votes as squares
-   * Diplays Voting Results
    */
   drawRect() {
     let noVoteBool = false;
@@ -394,71 +372,20 @@ finalDisplayBool = false;
     //Democrat is Voting
     if (this.countR < this.numDem) {
       currentTransVal = this.tranVal - currentPartyNum * valAdjust;
-
-
-      //let vote = random(0, 1);
-      //    //print vote info to console for testing
-      //    print('Vote =' + vote);//for testing
-      //    print ('stress offset ' + stressOffset);//for testing
-      //    var voteDemTest = demYaythresh*stressOffset; //for testing
-      //    print('vote dem offset' + voteDemTest);//for testing
-
-      
-
-    //   if (vote <= this.demYaythresh * this.stressOffset) {
-    //     noVoteBool = false;
-    //     this.yay++;
-    //   } else {
-    //     noVoteBool = true;
-    //     this.nay++;
-    //   }
-
     }
     //Independent is Voting
     else if (this.countR >= this.numDem && this.countR < this.numDem + numRepOrWild) {
       currentPartyNum = this.partyNum + 1;
       currentTransVal = this.tranVal - currentPartyNum * valAdjust;
-
-
-    //   let vote = random(0, 1);
-
-    //   //    //print vote info to console for testing
-    //   //    print('Vote =' + vote);//for testing
-    //   //    print ('stress offset ' + stressOffset);//for testing
-    //   //    var voteRepTest = repYaythresh*stressOffset; //for testing
-    //   //    print('vote Rep offset' + voteRepTest);//for testing
-
-    //   //is random number greater than threshold for yes?
-    //   if (vote <= this.repYaythresh * this.stressOffset) {
-    //     noVoteBool = false;
-    //     this.yay++;
-    //   } else {
-    //     noVoteBool = true;
-    //     this.nay++;
-    //   }
-
     }
     //Republican is Voting
     else {
       currentPartyNum = this.partyNum + 2;
       currentTransVal = this.tranVal - currentPartyNum * valAdjust;
-    //   let vote = random(0, 1);
-    //   //print('Vote =' + vote); //testing
-    //   if (vote <= this.indYaythresh * this.stressOffset) {
-    //     noVoteBool = false;
-    //     this.yay++;
-    //   } else {
-    //     noVoteBool = true;
-    //     this.nay++;
-    //   }
-      //made for just two bodies
-      // if (stopVoteCount == 2) {
-      //     resultLogic();
-      // }
     }
     //AB: finding problem with x's
     // print("body #: " + bodyCount + " No Vote Bool: " + noVoteBool);
-    print("body #: " + this.bodyCount + "box #: " + this.count1 + " vote: " + vote);
+    //print("body #: " + this.bodyCount + "box #: " + this.count1 + " vote: " + vote);
 
 
     // Square is Drawn for Each Vote
@@ -466,7 +393,7 @@ finalDisplayBool = false;
 
     if (this.bodyLabel == 'VICE PRESIDENT') {
       if (!this.forUser)
-        this.y = this.y + (this.skip*.9);
+        this.y = this.y + (this.skip * .9);
       // y = y + skip;
       if (this.engine.vpVote == false) {
         stroke(255, 100);
@@ -483,15 +410,14 @@ finalDisplayBool = false;
     //   nay = 50;
     // }
 
-    //this.stopVoteChange();
-
     //creates a different shade for each voting party
     if (this.stopVoteBool == false) {
       noStroke();
       fill(255, currentTransVal);
     }
-    console.log("vote Visual will draw a rect");
+
     rect(this.x, this.y, this.diam, this.diam, this.diam / 8);
+
     //creates the x on squares that are "no votes"
     if (vote == "nay" && this.stopVoteBool == false) {
       fill(this.bColor);
@@ -499,8 +425,6 @@ finalDisplayBool = false;
       textAlign(CENTER, CENTER);
       textFont('Arial');
       text("x", this.x, this.y);
-      this.xdrawn++;
-      console.log("x #: " + this.xdrawn + " at body #: " + this.bodyCount + "box #: " + this.count1 + " vote: " + vote)
     }
 
 
@@ -512,7 +436,7 @@ finalDisplayBool = false;
       this.xCount++;
       //print('Y count = ' + yCount); // prints to consolde for testing
     }
-    //this.storeBodyVotes();
+
   }
 
   /**
@@ -523,78 +447,284 @@ finalDisplayBool = false;
     if (this.bodyCount == 2 && this.engine.vpVote == false) {
       this.stopVoteBool = true;
       this.stopVoteCount++; // oc not used
+      console.log("stop vote logic 1");
     }
     //if the vp votes and it's a NO, then bill dies
     else if (this.engine.vpVote == true && this.engine.bodyPass[2] === false) {
       this.stopVoteBool = true;
       this.stopVoteCount++; // oc not used
+      console.log("stop vote logic 2");
     }
     //AB if the first or second body is not a pass,  bill dies thus preventing other bodies to vote
+    // OC note: falls into this else block bc chamber 2 (this.engine.bodyPass[1]) does not approve when it hasn't gotten there yet
     else if (this.engine.bodyPass[0] === false || this.engine.bodyPass[1] === false) {
       this.stopVoteBool = true;
       this.stopVoteCount++; // oc not used
+      console.log("stop vote logic 3");
     } else {
       this.stopVoteBool = false;
+      console.log("stop vote logic 4");
     }
   }
 
-    /**
+  /**
    * appearance of squares changes to outlines when no vote is required
-   */
-    stopVoteChange() {
-        if (this.stopVoteBool == true) {
-          this.stopVoteArr[this.bodyCount] = true; // not used
-          stroke(255, 100);
-          noFill();
-          strokeWeight(3);
-          // stopVoteBool == false;
-        } else {
-          fill(this.bColor);
-          noStroke();
-          this.stopVoteArr[this.bodyCount] = false; // not used
-    
-        }
-      }
+    */
+  stopVoteChange() {
+    if (this.stopVoteBool == true) {
+      stroke(255, 100);
+      noFill();
+      strokeWeight(3);
+      console.log("will draw blank circle");
+      // stopVoteBool == false;
+    } else {
+      fill(this.bColor);
+      noStroke();
 
-      resultLogic() {
-         //Adds one to the count of how many bodies have voted and enters into user input state (buttons) if the vote is done.
+    }
+  }
+
+  /**
+   * Updates bodyCount and signals for user input state (buttons) to show on screen
+   */
+  resultLogic() {
+    //Adds one to the count of how many bodies have voted and enters into user input state (buttons) if the vote is done.
     if (this.bodyCount < this.engine.numBodies) {
-        this.bodyCount++;
-        print("VISUAL CLASS new body count: " + this.bodyCount);
-      }
-  
-      if (this.bodyCount >= this.engine.numBodies) {
-        //this.finalDisplayLogic();
-        this.finalDisplayBool = true; 
-        print('Final Stage');
-      }
-  
-      
-      this.endBody = 1;
+      this.bodyCount++;
+      print("VISUAL CLASS new body count: " + this.bodyCount);
+    }
+
+    if (this.bodyCount >= this.engine.numBodies) {
+      //this.finalDisplayLogic();
+      this.userInputState = true;
+      print('Final Stage');
     }
 
 
-    resetDraw() {
-        if (this.yCountT * this.skip >= this.offSet) {
-          this.skip = this.offSet / (1.025 * this.xCount);
-        }
-        noStroke();
-        fill(this.bColor);
-        this.tranVal = 255;
-        rectMode(CORNER);
-    
-        //AB: removed this rect b/c it covers vp or president during logic
-        // rect(0, 0, offSet, dHeight);
-    
-        this.x = this.skip / 2;
-        this.y = this.skip / 2;
-        this.yay = 0;
-        this.nay = 0;
-        this.xCount = 1;
-        this.yCount = 1;
-        this.endBody = 0;
-      }
-    
+    this.endBody = 1;
+  }
 
+
+  resetDraw() {
+    if (this.yCountT * this.skip >= this.offSet) {
+      this.skip = this.offSet / (1.025 * this.xCount);
+    }
+    noStroke();
+    fill(this.bColor);
+    this.tranVal = 255;
+    rectMode(CORNER);
+
+    //AB: removed this rect b/c it covers vp or president during logic
+    // rect(0, 0, offSet, dHeight);
+
+    this.x = this.skip / 2;
+    this.y = this.skip / 2;
+    this.yay = 0;
+    this.nay = 0;
+    this.xCount = 1;
+    this.yCount = 1;
+    this.endBody = 0;
+  }
+
+
+  finalTextDisplayDefault(engine, font) {
+    let currentBodyLabel;
+
+    let columnAmount = engine.numBodies - 1;
+    let rowAmount = 4;
+
+    let padY = 20;
+    let padX = 10;
+    let dispW = (this.dWidth / columnAmount);
+    let dispH = (this.dHeight / rowAmount);
+
+    let dispX = 0 + padX;
+    let dispY = 0 + padY;
+
+    var resBColor = color(0, 0, 0);
+    let decisionText = "";
+    //column 1 to be yay/nay votes
+    //column 2 to be body votes
+    textFont(font);
+
+    textAlign(LEFT, TOP);
+    fill(color("#faf4d3"));
+    noStroke();
+    rectMode(CORNER);
+    resBColor.setAlpha(200);
+    fill(resBColor);
+    rect(0, 0, this.dWidth, this.dHeight);
+    textStyle(NORMAL);
+
+
+    //NEED TO CHANGE LATER FOR MORE THAN 3 BODIES
+    for (let i = 0; i < engine.numBodies; i++) {
+      fill(255);
+      if (i == 0) {
+        currentBodyLabel = 'HOUSE';
+      } else if (i == 1) {
+        currentBodyLabel = 'SENATE';
+      } else if (i == 2) {
+        currentBodyLabel = 'VICE PRESIDENCY';
+      } else if (i == 3) {
+        // print("I AM IN PRESIDENT b4 LOGIC");
+        currentBodyLabel = 'PRESIDENCY';
+      }
+
+      // show text on screen
+      if (i < engine.votingBodyCounts.length) {
+        print("i = " + i + " and current body label = " + currentBodyLabel);
+
+        if (currentBodyLabel == 'PRESIDENCY') {
+          textSize(22);
+          text(currentBodyLabel, (i - 1) * dispW + padX, padY, dispW, dispH);
+          textAlign(LEFT);
+
+          if (engine.stopVoteArr[i] == false) { // president voted, so display yes/no counts
+            textSize(20);
+            text("\n\nVOTES \n", (i - 1) * dispW + padX, padY, dispW, dispH);
+            textSize(16);
+            text("\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", (i - 1) * dispW + padX, padY, dispW, dispH);
+            textSize(20);
+            text('\n' + engine.voteResults[i], (i - 1) * dispW + padX, this.dHeight / 4, dispW - padX, dispH);
+          } else { // president did not vote, so only adjust placement of text
+            textSize(20);
+            text('\n\n' + engine.voteResults[i], (i - 1) * dispW + padX, padY, dispW - padX, dispH);
+          }
+        } else if (currentBodyLabel == 'VICE PRESIDENCY') {
+          textSize(22);
+          text(currentBodyLabel, i * dispW + padX, this.dHeight / 2, dispW, dispH);
+
+          if (engine.stopVoteArr[i] == false && engine.vpVote == true) { // vp voted, so display yes/no counts
+            textSize(20);
+            text("\n\nVOTES \n", i * dispW + padX, this.dHeight / 2, dispW, dispH);
+            textSize(16);
+            text("\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", i * dispW + padX, this.dHeight / 2, dispW - padX, dispH);
+            textSize(20);
+            text('\n' + engine.voteResults[i], (i) * dispW + padX, this.dHeight * (3 / 4), dispW - padX, dispH);
+          } else { // did not vote
+            textSize(20);
+            text('\n\n' + engine.voteResults[i], i * dispW + padX, this.dHeight / 2, dispW - padX, dispH);
+          }
+        } else {
+          textSize(22);
+          text(currentBodyLabel, i * dispW + padX, padY, dispW - padX, dispH);
+
+          if (engine.stopVoteArr[i] == false) { // body voted, so display yes/no counts
+            textSize(20);
+            text("\n\nVOTES \n", i * dispW + padX, padY, dispW - padX, dispH);
+            textSize(16);
+            text("\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", i * dispW + padX, padY, dispW, dispH);
+            textSize(20);
+            text('\n' + engine.voteResults[i], i * dispW + padX, this.dHeight / 4, dispW - padX, dispH);
+          } else { // did not vote
+            textSize(20);
+            text('\n\n' + engine.voteResults[i], i * dispW + padX, padY, dispW - padX, dispH);
+          }
+        }
+      }
+      // changeText(engine.decisionTxt); // change final decision text at bottom of screen
+    }
+  }
+
+  finalTextDisplayUser(engine, font) {
+    let currentBodyLabel;
+
+    let columnAmount = engine.numBodies;
+    let rowAmount = 4;
+
+    let padY = 20;
+    let padX = 20;
+    let dispW = (this.dWidth / columnAmount);
+    let dispH = this.dHeight;
+
+    let dispX = 0 + padX;
+    let dispY = 0 + padY;
+
+    var resBColor = color(0, 0, 0);
+    let decisionText = "";
+    //column 1 to be yay/nay votes
+    //column 2 to be body votes
+    textFont(font);
+
+    textAlign(LEFT, TOP);
+    fill(color("#faf4d3"));
+    noStroke();
+    rectMode(CORNER);
+    resBColor.setAlpha(200);
+    fill(resBColor);
+    rect(0, 0, this.dWidth, this.dHeight);
+    textStyle(NORMAL);
+
+
+    //NEED TO CHANGE LATER FOR MORE THAN 3 BODIES
+    for (let i = 0; i < engine.numBodies; i++) {
+      fill(255);
+      if (i == 0) {
+        currentBodyLabel = 'LEGISLATIVE CHAMBER 1';
+      } else if (i == 1) {
+        currentBodyLabel = 'LEGISLATIVE CHAMBER 2';
+      } else if (i == 2) {
+        currentBodyLabel = 'VICE PRESIDENCY';
+      } else if (i == 3) {
+        // print("I AM IN PRESIDENT b4 LOGIC");
+        currentBodyLabel = 'PRESIDENCY';
+      }
+
+      // show text on screen
+      if (i < engine.votingBodyCounts.length) {
+        print("i = " + i + " and current body label = " + currentBodyLabel);
+
+        if (currentBodyLabel == 'PRESIDENCY') {
+          textSize(22);
+          text(currentBodyLabel, (i) * dispW + padX, padY, dispW, dispH); // display this body label
+          textAlign(LEFT);
+
+          if (engine.stopVoteArr[i] == false) { // president voted, so display yes/no counts
+            textSize(20);
+            text("\n\n\nVOTES \n", (i) * dispW + padX, padY, dispW, dispH);
+            textSize(16);
+            text("\n\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", (i) * dispW + padX, padY);
+            textSize(20);
+            text('\n\n\n' + engine.voteResults[i], (i) * dispW + padX, this.dHeight / 4, dispW - padX, dispH);
+          } else { // president not voted, so adjust placement of text
+            textSize(20);
+            text('\n\n\n\n' + engine.voteResults[i], (i) * dispW + padX, padY, dispW - padX, dispH);
+          }
+        } else if (currentBodyLabel == 'VICE PRESIDENCY') {
+          textSize(22);
+          text(currentBodyLabel, i * dispW + padX, padY, dispW, dispH);
+
+          if (engine.stopVoteArr[i] == false && engine.vpVote == true) { // vp voted, so display yes/no counts
+            textSize(20);
+            text("\n\n\nVOTES \n", i * dispW + padX, padY, dispW, dispH);
+            textSize(16);
+            text("\n\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", i * dispW + padX, padY);
+            textSize(20);
+            text('\n\n\n' + engine.voteResults[i], (i) * dispW + padX, this.dHeight / 4, dispW - padX, dispH);
+          } else { // did not vote
+            textSize(20);
+            text('\n\n\n' + engine.voteResults[i], i * dispW + padX, padY, dispW - padX, dispH);
+          }
+        } else {
+          textSize(22);
+          text(currentBodyLabel, i * dispW + padX, padY, dispW - padX, dispH);
+
+          if (engine.stopVoteArr[i] == false) { // body voted, so display yes/no counts
+            textSize(20);
+            text("\n\n\nVOTES \n", i * dispW + padX, padY, dispW - padX, dispH);
+            textSize(16);
+            text("\n\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", i * dispW + padX, padY);
+            textSize(20);
+            text('\n\n\n' + engine.voteResults[i], i * dispW + padX, this.dHeight / 4, dispW - padX, dispH);
+          } else { // did not vote
+            textSize(20);
+            text('\n\n\n' + engine.voteResults[i], i * dispW + padX, padY, dispW - padX, dispH);
+          }
+        }
+      }
+    }
+
+  }
 
 }

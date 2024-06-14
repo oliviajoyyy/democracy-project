@@ -1,6 +1,8 @@
 //democracy simulater, connected to user values
 function democracyEngineUser() {
   console.log("democracy userEdits: " + userEdits);
+  var voteDisplayUser;
+
   this.setup = function() {
 
     textFont(helvFont);
@@ -26,9 +28,10 @@ function democracyEngineUser() {
       // windowResized();
       engine.dWidth = windowWidth * .8;
       engine.dHeight = windowHeight * .8;
-      v.dWidth = windowWidth * .8;
-      v.dHeight = windowHeight * .8;
-      canvas = createCanvas(engine.dWidth, engine.dHeight);
+      voteDisplayUser = new voteVisual(loadingImage);
+      voteDisplayUser.dWidth = windowWidth * .8;
+      voteDisplayUser.dHeight = windowHeight * .8;
+      canvas = createCanvas(voteDisplayUser.dWidth, voteDisplayUser.dHeight);
       let canvasDiv = document.getElementById('vote');
       canvas.parent(canvasDiv);
       reconfigBool = false;
@@ -55,7 +58,17 @@ function democracyEngineUser() {
 
     let forUser = true;
     engine.currentCongLogic(forUser);
-    finalDisplay(); // display final text and buttons
+
+    // OC when engine is done with voting calculation, show votes
+    if (engine.finalDisplayBool) {
+
+      voteDisplayUser.displayVoting(engine);
+
+      // OC when visual display of rectangles is done, show buttons
+      if (voteDisplayUser.userInputState) {
+        finalDisplay();
+      }
+    }
 
   }
 
@@ -63,129 +76,133 @@ function democracyEngineUser() {
   // also displays buttons
   function finalDisplay() {
 
-    // only run this function when engine logic signals true for the final display of results
-    if (!engine.finalDisplayBool) {
-      return;
-    }
+    // // only run this function when engine logic signals true for the final display of results
+    // if (!engine.finalDisplayBool) {
+    //   return;
+    // }
 
-    let currentBodyLabel;
+    // let currentBodyLabel;
 
-    let columnAmount = engine.numBodies;
-    let rowAmount = 4;
+    // let columnAmount = engine.numBodies;
+    // let rowAmount = 4;
 
-    let padY = 20;
-    let padX = 20;
-    let dispW = (engine.dWidth / columnAmount);
-    let dispH = engine.dHeight;
+    // let padY = 20;
+    // let padX = 20;
+    // let dispW = (engine.dWidth / columnAmount);
+    // let dispH = engine.dHeight;
 
-    let dispX = 0 + padX;
-    let dispY = 0 + padY;
+    // let dispX = 0 + padX;
+    // let dispY = 0 + padY;
 
-    var resBColor = color(0, 0, 0);
-    let decisionText = "";
-    //column 1 to be yay/nay votes
-    //column 2 to be body votes
-    textFont(helvFont);
+    // var resBColor = color(0, 0, 0);
+    // let decisionText = "";
+    // //column 1 to be yay/nay votes
+    // //column 2 to be body votes
+    // textFont(helvFont);
 
-    console.log("body pass: " + engine.bodyPass);
+    // console.log("body pass: " + engine.bodyPass);
 
-    if (engine.bodyCount == engine.numBodies) {
+    //if (engine.bodyCount == engine.numBodies) {
       setTimeout(function() {
         document.body.style.backgroundColor = "black";
         userInput(); // show buttons
+        voteDisplayUser.finalTextDisplayUser(engine, helvFont);
 
-        textAlign(LEFT, TOP);
-        fill(color("#faf4d3"));
-        noStroke();
-        rectMode(CORNER);
-        resBColor.setAlpha(200);
-        fill(resBColor);
-        rect(0, 0, engine.dWidth, engine.dHeight);
-        textStyle(NORMAL);
+        // textAlign(LEFT, TOP);
+        // fill(color("#faf4d3"));
+        // noStroke();
+        // rectMode(CORNER);
+        // resBColor.setAlpha(200);
+        // fill(resBColor);
+        // rect(0, 0, engine.dWidth, engine.dHeight);
+        // textStyle(NORMAL);
 
 
-        //NEED TO CHANGE LATER FOR MORE THAN 3 BODIES
-        for (let i = 0; i < engine.numBodies; i++) {
-          fill(255);
-          if (i == 0) {
-            currentBodyLabel = 'LEGISLATIVE CHAMBER 1';
-          } else if (i == 1) {
-            currentBodyLabel = 'LEGISLATIVE CHAMBER 2';
-          } else if (i == 2) {
-            currentBodyLabel = 'VICE PRESIDENCY';
-          } else if (i == 3) {
-            // print("I AM IN PRESIDENT b4 LOGIC");
-            currentBodyLabel = 'PRESIDENCY';
-          }
+        // //NEED TO CHANGE LATER FOR MORE THAN 3 BODIES
+        // for (let i = 0; i < engine.numBodies; i++) {
+        //   fill(255);
+        //   if (i == 0) {
+        //     currentBodyLabel = 'LEGISLATIVE CHAMBER 1';
+        //   } else if (i == 1) {
+        //     currentBodyLabel = 'LEGISLATIVE CHAMBER 2';
+        //   } else if (i == 2) {
+        //     currentBodyLabel = 'VICE PRESIDENCY';
+        //   } else if (i == 3) {
+        //     // print("I AM IN PRESIDENT b4 LOGIC");
+        //     currentBodyLabel = 'PRESIDENCY';
+        //   }
 
-          // show text on screen
-          if (i < engine.votingBodyCounts.length) {
-            print("i = " + i + " and current body label = " + currentBodyLabel);
+        //   // show text on screen
+        //   if (i < engine.votingBodyCounts.length) {
+        //     print("i = " + i + " and current body label = " + currentBodyLabel);
 
-            if (currentBodyLabel == 'PRESIDENCY') {
-              textSize(22);
-              text(currentBodyLabel, (i) * dispW + padX, padY, dispW, dispH); // display this body label
-              textAlign(LEFT);
+        //     if (currentBodyLabel == 'PRESIDENCY') {
+        //       textSize(22);
+        //       text(currentBodyLabel, (i) * dispW + padX, padY, dispW, dispH); // display this body label
+        //       textAlign(LEFT);
               
-              if (engine.stopVoteArr[i] == false) { // president voted, so display yes/no counts
-                textSize(20);
-                text("\n\n\nVOTES \n", (i) * dispW + padX, padY, dispW, dispH);
-                textSize(16);
-                text("\n\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", (i) * dispW + padX, padY);
-                textSize(20);
-                text('\n\n\n' + engine.voteResults[i], (i) * dispW + padX, engine.dHeight / 4, dispW - padX, dispH);
-              } else { // president not voted, so adjust placement of text
-                textSize(20);
-                  text('\n\n\n\n' + engine.voteResults[i], (i) * dispW + padX, padY, dispW - padX, dispH);
-              }
-            } else if (currentBodyLabel == 'VICE PRESIDENCY') {
-              textSize(22);
-              text(currentBodyLabel, i * dispW + padX, padY, dispW, dispH);
+        //       if (engine.stopVoteArr[i] == false) { // president voted, so display yes/no counts
+        //         textSize(20);
+        //         text("\n\n\nVOTES \n", (i) * dispW + padX, padY, dispW, dispH);
+        //         textSize(16);
+        //         text("\n\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", (i) * dispW + padX, padY);
+        //         textSize(20);
+        //         text('\n\n\n' + engine.voteResults[i], (i) * dispW + padX, engine.dHeight / 4, dispW - padX, dispH);
+        //       } else { // president not voted, so adjust placement of text
+        //         textSize(20);
+        //           text('\n\n\n\n' + engine.voteResults[i], (i) * dispW + padX, padY, dispW - padX, dispH);
+        //       }
+        //     } else if (currentBodyLabel == 'VICE PRESIDENCY') {
+        //       textSize(22);
+        //       text(currentBodyLabel, i * dispW + padX, padY, dispW, dispH);
 
-              if (engine.stopVoteArr[i] == false && engine.vpVote == true) { // vp voted, so display yes/no counts
-                textSize(20);
-                text("\n\n\nVOTES \n", i * dispW + padX, padY, dispW, dispH);
-                textSize(16);
-                text("\n\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", i * dispW + padX, padY);
-                textSize(20);
-                text('\n\n\n' + engine.voteResults[i], (i) * dispW + padX, engine.dHeight / 4, dispW - padX, dispH);
-              } else { // did not vote
-                textSize(20);
-                text('\n\n\n' + engine.voteResults[i], i * dispW + padX, padY, dispW - padX, dispH);
-              }
-            } else {
-              textSize(22);
-              text(currentBodyLabel, i * dispW + padX, padY, dispW - padX, dispH);
+        //       if (engine.stopVoteArr[i] == false && engine.vpVote == true) { // vp voted, so display yes/no counts
+        //         textSize(20);
+        //         text("\n\n\nVOTES \n", i * dispW + padX, padY, dispW, dispH);
+        //         textSize(16);
+        //         text("\n\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", i * dispW + padX, padY);
+        //         textSize(20);
+        //         text('\n\n\n' + engine.voteResults[i], (i) * dispW + padX, engine.dHeight / 4, dispW - padX, dispH);
+        //       } else { // did not vote
+        //         textSize(20);
+        //         text('\n\n\n' + engine.voteResults[i], i * dispW + padX, padY, dispW - padX, dispH);
+        //       }
+        //     } else {
+        //       textSize(22);
+        //       text(currentBodyLabel, i * dispW + padX, padY, dispW - padX, dispH);
 
-              if (engine.stopVoteArr[i] == false) { // body voted, so display yes/no counts
-                textSize(20);
-                text("\n\n\nVOTES \n", i * dispW + padX, padY, dispW - padX, dispH);
-                textSize(16);
-                text("\n\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", i * dispW + padX, padY);
-                textSize(20);
-                text('\n\n\n' + engine.voteResults[i], i * dispW + padX, engine.dHeight / 4, dispW - padX, dispH);
-              } else { // did not vote
-                textSize(20);
-                text('\n\n\n' + engine.voteResults[i], i * dispW + padX, padY, dispW - padX, dispH);
-              }
-            }
-          }
-            changeText(engine.decisionTxt); // change final decision text at bottom of screen 
-          };
+        //       if (engine.stopVoteArr[i] == false) { // body voted, so display yes/no counts
+        //         textSize(20);
+        //         text("\n\n\nVOTES \n", i * dispW + padX, padY, dispW - padX, dispH);
+        //         textSize(16);
+        //         text("\n\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", i * dispW + padX, padY);
+        //         textSize(20);
+        //         text('\n\n\n' + engine.voteResults[i], i * dispW + padX, engine.dHeight / 4, dispW - padX, dispH);
+        //       } else { // did not vote
+        //         textSize(20);
+        //         text('\n\n\n' + engine.voteResults[i], i * dispW + padX, padY, dispW - padX, dispH);
+        //       }
+        //     }
+        //   }
+            
+        //   };
+          changeText(engine.decisionTxt); // change final decision text at bottom of screen 
         }, 1500); // 1.5 seconds before text overlay shows
-      }
-      engine.finalDisplayBool = false;
 
-      for (let i=0; i<engine.numBodies; i++){
-        console.log(engine.allVotes[i]);
-        var yCt = 0;
-        for (let j=0; j<engine.allVotes[i].length; j++) {
-          if (engine.allVotes[i][j] == "yay") {
-            yCt++;
-          }
-        }
-          console.log("body " + i + " yay ct: " + yCt);
-        }
+      //}
+      engine.finalDisplayBool = false;
+      voteDisplayUser.userInputState = false;
+
+      // for (let i=0; i<engine.numBodies; i++){
+      //   console.log(engine.allVotes[i]);
+      //   var yCt = 0;
+      //   for (let j=0; j<engine.allVotes[i].length; j++) {
+      //     if (engine.allVotes[i][j] == "yay") {
+      //       yCt++;
+      //     }
+      //   }
+      //     console.log("body " + i + " yay ct: " + yCt);
+      //   }
 
     }
 
@@ -278,11 +295,18 @@ function democracyEngineOrigin() {
 
     let forUser = false;
     engine.currentCongLogic(forUser);
-    //console.log("allvotes from engine: "+engine.allVotes);
+
+    // OC when engine is done with voting calculation, show votes
     if (engine.finalDisplayBool) {
-      //console.log("allvotes from engine about to call displayVoting: "+engine.allVotes);
-      v.displayVoting(engine, engine.forUser, engine.allVotes);
-      finalDisplay();
+
+      //engine.bodyPass[1] = false; //for testing
+      v.displayVoting(engine);
+
+      // OC when visual display of rectangles is done, show buttons
+      if (v.userInputState) {
+        finalDisplay();
+      }
+      
     }
     
     
@@ -290,139 +314,129 @@ function democracyEngineOrigin() {
   }
 
   
-  //Displays the voting results
+  //Displays the buttons for user input
   function finalDisplay() {
 
-    // only run this function when engine logic signals true for the final display of results
-    // if (!engine.finalDisplayBool) {
-    //   return;
-    // }
+    // let currentBodyLabel;
 
-    
+    // let columnAmount = engine.numBodies - 1;
+    // let rowAmount = 4;
 
-    //console.log("v final display bool" + v.finalDisplayBool);
-  if (!v.finalDisplayBool) {
-      return;
-    }
+    // let padY = 20;
+    // let padX = 10;
+    // let dispW = (engine.dWidth / columnAmount);
+    // let dispH = (engine.dHeight / rowAmount);
 
-    let currentBodyLabel;
+    // let dispX = 0 + padX;
+    // let dispY = 0 + padY;
 
-    let columnAmount = engine.numBodies - 1;
-    let rowAmount = 4;
+    // var resBColor = color(0, 0, 0);
+    // let decisionText = "";
+    // //column 1 to be yay/nay votes
+    // //column 2 to be body votes
+    // textFont(helvFont);
 
-    let padY = 20;
-    let padX = 10;
-    let dispW = (engine.dWidth / columnAmount);
-    let dispH = (engine.dHeight / rowAmount);
+    // console.log("body pass: " + engine.bodyPass);
 
-    let dispX = 0 + padX;
-    let dispY = 0 + padY;
-
-    var resBColor = color(0, 0, 0);
-    let decisionText = "";
-    //column 1 to be yay/nay votes
-    //column 2 to be body votes
-    textFont(helvFont);
-
-    console.log("body pass: " + engine.bodyPass);
-
-    if (engine.bodyCount == engine.numBodies) {
+    //if (engine.bodyCount == engine.numBodies) {
       setTimeout(function() {
         document.body.style.backgroundColor = "black";
         userInput(); // show buttons
+        v.finalTextDisplayDefault(engine, helvFont);
 
-        textAlign(LEFT, TOP);
-        fill(color("#faf4d3"));
-        noStroke();
-        rectMode(CORNER);
-        resBColor.setAlpha(200);
-        fill(resBColor);
-        rect(0, 0, engine.dWidth, engine.dHeight);
-        textStyle(NORMAL);
+        // textAlign(LEFT, TOP);
+        // fill(color("#faf4d3"));
+        // noStroke();
+        // rectMode(CORNER);
+        // resBColor.setAlpha(200);
+        // fill(resBColor);
+        // rect(0, 0, engine.dWidth, engine.dHeight);
+        // textStyle(NORMAL);
 
 
-        //NEED TO CHANGE LATER FOR MORE THAN 3 BODIES
-        for (let i = 0; i < engine.numBodies; i++) {
-          fill(255);
-          if (i == 0) {
-            currentBodyLabel = 'HOUSE';
-          } else if (i == 1) {
-            currentBodyLabel = 'SENATE';
-          } else if (i == 2) {
-            currentBodyLabel = 'VICE PRESIDENCY';
-          } else if (i == 3) {
-            // print("I AM IN PRESIDENT b4 LOGIC");
-            currentBodyLabel = 'PRESIDENCY';
-          }
+        // //NEED TO CHANGE LATER FOR MORE THAN 3 BODIES
+        // for (let i = 0; i < engine.numBodies; i++) {
+        //   fill(255);
+        //   if (i == 0) {
+        //     currentBodyLabel = 'HOUSE';
+        //   } else if (i == 1) {
+        //     currentBodyLabel = 'SENATE';
+        //   } else if (i == 2) {
+        //     currentBodyLabel = 'VICE PRESIDENCY';
+        //   } else if (i == 3) {
+        //     // print("I AM IN PRESIDENT b4 LOGIC");
+        //     currentBodyLabel = 'PRESIDENCY';
+        //   }
 
-          // show text on screen
-          if (i < engine.votingBodyCounts.length) {
-            print("i = " + i + " and current body label = " + currentBodyLabel);
+        //   // show text on screen
+        //   if (i < engine.votingBodyCounts.length) {
+        //     print("i = " + i + " and current body label = " + currentBodyLabel);
 
-            if (currentBodyLabel == 'PRESIDENCY') {
-              textSize(22);
-              text(currentBodyLabel, (i - 1) * dispW + padX, padY, dispW, dispH);
-              textAlign(LEFT);
+        //     if (currentBodyLabel == 'PRESIDENCY') {
+        //       textSize(22);
+        //       text(currentBodyLabel, (i - 1) * dispW + padX, padY, dispW, dispH);
+        //       textAlign(LEFT);
               
-              if (engine.stopVoteArr[i] == false) { // president voted, so display yes/no counts
-                textSize(20);
-                text("\n\nVOTES \n", (i - 1) * dispW + padX, padY, dispW, dispH);
-                textSize(16);
-                text("\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", (i - 1) * dispW + padX, padY, dispW, dispH);
-                textSize(20);
-                text('\n' + engine.voteResults[i], (i - 1) * dispW + padX, engine.dHeight / 4, dispW - padX, dispH);
-              } else { // president did not vote, so only adjust placement of text
-                textSize(20);
-                text('\n\n' + engine.voteResults[i], (i - 1) * dispW + padX, padY, dispW - padX, dispH);
-              }
-            } else if (currentBodyLabel == 'VICE PRESIDENCY') {
-              textSize(22);
-              text(currentBodyLabel, i * dispW + padX, engine.dHeight / 2, dispW, dispH);
+        //       if (engine.stopVoteArr[i] == false) { // president voted, so display yes/no counts
+        //         textSize(20);
+        //         text("\n\nVOTES \n", (i - 1) * dispW + padX, padY, dispW, dispH);
+        //         textSize(16);
+        //         text("\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", (i - 1) * dispW + padX, padY, dispW, dispH);
+        //         textSize(20);
+        //         text('\n' + engine.voteResults[i], (i - 1) * dispW + padX, engine.dHeight / 4, dispW - padX, dispH);
+        //       } else { // president did not vote, so only adjust placement of text
+        //         textSize(20);
+        //         text('\n\n' + engine.voteResults[i], (i - 1) * dispW + padX, padY, dispW - padX, dispH);
+        //       }
+        //     } else if (currentBodyLabel == 'VICE PRESIDENCY') {
+        //       textSize(22);
+        //       text(currentBodyLabel, i * dispW + padX, engine.dHeight / 2, dispW, dispH);
 
-              if (engine.stopVoteArr[i] == false && engine.vpVote == true) { // vp voted, so display yes/no counts
-                textSize(20);
-                text("\n\nVOTES \n", i * dispW + padX, engine.dHeight / 2, dispW, dispH);
-                textSize(16);
-                text("\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", i * dispW + padX, engine.dHeight / 2, dispW - padX, dispH);
-                textSize(20);
-                text('\n' + engine.voteResults[i], (i) * dispW + padX, engine.dHeight * (3 / 4), dispW - padX, dispH);
-              } else { // did not vote
-                textSize(20);
-                text('\n\n' + engine.voteResults[i], i * dispW + padX, engine.dHeight / 2, dispW - padX, dispH);
-              }
-            } else {
-              textSize(22);
-              text(currentBodyLabel, i * dispW + padX, padY, dispW - padX, dispH);
+        //       if (engine.stopVoteArr[i] == false && engine.vpVote == true) { // vp voted, so display yes/no counts
+        //         textSize(20);
+        //         text("\n\nVOTES \n", i * dispW + padX, engine.dHeight / 2, dispW, dispH);
+        //         textSize(16);
+        //         text("\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", i * dispW + padX, engine.dHeight / 2, dispW - padX, dispH);
+        //         textSize(20);
+        //         text('\n' + engine.voteResults[i], (i) * dispW + padX, engine.dHeight * (3 / 4), dispW - padX, dispH);
+        //       } else { // did not vote
+        //         textSize(20);
+        //         text('\n\n' + engine.voteResults[i], i * dispW + padX, engine.dHeight / 2, dispW - padX, dispH);
+        //       }
+        //     } else {
+        //       textSize(22);
+        //       text(currentBodyLabel, i * dispW + padX, padY, dispW - padX, dispH);
 
-              if (engine.stopVoteArr[i] == false) { // body voted, so display yes/no counts
-                textSize(20);
-                text("\n\nVOTES \n", i * dispW + padX, padY, dispW - padX, dispH);
-                textSize(16);
-                text("\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", i * dispW + padX, padY, dispW, dispH);
-                textSize(20);
-                text('\n' + engine.voteResults[i], i * dispW + padX, engine.dHeight / 4, dispW - padX, dispH);
-              } else { // did not vote
-                textSize(20);
-                text('\n\n' + engine.voteResults[i], i * dispW + padX, padY, dispW - padX, dispH);
-              }
-            }
-          }
-            changeText(engine.decisionTxt); // change final decision text at bottom of screen
-          };
+        //       if (engine.stopVoteArr[i] == false) { // body voted, so display yes/no counts
+        //         textSize(20);
+        //         text("\n\nVOTES \n", i * dispW + padX, padY, dispW - padX, dispH);
+        //         textSize(16);
+        //         text("\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", i * dispW + padX, padY, dispW, dispH);
+        //         textSize(20);
+        //         text('\n' + engine.voteResults[i], i * dispW + padX, engine.dHeight / 4, dispW - padX, dispH);
+        //       } else { // did not vote
+        //         textSize(20);
+        //         text('\n\n' + engine.voteResults[i], i * dispW + padX, padY, dispW - padX, dispH);
+        //       }
+        //     }
+        //   }
+        //     // changeText(engine.decisionTxt); // change final decision text at bottom of screen
+        //   };
+          changeText(engine.decisionTxt); // change final decision text at bottom of screen
         }, 1500); // 1.5 seconds before text overlay showss
-      }
+      //}
       engine.finalDisplayBool = false;
-      v.finalDisplayBool = false;
-      for (let i=0; i<engine.numBodies; i++){
-        console.log(engine.allVotes[i]);
-        var yCt = 0;
-        for (let j=0; j<engine.allVotes[i].length; j++) {
-          if (engine.allVotes[i][j] == "yay") {
-            yCt++;
-          }
-        }
-          console.log("body " + i + " yay ct: " + yCt);
-        }
+      v.userInputState = false;
+      // for (let i=0; i<engine.numBodies; i++){
+      //   console.log(engine.allVotes[i]);
+      //   var yCt = 0;
+      //   for (let j=0; j<engine.allVotes[i].length; j++) {
+      //     if (engine.allVotes[i][j] == "yay") {
+      //       yCt++;
+      //     }
+      //   }
+      //     console.log("body " + i + " yay ct: " + yCt);
+      //   }
         
     }
 

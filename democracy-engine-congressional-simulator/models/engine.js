@@ -373,9 +373,9 @@ allVotes = [];
         if (this.count < this.numCon - 1 && this.count1 < 1) {
           this.testSize();
           this.count++;
-          console.log("count " + this.count);
+          //console.log("count " + this.count);
         }
-        console.log("count " + this.count);
+        //console.log("count " + this.count);
         this.bodyVote();
         this.count1++;
       }
@@ -700,6 +700,7 @@ allVotes = [];
     // console.log("body pass yay: " + yay + "body superthresh cutoff: " + numCon * superThresh);
     // console.log(numCon + " " + superThresh);
 
+    console.log("will set bodyPass");
       if (this.yay >= this.numCon * this.superThresh) {
 
         this.bodyPass[this.bodyCount] = true;
@@ -715,10 +716,10 @@ allVotes = [];
         this.bodyPass[this.bodyCount] = false;
         this.superThreshIndex[this.bodyCount] = false;
       }
-    } else { // otherwise enging running for original configuration
+    } else { // otherwise engine running for original configuration
       // If voting body == 1 and yay == 50%
       // then vice president votes
-
+      console.log("will set bodyPass");
       if (this.yay >= this.numCon * this.superThresh) {
         // text('BILL PASSES ' + bodyLabel + ' WITH supermajority', votePadX, votePadY, offSet - votePadX, dHeight - votePadY);
         this.bodyPass[this.bodyCount] = true;
@@ -757,7 +758,7 @@ allVotes = [];
   }
 
   /**
-   * Logic to determine the voting results, run with either original configuration
+   * Logic to determine the voting results, run with either user or original configuration
    */
   finalDisplayLogic() {
     let currentBodyLabel;
