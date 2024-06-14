@@ -76,6 +76,8 @@ forUser;
 
 allVotes = [];
 
+xdrawn = 0;
+
 finalDisplayBool = false; 
 
     constructor (img) {
@@ -266,18 +268,20 @@ finalDisplayBool = false;
   // Need to make sure we are not over our number of congressional body numCon and readjusts skip if too big
   if (this.count < this.numCon - 1 && this.count1 < 1) {
 
-    this.rotLoadImage();
-    this.testSize();
-    this.count += 2; // OC note: count is incremented once every draw loop until it reaches num in this body
-    print('vv Count = ' + this.count); //fortesting
-    print('vv Count1 = ' + this.count1); //fortesting
+    for (let i = 0; i < 2; i++) { // OC loading image stays on screen for half the time it used to
+      this.rotLoadImage();
+      this.testSize();
+      this.count++; // OC note: count is incremented once every draw loop until it reaches num in this body
+      print('vv Count = ' + this.count); //fortesting
+      print('vv Count1 = ' + this.count1); //fortesting
+    }
     
   } else if (this.count >= this.numCon - 1) {
     
-    //for (let i = 0; i < this.engine.numBodies; i++) { // OC note: < numCon draws all squares at once for each body
+    for (let i = 0; i < 3; i++) { // OC draws 4 boxes every draw loop
       this.bodyVote();
       this.count1++;
-    //}
+    }
     
     //print ('Count1 = ' + count1); //fortesting
     //print ('skip * Y = ' + (yCountT * skip));
@@ -303,7 +307,7 @@ finalDisplayBool = false;
     image(this.loadingImage, 0, 0, 150, 150);
     //AB: small circle to cover rotating image after
     console.log(this.numCon);
-    if (this.count >= this.numCon - 3) {
+    if (this.count >= this.numCon - 2) {
       ellipse(0, 0, 160, 160);
     }
     pop();
@@ -339,7 +343,7 @@ finalDisplayBool = false;
     }
   }
 
-      /**
+  /**
    * Start the body vote and Shows result of the vote
    */
   bodyVote() {
@@ -489,12 +493,14 @@ finalDisplayBool = false;
     console.log("vote Visual will draw a rect");
     rect(this.x, this.y, this.diam, this.diam, this.diam / 8);
     //creates the x on squares that are "no votes"
-    if (vote == "nay") {
+    if (vote == "nay" && this.stopVoteBool == false) {
       fill(this.bColor);
       textSize(this.diam + 3);
       textAlign(CENTER, CENTER);
       textFont('Arial');
       text("x", this.x, this.y);
+      this.xdrawn++;
+      console.log("x #: " + this.xdrawn + " at body #: " + this.bodyCount + "box #: " + this.count1 + " vote: " + vote)
     }
 
 
@@ -516,17 +522,17 @@ finalDisplayBool = false;
     //AB if the vp vote is not needed, no vote is necessary
     if (this.bodyCount == 2 && this.engine.vpVote == false) {
       this.stopVoteBool = true;
-      this.stopVoteCount++;
+      this.stopVoteCount++; // oc not used
     }
     //if the vp votes and it's a NO, then bill dies
-    else if (this.engine.vpVote == true && this.bodyPass[2] === false) {
+    else if (this.engine.vpVote == true && this.engine.bodyPass[2] === false) {
       this.stopVoteBool = true;
-      this.stopVoteCount++;
+      this.stopVoteCount++; // oc not used
     }
     //AB if the first or second body is not a pass,  bill dies thus preventing other bodies to vote
-    else if (this.bodyPass[0] === false || this.bodyPass[1] === false) {
+    else if (this.engine.bodyPass[0] === false || this.engine.bodyPass[1] === false) {
       this.stopVoteBool = true;
-      this.stopVoteCount++;
+      this.stopVoteCount++; // oc not used
     } else {
       this.stopVoteBool = false;
     }
