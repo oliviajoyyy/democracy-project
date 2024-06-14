@@ -456,8 +456,7 @@ class voteVisual {
       console.log("stop vote logic 2");
     }
     //AB if the first or second body is not a pass,  bill dies thus preventing other bodies to vote
-    // OC note: falls into this else block bc chamber 2 (this.engine.bodyPass[1]) does not approve when it hasn't gotten there yet
-    else if (this.engine.bodyPass[0] === false || this.engine.bodyPass[1] === false) {
+    else if ((this.bodyCount >= 1 && this.engine.bodyPass[0] === false) || (this.bodyCount > 1 && this.engine.bodyPass[1] === false)) {
       this.stopVoteBool = true;
       this.stopVoteCount++; // oc not used
       console.log("stop vote logic 3");
