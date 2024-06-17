@@ -1,7 +1,9 @@
-//
-// class for the democacy engine
-//
-
+/**
+ * file: engine.js
+ * This class models the decision-making logic of the Legislative branch of the US government.
+ * It can run with the default configuration of the government,
+ * or with those parameters adjusted by users.
+ */
 class DemocracyEngine {
 
   //******These Can be Changed by User*********
@@ -86,33 +88,11 @@ superThreshIndex = [];
 
 //
 
-//The count variables are updated every time a circle is drawn
+//The count variables are updated every time a vote is made
 count = 0;
 count1 = 0;
 count2 = 0;
 countR = 0;
-
-//The yCount variables
-xCount = 1;
-yCount = 1;
-yCountT = 1;
-
-//Determines size of circle & spacing
-skip; //taking the square root of the area of the drawing
-skip2;
-// skipR; strange artifact from Rhonda
-
-//Location Circle is Drawn
-x;
-y;
-x2;
-y2;
-
-//Diameter or circle
-diam;
-
-//Splits the Screen into 'sections' based on number of voting bodies
-offSet;
 
 //test state variable - 0 if untested 1 if tested
 test;
@@ -125,55 +105,35 @@ passCount = 0; //artifact from Rhonda
 
 bodyLabel;
 
-// colors
-bColor = "#012244";
-pColor = "#3c1b36";
-
-tranVal = 255;
-// let fadeOpac = 255;
-partyNum = 0;
-moveArrow = 0;
-
-rot = 0;
-
 stopVoteBool = false;
 stopVoteCount = 0;
 stopVoteArr = [];
 vpVote = false;
 
-// for canvas
-dWidth;
-dHeight;
-
 numDem;
 numRep;
 numWild;
 
-loadingImage;
-
-// forUser: bool - true if engine is running for user configuration, false if running for original config
+// OC forUser: bool - true if engine is running for user configuration, false if running for original config
 forUser;
 
-// OC: finalDisplayBool - will be set true when ready to display calcuation results outside of class
-// OC: signal used to determine when finalDisplay() runs (finalDisplay funct is in the scenes)
+// OC finalDisplayBool - will be set true when ready to display calcuation results outside of class
+// OC signal used to determine when finalDisplay() runs (finalDisplay funct is in the scenes)
 finalDisplayBool = false;
 
 voteResults = ["","","",""];
-// OC: stores decisions for each body (bill approved/not): [chamber1, chamber2, vp, pres]
+// OC stores decisions for each body (bill approved/not): [chamber1, chamber2, vp, pres]
 
-decisionTxt = ""; // OC: final decision string
+decisionTxt = ""; // OC final decision string
 
+// OC for loop variables
 ix;
 jx;
 
-allVotes = [];
+allVotes = []; // OC 2D array keep track of votes for each member of each body: bodyCount, array of votes
 
-  /**
-   * Initialize democracy engine object
-   * @param {image} img - loading image that spins
-   */
-  constructor (img) {
-    this.loadingImage = img;
+
+  constructor () {
   }
 
   /**
@@ -183,7 +143,9 @@ allVotes = [];
   currentCongLogic(forUserBool) {
     this.forUser = forUserBool;
 
+    // OC loops through number of voting bodies
     for (this.ix=0; this.ix<this.numBodies; this.ix++) {
+
     // Logic for House
     if (this.bodyCount == 0) {
 
@@ -192,8 +154,8 @@ allVotes = [];
         this.test = 0;
         print('bodyCount = ')
         print(this.bodyCount);
-        //background(color(this.bColor));
-        this.allVotes[this.ix] = [];
+        this.allVotes[this.ix] = []; // OC initialize empty array for votes in this body
+        this.voteResults[this.ix] = "";
 
         //maps stress index onto percentage effecting yay/nay vote.
         this.stressMap = map(this.stress, this.stressLow, this.stressHigh, 0, 2);
@@ -213,25 +175,11 @@ allVotes = [];
         this.numDem = round(this.numCon * this.perDemHouse);
         this.numRep = round(this.numCon * this.perRepHouse);
         this.numWild = round(this.numCon * this.perIndHouse);
-
-
-        if (this.forUser)
-          this.offSet = this.dWidth / (this.numBodies);
-        else
-        this.offSet = this.dWidth / (this.numBodies - 1);
-
-        //Figure out how big to draw the circles and how far to space them out
-        this.skip = floor(.97 * (sqrt((this.offSet) * this.dHeight / this.numCon)));
-        print('Skip = ' + this.skip); //testing
-        this.x = this.skip / 2;
-        this.y = this.skip / 2;
       }
     }
 
     //Logic for Senate
     if (this.bodyCount == 1) {
-      strokeWeight(10);
-      translate(this.offSet * this.bodyCount, 0);
 
       if (this.endBody == 1) {
         this.resetCount();
@@ -244,6 +192,7 @@ allVotes = [];
         print('bodyCount = ')
         print(this.bodyCount);
         this.allVotes[this.ix] = [];
+        this.voteResults[this.ix] = "";
 
         ///Set number of voting memebers
         this.numCon = this.numSenate;
@@ -253,13 +202,6 @@ allVotes = [];
         this.numDem = round(this.numCon * this.perDemSenate);
         this.numRep = round(this.numCon * this.perRepSenate);
         this.numWild = round(this.numCon * this.perIndSenate);
-
-
-        //Figure out how big to draw the circles and how far to space them out
-        this.skip = floor(.97 * (sqrt(this.offSet * this.dHeight / this.numCon)));
-        print('Skip = ' + this.skip); //testing
-        this.x = this.skip / 2;
-        this.y = this.skip / 2;
 
         print('Count = ' + this.count); //fortesting
         print('Count1 = ' + this.count1); //fortesting
@@ -272,16 +214,11 @@ allVotes = [];
     if (this.bodyCount == 2) {
       print("votingBodyCounts[1][0]= " + this.votingBodyCounts[1][0] + "votingBodyCounts[1][1] = " + this.votingBodyCounts[1][1]);
 
-
-
       // if (votingBodyCounts[1][0] == votingBodyCounts[1][1] && vpVote == true) {
       //   vpVote = true;
       // } else {
       //   vpVote = false;
       // }
-
-      strokeWeight(10);
-      translate(this.offSet * this.bodyCount, 0);
 
       if (this.endBody == 1) {
         this.resetCount();
@@ -293,6 +230,7 @@ allVotes = [];
         print('bodyCount = ')
         print(this.bodyCount);
         this.allVotes[this.ix] = [];
+        this.voteResults[this.ix] = "";
 
         ///Set number of voting memebers
         this.numCon = this.numVP;
@@ -302,26 +240,11 @@ allVotes = [];
         this.numDem = round(this.numCon * this.perDemVP);
         this.numRep = round(this.numCon * this.perRepVP);
         this.numWild = round(this.numCon * this.perIndVP);
-
-        //Figure out how big to draw the circles and how far to space them out
-        if (this.forUser)
-          this.skip = floor(.97 * (sqrt(this.offSet * this.dHeight / this.numCon)));
-        else
-          this.skip = floor(.65 * (sqrt(this.offSet * this.dHeight / this.numCon)));
-        print('Skip = ' + this.skip); //testing
-        this.x = this.skip / 2;
-        this.y = this.skip / 2;
       }
     }
 
     //Logic for President
     if (this.bodyCount == 3) {
-      strokeWeight(10);
-
-      if (this.forUser)
-        translate(this.offSet * (this.bodyCount), 0);
-      else
-        translate(this.offSet * (this.bodyCount - 1), 0);
 
       if (this.endBody == 1) {
         this.resetCount();
@@ -334,6 +257,7 @@ allVotes = [];
         print('bodyCount = ')
         print(this.bodyCount);
         this.allVotes[this.ix] = [];
+        this.voteResults[this.ix] = "";
 
         // Set number of voting memebers
         this.numCon = this.numPres;
@@ -344,57 +268,51 @@ allVotes = [];
         this.numRep = round(this.numCon * this.perRepPres);
         this.numWild = round(this.numCon * this.perIndPres);
 
-
-        //Figure out how big to draw the circles and how far to space them out
-        if (this.forUser)
-          this.skip = floor(.97 * (sqrt(this.offSet * this.dHeight / this.numCon)));
-        else
-          this.skip = floor(.65 * (sqrt(this.offSet * this.dHeight / this.numCon)));
-        print('Skip = ' + this.skip); //testing
-        this.x = this.skip / 2;
-        this.y = this.skip / 2;
       }
     }
 
-    // Need to make sure we are not over our number of congressional body numCon and readjusts skip if too big
-    // if (this.count < this.numCon - 1 && this.count1 < 1) {
-
-    //   this.rotLoadImage();
-    //   this.testSize();
-    //   this.count += 2; // OC note: count is incremented once every draw loop until it reaches num in this body
-    //   print('Count = ' + this.count); //fortesting
-    //   print('Count1 = ' + this.count1); //fortesting
-      
-    // } else 
-    //if (this.count >= this.numCon - 1) {
-    //this.allVotes[this.ix] = [];
-
-      for (this.jx = 0; this.jx < this.numCon; this.jx++) { // OC note: < numCon draws all squares at once for each body
+    // OC loops through each member of each body
+      for (this.jx = 0; this.jx < this.numCon; this.jx++) { 
         if (this.count < this.numCon - 1 && this.count1 < 1) {
-          this.testSize();
           this.count++;
           //console.log("count " + this.count);
         }
-        //console.log("count " + this.count);
         this.bodyVote();
         this.count1++;
       }
       
       //print ('Count1 = ' + count1); //fortesting
       //print ('skip * Y = ' + (yCountT * skip));
-    //}
     }
   }
 
+  
   /**
-   * Draws all votes as squares
-   * Diplays Voting Results
+   * Start the body vote
    */
-  drawRect() {
+  bodyVote() {
+
+    if (this.count1 < 1) {
+      this.resetDraw();
+      this.test = 1;
+    }
+    if (this.count1 < this.numCon) {
+      this.stopVoteLogic();
+      this.vote();
+
+      // Once all of votes have been cast display the total for each body
+      if (this.count1 == this.numCon - 1) {
+        this.resultLogic();
+      }
+    }
+  }
+
+
+  /**
+   * Determines a "yay" or "nay" vote
+   */
+  vote() {
     let noVoteBool = false;
-    var valAdjust = 75;
-    var currentTransVal = 0;
-    var currentPartyNum = 0;
 
     var numRepOrWild;
     if (this.forUser) // OC forUser: bool - true if engine is running for user config, false if running default config
@@ -408,12 +326,10 @@ allVotes = [];
       this.countR = this.count2;
     }
 
-    this.diam = this.skip * .8;
     this.stopVoteChange();
+
     //Democrat is Voting
     if (this.countR < this.numDem) {
-      currentTransVal = this.tranVal - currentPartyNum * valAdjust;
-
 
       let vote = random(0, 1);
       //    //print vote info to console for testing
@@ -435,9 +351,6 @@ allVotes = [];
     }
     //Independent is Voting
     else if (this.countR >= this.numDem && this.countR < this.numDem + numRepOrWild) {
-      currentPartyNum = this.partyNum + 1;
-      currentTransVal = this.tranVal - currentPartyNum * valAdjust;
-
 
       let vote = random(0, 1);
 
@@ -461,8 +374,7 @@ allVotes = [];
     }
     //Republican is Voting
     else {
-      currentPartyNum = this.partyNum + 2;
-      currentTransVal = this.tranVal - currentPartyNum * valAdjust;
+
       let vote = random(0, 1);
       //print('Vote =' + vote); //testing
       if (vote <= this.indYaythresh * this.stressOffset) {
@@ -479,24 +391,9 @@ allVotes = [];
       //     resultLogic();
       // }
     }
+
     //AB: finding problem with x's
     // print("body #: " + bodyCount + " No Vote Bool: " + noVoteBool);
-
-    // Square is Drawn for Each Vote
-    rectMode(CENTER);
-
-    if (this.bodyLabel == 'VICE PRESIDENT') {
-      if (!this.forUser)
-        this.y = this.y + (this.skip*.9);
-      // y = y + skip;
-      if (this.vpVote == false) {
-        stroke(255, 100);
-        noFill();
-        strokeWeight(3);
-      }
-      //ab for error checking
-      // print('drawing VP square at' + x + " " + y);
-    }
 
     // if (bodyCount == 1) {
     //   // simulate vp tiebreaker vote
@@ -504,31 +401,6 @@ allVotes = [];
     //   nay = 50;
     // }
 
-
-    //creates a different shade for each voting party
-    if (this.stopVoteBool == false) {
-      noStroke();
-      fill(255, currentTransVal);
-    }
-    //rect(this.x, this.y, this.diam, this.diam, this.diam / 8);
-    //creates the x on squares that are "no votes"
-    if (noVoteBool == true && this.stopVoteBool == false) {
-      fill(this.bColor);
-      textSize(this.diam + 3);
-      textAlign(CENTER, CENTER);
-      textFont('Arial');
-      text("x", this.x, this.y);
-    }
-
-
-    if ((this.y += this.skip) >= this.dHeight - (this.skip / 2)) {
-      this.y = this.skip / 2;
-      this.yCount++;
-      //print('Y count = ' + yCount);
-      if ((this.x += this.skip) >= this.offSet - (this.skip / 2)) this.x = this.skip / 2;
-      this.xCount++;
-      //print('Y count = ' + yCount); // prints to consolde for testing
-    }
     this.storeBodyVotes();
   }
 
@@ -541,95 +413,16 @@ allVotes = [];
     this.count1 = 0;
     this.count2 = 0;
     this.countR = 0;
-    this.xCount = 1;
-    this.yCount = 1;
-    this.yCountT = 1;
-    this.moveArrow = 0;
-  }
-
-  /**
-   * This function tests to see if the circles are being drawn off screen based on first pass of calculations
-   */
-  testSize() {
-    for (var i = 0; i < 1; i++) {
-      if ((this.y += this.skip) >= this.dHeight - (this.skip / 2)) {
-        this.y = this.skip / 2;
-        this.yCountT++;
-        if ((this.x += this.skip) >= this.offSet - (this.skip / 2)) this.x = this.skip / 2;
-        this.xCount++;
-        //print('Y count = ' + yCount); // prints to consolde for testing
-      }
-    }
-  }
-
-  /**
-   * loading image function, rotates image on current calculation
-   */
-  rotLoadImage() {
-    this.rot += 0.5;
-    push();
-    rectMode(CORNER);
-    noStroke();
-    fill(this.bColor);
-
-    translate(this.offSet / 2, this.dHeight / 2);
-    rectMode(CENTER);
-    rect(0, 0, 160, 160);
-    rotate(PI / 180 * this.rot);
-    imageMode(CENTER);
-    image(this.loadingImage, 0, 0, 150, 150);
-    //AB: small circle to cover rotating image after
-    console.log(this.numCon);
-    if (this.count >= this.numCon - 3) {
-      ellipse(0, 0, 160, 160);
-    }
-    pop();
-  }
-
-  /**
-   * Start the body vote and Shows result of the vote
-   */
-  bodyVote() {
-    fill(map(this.count1, 0, this.numCon, 0, 255));
-    // reset variables if first pass thorugh function
-    if (this.count1 < 1) {
-      this.resetDraw();
-      this.test = 1;
-    }
-    if (this.count1 < this.numCon) {
-      this.stopVoteLogic();
-
-      this.drawRect();
-      // Once all of votes have been cast display the total for each body
-      if (this.count1 == this.numCon - 1) {
-        this.resultLogic();
-      }
-    }
   }
 
   resetDraw() {
-    if (this.yCountT * this.skip >= this.offSet) {
-      this.skip = this.offSet / (1.025 * this.xCount);
-    }
-    noStroke();
-    fill(this.bColor);
-    this.tranVal = 255;
-    rectMode(CORNER);
-
-    //AB: removed this rect b/c it covers vp or president during logic
-    // rect(0, 0, offSet, dHeight);
-
-    this.x = this.skip / 2;
-    this.y = this.skip / 2;
     this.yay = 0;
     this.nay = 0;
-    this.xCount = 1;
-    this.yCount = 1;
     this.endBody = 0;
   }
 
   /**
-   * Stores yay and nay votes into array
+   * Stores the count yay and nay votes into array
    */
   storeBodyVotes() {
     this.votingBodyCounts[this.bodyCount] = [this.yay, this.nay];
@@ -640,25 +433,19 @@ allVotes = [];
   }
 
   /**
-   * appearance of squares changes to outlines when no vote is required
+   * track stop of votes
    */
   stopVoteChange() {
     if (this.stopVoteBool == true) {
       this.stopVoteArr[this.bodyCount] = true;
-      stroke(255, 100);
-      noFill();
-      strokeWeight(3);
       // stopVoteBool == false;
     } else {
-      fill(this.bColor);
-      noStroke();
       this.stopVoteArr[this.bodyCount] = false;
-
     }
   }
 
   /**
-   * Stop vote logic before changing appearance when no vote is required
+   * Stop vote logic when no vote is required
    */
   stopVoteLogic() {
     //AB if the vp vote is not needed, no vote is necessary
@@ -681,15 +468,9 @@ allVotes = [];
   }
 
    /**
-    * Logic for all the final results
-    * Determines the voting outcome of the voting results
+    * Logic for all the final results - determines the voting outcome
     */
    resultLogic() {
-
-    //padding & offsets for text display
-    var votePadX = this.dWidth / 4;
-    var votePadY = this.dHeight / 4;
-    var voteOutcomePosY = this.votePadY * 3;
 
     if (this.forUser) { // engine running for user configuration
 
@@ -700,7 +481,6 @@ allVotes = [];
     // console.log("body pass yay: " + yay + "body superthresh cutoff: " + numCon * superThresh);
     // console.log(numCon + " " + superThresh);
 
-    console.log("will set bodyPass");
       if (this.yay >= this.numCon * this.superThresh) {
 
         this.bodyPass[this.bodyCount] = true;
@@ -719,7 +499,6 @@ allVotes = [];
     } else { // otherwise engine running for original configuration
       // If voting body == 1 and yay == 50%
       // then vice president votes
-      console.log("will set bodyPass");
       if (this.yay >= this.numCon * this.superThresh) {
         // text('BILL PASSES ' + bodyLabel + ' WITH supermajority', votePadX, votePadY, offSet - votePadX, dHeight - votePadY);
         this.bodyPass[this.bodyCount] = true;
@@ -738,6 +517,7 @@ allVotes = [];
       }
 
     }
+
     //Adds one to the count of how many bodies have voted and enters into user input state (buttons) if the vote is done.
     if (this.bodyCount < this.numBodies) {
       this.nextBody();
@@ -745,11 +525,10 @@ allVotes = [];
     }
 
     if (this.bodyCount >= this.numBodies) {
-      this.finalDisplayLogic();
+      this.finalLogic();
       print('Final Stage');
     }
 
-    
     this.endBody = 1;
   }
 
@@ -758,9 +537,10 @@ allVotes = [];
   }
 
   /**
-   * Logic to determine the voting results, run with either user or original configuration
+   * Logic to determine the voting results of each body (bill approved/not approved/does not vote) 
+   * and final result (bill becomes law/does not become law) as text
    */
-  finalDisplayLogic() {
+  finalLogic() {
     let currentBodyLabel;
     let decisionText = "";
     console.log("body pass: " + this.bodyPass);

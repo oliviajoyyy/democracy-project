@@ -1,4 +1,8 @@
-
+/**
+ * file: vote-visual.js
+ * This class is used for drawing the result of the democracy engine to the screen.
+ * Rectangles represent each vote and text describes the final result.
+ */
 
 class voteVisual {
 
@@ -47,9 +51,9 @@ class voteVisual {
 
   bodyLabel;
 
-  // colors
-  bColor = "#012244";
-  pColor = "#3c1b36";
+  // colors - OC now passed as constructor params
+  bColor; // = "#012244";
+  pColor; // = "#3c1b36";
 
   tranVal = 255;
   // let fadeOpac = 255;
@@ -59,7 +63,6 @@ class voteVisual {
   rot = 0;
 
   stopVoteBool = false;
-  stopVoteCount = 0;
 
   numDem;
   numRep;
@@ -69,21 +72,21 @@ class voteVisual {
   dWidth;
   dHeight;
 
-  engine;
+  engine; // OC engine object to draw for
 
-  forUser;
-
-  allVotes = [];
-
-  userInputState = false;
+  forUser; // OC bool to indicate if the govt config was set by the user
+  userInputState = false; // OC boolean to indicate when to show buttons for next user input for engine config
 
   /**
    * Sets loading image and background color properties
    * @param {image} img - loading image bitmap
-   * @param {color} bgColor - color for background
+   * @param {color} bK - color for background
+   * @param {color} pK - a second color
    */
-  constructor(img, bgColor) {
+  constructor(img, bK, pK) {
     this.loadingImage = img;
+    this.bColor = bK;
+    this.pColor = pK;
   }
 
   /**
@@ -247,7 +250,7 @@ class voteVisual {
     // Need to make sure we are not over our number of congressional body numCon and readjusts skip if too big
     if (this.count < this.numCon - 1 && this.count1 < 1) {
 
-      for (let i = 0; i < 2; i++) { // OC loading image stays on screen for half the time it used to
+      for (let i = 0; i < 3; i++) { // OC loading image stays on screen for less time it used to
         this.rotLoadImage();
         this.testSize();
         this.count++;
@@ -257,7 +260,7 @@ class voteVisual {
 
     } else if (this.count >= this.numCon - 1) {
 
-      for (let i = 0; i < 3; i++) { // OC draws 4 boxes every draw loop
+      for (let i = 0; i < 3; i++) { // OC draws 3 boxes every draw loop, drawing performace improved
         this.bodyVote();
         this.count1++;
         //print ('Count1 = ' + count1); //fortesting
@@ -269,8 +272,8 @@ class voteVisual {
   }
 
   /**
-   * Rotates loading image
-  */
+   * Rotates loading image on screen
+   */
   rotLoadImage() {
     this.rot += 0.5;
     push();
@@ -323,7 +326,7 @@ class voteVisual {
   }
 
   /**
-   * Start the body vote and Shows result of the vote
+   * Shows result of the vote
    */
   bodyVote() {
     fill(map(this.count1, 0, this.numCon, 0, 255));
@@ -346,7 +349,7 @@ class voteVisual {
    * Draws all votes as squares
    */
   drawRect() {
-    let noVoteBool = false;
+    // let noVoteBool = false;
     var valAdjust = 75;
     var currentTransVal = 0;
     var currentPartyNum = 0;
@@ -366,12 +369,13 @@ class voteVisual {
     this.diam = this.skip * .8;
     this.stopVoteChange();
 
+    // OC get the vote for this member (count1) of the body (bodyCount) from engine's calculation
     let vote = this.engine.allVotes[this.bodyCount][this.count1];
 
 
     //Democrat is Voting
     if (this.countR < this.numDem) {
-      currentTransVal = this.tranVal - currentPartyNum * valAdjust;
+      currentTransVal = this.tranVal - currentPartyNum * valAdjust; // party determines tranparency of rectangle
     }
     //Independent is Voting
     else if (this.countR >= this.numDem && this.countR < this.numDem + numRepOrWild) {
@@ -446,19 +450,20 @@ class voteVisual {
     //AB if the vp vote is not needed, no vote is necessary
     if (this.bodyCount == 2 && this.engine.vpVote == false) {
       this.stopVoteBool = true;
-      this.stopVoteCount++; // oc not used
+      // this.stopVoteCount++; // used in the engine, not for drawing
       console.log("stop vote logic 1");
     }
     //if the vp votes and it's a NO, then bill dies
     else if (this.engine.vpVote == true && this.engine.bodyPass[2] === false) {
       this.stopVoteBool = true;
-      this.stopVoteCount++; // oc not used
+      // this.stopVoteCount++;
       console.log("stop vote logic 2");
     }
     //AB if the first or second body is not a pass,  bill dies thus preventing other bodies to vote
+    //OC check that voting of the house or senate was already drawn to screen before checking bodyPass for it
     else if ((this.bodyCount >= 1 && this.engine.bodyPass[0] === false) || (this.bodyCount > 1 && this.engine.bodyPass[1] === false)) {
       this.stopVoteBool = true;
-      this.stopVoteCount++; // oc not used
+      // this.stopVoteCount++;
       console.log("stop vote logic 3");
     } else {
       this.stopVoteBool = false;
@@ -468,13 +473,12 @@ class voteVisual {
 
   /**
    * appearance of squares changes to outlines when no vote is required
-    */
+   */
   stopVoteChange() {
     if (this.stopVoteBool == true) {
       stroke(255, 100);
       noFill();
       strokeWeight(3);
-      console.log("will draw blank circle");
       // stopVoteBool == false;
     } else {
       fill(this.bColor);
@@ -487,6 +491,11 @@ class voteVisual {
    * Updates bodyCount and signals for user input state (buttons) to show on screen
    */
   resultLogic() {
+    // //padding & offsets for text display
+    // var votePadX = this.dWidth / 4;
+    // var votePadY = this.dHeight / 4;
+    // var voteOutcomePosY = this.votePadY * 3;
+
     //Adds one to the count of how many bodies have voted and enters into user input state (buttons) if the vote is done.
     if (this.bodyCount < this.engine.numBodies) {
       this.bodyCount++;
@@ -499,11 +508,12 @@ class voteVisual {
       print('Final Stage');
     }
 
-
     this.endBody = 1;
   }
 
-
+  /**
+   * Resets draw coordinates and offset when passing to new body
+   */
   resetDraw() {
     if (this.yCountT * this.skip >= this.offSet) {
       this.skip = this.offSet / (1.025 * this.xCount);
@@ -518,14 +528,19 @@ class voteVisual {
 
     this.x = this.skip / 2;
     this.y = this.skip / 2;
-    this.yay = 0;
-    this.nay = 0;
+    // this.yay = 0;
+    // this.nay = 0;
     this.xCount = 1;
     this.yCount = 1;
     this.endBody = 0;
   }
 
 
+  /**
+   * Displays text on screen for results of the voting with the default configuration
+   * @param {DemocracyEngine} engine 
+   * @param {Font} font 
+   */
   finalTextDisplayDefault(engine, font) {
     let currentBodyLabel;
 
@@ -537,11 +552,11 @@ class voteVisual {
     let dispW = (this.dWidth / columnAmount);
     let dispH = (this.dHeight / rowAmount);
 
-    let dispX = 0 + padX;
-    let dispY = 0 + padY;
+    // let dispX = 0 + padX;
+    // let dispY = 0 + padY;
 
     var resBColor = color(0, 0, 0);
-    let decisionText = "";
+    // let decisionText = "";
     //column 1 to be yay/nay votes
     //column 2 to be body votes
     textFont(font);
@@ -626,22 +641,27 @@ class voteVisual {
     }
   }
 
+  /**
+   * Displays text on screen for results of the voting with the user's configuration
+   * @param {DemocracyEngine} engine 
+   * @param {Font} font 
+   */
   finalTextDisplayUser(engine, font) {
     let currentBodyLabel;
 
     let columnAmount = engine.numBodies;
-    let rowAmount = 4;
+    // let rowAmount = 4;
 
     let padY = 20;
     let padX = 20;
     let dispW = (this.dWidth / columnAmount);
     let dispH = this.dHeight;
 
-    let dispX = 0 + padX;
-    let dispY = 0 + padY;
+    // let dispX = 0 + padX;
+    // let dispY = 0 + padY;
 
     var resBColor = color(0, 0, 0);
-    let decisionText = "";
+    // let decisionText = "";
     //column 1 to be yay/nay votes
     //column 2 to be body votes
     textFont(font);

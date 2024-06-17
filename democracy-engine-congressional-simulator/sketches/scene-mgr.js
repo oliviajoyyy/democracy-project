@@ -27,7 +27,6 @@
 
 var mgr;
 var engine;
-var v;
 
 //fortesting
 let senateResult;
@@ -88,6 +87,10 @@ var userEdits = false;
 var reconfigBool = false;
 var onePartyBool = false;
 
+// colors
+var bColor = "#012244";
+var pColor = "#3c1b36";
+
 
 function preload() {
   helvFont = loadFont('/democracy-engine-congressional-simulator/assets/font/HelveticaNeue-Regular.otf');
@@ -99,8 +102,7 @@ function preload() {
 function setup() {
   // createCanvas(windowWidth*.8, windowHeight*.8);
   // rectMode(CENTER);
-  engine = new DemocracyEngine(loadingImage);
-  v = new voteVisual(loadingImage);
+  engine = new DemocracyEngine(); // OC create engine object to run voting logic
 
   noStroke();
   mgr = new SceneManager();

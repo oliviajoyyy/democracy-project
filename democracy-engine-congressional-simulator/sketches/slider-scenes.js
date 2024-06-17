@@ -3,17 +3,15 @@ function democracyEngineUser() {
   console.log("democracy userEdits: " + userEdits);
   var voteDisplayUser;
 
-  this.setup = function() {
+  this.setup = function () {
 
     textFont(helvFont);
-    engine.dWidth = windowWidth * .8;
-    engine.dHeight = windowHeight * .8;
-    v.dWidth = windowWidth * .8;
-    v.dHeight = windowHeight * .8;
-    let canvas = createCanvas(engine.dWidth, engine.dHeight);
+    let dWidth = windowWidth * .8;
+    let dHeight = windowHeight * .8;
+    let canvas = createCanvas(dWidth, dHeight);
     let canvasDiv = document.getElementById('vote');
     canvas.parent(canvasDiv);
-    background(engine.bColor);
+    background(bColor);
     // dispButton();
     // let fs = fullscreen();
     // fullscreen(!fs);
@@ -22,13 +20,13 @@ function democracyEngineUser() {
 
 
 
-  this.enter = function() {
+  this.enter = function () {
+    
+    voteDisplayUser = new voteVisual(loadingImage, bColor, pColor);
+
     //redraws canvas with new width and height when user simulator restarts
     if (reconfigBool == true) {
       // windowResized();
-      engine.dWidth = windowWidth * .8;
-      engine.dHeight = windowHeight * .8;
-      voteDisplayUser = new voteVisual(loadingImage);
       voteDisplayUser.dWidth = windowWidth * .8;
       voteDisplayUser.dHeight = windowHeight * .8;
       canvas = createCanvas(voteDisplayUser.dWidth, voteDisplayUser.dHeight);
@@ -54,10 +52,9 @@ function democracyEngineUser() {
   }
 
   // run the simulator for user configuration
-  this.draw = function() {
+  this.draw = function () {
 
-    let forUser = true;
-    engine.currentCongLogic(forUser);
+    engine.currentCongLogic(userEdits);
 
     // OC when engine is done with voting calculation, show votes
     if (engine.finalDisplayBool) {
@@ -76,135 +73,17 @@ function democracyEngineUser() {
   // also displays buttons
   function finalDisplay() {
 
-    // // only run this function when engine logic signals true for the final display of results
-    // if (!engine.finalDisplayBool) {
-    //   return;
-    // }
+    setTimeout(function () {
+      document.body.style.backgroundColor = "black";
+      userInput(); // show buttons
+      voteDisplayUser.finalTextDisplayUser(engine, helvFont);
+      changeText(engine.decisionTxt); // change final decision text at bottom of screen 
+    }, 1500); // 1.5 seconds before text overlay shows
 
-    // let currentBodyLabel;
+    engine.finalDisplayBool = false;
+    voteDisplayUser.userInputState = false;
 
-    // let columnAmount = engine.numBodies;
-    // let rowAmount = 4;
-
-    // let padY = 20;
-    // let padX = 20;
-    // let dispW = (engine.dWidth / columnAmount);
-    // let dispH = engine.dHeight;
-
-    // let dispX = 0 + padX;
-    // let dispY = 0 + padY;
-
-    // var resBColor = color(0, 0, 0);
-    // let decisionText = "";
-    // //column 1 to be yay/nay votes
-    // //column 2 to be body votes
-    // textFont(helvFont);
-
-    // console.log("body pass: " + engine.bodyPass);
-
-    //if (engine.bodyCount == engine.numBodies) {
-      setTimeout(function() {
-        document.body.style.backgroundColor = "black";
-        userInput(); // show buttons
-        voteDisplayUser.finalTextDisplayUser(engine, helvFont);
-
-        // textAlign(LEFT, TOP);
-        // fill(color("#faf4d3"));
-        // noStroke();
-        // rectMode(CORNER);
-        // resBColor.setAlpha(200);
-        // fill(resBColor);
-        // rect(0, 0, engine.dWidth, engine.dHeight);
-        // textStyle(NORMAL);
-
-
-        // //NEED TO CHANGE LATER FOR MORE THAN 3 BODIES
-        // for (let i = 0; i < engine.numBodies; i++) {
-        //   fill(255);
-        //   if (i == 0) {
-        //     currentBodyLabel = 'LEGISLATIVE CHAMBER 1';
-        //   } else if (i == 1) {
-        //     currentBodyLabel = 'LEGISLATIVE CHAMBER 2';
-        //   } else if (i == 2) {
-        //     currentBodyLabel = 'VICE PRESIDENCY';
-        //   } else if (i == 3) {
-        //     // print("I AM IN PRESIDENT b4 LOGIC");
-        //     currentBodyLabel = 'PRESIDENCY';
-        //   }
-
-        //   // show text on screen
-        //   if (i < engine.votingBodyCounts.length) {
-        //     print("i = " + i + " and current body label = " + currentBodyLabel);
-
-        //     if (currentBodyLabel == 'PRESIDENCY') {
-        //       textSize(22);
-        //       text(currentBodyLabel, (i) * dispW + padX, padY, dispW, dispH); // display this body label
-        //       textAlign(LEFT);
-              
-        //       if (engine.stopVoteArr[i] == false) { // president voted, so display yes/no counts
-        //         textSize(20);
-        //         text("\n\n\nVOTES \n", (i) * dispW + padX, padY, dispW, dispH);
-        //         textSize(16);
-        //         text("\n\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", (i) * dispW + padX, padY);
-        //         textSize(20);
-        //         text('\n\n\n' + engine.voteResults[i], (i) * dispW + padX, engine.dHeight / 4, dispW - padX, dispH);
-        //       } else { // president not voted, so adjust placement of text
-        //         textSize(20);
-        //           text('\n\n\n\n' + engine.voteResults[i], (i) * dispW + padX, padY, dispW - padX, dispH);
-        //       }
-        //     } else if (currentBodyLabel == 'VICE PRESIDENCY') {
-        //       textSize(22);
-        //       text(currentBodyLabel, i * dispW + padX, padY, dispW, dispH);
-
-        //       if (engine.stopVoteArr[i] == false && engine.vpVote == true) { // vp voted, so display yes/no counts
-        //         textSize(20);
-        //         text("\n\n\nVOTES \n", i * dispW + padX, padY, dispW, dispH);
-        //         textSize(16);
-        //         text("\n\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", i * dispW + padX, padY);
-        //         textSize(20);
-        //         text('\n\n\n' + engine.voteResults[i], (i) * dispW + padX, engine.dHeight / 4, dispW - padX, dispH);
-        //       } else { // did not vote
-        //         textSize(20);
-        //         text('\n\n\n' + engine.voteResults[i], i * dispW + padX, padY, dispW - padX, dispH);
-        //       }
-        //     } else {
-        //       textSize(22);
-        //       text(currentBodyLabel, i * dispW + padX, padY, dispW - padX, dispH);
-
-        //       if (engine.stopVoteArr[i] == false) { // body voted, so display yes/no counts
-        //         textSize(20);
-        //         text("\n\n\nVOTES \n", i * dispW + padX, padY, dispW - padX, dispH);
-        //         textSize(16);
-        //         text("\n\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", i * dispW + padX, padY);
-        //         textSize(20);
-        //         text('\n\n\n' + engine.voteResults[i], i * dispW + padX, engine.dHeight / 4, dispW - padX, dispH);
-        //       } else { // did not vote
-        //         textSize(20);
-        //         text('\n\n\n' + engine.voteResults[i], i * dispW + padX, padY, dispW - padX, dispH);
-        //       }
-        //     }
-        //   }
-            
-        //   };
-          changeText(engine.decisionTxt); // change final decision text at bottom of screen 
-        }, 1500); // 1.5 seconds before text overlay shows
-
-      //}
-      engine.finalDisplayBool = false;
-      voteDisplayUser.userInputState = false;
-
-      // for (let i=0; i<engine.numBodies; i++){
-      //   console.log(engine.allVotes[i]);
-      //   var yCt = 0;
-      //   for (let j=0; j<engine.allVotes[i].length; j++) {
-      //     if (engine.allVotes[i][j] == "yay") {
-      //       yCt++;
-      //     }
-      //   }
-      //     console.log("body " + i + " yay ct: " + yCt);
-      //   }
-
-    }
+  }
 
   //Once Bill Pass result has been calculated users can enter in their own variables to reconfigure congress or recalculate the vote with the same parameters
   function userInput() {
@@ -256,20 +135,19 @@ function democracyEngineUser() {
 function democracyEngineOrigin() {
 
   console.log("origin democracy userEdits: " + userEdits);
+  var voteDisplayOrigin;
 
-  this.setup = function() {
+  this.setup = function () {
     textFont(helvFont);
-    engine.dWidth = windowWidth * .8;
-    engine.dHeight = windowHeight * .8;
-    v.dWidth = windowWidth * .8;
-    v.dHeight = windowHeight * .8;
-    let canvas = createCanvas(engine.dWidth, engine.dHeight);
+    let dWidth = windowWidth * .8;
+    let dHeight = windowHeight * .8;
+    let canvas = createCanvas(dWidth, dHeight);
     let canvasDiv = document.getElementById('vote');
     canvas.parent(canvasDiv);
 
   }
 
-  this.enter = function() {
+  this.enter = function () {
 
     document.getElementById("top").style.display = "none";
     document.getElementById("page1").style.display = "none";
@@ -281,164 +159,49 @@ function democracyEngineOrigin() {
     document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
-    //currentCongLogic();
-    // let forUser = true;
+
     // engine.currentCongLogic(forUser);
-    // // call finalDisplay();
-    // if (engine.bodyCount >= engine.numBodies) {
-    //   finalDisplay();
-    //   print('Final Stage');
-    // }
+    voteDisplayOrigin = new voteVisual(loadingImage, bColor, pColor);
+    voteDisplayOrigin.dWidth = windowWidth * .8;
+    voteDisplayOrigin.dHeight = windowHeight * .8;
   }
 
-  this.draw = function() {
+  this.draw = function () {
 
-    let forUser = false;
-    engine.currentCongLogic(forUser);
+    engine.currentCongLogic(userEdits);
 
     // OC when engine is done with voting calculation, show votes
     if (engine.finalDisplayBool) {
 
       //engine.bodyPass[1] = false; //for testing
-      v.displayVoting(engine);
+      voteDisplayOrigin.displayVoting(engine);
 
       // OC when visual display of rectangles is done, show buttons
-      if (v.userInputState) {
+      if (voteDisplayOrigin.userInputState) {
         finalDisplay();
       }
-      
+
     }
-    
-    
+
+
 
   }
 
-  
+
   //Displays the buttons for user input
   function finalDisplay() {
 
-    // let currentBodyLabel;
+    setTimeout(function () {
+      document.body.style.backgroundColor = "black";
+      userInput(); // show buttons
+      voteDisplayOrigin.finalTextDisplayDefault(engine, helvFont);
+      changeText(engine.decisionTxt); // change final decision text at bottom of screen
+    }, 1500); // 1.5 seconds before text overlay showss
 
-    // let columnAmount = engine.numBodies - 1;
-    // let rowAmount = 4;
+    engine.finalDisplayBool = false;
+    voteDisplayOrigin.userInputState = false;
 
-    // let padY = 20;
-    // let padX = 10;
-    // let dispW = (engine.dWidth / columnAmount);
-    // let dispH = (engine.dHeight / rowAmount);
-
-    // let dispX = 0 + padX;
-    // let dispY = 0 + padY;
-
-    // var resBColor = color(0, 0, 0);
-    // let decisionText = "";
-    // //column 1 to be yay/nay votes
-    // //column 2 to be body votes
-    // textFont(helvFont);
-
-    // console.log("body pass: " + engine.bodyPass);
-
-    //if (engine.bodyCount == engine.numBodies) {
-      setTimeout(function() {
-        document.body.style.backgroundColor = "black";
-        userInput(); // show buttons
-        v.finalTextDisplayDefault(engine, helvFont);
-
-        // textAlign(LEFT, TOP);
-        // fill(color("#faf4d3"));
-        // noStroke();
-        // rectMode(CORNER);
-        // resBColor.setAlpha(200);
-        // fill(resBColor);
-        // rect(0, 0, engine.dWidth, engine.dHeight);
-        // textStyle(NORMAL);
-
-
-        // //NEED TO CHANGE LATER FOR MORE THAN 3 BODIES
-        // for (let i = 0; i < engine.numBodies; i++) {
-        //   fill(255);
-        //   if (i == 0) {
-        //     currentBodyLabel = 'HOUSE';
-        //   } else if (i == 1) {
-        //     currentBodyLabel = 'SENATE';
-        //   } else if (i == 2) {
-        //     currentBodyLabel = 'VICE PRESIDENCY';
-        //   } else if (i == 3) {
-        //     // print("I AM IN PRESIDENT b4 LOGIC");
-        //     currentBodyLabel = 'PRESIDENCY';
-        //   }
-
-        //   // show text on screen
-        //   if (i < engine.votingBodyCounts.length) {
-        //     print("i = " + i + " and current body label = " + currentBodyLabel);
-
-        //     if (currentBodyLabel == 'PRESIDENCY') {
-        //       textSize(22);
-        //       text(currentBodyLabel, (i - 1) * dispW + padX, padY, dispW, dispH);
-        //       textAlign(LEFT);
-              
-        //       if (engine.stopVoteArr[i] == false) { // president voted, so display yes/no counts
-        //         textSize(20);
-        //         text("\n\nVOTES \n", (i - 1) * dispW + padX, padY, dispW, dispH);
-        //         textSize(16);
-        //         text("\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", (i - 1) * dispW + padX, padY, dispW, dispH);
-        //         textSize(20);
-        //         text('\n' + engine.voteResults[i], (i - 1) * dispW + padX, engine.dHeight / 4, dispW - padX, dispH);
-        //       } else { // president did not vote, so only adjust placement of text
-        //         textSize(20);
-        //         text('\n\n' + engine.voteResults[i], (i - 1) * dispW + padX, padY, dispW - padX, dispH);
-        //       }
-        //     } else if (currentBodyLabel == 'VICE PRESIDENCY') {
-        //       textSize(22);
-        //       text(currentBodyLabel, i * dispW + padX, engine.dHeight / 2, dispW, dispH);
-
-        //       if (engine.stopVoteArr[i] == false && engine.vpVote == true) { // vp voted, so display yes/no counts
-        //         textSize(20);
-        //         text("\n\nVOTES \n", i * dispW + padX, engine.dHeight / 2, dispW, dispH);
-        //         textSize(16);
-        //         text("\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", i * dispW + padX, engine.dHeight / 2, dispW - padX, dispH);
-        //         textSize(20);
-        //         text('\n' + engine.voteResults[i], (i) * dispW + padX, engine.dHeight * (3 / 4), dispW - padX, dispH);
-        //       } else { // did not vote
-        //         textSize(20);
-        //         text('\n\n' + engine.voteResults[i], i * dispW + padX, engine.dHeight / 2, dispW - padX, dispH);
-        //       }
-        //     } else {
-        //       textSize(22);
-        //       text(currentBodyLabel, i * dispW + padX, padY, dispW - padX, dispH);
-
-        //       if (engine.stopVoteArr[i] == false) { // body voted, so display yes/no counts
-        //         textSize(20);
-        //         text("\n\nVOTES \n", i * dispW + padX, padY, dispW - padX, dispH);
-        //         textSize(16);
-        //         text("\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", i * dispW + padX, padY, dispW, dispH);
-        //         textSize(20);
-        //         text('\n' + engine.voteResults[i], i * dispW + padX, engine.dHeight / 4, dispW - padX, dispH);
-        //       } else { // did not vote
-        //         textSize(20);
-        //         text('\n\n' + engine.voteResults[i], i * dispW + padX, padY, dispW - padX, dispH);
-        //       }
-        //     }
-        //   }
-        //     // changeText(engine.decisionTxt); // change final decision text at bottom of screen
-        //   };
-          changeText(engine.decisionTxt); // change final decision text at bottom of screen
-        }, 1500); // 1.5 seconds before text overlay showss
-      //}
-      engine.finalDisplayBool = false;
-      v.userInputState = false;
-      // for (let i=0; i<engine.numBodies; i++){
-      //   console.log(engine.allVotes[i]);
-      //   var yCt = 0;
-      //   for (let j=0; j<engine.allVotes[i].length; j++) {
-      //     if (engine.allVotes[i][j] == "yay") {
-      //       yCt++;
-      //     }
-      //   }
-      //     console.log("body " + i + " yay ct: " + yCt);
-      //   }
-        
-    }
+  }
 
   //Once Bill Pass result has been calculated users can enter in their own variables to reconfigure congress or recalculate the vote with the same parameters
   function userInput() {
@@ -486,13 +249,13 @@ function sLegislative() {
   var curNumPres = parseInt(engine.numPres);
 
 
-  this.setup = function() {
+  this.setup = function () {
     textSize(15);
     noStroke();
 
   }
 
-  this.enter = function() {
+  this.enter = function () {
 
     console.log("1st Slider Page");
     document.getElementById("page1").style.display = "block";
@@ -505,8 +268,8 @@ function sLegislative() {
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
 
-    background(engine.bColor);
-    document.body.style.backgroundColor = engine.bColor;
+    background(bColor);
+    document.body.style.backgroundColor = bColor;
     buttonRC.remove();
     buttonRes.remove();
     buttonDef.remove();
@@ -526,7 +289,7 @@ function sLegislative() {
 
   }
 
-  this.draw = function() {
+  this.draw = function () {
 
   }
 
@@ -623,19 +386,19 @@ function sLegislative() {
       //connecting values to html, each tab value is stored in an array
       // var rangeSliderValueElement = document.getElementById('slider-value');
 
-      slider1.noUiSlider.on('update', function(values, handle) {
+      slider1.noUiSlider.on('update', function (values, handle) {
         userNumHouse = values[0]
         // rangeSliderValueElement.innerHTML = userNumHouse + " " + userNumSenate + " " + userNumPres + " " + userNumVP;
       });
-      slider2.noUiSlider.on('update', function(values, handle) {
+      slider2.noUiSlider.on('update', function (values, handle) {
         userNumSenate = values[0];
         // rangeSliderValueElement.innerHTML = userNumHouse + " " + userNumSenate + " " + userNumPres + " " + userNumVP;
       });
-      slider3.noUiSlider.on('update', function(values, handle) {
+      slider3.noUiSlider.on('update', function (values, handle) {
         userNumVP = values[0];
         // rangeSliderValueElement.innerHTML = userNumHouse + " " + userNumSenate + " " + userNumPres + " " + userNumVP;
       });
-      slider4.noUiSlider.on('update', function(values, handle) {
+      slider4.noUiSlider.on('update', function (values, handle) {
         userNumPres = values[0];
         // rangeSliderValueElement.innerHTML = userNumHouse + " " + userNumSenate + " " + userNumPres + " " + userNumVP;
       });
@@ -657,10 +420,10 @@ function sLegislative() {
 function sParties() {
   var slider5 = document.getElementById('slider5');
 
-  this.setup = function() {
+  this.setup = function () {
 
   }
-  this.enter = function() {
+  this.enter = function () {
     console.log("2nd Slider Page");
     document.getElementById("top").style.display = "block";
     document.getElementById("top").innerHTML = "NUMBER OF POLITICAL PARTIES";
@@ -676,7 +439,7 @@ function sParties() {
     sliders();
     // button();
   }
-  this.draw = function() {
+  this.draw = function () {
     // imageMode(CENTER);
     // image(blueHydrangea, width / 6, 50, 100, 100);
   }
@@ -726,7 +489,7 @@ function sParties() {
       //connecting values to html, each tab value is stored in an array
       // var rangeSliderValueElement = document.getElementById('slider-value');
 
-      slider5.noUiSlider.on('update', function(values, handle) {
+      slider5.noUiSlider.on('update', function (values, handle) {
         userNumParties = values[0];
         // rangeSliderValueElement.innerHTML = userNumParties;
         if (userNumParties <= 1) {
@@ -756,9 +519,9 @@ function sMembers() {
   var slider8 = document.getElementById('slider8');
   var slider9 = document.getElementById('slider9');
 
-  this.setup = function() {}
+  this.setup = function () { }
 
-  this.enter = function() {
+  this.enter = function () {
     console.log("3rd Slider Page");
     document.getElementById("top").innerHTML = "NUMBER OF VOTING MEMBERS AFFILIATED WITH EACH POLITICAL PARTY";
     document.getElementById("page1").style.display = "none";
@@ -774,7 +537,7 @@ function sMembers() {
     sliders();
 
   }
-  this.draw = function() {
+  this.draw = function () {
 
   }
 
@@ -1011,7 +774,7 @@ function sMembers() {
 
         userPerHouseBody = [];
         var numPerHouseBody = [];
-        slider6.noUiSlider.on('update', function(values, handle) {
+        slider6.noUiSlider.on('update', function (values, handle) {
           for (var i = 0; i <= values.length; i++) {
             if (i == 0) {
               userPerHouseBody[i] = values[i];
@@ -1042,7 +805,7 @@ function sMembers() {
 
         userPerSenateBody = [];
         var numPerSenateBody = [];
-        slider7.noUiSlider.on('update', function(values, handle) {
+        slider7.noUiSlider.on('update', function (values, handle) {
           for (var i = 0; i <= values.length; i++) {
             if (i == 0) {
               userPerSenateBody[i] = values[i];
@@ -1071,7 +834,7 @@ function sMembers() {
 
         userPerVPBody = [];
         var numPerVPBody = [];
-        slider8.noUiSlider.on('update', function(values, handle) {
+        slider8.noUiSlider.on('update', function (values, handle) {
           for (var i = 0; i <= values.length; i++) {
             if (i == 0) {
               userPerVPBody[i] = values[i];
@@ -1101,7 +864,7 @@ function sMembers() {
 
         userPerPresBody = [];
         var numPerPresBody = [];
-        slider9.noUiSlider.on('update', function(values, handle) {
+        slider9.noUiSlider.on('update', function (values, handle) {
           for (var i = 0; i <= values.length; i++) {
             if (i == 0) {
               userPerPresBody[i] = values[i];
@@ -1136,18 +899,18 @@ function sBodyPass() {
   var currSuperThresh = parseFloat(engine.superThresh * 100);
   var currPerPass = parseFloat(engine.perPass * 100);
 
-  this.setup = function() {
+  this.setup = function () {
     textSize(15);
     noStroke();
-    engine.dWidth = width;
-    engine.dHeight = height;
-    v.dWidth = width;
-    v.dHeight = height;
+    // engine.dWidth = width;
+    // engine.dHeight = height;
+    // v.dWidth = width;
+    // v.dHeight = height;
     // background("#012244");
 
   }
 
-  this.enter = function() {
+  this.enter = function () {
     // noCursor();
     console.log("4th Slider Page");
     document.getElementById("top").innerHTML = "PERCENTAGE OF VOTES REQUIRED FOR APPROVAL OF BILL BY EACH LEGISLATIVE CHAMBER";
@@ -1169,7 +932,7 @@ function sBodyPass() {
 
   }
 
-  this.draw = function() {
+  this.draw = function () {
 
   }
 
@@ -1232,12 +995,12 @@ function sBodyPass() {
       userBodyPass = "";
       userSuperThresh = "";
 
-      slider10.noUiSlider.on('update', function(values, handle) {
+      slider10.noUiSlider.on('update', function (values, handle) {
         userBodyPass = values[0]
         // rangeSliderValueElement.innerHTML = userBodyPass + " " + userSuperThresh;
 
       });
-      slider11.noUiSlider.on('update', function(values, handle) {
+      slider11.noUiSlider.on('update', function (values, handle) {
         userSuperThresh = values[0];
         // rangeSliderValueElement.innerHTML = userBodyPass + " " + userSuperThresh;
 
@@ -1256,11 +1019,11 @@ function sYesVotes() {
   var curRepYaythresh = parseInt(engine.repYaythresh * 100);
   var curIndYaythresh = parseInt(engine.indYaythresh * 100);
 
-  this.setup = function() {
+  this.setup = function () {
 
   }
 
-  this.enter = function() {
+  this.enter = function () {
 
     console.log("5th slider page");
     document.getElementById("top").innerHTML = "PROBABILITY OF AN AFFIRMATIVE VOTE BY A PARTY MEMBER";
@@ -1277,7 +1040,7 @@ function sYesVotes() {
 
   }
 
-  this.draw = function() {}
+  this.draw = function () { }
 
 
   function checkParties() {
@@ -1377,13 +1140,13 @@ function sYesVotes() {
       userRepYaythresh = "";
       userIndYaythresh = "";
 
-      slider12.noUiSlider.on('update', function(values, handle) {
+      slider12.noUiSlider.on('update', function (values, handle) {
         userDemYaythresh = values[0];
         // rangeSliderValueElement.innerHTML = userDemYaythresh + " " + userRepYaythresh + " " + userIndYaythresh;
 
       });
       if (userNumParties >= 2) {
-        slider13.noUiSlider.on('update', function(values, handle) {
+        slider13.noUiSlider.on('update', function (values, handle) {
           userRepYaythresh = values[0];
           // rangeSliderValueElement.innerHTML = userDemYaythresh + " " + userRepYaythresh + " " + userIndYaythresh;
 
@@ -1393,7 +1156,7 @@ function sYesVotes() {
       }
 
       if (userNumParties == 3) {
-        slider14.noUiSlider.on('update', function(values, handle) {
+        slider14.noUiSlider.on('update', function (values, handle) {
           userIndYaythresh = values[0];
           // rangeSliderValueElement.innerHTML = userDemYaythresh + " " + userRepYaythresh + " " + userIndYaythresh;
 
@@ -1413,13 +1176,13 @@ function sYesVotes() {
 //page showing all of user inputs
 function sResults() {
 
-  this.setup = function() {
+  this.setup = function () {
 
     userOutputText = document.getElementById('slider-disp');
 
   }
 
-  this.enter = function() {
+  this.enter = function () {
     userEditCount++;
     console.log("user edit count: " + userEditCount);
     console.log("user result page");
@@ -1452,7 +1215,7 @@ function sResults() {
     inputTxt();
   }
 
-  this.draw = function() {
+  this.draw = function () {
 
   }
 
@@ -1513,11 +1276,11 @@ function sResults() {
 //explanation text before user goes back into simulator
 function sInfo() {
 
-  this.setup = function() {
+  this.setup = function () {
     simInfoText = document.getElementById('sim-info');
   }
 
-  this.enter = function() {
+  this.enter = function () {
     console.log("simulator info page");
     document.getElementById("top").innerHTML = " ";
     document.getElementById("page1").style.display = "none";
@@ -1534,14 +1297,14 @@ function sInfo() {
     inputTxt();
     var delayInMilliseconds = 13000; //15 seconds
 
-    setTimeout(function() {
+    setTimeout(function () {
       inputVar();
     }, delayInMilliseconds);
 
 
   }
 
-  this.draw = function() {
+  this.draw = function () {
 
   }
 
@@ -1556,11 +1319,11 @@ function sInfo() {
 //display of user inputs while in simulator
 function sDisplay() {
 
-  this.setup = function() {
+  this.setup = function () {
 
   }
 
-  this.enter = function() {
+  this.enter = function () {
 
     console.log("user display page");
     document.getElementById("top").innerHTML = "DEMOCRACY ENGINE SIMULATOR INPUT DISPLAY";
@@ -1577,7 +1340,7 @@ function sDisplay() {
     inputTxt();
   }
 
-  this.draw = function() {
+  this.draw = function () {
 
 
   }
@@ -1624,11 +1387,11 @@ function sDisplay() {
 //shows default congress settings at end of original simulator
 function sDefault() {
 
-  this.setup = function() {
+  this.setup = function () {
     userOutputText = document.getElementById('slider-disp');
   }
 
-  this.enter = function() {
+  this.enter = function () {
 
     console.log("default settings display page");
     document.getElementById("top").innerHTML = " ";
@@ -1645,7 +1408,7 @@ function sDefault() {
     inputTxt();
   }
 
-  this.draw = function() {
+  this.draw = function () {
 
 
   }
