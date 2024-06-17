@@ -22,7 +22,7 @@ function democracyEngineUser() {
 
   this.enter = function () {
     
-    voteDisplayUser = new voteVisual(loadingImage, bColor, pColor);
+    voteDisplayUser = new VoteVisual(loadingImage, bColor, pColor);
 
     //redraws canvas with new width and height when user simulator restarts
     if (reconfigBool == true) {
@@ -161,7 +161,7 @@ function democracyEngineOrigin() {
     document.getElementById("slider-disp").style.display = "none";
 
     // engine.currentCongLogic(forUser);
-    voteDisplayOrigin = new voteVisual(loadingImage, bColor, pColor);
+    voteDisplayOrigin = new VoteVisual(loadingImage, bColor, pColor);
     voteDisplayOrigin.dWidth = windowWidth * .8;
     voteDisplayOrigin.dHeight = windowHeight * .8;
   }

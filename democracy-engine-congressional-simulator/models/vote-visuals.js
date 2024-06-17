@@ -4,7 +4,7 @@
  * Rectangles represent each vote and text describes the final result.
  */
 
-class voteVisual {
+class VoteVisual {
 
   loadingImage;
 
@@ -451,23 +451,23 @@ class voteVisual {
     if (this.bodyCount == 2 && this.engine.vpVote == false) {
       this.stopVoteBool = true;
       // this.stopVoteCount++; // used in the engine, not for drawing
-      console.log("stop vote logic 1");
+      console.log("stop vote logic 1"); // for testing
     }
     //if the vp votes and it's a NO, then bill dies
     else if (this.engine.vpVote == true && this.engine.bodyPass[2] === false) {
       this.stopVoteBool = true;
       // this.stopVoteCount++;
-      console.log("stop vote logic 2");
+      console.log("stop vote logic 2"); // for testing
     }
     //AB if the first or second body is not a pass,  bill dies thus preventing other bodies to vote
     //OC check that voting of the house or senate was already drawn to screen before checking bodyPass for it
     else if ((this.bodyCount >= 1 && this.engine.bodyPass[0] === false) || (this.bodyCount > 1 && this.engine.bodyPass[1] === false)) {
       this.stopVoteBool = true;
       // this.stopVoteCount++;
-      console.log("stop vote logic 3");
+      console.log("stop vote logic 3"); // for testing
     } else {
       this.stopVoteBool = false;
-      console.log("stop vote logic 4");
+      console.log("stop vote logic 4"); // for testing
     }
   }
 
