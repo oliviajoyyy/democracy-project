@@ -54,7 +54,15 @@ function democracyEngineUser() {
   // run the simulator for user configuration
   this.draw = function () {
 
+    // if (frameCount >= 2000 && frameCount < 2120) { // for testing multiple runs
+    //   //engine = new DemocracyEngine();
+    //   inputVar();
+    // engine.currentCongLogic(userEdits);
+    //   console.log("RESULT " + (frameCount-1999) + " : " + engine.voteResults);
+    // }
+
     engine.currentCongLogic(userEdits);
+    
 
     // OC when engine is done with voting calculation, show votes
     if (engine.finalDisplayBool) {
@@ -167,6 +175,18 @@ function democracyEngineOrigin() {
   }
 
   this.draw = function () {
+
+    // if (frameCount >= 300 && frameCount < 420) {
+    // engine = new DemocracyEngine();
+    // // engine.bodyCount = 0;
+    // // engine.resetCount();
+    // // engine.resetDraw();
+    // // engine.superThreshIndex = [];
+    // // engine.votingBodyCounts = [];
+    // // engine.bodyPass = [];
+    // engine.currentCongLogic(userEdits);
+    // console.log("RESULT " + (frameCount-299) + " : " + engine.voteResults);
+    // }
 
     engine.currentCongLogic(userEdits);
 

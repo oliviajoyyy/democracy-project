@@ -319,14 +319,24 @@ function dispButton() {
 
 
 function removeField() {
-  buttonRes.remove();
-  buttonRC.remove();
+  if(document.getElementById('res-btn')){
+    buttonRes.remove();
+  }
+  if(document.getElementById('rec-btn')){
+    buttonRC.remove();
+  }
   if (userEdits==true)
   {
-    recalBtn.remove();
-    emailBtn.remove();
+    if(document.getElementById('recal-btn')){
+      recalBtn.remove();
+    }
+    if(document.getElementById('email-btn')){
+      emailBtn.remove();
+    }
   }
-  nextButton.remove();
+  if(document.getElementById('next-btn')){
+    nextButton.remove();
+  }
 }
 
 function emailFunc(){

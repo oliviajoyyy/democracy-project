@@ -83,7 +83,7 @@ demYayCount;
 repNayCount;
 repYayCount;
 votingBodyCounts = []; // 2D array
-// [[chamber1 yes, chamber1, no], [chamber2 yes, chamber2 no], [vp yes, vp no], [pres yes, pres no]]
+// [[chamber1 #yes, chamber1, #no], [chamber2 #yes, chamber2 #no], [vp #yes, #vp no], [pres #yes, pres #no]]
 superThreshIndex = [];
 
 //
@@ -130,7 +130,7 @@ decisionTxt = ""; // OC final decision string
 ix;
 jx;
 
-allVotes = []; // OC 2D array keep track of votes for each member of each body: bodyCount, array of votes
+allVotes = []; // OC 2D array keep track of "yay"/"nay" votes for each member of each body: bodyCount, array of votes
 
 
   constructor () {
