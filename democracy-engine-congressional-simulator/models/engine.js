@@ -23,42 +23,58 @@ stressPlanetHigh = 10; //change this to the low stress masimum
 //Offset of combined stress levels that will increase likelyhood of yes vote on any given bill (state change)
 stressOffset;
 
+// Defaults based on 117 congress 2021-06-01
+
+// Senate (2021-2023)
+// Majority Party: Republican (48 seats)
+// Minority Party: Democrat (50 seats)
+// Other Parties: 2 Independents (both caucus with the Democrats)
+// Total Seats: 100
+// https://www.senate.gov/history/partydiv.htm
+
+// House
+// 211 Republicans
+// 220 Democrats
+// 0 Libertarian
+// 4 * Vacancies
+// https://pressgallery.house.gov/member-data/party-breakdown
+
 //Number voting members
-numHouse = 435
-numSenate = 100;
-numPres = 1;
-numVP = 1;
+numHouse; // = 435
+numSenate; // = 100;
+numPres; // = 1;
+numVP; // = 1;
 
 //Demographics of House as decimal percentages 1 = 100%
-perDemHouse = 0.505;
-perRepHouse = 0.485;
-perIndHouse = 0.00;
+perDemHouse; // = 0.505;
+perRepHouse; // = 0.485;
+perIndHouse; // = 0.00;
 
 //Demographics of Senate as decimal percentages 1 = 100%
-perDemSenate = 0.48;
-perRepSenate = 0.50;
-perIndSenate = 0.02;
+perDemSenate; // = 0.48;
+perRepSenate; // = 0.50;
+perIndSenate; // = 0.02;
 
 //Demographics of President as decimal percentages 1 = 100%
-perDemPres = 1.0;
-perRepPres = 0.0;
-perIndPres = 0.0;
+perDemPres; // = 1.0;
+perRepPres; // = 0.0;
+perIndPres; //= 0.0;
 
-perDemVP = 1.0;
-perRepVP = 0.0;
-perIndVP = 0.0;
+perDemVP; // = 1.0;
+perRepVP; // = 0.0;
+perIndVP; // = 0.0;
 
 //supermajority Cutoff for override of presidential veto
-superThresh = 0.67;
-perPass = .5;
+superThresh; // = 0.67;
+perPass; // = .5;
 
 //Historical Likelihood of party affiliation & likelihood of 'yay' vote
-demYaythresh = 0.7;
-repYaythresh = 0.3;
-indYaythresh = 0.5;
+demYaythresh; // = 0.7;
+repYaythresh; // = 0.3;
+indYaythresh; // = 0.5;
 
 //How Many Voting Bodies (house, senate, president = 3) *see to DO at top of code
-numBodies = 4;
+numBodies; // = 4;
 //defNumBody;//delete?
 
 //******These are NOT user determined*********
@@ -133,7 +149,40 @@ jx;
 allVotes = []; // OC 2D array keep track of "yay"/"nay" votes for each member of each body: bodyCount, array of votes
 
 
-  constructor () {
+  constructor (currentConfig) {
+    //Number of voting members
+    this.numHouse = currentConfig.house.totalMembers;
+    this.numSenate = currentConfig.senate.totalMembers;
+    this.numVP = currentConfig.vicePres.totalMembers;
+    this.numPres = currentConfig.president.totalMembers;
+
+    //Demographics of House as decimal percentages 1 = 100%
+this.perDemHouse = currentConfig.house.democrats / this.numHouse;
+this.perRepHouse = currentConfig.house.republicans / this.numHouse;
+this.perIndHouse = currentConfig.house.independent / this.numHouse;
+
+//Demographics of Senate as decimal percentages 1 = 100%
+this.perDemSenate = currentConfig.senate.democrats / this.numSenate;
+this.perRepSenate = currentConfig.senate.republicans / this.numSenate;
+this.perIndSenate = currentConfig.senate.independent / this.numSenate;
+
+//Demographics of Vice President as decimal percentages 1 = 100%
+this.perDemVP = currentConfig.vicePres.democrats / this.numVP;
+this.perRepVP = currentConfig.vicePres.republicans / this.numVP;
+this.perIndVP = currentConfig.vicePres.independent / this.numVP;
+
+//Demographics of President as decimal percentages 1 = 100%
+this.perDemPres = currentConfig.president.democrats / this.numPres;
+this.perRepPres = currentConfig.president.reppublicans / this.numPres;
+this.perIndPres = currentConfig.president.independent / this.numPres;
+
+this.superThresh = currentConfig.threshold.supermajority;
+this.perPass = currentConfig.threshold.majority;
+this.demYaythresh = currentConfig.threshold.demYay;
+this.repYaythresh = currentConfig.threshold.demYay;
+this.demYaythresh = currentConfig.threshold.demYay;
+this.numBodies = currentConfig.numVotingBodies;
+
   }
 
   /**

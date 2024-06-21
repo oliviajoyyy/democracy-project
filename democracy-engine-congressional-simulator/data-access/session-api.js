@@ -31,6 +31,7 @@ async function getItems() {
     }
 }
 
+// create session record from the engine object
 function toSchema(engineObj) {
     const session = {
         userConfig: engineObj.forUser,

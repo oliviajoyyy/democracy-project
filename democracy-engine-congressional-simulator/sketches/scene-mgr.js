@@ -9,22 +9,6 @@
 // Allow users to change the configuration and logical interdependencies of decision-making units:
 // see: https://docs.google.com/document/d/118letZLbFm9D3QhtOtrdhQvJU4OJxYWr6OiAuUlJTjA/edit?usp=sharing
 
-// Defaults based on 117 congress 2021-06-01
-
-// Senate (2021-2023)
-// Majority Party: Republican (48 seats)
-// Minority Party: Democrat (50 seats)
-// Other Parties: 2 Independents (both caucus with the Democrats)
-// Total Seats: 100
-// https://www.senate.gov/history/partydiv.htm
-
-// House
-// 211 Republicans
-// 220 Democrats
-// 0 Libertarian
-// 4 * Vacancies
-// https://pressgallery.house.gov/member-data/party-breakdown
-
 var mgr;
 var engine;
 
@@ -91,18 +75,21 @@ var onePartyBool = false;
 var bColor = "#012244";
 var pColor = "#3c1b36";
 
+var govtConfig;
+
 
 function preload() {
   helvFont = loadFont('/democracy-engine-congressional-simulator/assets/font/HelveticaNeue-Regular.otf');
-  loadingImage = loadImage('/democracy-engine-congressional-simulator/assets/gears-icon.png')
-  enterImage = loadImage('/democracy-engine-congressional-simulator/assets/asraProgress.png')
+  loadingImage = loadImage('/democracy-engine-congressional-simulator/assets/gears-icon.png');
+  enterImage = loadImage('/democracy-engine-congressional-simulator/assets/asraProgress.png');
+  govtConfig = loadJSON('/democracy-engine-congressional-simulator/assets/govt-config.json');
 }
 
 
 function setup() {
   // createCanvas(windowWidth*.8, windowHeight*.8);
   // rectMode(CENTER);
-  engine = new DemocracyEngine(); // OC create engine object to run voting logic
+  engine = new DemocracyEngine(govtConfig); // OC create engine object to run voting logic
 
   noStroke();
   mgr = new SceneManager();

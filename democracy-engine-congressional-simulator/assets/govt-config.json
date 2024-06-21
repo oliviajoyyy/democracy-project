@@ -1,0 +1,40 @@
+{
+    "house": {
+        "totalMembers": 435,
+        "democrats": 220,
+        "republicans": 211,
+        "independent": 0
+    },
+
+    "senate": {
+        "totalMembers": 100,
+        "democrats": 48,
+        "republicans": 50,
+        "independent": 2
+    },
+
+    "vicePres": {
+        "totalMembers": 1,
+        "democrats": 1,
+        "republicans": 0,
+        "independent": 0
+    },
+
+    "president": {
+        "totalMembers": 1,
+        "democrats": 1,
+        "republicans": 0,
+        "independent": 0
+    },
+
+    "threshold": {
+        "supermajority": 0.67,
+        "majority": 0.5,
+        "demYay": 0.7,
+        "repYay": 0.3,
+        "indYay": 0.5
+    },
+
+    "numVotingBodies": 4
+    
+}
