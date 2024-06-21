@@ -335,7 +335,7 @@ function removeField() {
     }
   }
   if(document.getElementById('next-btn')){
-    nextButton.remove();
+      nextButton.remove();
   }
 }
 

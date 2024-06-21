@@ -65,15 +65,16 @@ function democracyEngineUser() {
     
 
     // OC when engine is done with voting calculation, show votes
-    if (engine.finalDisplayBool) {
+    //if (engine.finalDisplayBool) {
 
       voteDisplayUser.displayVoting(engine);
 
       // OC when visual display of rectangles is done, show buttons
       if (voteDisplayUser.userInputState) {
         finalDisplay();
+        addSession(toSchema(engine)); // OC save session to db after displaying to screen
       }
-    }
+    //}
 
   }
 
@@ -88,7 +89,7 @@ function democracyEngineUser() {
       changeText(engine.decisionTxt); // change final decision text at bottom of screen 
     }, 1500); // 1.5 seconds before text overlay shows
 
-    engine.finalDisplayBool = false;
+    //engine.finalDisplayBool = false;
     voteDisplayUser.userInputState = false;
 
   }
@@ -191,17 +192,17 @@ function democracyEngineOrigin() {
     engine.currentCongLogic(userEdits);
 
     // OC when engine is done with voting calculation, show votes
-    if (engine.finalDisplayBool) {
-
-      //engine.bodyPass[1] = false; //for testing
+    //if (engine.finalDisplayBool) {
       voteDisplayOrigin.displayVoting(engine);
 
       // OC when visual display of rectangles is done, show buttons
       if (voteDisplayOrigin.userInputState) {
         finalDisplay();
+        // console.log(engine.votingBodyCounts); // for testing
+        //addSession(toSchema(engine)); // OC save session to db after displaying to screen
       }
 
-    }
+    //}
 
 
 
@@ -218,7 +219,7 @@ function democracyEngineOrigin() {
       changeText(engine.decisionTxt); // change final decision text at bottom of screen
     }, 1500); // 1.5 seconds before text overlay showss
 
-    engine.finalDisplayBool = false;
+    //engine.finalDisplayBool = false;
     voteDisplayOrigin.userInputState = false;
 
   }

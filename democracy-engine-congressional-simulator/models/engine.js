@@ -119,7 +119,7 @@ forUser;
 
 // OC finalDisplayBool - will be set true when ready to display calcuation results outside of class
 // OC signal used to determine when finalDisplay() runs (finalDisplay funct is in the scenes)
-finalDisplayBool = false;
+//finalDisplayBool = false;
 
 voteResults = ["","","",""];
 // OC stores decisions for each body (bill approved/not): [chamber1, chamber2, vp, pres]
@@ -598,8 +598,12 @@ allVotes = []; // OC 2D array keep track of "yay"/"nay" votes for each member of
 
                 if (this.bodyPass[0] == false || this.bodyPass[1] == false) {
                   this.voteResults[i] = "BILL IS NOT APPROVED BY ALL CHAMBERS: PRESIDENT DOES NOT VOTE";
+                  this.votingBodyCounts[i][0] = null;
+                  this.votingBodyCounts[i][1] = null;
                 } else {
                   this.voteResults[i] = "DOES NOT VOTE";
+                  this.votingBodyCounts[i][0] = null;
+                  this.votingBodyCounts[i][1] = null;
                 }
               }
 
@@ -609,6 +613,8 @@ allVotes = []; // OC 2D array keep track of "yay"/"nay" votes for each member of
                 if (this.bodyPass[0] == false || this.bodyPass[1] == false) {
                   //text('\n\n\nBILL IS NOT APPROVED BY ALL CHAMBERS: NO VICE PRESIDENTIAL VOTE', i * dispW + padX, this.dHeight * (3 / 4), dispW - padX, dispH);
                   this.voteResults[i] = "BILL IS NOT APPROVED BY ALL CHAMBERS: NO VICE PRESIDENTIAL VOTE";
+                  this.votingBodyCounts[i][0] = null;
+                  this.votingBodyCounts[i][1] = null;
                 } else if (this.bodyPass[0] == true && this.bodyPass[1] == true && this.vpVote == true) {
                   if (this.bodyPass[i] == false) {
                     //text('\nBILL IS NOT APPROVED', (i) * dispW + padX, this.dHeight * (3 / 4), dispW - padX, dispH);
@@ -621,6 +627,8 @@ allVotes = []; // OC 2D array keep track of "yay"/"nay" votes for each member of
 
               } else { // vp does not vote
                 this.voteResults[i] = "DOES NOT VOTE";
+                this.votingBodyCounts[i][0] = null;
+                this.votingBodyCounts[i][1] = null;
               }
 
             } else { // senate & house
@@ -638,6 +646,8 @@ allVotes = []; // OC 2D array keep track of "yay"/"nay" votes for each member of
                 }
               } else { // body does not vote
                 this.voteResults[i] = "DOES NOT VOTE";
+                this.votingBodyCounts[i][0] = null;
+                this.votingBodyCounts[i][1] = null;
               }
             }
             console.log(this.voteResults);
@@ -664,7 +674,9 @@ allVotes = []; // OC 2D array keep track of "yay"/"nay" votes for each member of
         };
 
     }
-    this.finalDisplayBool = true; // signal to now display final text and buttons
+    console.log(this.votingBodyCounts); 
+    // OC could save session to db here or outside of engine
+    //this.finalDisplayBool = true; // signal to now display final text and buttons
   }
 
 }
