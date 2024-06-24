@@ -139,6 +139,7 @@ function nextScene() {
   }  else if (mgr.isCurrent(sInfo) && userEdits == true) {
     mgr.showScene(democracyEngineUser);
   } else if (mgr.isCurrent(democracyEngineUser)) {
+    // OC update config count var here?
     mgr.showScene(sLegislative);
   } else if (mgr.isCurrent(sDefault)) {
     mgr.showScene(sLegislative);

@@ -72,7 +72,7 @@ function democracyEngineUser() {
       // OC when visual display of rectangles is done, show buttons
       if (voteDisplayUser.userInputState) {
         finalDisplay();
-        addSession(toSchema(engine)); // OC save session to db after displaying to screen
+        //addSession(toSchema(engine)); // OC save session to db after displaying to screen
       }
     //}
 

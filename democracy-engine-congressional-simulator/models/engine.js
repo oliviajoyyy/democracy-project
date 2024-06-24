@@ -179,8 +179,8 @@ this.perIndPres = currentConfig.president.independent / this.numPres;
 this.superThresh = currentConfig.threshold.supermajority;
 this.perPass = currentConfig.threshold.majority;
 this.demYaythresh = currentConfig.threshold.demYay;
-this.repYaythresh = currentConfig.threshold.demYay;
-this.demYaythresh = currentConfig.threshold.demYay;
+this.repYaythresh = currentConfig.threshold.repYay;
+this.indYaythresh = currentConfig.threshold.indYay;
 this.numBodies = currentConfig.numVotingBodies;
 
   }
@@ -444,10 +444,10 @@ this.numBodies = currentConfig.numVotingBodies;
     //AB: finding problem with x's
     // print("body #: " + bodyCount + " No Vote Bool: " + noVoteBool);
 
-    // if (bodyCount == 1) {
+    // if (this.bodyCount == 1) {
     //   // simulate vp tiebreaker vote
-    //   yay = 50;
-    //   nay = 50;
+    //   this.yay = 50;
+    //   this.nay = 50;
     // }
 
     this.storeBodyVotes();
