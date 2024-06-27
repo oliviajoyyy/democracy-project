@@ -11,6 +11,7 @@
 
 var mgr;
 var engine;
+var visual;
 
 //fortesting
 let senateResult;
@@ -72,24 +73,37 @@ var reconfigBool = false;
 var onePartyBool = false;
 
 // colors
-var bColor = "#012244";
-var pColor = "#3c1b36";
+var bColor; // = "#012244";
+var pColor; // = "#3c1b36";
+var textColor;
+var colorOverlay;
+var rectColor;
 
 var govtConfig;
+var colorConfig;
 
 
 function preload() {
   helvFont = loadFont('/democracy-engine-congressional-simulator/assets/font/HelveticaNeue-Regular.otf');
   loadingImage = loadImage('/democracy-engine-congressional-simulator/assets/gears-icon.png');
   enterImage = loadImage('/democracy-engine-congressional-simulator/assets/asraProgress.png');
-  govtConfig = loadJSON('/democracy-engine-congressional-simulator/assets/govt-config.json');
+  govtConfig = loadJSON('/democracy-engine-congressional-simulator/config/govt-config.json');
+  colorConfig = loadJSON('/democracy-engine-congressional-simulator/config/color-config.json');
 }
 
 
 function setup() {
   // createCanvas(windowWidth*.8, windowHeight*.8);
   // rectMode(CENTER);
+  bColor = colorConfig.background;
+  pColor = colorConfig.headerFooterBkg;
+  textColor = colorConfig.text;
+  colorOverlay = colorConfig.textOverlay;
+  rectColor = colorConfig.rectColor;
+  document.body.style.backgroundColor = bColor;
+  //document.header.style.backgroundColor = bColor;
   engine = new DemocracyEngine(govtConfig); // OC create engine object to run voting logic
+  visual = new VoteVisual(loadingImage, bColor, pColor, textColor, rectColor);
 
   noStroke();
   mgr = new SceneManager();
@@ -194,17 +208,17 @@ function dispResult() {
   if (mgr.isCurrent(sDisplay)) {
     mgr.showScene(democracyEngineUser);
     dispBtn.elt.textContent = "DISPLAY USER SETTINGS";
-    emailBtn.elt.style.opacity = "1";
-    buttonRC.elt.style.opacity = "1";
-    buttonRes.elt.style.opacity = "1";
-    recalBtn.elt.style.opacity = "1";
+    // emailBtn.elt.style.opacity = "1";
+    // buttonRC.elt.style.opacity = "1";
+    // buttonRes.elt.style.opacity = "1";
+    // recalBtn.elt.style.opacity = "1";
   } else {
     mgr.showScene(sDisplay);
     dispBtn.elt.textContent = "DISPLAY VOTE";
-    emailBtn.elt.style.opacity = "0";
-    buttonRC.elt.style.opacity = "0";
-    buttonRes.elt.style.opacity = "0";
-    recalBtn.elt.style.opacity = "0";
+    // emailBtn.elt.style.opacity = "0";
+    // buttonRC.elt.style.opacity = "0";
+    // buttonRes.elt.style.opacity = "0";
+    // recalBtn.elt.style.opacity = "0";
   }
 }
 
@@ -220,11 +234,11 @@ function defResult() {
 
 //User Input Values for Congressional Reconfiguration
 function inputVar() {
-  document.body.style.backgroundColor = "#012244";
+  document.body.style.backgroundColor = bColor;
   changeText(" ");
   if(!document.getElementById('disp-btn')){
           dispButton();
-    }
+   }
 
 
   //Number voting members
@@ -288,6 +302,12 @@ function inputVar() {
   engine.superThreshIndex = [];
   engine.votingBodyCounts = [];
   engine.bodyPass = [];
+
+  visual.bodyCount = 0;
+  visual.resetCount();
+  visual.resetDraw();
+  visual.bodyPass = [];
+
   removeField();
   // resetSliders();
   userEdits = true;

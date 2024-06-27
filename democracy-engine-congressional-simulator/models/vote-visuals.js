@@ -52,8 +52,10 @@ class VoteVisual {
   bodyLabel;
 
   // colors - OC now passed as constructor params
-  bColor; // = "#012244";
-  pColor; // = "#3c1b36";
+  bColor; // = "#012244"; // background color
+  pColor; // = "#3c1b36"; // header color
+  tColor; // text color
+  rColor; // rect and loading image color
 
   tranVal = 255;
   // let fadeOpac = 255;
@@ -82,11 +84,15 @@ class VoteVisual {
    * @param {image} img - loading image bitmap
    * @param {color} bK - color for background
    * @param {color} pK - a second color
+   * @param {color} tK - text color
+   * @param {color} rK - rectangle color
    */
-  constructor(img, bK, pK) {
+  constructor(img, bK, pK, tK, rK) {
     this.loadingImage = img;
-    this.bColor = bK;
-    this.pColor = pK;
+    this.bColor = color(bK);
+    this.pColor = color(pK);
+    this.tColor = color(tK);
+    this.rColor = color(rK);
   }
 
   /**
@@ -105,7 +111,7 @@ class VoteVisual {
         this.test = 0;
         print('VISUAL CLASS logic for house bodyCount = ' + this.bodyCount);
         print(this.bodyCount);
-        background(color(this.bColor));
+        background(this.bColor);
 
         // Set number of voting memebers
         this.numCon = this.engine.numHouse;
@@ -279,6 +285,8 @@ class VoteVisual {
     push();
     rectMode(CORNER);
     noStroke();
+    this.rColor.setAlpha(255);
+    tint(this.rColor);
     fill(this.bColor);
 
     translate(this.offSet / 2, this.dHeight / 2);
@@ -400,7 +408,7 @@ class VoteVisual {
         this.y = this.y + (this.skip * .9);
       // y = y + skip;
       if (this.engine.vpVote == false) {
-        stroke(255, 100);
+        stroke(this.rColor, 100); //stroke(255, 100);
         noFill();
         strokeWeight(3);
       }
@@ -417,7 +425,9 @@ class VoteVisual {
     //creates a different shade for each voting party
     if (this.stopVoteBool == false) {
       noStroke();
-      fill(255, currentTransVal);
+      this.rColor.setAlpha(currentTransVal);
+      fill(this.rColor);
+      //fill(255, currentTransVal);
     }
 
     rect(this.x, this.y, this.diam, this.diam, this.diam / 8);
@@ -476,7 +486,7 @@ class VoteVisual {
    */
   stopVoteChange() {
     if (this.stopVoteBool == true) {
-      stroke(255, 100);
+      stroke(this.rColor, 100); //stroke(255, 100);
       noFill();
       strokeWeight(3);
       // stopVoteBool == false;
@@ -540,8 +550,9 @@ class VoteVisual {
    * Displays text on screen for results of the voting with the default configuration
    * @param {DemocracyEngine} engine 
    * @param {Font} font 
+   * @param {Color} colorOverlay
    */
-  finalTextDisplayDefault(engine, font) {
+  finalTextDisplayDefault(engine, font, colorOverlay) {
     let currentBodyLabel;
 
     let columnAmount = engine.numBodies - 1;
@@ -555,14 +566,14 @@ class VoteVisual {
     // let dispX = 0 + padX;
     // let dispY = 0 + padY;
 
-    var resBColor = color(0, 0, 0);
+    var resBColor = color(colorOverlay); // color(0, 0, 0); // result overlay
     // let decisionText = "";
     //column 1 to be yay/nay votes
     //column 2 to be body votes
     textFont(font);
 
     textAlign(LEFT, TOP);
-    fill(color("#faf4d3"));
+    //fill(color("#faf4d3"));
     noStroke();
     rectMode(CORNER);
     resBColor.setAlpha(200);
@@ -573,7 +584,7 @@ class VoteVisual {
 
     //NEED TO CHANGE LATER FOR MORE THAN 3 BODIES
     for (let i = 0; i < engine.numBodies; i++) {
-      fill(255);
+      fill(this.tColor);
       if (i == 0) {
         currentBodyLabel = 'HOUSE';
       } else if (i == 1) {
@@ -646,7 +657,7 @@ class VoteVisual {
    * @param {DemocracyEngine} engine 
    * @param {Font} font 
    */
-  finalTextDisplayUser(engine, font) {
+  finalTextDisplayUser(engine, font, colorOverlay) {
     let currentBodyLabel;
 
     let columnAmount = engine.numBodies;
@@ -660,14 +671,14 @@ class VoteVisual {
     // let dispX = 0 + padX;
     // let dispY = 0 + padY;
 
-    var resBColor = color(0, 0, 0);
+    var resBColor = color(colorOverlay);
     // let decisionText = "";
     //column 1 to be yay/nay votes
     //column 2 to be body votes
     textFont(font);
 
     textAlign(LEFT, TOP);
-    fill(color("#faf4d3"));
+    //fill(color("#faf4d3"));
     noStroke();
     rectMode(CORNER);
     resBColor.setAlpha(200);
@@ -678,7 +689,7 @@ class VoteVisual {
 
     //NEED TO CHANGE LATER FOR MORE THAN 3 BODIES
     for (let i = 0; i < engine.numBodies; i++) {
-      fill(255);
+      fill(this.tColor); //fill(255);
       if (i == 0) {
         currentBodyLabel = 'LEGISLATIVE CHAMBER 1';
       } else if (i == 1) {

@@ -1,7 +1,6 @@
 //democracy simulater, connected to user values
 function democracyEngineUser() {
   console.log("democracy userEdits: " + userEdits);
-  var voteDisplayUser;
 
   this.setup = function () {
 
@@ -22,14 +21,12 @@ function democracyEngineUser() {
 
   this.enter = function () {
     
-    voteDisplayUser = new VoteVisual(loadingImage, bColor, pColor);
-
     //redraws canvas with new width and height when user simulator restarts
     if (reconfigBool == true) {
       // windowResized();
-      voteDisplayUser.dWidth = windowWidth * .8;
-      voteDisplayUser.dHeight = windowHeight * .8;
-      canvas = createCanvas(voteDisplayUser.dWidth, voteDisplayUser.dHeight);
+      visual.dWidth = windowWidth * .8;
+      visual.dHeight = windowHeight * .8;
+      canvas = createCanvas(visual.dWidth, visual.dHeight);
       let canvasDiv = document.getElementById('vote');
       canvas.parent(canvasDiv);
       reconfigBool = false;
@@ -67,10 +64,10 @@ function democracyEngineUser() {
     // OC when engine is done with voting calculation, show votes
     //if (engine.finalDisplayBool) {
 
-      voteDisplayUser.displayVoting(engine);
+    visual.displayVoting(engine);
 
       // OC when visual display of rectangles is done, show buttons
-      if (voteDisplayUser.userInputState) {
+      if (visual.userInputState) {
         finalDisplay();
         //addSession(toSchema(engine)); // OC save session to db after displaying to screen
       }
@@ -83,14 +80,14 @@ function democracyEngineUser() {
   function finalDisplay() {
 
     setTimeout(function () {
-      document.body.style.backgroundColor = "black";
+      document.body.style.backgroundColor = colorOverlay;
       userInput(); // show buttons
-      voteDisplayUser.finalTextDisplayUser(engine, helvFont);
+      visual.finalTextDisplayUser(engine, helvFont, colorOverlay);
       changeText(engine.decisionTxt); // change final decision text at bottom of screen 
     }, 1500); // 1.5 seconds before text overlay shows
 
     //engine.finalDisplayBool = false;
-    voteDisplayUser.userInputState = false;
+    visual.userInputState = false;
 
   }
 
@@ -144,7 +141,6 @@ function democracyEngineUser() {
 function democracyEngineOrigin() {
 
   console.log("origin democracy userEdits: " + userEdits);
-  var voteDisplayOrigin;
 
   this.setup = function () {
     textFont(helvFont);
@@ -170,9 +166,8 @@ function democracyEngineOrigin() {
     document.getElementById("slider-disp").style.display = "none";
 
     // engine.currentCongLogic(forUser);
-    voteDisplayOrigin = new VoteVisual(loadingImage, bColor, pColor);
-    voteDisplayOrigin.dWidth = windowWidth * .8;
-    voteDisplayOrigin.dHeight = windowHeight * .8;
+    visual.dWidth = windowWidth * .8;
+    visual.dHeight = windowHeight * .8;
   }
 
   this.draw = function () {
@@ -193,10 +188,10 @@ function democracyEngineOrigin() {
 
     // OC when engine is done with voting calculation, show votes
     //if (engine.finalDisplayBool) {
-      voteDisplayOrigin.displayVoting(engine);
+      visual.displayVoting(engine);
 
       // OC when visual display of rectangles is done, show buttons
-      if (voteDisplayOrigin.userInputState) {
+      if (visual.userInputState) {
         finalDisplay();
         // console.log(engine.votingBodyCounts); // for testing
         //addSession(toSchema(engine)); // OC save session to db after displaying to screen
@@ -213,14 +208,14 @@ function democracyEngineOrigin() {
   function finalDisplay() {
 
     setTimeout(function () {
-      document.body.style.backgroundColor = "black";
+      document.body.style.backgroundColor = colorOverlay;
       userInput(); // show buttons
-      voteDisplayOrigin.finalTextDisplayDefault(engine, helvFont);
+      visual.finalTextDisplayDefault(engine, helvFont, colorOverlay);
       changeText(engine.decisionTxt); // change final decision text at bottom of screen
     }, 1500); // 1.5 seconds before text overlay showss
 
     //engine.finalDisplayBool = false;
-    voteDisplayOrigin.userInputState = false;
+    visual.userInputState = false;
 
   }
 

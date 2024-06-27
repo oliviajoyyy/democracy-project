@@ -1,0 +1,11 @@
+{
+    "background": "#99deab",
+    "headerFooterBkg": "#77bebf",
+    "text": "#000000",
+    "button": "#84a39b",
+    "activeNav": "#5785ba",
+    "link": "#88b6eb",
+    "linkHover": "#c47cb7",
+    "textOverlay": "#ffffff",
+    "rectColor": "#775196"
+}
