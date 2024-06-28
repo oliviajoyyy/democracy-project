@@ -33,6 +33,7 @@ function democracyEngineUser() {
     }
 
     document.getElementById("top").style.display = "none";
+    document.getElementById("page0").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
@@ -155,6 +156,7 @@ function democracyEngineOrigin() {
   this.enter = function () {
 
     document.getElementById("top").style.display = "none";
+    document.getElementById("page0").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
@@ -252,17 +254,17 @@ function democracyEngineOrigin() {
 
 }
 
-//user input page for for amount of members in each legislative body
-function sLegislative() {
+//user input page for number of legislative bodies (1-3)
+function sBodies() {
 
-  var slider1 = document.getElementById('slider1');
-  var slider2 = document.getElementById('slider2');
-  var slider3 = document.getElementById('slider3');
-  var slider4 = document.getElementById('slider4');
-  var curNumHouse = parseInt(engine.numHouse);
-  var curNumSen = parseInt(engine.numSenate);
-  var curNumVP = parseInt(engine.numVP);
-  var curNumPres = parseInt(engine.numPres);
+  var slider1 = document.getElementById('slider01');
+  // var slider2 = document.getElementById('slider02');
+  // var slider3 = document.getElementById('slider03');
+  // var slider4 = document.getElementById('slider04');
+  // var curNumHouse = parseInt(engine.numHouse);
+  // var curNumSen = parseInt(engine.numSenate);
+  // var curNumVP = parseInt(engine.numVP);
+  // var curNumPres = parseInt(engine.numPres);
 
 
   this.setup = function () {
@@ -273,8 +275,9 @@ function sLegislative() {
 
   this.enter = function () {
 
-    console.log("1st Slider Page");
-    document.getElementById("page1").style.display = "block";
+    console.log("0 Slider Page");
+    document.getElementById("page0").style.display = "block";
+    document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
     document.getElementById("page4").style.display = "none";
@@ -299,6 +302,187 @@ function sLegislative() {
 
     sliders();
     button();
+    document.getElementById("top").style.display = "block";
+    document.getElementById("top").innerHTML = "NUMBER OF LEGISLATIVE BODIES";
+
+
+  }
+
+  this.draw = function () {
+
+  }
+
+  function sliders() {
+    console.log("user edits boool: " + userEdits);
+    if (userEdits == true) {
+      sliderVals();
+
+    } else {
+      createSlider();
+      sliderVals();
+    }
+
+    function createSlider() {
+
+      noUiSlider.create(slider1, {
+        start: [2],
+        range: {
+          'min': [1],
+          'max': [3]
+        },
+        cssPrefix: 'noUi-',
+        tooltips: true,
+        pips: {
+          mode: 'range',
+          density: 'range',
+        },
+        step: 1,
+        format: wNumb({
+          decimals: 0
+        })
+      });
+
+      // noUiSlider.create(slider2, {
+      //   start: curNumSen,
+      //   range: {
+      //     'min': [1],
+      //     'max': [500]
+      //   },
+      //   cssPrefix: 'noUi-',
+      //   tooltips: true,
+      //   pips: {
+      //     mode: 'range',
+      //     density: 'range',
+      //   },
+      //   step: 1,
+      //   format: wNumb({
+      //     decimals: 0
+      //   })
+      // });
+
+      // noUiSlider.create(slider3, {
+      //   start: curNumVP,
+      //   range: {
+      //     'min': [1],
+      //     'max': [500]
+      //   },
+      //   cssPrefix: 'noUi-',
+      //   tooltips: true,
+      //   pips: {
+      //     mode: 'range',
+      //     density: 'range',
+      //   },
+      //   step: 1,
+      //   format: wNumb({
+      //     decimals: 0
+      //   })
+      // });
+
+
+      // noUiSlider.create(slider4, {
+      //   start: curNumPres,
+      //   range: {
+      //     'min': [1],
+      //     'max': [500]
+      //   },
+      //   cssPrefix: 'noUi-',
+      //   tooltips: true,
+      //   pips: {
+      //     mode: 'range',
+      //     density: 'range',
+      //   },
+      //   step: 1,
+      //   format: wNumb({
+      //     decimals: 0
+      //   })
+      // });
+    }
+
+
+    // COME BACK HERE FOR CODE REVIEW
+
+    function sliderVals() {
+      //connecting values to html, each tab value is stored in an array
+      // var rangeSliderValueElement = document.getElementById('slider-value');
+
+      slider1.noUiSlider.on('update', function (values, handle) {
+        userNumBodies = values[0];
+        // rangeSliderValueElement.innerHTML = userNumHouse + " " + userNumSenate + " " + userNumPres + " " + userNumVP;
+      });
+      // slider2.noUiSlider.on('update', function (values, handle) {
+      //   //userNumSenate = values[0];
+      //   // rangeSliderValueElement.innerHTML = userNumHouse + " " + userNumSenate + " " + userNumPres + " " + userNumVP;
+      // });
+      // slider3.noUiSlider.on('update', function (values, handle) {
+      //   //userNumVP = values[0];
+      //   // rangeSliderValueElement.innerHTML = userNumHouse + " " + userNumSenate + " " + userNumPres + " " + userNumVP;
+      // });
+      // slider4.noUiSlider.on('update', function (values, handle) {
+      //   //userNumPres = values[0];
+      //   // rangeSliderValueElement.innerHTML = userNumHouse + " " + userNumSenate + " " + userNumPres + " " + userNumVP;
+      // });
+
+    }
+  }
+
+  function button() {
+    var sidePad = 20;
+
+    nextButton = createButton('NEXT');
+    nextButton.id("next-btn");
+    //position of next button is handled in css
+    nextButton.mousePressed(nextScene);
+  }
+}
+
+//user input page for for amount of members in each legislative body
+function sLegislative() {
+
+  var slider1 = document.getElementById('slider1');
+  var slider2 = document.getElementById('slider2');
+  var slider3 = document.getElementById('slider3');
+  var slider4 = document.getElementById('slider4');
+  var curNumHouse = parseInt(engine.numHouse);
+  var curNumSen = parseInt(engine.numSenate);
+  var curNumVP = parseInt(engine.numVP);
+  var curNumPres = parseInt(engine.numPres);
+
+
+  this.setup = function () {
+    // textSize(15);
+    // noStroke();
+
+  }
+
+  this.enter = function () {
+
+    console.log("1st Slider Page");
+    document.getElementById("page0").style.display = "none";
+    document.getElementById("page1").style.display = "block";
+    document.getElementById("page2").style.display = "none";
+    document.getElementById("page3").style.display = "none";
+    document.getElementById("page4").style.display = "none";
+    document.getElementById("page5").style.display = "none";
+    document.getElementById("page6").style.display = "none";
+    document.getElementById("slider-value").style.display = "none";
+    document.getElementById("vote").style.display = "none";
+    document.getElementById("slider-disp").style.display = "none";
+
+    // background(bColor);
+    // document.body.style.backgroundColor = bColor;
+    // buttonRC.remove();
+    // buttonRes.remove();
+    // buttonDef.remove();
+    // if (userEdits == true) {
+    //   dispBtn.remove();
+    //   recalBtn.remove();
+    //   emailBtn.remove();
+    // }
+
+    // changeText(" ");
+
+    sliders();
+    //button();
     document.getElementById("top").style.display = "block";
     document.getElementById("top").innerHTML = "NUMBER OF VOTING MEMBERS";
 
@@ -422,14 +606,14 @@ function sLegislative() {
     }
   }
 
-  function button() {
-    var sidePad = 20;
+  // function button() {
+  //   var sidePad = 20;
 
-    nextButton = createButton('NEXT');
-    nextButton.id("next-btn");
-    //position of next button is handled in css
-    nextButton.mousePressed(nextScene);
-  }
+  //   nextButton = createButton('NEXT');
+  //   nextButton.id("next-btn");
+  //   //position of next button is handled in css
+  //   nextButton.mousePressed(nextScene);
+  // }
 }
 
 //user input page for number of parties, current maximum of 3
@@ -443,6 +627,7 @@ function sParties() {
     console.log("2nd Slider Page");
     document.getElementById("top").style.display = "block";
     document.getElementById("top").innerHTML = "NUMBER OF POLITICAL PARTIES";
+    document.getElementById("page0").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "block";
     document.getElementById("page3").style.display = "none";
@@ -540,6 +725,7 @@ function sMembers() {
   this.enter = function () {
     console.log("3rd Slider Page");
     document.getElementById("top").innerHTML = "NUMBER OF VOTING MEMBERS AFFILIATED WITH EACH POLITICAL PARTY";
+    document.getElementById("page0").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "block";
@@ -930,6 +1116,7 @@ function sBodyPass() {
     // noCursor();
     console.log("4th Slider Page");
     document.getElementById("top").innerHTML = "PERCENTAGE OF VOTES REQUIRED FOR APPROVAL OF BILL BY EACH LEGISLATIVE CHAMBER";
+    document.getElementById("page0").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
@@ -1043,6 +1230,7 @@ function sYesVotes() {
 
     console.log("5th slider page");
     document.getElementById("top").innerHTML = "PROBABILITY OF AN AFFIRMATIVE VOTE BY A PARTY MEMBER";
+    document.getElementById("page0").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
@@ -1203,6 +1391,7 @@ function sResults() {
     console.log("user edit count: " + userEditCount);
     console.log("user result page");
     document.getElementById("top").innerHTML = "DEMOCRACY ENGINE SIMULATOR INPUTS";
+    document.getElementById("page0").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
@@ -1299,6 +1488,7 @@ function sInfo() {
   this.enter = function () {
     console.log("simulator info page");
     document.getElementById("top").innerHTML = " ";
+    document.getElementById("page0").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
@@ -1343,6 +1533,7 @@ function sDisplay() {
 
     console.log("user display page");
     document.getElementById("top").innerHTML = "DEMOCRACY ENGINE SIMULATOR INPUT DISPLAY";
+    document.getElementById("page0").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
@@ -1411,6 +1602,7 @@ function sDefault() {
 
     console.log("default settings display page");
     document.getElementById("top").innerHTML = " ";
+    document.getElementById("page0").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";

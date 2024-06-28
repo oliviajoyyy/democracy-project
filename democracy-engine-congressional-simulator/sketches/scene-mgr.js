@@ -39,6 +39,8 @@ var userInputX = 20;
 
 
 //user input variables
+var userNumBodies;
+
 var userNumHouse;
 var userPerHouseBody;
 
@@ -109,6 +111,7 @@ function setup() {
   mgr = new SceneManager();
   mgr.addScene(democracyEngineOrigin);
   mgr.addScene(democracyEngineUser);
+  mgr.addScene(sBodies);
   mgr.addScene(sLegislative);
   mgr.addScene(sParties);
   mgr.addScene(sMembers);
@@ -135,6 +138,9 @@ function mousePressed() {
 
 function nextScene() {
   if (mgr.isCurrent(democracyEngineOrigin)) {
+    //mgr.showScene(sLegislative);
+    mgr.showScene(sBodies);
+  } else if (mgr.isCurrent(sBodies)) {
     mgr.showScene(sLegislative);
   } else if (mgr.isCurrent(sLegislative)) {
     mgr.showScene(sParties);
@@ -154,9 +160,11 @@ function nextScene() {
     mgr.showScene(democracyEngineUser);
   } else if (mgr.isCurrent(democracyEngineUser)) {
     // OC update config count var here?
-    mgr.showScene(sLegislative);
+    //mgr.showScene(sLegislative);
+    mgr.showScene(sBodies);
   } else if (mgr.isCurrent(sDefault)) {
-    mgr.showScene(sLegislative);
+   //mgr.showScene(sLegislative);
+   mgr.showScene(sBodies);
   }
 
 }
@@ -286,7 +294,8 @@ function inputVar() {
   console.log("per pass: " + engine.perPass);
 
   //How Many Voting Bodies (house, senate, president, VP = 4) *for V2 - see TODO at top
-  engine.numBodies = 4;
+  engine.numBodies = parseFloat(userNumBodies) + 2; // OC add 2 for vp and pres
+  console.log("USER NUM BODIES: " + engine.numBodies);
 
 
 
