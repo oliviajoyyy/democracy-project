@@ -35,6 +35,68 @@
         "indYay": 0.5
     },
 
-    "numVotingBodies": 4
+    "numVotingBodies": 4,
+
+    "bills": [
+        {
+            "title": "Civil Rights Act (1964)",
+            "supportedParty": "Democratic",
+            "description": "Virtually every scholar, liberal and conservative, ranked this act first on their list. Its impact is unquestionable: Coming after a decade of civil rights struggle in the South and on the heels of President John F. Kennedy's assassination, the hotly contested act effectively ended racial discrimination in public accommodations and employment. Less noticed initially, but arguably just as significant, is the act's role in ending discrimination based on sex. \"America could scarcely lay claim to be a moral exemplar for the world prior to this act,\" Lichtman said."
+        },
+
+        {
+            "title": "Voting Rights Act (1965)",
+            "supportedParty": "Democratic",
+            "description": "A few of our scholars ranked this act equal to, or even higher than, the Civil Rights Act. They cited not only its intended impact on ensuring the vote for blacks, but also its unintended but profound role in realigning American politics. After the VRA, white voters, first in the South and then elsewhere, flocked to the Republican Party. This in turn made possible America’s turn to the right on economic, social and foreign policy since the 1980s."
+        },
+
+        {
+            "title": "Medicare and Medicaid acts (1965)",
+            "supportedParty": "Democratic",
+            "description": "Together, these programs have protected the health of countless elderly and poor Americans, putting it “right up there with Social Security in its impact on American life,” in Aberbach’s words. And looking into the future, the programs are so enormous that both the federal government and state governments are destined to face intractable budget challenges."
+        },
+
+        {
+            "title": "Federal-Aid Highway Act (1956)",
+            "supportedParty": "Republican",
+            "description": "Its title is obscure, but its impact is not: The act created the Interstate Highway System, which touched virtually every aspect of American life in the past 50 years. Faster roads intensified economic growth, boosted domestic tourism and made possible just-in-time manufacturing processes. Interstates also produced suburbanization, which dramatically changed lifestyles (more space, but longer commutes), drove downtowns into decline and led to the development of previously empty land. Population shifted to the Sun Belt, changing the nation’s political balance. And the Interstates irreversibly solidified the primacy of the automobile, worsening air pollution and climate change and cementing the strategic importance of the Middle East."
+        },
+
+        {
+            "title": "Economic Recovery Tax Act (1981)",
+            "supportedParty": "Republican",
+            "description": "ERTA, the keystone of President Ronald Reagan’s economic program, cut individual taxes by 25 percent, indexed tax rates to end “bracket creep” and made other technical changes that have had an enormous influence on the economy in the past quarter-century. In a larger sense, ERTA ushered in an era in which big government, and sometimes any government, ceased to be seen as an unalloyed good. The act “changed the direction of the federal government — the biggest shift since the New Deal — and laid the foundation for Republican success,” Uslaner said."
+        },
+
+        {
+            "title": "National Defense Education Act (1958)",
+            "supportedParty": "Democratic",
+            "description": "Passed in response to the Soviet launch of the satellite Sputnik, NDEA provided $575 million for education and low-interest loans for students. Its stated focus on boosting achievement in science and mathematics helped enhance the nation’s intellectual capital, laying the groundwork for decades of American innovation in science and technology and, in turn, providing a basis for economic growth, military superiority and world leadership. The act is relatively forgotten today; only two of our panelists cited it."
+        },
+
+        {
+            "title": "Tonkin Gulf Resolution (1964)",
+            "supportedParty": "Democratic",
+            "description": "The Tonkin Gulf Resolution authorized military action in Vietnam, leading the United States into a conflict that left more than 50,000 Americans dead and bequeathed tremendous divisiveness at home. Beyond that, however, the resolution — which was based on an attack that may not have taken place at all — was a major landmark for presidential authority on waging war. Ever since, presidents have exercised largely unfettered power to commit American troops abroad, with little say by Congress, despite passage of the War Powers Resolution of 1973."
+        },
+
+        {
+            "title": "Amendments to Immigration and Nationality Act (1965)",
+            "supportedParty": "Democratic",
+            "description": "This legislation, sponsored by Sen. Phil Hart (D-Mich.) and Rep. Emanuel Celler (D-N.Y.), is the sleeper of the list. It removed national-origins quotas for immigrants that had stood since 1921, thus clearing the way for a new wave of mass immigration that transformed America. To supporters, these immigrants have strengthened America’s economy; to detractors, they have been a burden, especially for native-born Americans who face new competition for jobs. Either way, the influx of immigrants from around the globe has irrevocably redefined American culture. “At the time, it wasn’t thought to be all that important, and it wasn’t very controversial,” Mayhew said. “But few acts of Congress have ever been as consequential.”"
+        },
+
+        {
+            "title": "Clean Air Act Amendments (1970)",
+            "supportedParty": "Democratic",
+            "description": "Other landmarks of environmental legislation could easily have filled this spot — such as the National Environmental Policy Act, passed the previous year — but this measure attracted the most support among our panelists. It played a key role in the federal government’s pre-emption of state regulatory authority over the environment, and, coming shortly after the first Earth Day, it was designed to be a clear signal that environmental regulation and economic growth were not incompatible. Despite some ups and downs, that view still holds considerable sway."
+        },
+
+        {
+            "title": "Personal Responsibility and Work Opportunity Reconciliation Act (1996)",
+            "supportedParty": "Republican",
+            "description": "This major overhaul of welfare, requiring work rather than government assistance, directly affected many Americans. But it was also passed by a Republican Congress and signed by a Democratic president, Bill Clinton, thus signaling the bipartisan abandonment — albeit a long time coming — of the ideas that undergirded President Lyndon Johnson’s Great Society."
+        }
+    ]
     
 }
