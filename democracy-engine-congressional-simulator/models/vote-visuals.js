@@ -408,7 +408,8 @@ class VoteVisual {
         this.y = this.y + (this.skip * .9);
       // y = y + skip;
       if (this.engine.vpVote == false) {
-        stroke(this.rColor, 100); //stroke(255, 100);
+        this.rColor.setAlpha(100);
+        stroke(this.rColor); //stroke(255, 100);
         noFill();
         strokeWeight(3);
       }
@@ -486,7 +487,8 @@ class VoteVisual {
    */
   stopVoteChange() {
     if (this.stopVoteBool == true) {
-      stroke(this.rColor, 100); //stroke(255, 100);
+      this.rColor.setAlpha(100);
+      stroke(this.rColor); //stroke(255, 100);
       noFill();
       strokeWeight(3);
       // stopVoteBool == false;

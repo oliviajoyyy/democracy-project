@@ -84,11 +84,11 @@ var colorConfig;
 
 
 function preload() {
-  helvFont = loadFont('/democracy-engine-congressional-simulator/assets/font/HelveticaNeue-Regular.otf');
-  loadingImage = loadImage('/democracy-engine-congressional-simulator/assets/gears-icon.png');
-  enterImage = loadImage('/democracy-engine-congressional-simulator/assets/asraProgress.png');
-  govtConfig = loadJSON('/democracy-engine-congressional-simulator/config/govt-config.json');
-  colorConfig = loadJSON('/democracy-engine-congressional-simulator/config/color-config.json');
+  helvFont = loadFont('../democracy-engine-congressional-simulator/assets/font/HelveticaNeue-Regular.otf');
+  loadingImage = loadImage('../democracy-engine-congressional-simulator/assets/gears-icon.png');
+  enterImage = loadImage('../democracy-engine-congressional-simulator/assets/asraProgress.png');
+  govtConfig = loadJSON('../democracy-engine-congressional-simulator/config/govt-config.json');
+  colorConfig = loadJSON('../democracy-engine-congressional-simulator/config/color-config.json');
 }
 
 
