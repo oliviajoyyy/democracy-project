@@ -501,7 +501,7 @@ class VoteVisual {
       console.log("stop vote logic 1"); // for testing
     }
     //if the vp votes and it's a NO, then bill dies
-    else if (this.engine.vpVote == true && this.engine.bodyPass[2] === false) {
+    else if (this.bodyCount > 2 && this.engine.vpVote == true && this.engine.bodyPass[2] === false) {
       this.stopVoteBool = true;
       // this.stopVoteCount++;
       console.log("stop vote logic 2"); // for testing

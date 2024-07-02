@@ -268,6 +268,7 @@ this.numBodies = currentConfig.numLegislativeBodies + 2; // add 2 for vp and pre
 
     //AB logic for VP if Senate needs a tiebreaker
     if (this.bodyCount == 2) {
+      print("votingBodyCounts[0][0]= " + this.votingBodyCounts[0][0] + "votingBodyCounts[0][1] = " + this.votingBodyCounts[0][1]);
       print("votingBodyCounts[1][0]= " + this.votingBodyCounts[1][0] + "votingBodyCounts[1][1] = " + this.votingBodyCounts[1][1]);
 
       // if (votingBodyCounts[1][0] == votingBodyCounts[1][1] && vpVote == true) {
@@ -451,7 +452,13 @@ this.numBodies = currentConfig.numLegislativeBodies + 2; // add 2 for vp and pre
     //AB: finding problem with x's
     // print("body #: " + bodyCount + " No Vote Bool: " + noVoteBool);
 
-    // if (this.bodyCount == 1) {
+    if (this.bodyCount == 1) { // for 2 legislative bodies
+      // simulate vp tiebreaker vote
+      this.yay = 50;
+      this.nay = 50;
+    }
+
+    // if (this.bodyCount == 0) { // for 1 legislative bodies
     //   // simulate vp tiebreaker vote
     //   this.yay = 50;
     //   this.nay = 50;
@@ -551,9 +558,15 @@ this.numBodies = currentConfig.numLegislativeBodies + 2; // add 2 for vp and pre
         this.bodyPass[this.bodyCount] = true;
         this.superThreshIndex[this.bodyCount] = true;
         //AB logic if senate initiates tie breaker
-      } else if (this.yay == this.numCon * this.perPass && this.bodyLabel == "SENATE") {
+      } else if (this.yay == this.numCon * this.perPass) {
+        console.log("tie-breaker result logic, label: " + this.bodyLabel);
+        if (this.numLegislativeBodies == 1 && this.bodyLabel == "HOUSE OF REPRESENTATIVES") {
         this.bodyPass[this.bodyCount] = true;
         this.vpVote = true;
+        } else if (this.bodyLabel == "SENATE") {
+          this.bodyPass[this.bodyCount] = true;
+          this.vpVote = true;
+        }
       } else if (this.yay > this.numCon * this.perPass) {
         this.bodyPass[this.bodyCount] = true;
         this.superThreshIndex[this.bodyCount] = false;
@@ -573,7 +586,6 @@ this.numBodies = currentConfig.numLegislativeBodies + 2; // add 2 for vp and pre
         this.bodyPass[this.bodyCount] = true;
         this.superThreshIndex[this.bodyCount] = false;
       } else if (this.yay == this.numCon / 2 && this.bodyLabel == "SENATE") {
-        // OC REVIEW FOR CHANGE TO 1 OR 2 BODIES
         this.bodyPass[this.bodyCount] = true;
         this.vpVote = true;
       } else {
