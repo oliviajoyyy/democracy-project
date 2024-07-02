@@ -529,11 +529,11 @@ this.numBodies = currentConfig.numLegislativeBodies + 2; // add 2 for vp and pre
    resultLogic() {
 
     // OC for 1 legislative body (house), make senate automatically pass
-    //if (this.numLegislativeBodies == 1) {
+    if (this.numLegislativeBodies == 1) {
       this.bodyPass[1] = true;
       this.superThreshIndex[1] = true;
       this.stopVoteArr[1] = false;
-    //}
+    }
 
     console.log("body pass: " + this.bodyPass);
 
@@ -611,9 +611,9 @@ this.numBodies = currentConfig.numLegislativeBodies + 2; // add 2 for vp and pre
     let decisionText = "";
     console.log("body pass: " + this.bodyPass);
     //this.bodyPass[0] = true; // for testing house true
-    this.bodyPass[1] = true; // for testing senate true
-    //this.superThreshIndex[1] = true;
-    this.stopVoteArr[1] = false; // make senate vote
+    // this.bodyPass[1] = true; // for testing senate true
+    // //this.superThreshIndex[1] = true;
+    // this.stopVoteArr[1] = false; // make senate vote
     console.log("body pass: " + this.bodyPass);
 
     if (this.bodyCount == this.numBodies) {

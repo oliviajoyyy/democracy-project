@@ -11,6 +11,7 @@ class VoteVisual {
   //which body is voting
   bodyCount = 0;
   bodyPass = [];
+  numBodies;
 
   //The number of voting memebers for each body
   numCon;
@@ -103,6 +104,12 @@ class VoteVisual {
     this.engine = engineObj;
     this.forUser = this.engine.forUser;
 
+    if (this.engine.numLegislativeBodies == 1) {
+      this.numBodies = 3;
+    } else {
+      this.numBodies = this.engine.numBodies;
+    }
+
     // Logic for House
     if (this.bodyCount == 0) {
 
@@ -125,9 +132,9 @@ class VoteVisual {
 
         // OC offset calculated differently between default and user config
         if (this.forUser)
-          this.offSet = this.dWidth / (this.engine.numBodies);
+          this.offSet = this.dWidth / (this.numBodies);
         else
-          this.offSet = this.dWidth / (this.engine.numBodies - 1);
+          this.offSet = this.dWidth / (this.numBodies - 1);
 
         //Figure out how big to draw the circles and how far to space them out
         this.skip = floor(.97 * (sqrt((this.offSet) * this.dHeight / this.numCon)));
@@ -141,7 +148,7 @@ class VoteVisual {
     //   this.bodyCount == 1;
     // }
 
-    if (this.bodyCount == 1) {//} && this.engine.numLegislativeBodies == 1) {
+    if (this.bodyCount == 1 && this.engine.numLegislativeBodies == 1) {
       this.bodyCount++;
       //this.endBody = 1;
     }
@@ -691,7 +698,7 @@ class VoteVisual {
   finalTextDisplayUser(engine, font, colorOverlay) {
     let currentBodyLabel;
 
-    let columnAmount = engine.numBodies;
+    let columnAmount = this.numBodies;
     // let rowAmount = 4;
 
     let padY = 20;
@@ -717,13 +724,21 @@ class VoteVisual {
     rect(0, 0, this.dWidth, this.dHeight);
     textStyle(NORMAL);
 
-
     //NEED TO CHANGE LATER FOR MORE THAN 3 BODIES
     for (let i = 0; i < engine.numBodies; i++) {
       fill(this.tColor); //fill(255);
+      var ip;
+      if (engine.numLegislativeBodies == 1) 
+        ip = i - 1;
+      else 
+        ip = i;
+
       if (i == 0) {
         currentBodyLabel = 'LEGISLATIVE CHAMBER 1';
       } else if (i == 1) {
+        if (engine.numLegislativeBodies == 1) {
+          continue; // OC skip results if only 1 legislative body
+        }
         currentBodyLabel = 'LEGISLATIVE CHAMBER 2';
       } else if (i == 2) {
         currentBodyLabel = 'VICE PRESIDENCY';
@@ -738,34 +753,34 @@ class VoteVisual {
 
         if (currentBodyLabel == 'PRESIDENCY') {
           textSize(22);
-          text(currentBodyLabel, (i) * dispW + padX, padY, dispW, dispH); // display this body label
+          text(currentBodyLabel, (ip) * dispW + padX, padY, dispW, dispH); // display this body label
           textAlign(LEFT);
 
           if (engine.stopVoteArr[i] == false) { // president voted, so display yes/no counts
             textSize(20);
-            text("\n\n\nVOTES \n", (i) * dispW + padX, padY, dispW, dispH);
+            text("\n\n\nVOTES \n", (ip) * dispW + padX, padY, dispW, dispH);
             textSize(16);
-            text("\n\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", (i) * dispW + padX, padY);
+            text("\n\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", (ip) * dispW + padX, padY);
             textSize(20);
-            text('\n\n\n' + engine.voteResults[i], (i) * dispW + padX, this.dHeight / 4, dispW - padX, dispH);
+            text('\n\n\n' + engine.voteResults[i], (ip) * dispW + padX, this.dHeight / 4, dispW - padX, dispH);
           } else { // president not voted, so adjust placement of text
             textSize(20);
-            text('\n\n\n\n' + engine.voteResults[i], (i) * dispW + padX, padY, dispW - padX, dispH);
+            text('\n\n\n\n' + engine.voteResults[i], (ip) * dispW + padX, padY, dispW - padX, dispH);
           }
         } else if (currentBodyLabel == 'VICE PRESIDENCY') {
           textSize(22);
-          text(currentBodyLabel, i * dispW + padX, padY, dispW, dispH);
+          text(currentBodyLabel, (ip) * dispW + padX, padY, dispW, dispH);
 
           if (engine.stopVoteArr[i] == false && engine.vpVote == true) { // vp voted, so display yes/no counts
             textSize(20);
-            text("\n\n\nVOTES \n", i * dispW + padX, padY, dispW, dispH);
+            text("\n\n\nVOTES \n", (ip) * dispW + padX, padY, dispW, dispH);
             textSize(16);
-            text("\n\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", i * dispW + padX, padY);
+            text("\n\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", (ip) * dispW + padX, padY);
             textSize(20);
-            text('\n\n\n' + engine.voteResults[i], (i) * dispW + padX, this.dHeight / 4, dispW - padX, dispH);
+            text('\n\n\n' + engine.voteResults[i], (ip) * dispW + padX, this.dHeight / 4, dispW - padX, dispH);
           } else { // did not vote
             textSize(20);
-            text('\n\n\n' + engine.voteResults[i], i * dispW + padX, padY, dispW - padX, dispH);
+            text('\n\n\n' + engine.voteResults[i], (ip) * dispW + padX, padY, dispW - padX, dispH);
           }
         } else {
           textSize(22);
