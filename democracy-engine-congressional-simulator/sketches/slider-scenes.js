@@ -406,7 +406,7 @@ function sBodies() {
       // var rangeSliderValueElement = document.getElementById('slider-value');
 
       slider1.noUiSlider.on('update', function (values, handle) {
-        userNumBodies = values[0];
+        userNumLegislative = values[0];
         // rangeSliderValueElement.innerHTML = userNumHouse + " " + userNumSenate + " " + userNumPres + " " + userNumVP;
       });
       // slider2.noUiSlider.on('update', function (values, handle) {

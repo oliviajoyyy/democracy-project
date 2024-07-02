@@ -141,8 +141,14 @@ class VoteVisual {
     //   this.bodyCount == 1;
     // }
 
+    if (this.bodyCount == 1) {//} && this.engine.numLegislativeBodies == 1) {
+      this.bodyCount++;
+      //this.endBody = 1;
+    }
+
     //Logic for Senate
     if (this.bodyCount == 1) {
+      console.log("VC IN LOGIC FOR SENATE");
       strokeWeight(10);
       translate(this.offSet * this.bodyCount, 0);
 
@@ -153,6 +159,9 @@ class VoteVisual {
 
       // Setup variables first time we pass through a new body
       if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
+        // if (this.engine.numLegislativeBodies == 1) {
+        //   this.bodyCount++;
+        // } else {
         this.test = 0;
         print('VISUAL CLASS bodyCount = ')
         print(this.bodyCount);
@@ -176,15 +185,23 @@ class VoteVisual {
         print('v Count = ' + this.count); //fortesting
         print('v Count1 = ' + this.count1); //fortesting
         print('v Count2 = ' + this.count2); //fortesting
+        //}
       }
 
     }
 
     //AB logic for VP if Senate needs a tiebreaker
     if (this.bodyCount == 2) {
-
+      
       strokeWeight(10);
-      translate(this.offSet * this.bodyCount, 0);
+
+      var translateVal = this.bodyCount;
+      if (this.engine.numLegislativeBodies == 1) {
+        translateVal = this.bodyCount - 1;
+      }
+
+      translate(this.offSet * translateVal, 0);
+      //translate(this.offSet * this.bodyCount, 0);
 
       if (this.endBody == 1) {
         this.resetCount();
@@ -220,10 +237,18 @@ class VoteVisual {
     if (this.bodyCount == 3) {
       strokeWeight(10);
 
+      var translateVal = this.bodyCount;
+      if (this.engine.numLegislativeBodies == 1) {
+        translateVal = this.bodyCount - 1;
+      }
+
+      //translate(this.offSet * translateVal, 0);
+      //translate(this.offSet * this.bodyCount, 0);
+
       if (this.forUser)
-        translate(this.offSet * (this.bodyCount), 0);
+        translate(this.offSet * (translateVal), 0);
       else
-        translate(this.offSet * (this.bodyCount - 1), 0);
+        translate(this.offSet * (translateVal - 1), 0);
 
       if (this.endBody == 1) {
         this.resetCount();

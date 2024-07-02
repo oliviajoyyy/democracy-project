@@ -74,7 +74,8 @@ repYaythresh; // = 0.3;
 indYaythresh; // = 0.5;
 
 //How Many Voting Bodies (house, senate, president = 3) *see to DO at top of code
-numBodies; // = 4;
+numBodies; // = 4; // total number of voting bodies
+numLegislativeBodies; // number of legislative bodies (1-3)
 //defNumBody;//delete?
 
 //******These are NOT user determined*********
@@ -181,7 +182,8 @@ this.perPass = currentConfig.threshold.majority;
 this.demYaythresh = currentConfig.threshold.demYay;
 this.repYaythresh = currentConfig.threshold.repYay;
 this.indYaythresh = currentConfig.threshold.indYay;
-this.numBodies = currentConfig.numVotingBodies;
+this.numLegislativeBodies = currentConfig.numLegislativeBodies;
+this.numBodies = currentConfig.numLegislativeBodies + 2; // add 2 for vp and president
 
   }
 
@@ -525,10 +527,16 @@ this.numBodies = currentConfig.numVotingBodies;
     * Logic for all the final results - determines the voting outcome
     */
    resultLogic() {
-    this.bodyPass[1] = true; // for testing senate true
-    this.superThreshIndex[1] = true;
-    this.stopVoteArr[1] = false; // make senate vote
+
+    // OC for 1 legislative body (house), make senate automatically pass
+    //if (this.numLegislativeBodies == 1) {
+      this.bodyPass[1] = true;
+      this.superThreshIndex[1] = true;
+      this.stopVoteArr[1] = false;
+    //}
+
     console.log("body pass: " + this.bodyPass);
+
     if (this.forUser) { // engine running for user configuration
 
     // If voting body == 1 and yay == 50%

@@ -39,7 +39,7 @@ var userInputX = 20;
 
 
 //user input variables
-var userNumBodies;
+var userNumLegislative; // number of legislative bodies (1-3)
 
 var userNumHouse;
 var userPerHouseBody;
@@ -294,7 +294,9 @@ function inputVar() {
   console.log("per pass: " + engine.perPass);
 
   //How Many Voting Bodies (house, senate, president, VP = 4) *for V2 - see TODO at top
-  engine.numBodies = parseFloat(userNumBodies) + 2; // OC add 2 for vp and pres
+  engine.numLegislativeBodies = parseFloat(userNumLegislative);
+  //engine.numBodies = parseFloat(userNumLegislative) + 2; // OC add 2 for vp and pres
+  engine.numBodies = 4;
   console.log("USER NUM BODIES: " + engine.numBodies);
 
 

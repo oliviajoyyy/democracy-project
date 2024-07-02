@@ -35,7 +35,7 @@
         "indYay": 0.5
     },
 
-    "numVotingBodies": 4,
+    "numLegislativeBodies": 2,
 
     "bills": [
         {
