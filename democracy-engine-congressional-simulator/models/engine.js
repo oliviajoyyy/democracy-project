@@ -225,6 +225,11 @@ this.numBodies = currentConfig.numVotingBodies;
         this.numRep = round(this.numCon * this.perRepHouse);
         this.numWild = round(this.numCon * this.perIndHouse);
       }
+      // if (this.numBodies == 3) { // house, vp, pres
+      //   this.bodyPass[this.bodyCount] = true;
+      // this.nextBody();
+      // continue;
+      // }
     }
 
     //Logic for Senate
@@ -520,7 +525,10 @@ this.numBodies = currentConfig.numVotingBodies;
     * Logic for all the final results - determines the voting outcome
     */
    resultLogic() {
-
+    this.bodyPass[1] = true; // for testing senate true
+    this.superThreshIndex[1] = true;
+    this.stopVoteArr[1] = false; // make senate vote
+    console.log("body pass: " + this.bodyPass);
     if (this.forUser) { // engine running for user configuration
 
     // If voting body == 1 and yay == 50%
@@ -557,6 +565,7 @@ this.numBodies = currentConfig.numVotingBodies;
         this.bodyPass[this.bodyCount] = true;
         this.superThreshIndex[this.bodyCount] = false;
       } else if (this.yay == this.numCon / 2 && this.bodyLabel == "SENATE") {
+        // OC REVIEW FOR CHANGE TO 1 OR 2 BODIES
         this.bodyPass[this.bodyCount] = true;
         this.vpVote = true;
       } else {
@@ -592,6 +601,11 @@ this.numBodies = currentConfig.numVotingBodies;
   finalLogic() {
     let currentBodyLabel;
     let decisionText = "";
+    console.log("body pass: " + this.bodyPass);
+    //this.bodyPass[0] = true; // for testing house true
+    this.bodyPass[1] = true; // for testing senate true
+    //this.superThreshIndex[1] = true;
+    this.stopVoteArr[1] = false; // make senate vote
     console.log("body pass: " + this.bodyPass);
 
     if (this.bodyCount == this.numBodies) {
@@ -647,7 +661,7 @@ this.numBodies = currentConfig.numVotingBodies;
 
                 if (this.bodyPass[0] == false || this.bodyPass[1] == false) {
                   this.voteResults[i] = "BILL IS NOT APPROVED BY ALL CHAMBERS: PRESIDENT DOES NOT VOTE";
-                  this.votingBodyCounts[i][0] = null;
+                  this.votingBodyCounts[i][0] = null; // OC set to null so that no count of votes is saved to db
                   this.votingBodyCounts[i][1] = null;
                 } else {
                   this.voteResults[i] = "DOES NOT VOTE";

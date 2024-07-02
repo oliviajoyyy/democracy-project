@@ -137,6 +137,10 @@ class VoteVisual {
       }
     }
 
+    // if (this.numBodies == 3) { // house, vp, pres
+    //   this.bodyCount == 1;
+    // }
+
     //Logic for Senate
     if (this.bodyCount == 1) {
       strokeWeight(10);

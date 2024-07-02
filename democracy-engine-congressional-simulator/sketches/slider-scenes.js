@@ -1501,7 +1501,7 @@ function sInfo() {
     document.getElementById("sim-info").style.display = "block";
     nextButton.remove();
     inputTxt();
-    var delayInMilliseconds = 13000; //15 seconds
+    var delayInMilliseconds = 120; //13000; // 15 seconds
 
     setTimeout(function () {
       inputVar();
