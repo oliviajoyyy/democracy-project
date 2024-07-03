@@ -104,6 +104,7 @@ class VoteVisual {
     this.engine = engineObj;
     this.forUser = this.engine.forUser;
 
+    // OC centers vote drawings based on total of voting bodies
     if (this.engine.numLegislativeBodies == 1) {
       this.numBodies = 3;
     } else {
@@ -148,6 +149,7 @@ class VoteVisual {
     //   this.bodyCount == 1;
     // }
 
+    // OC skip bodyCount == 1 (senate) when only 1 legislative body
     if (this.bodyCount == 1 && this.engine.numLegislativeBodies == 1) {
       this.bodyCount++;
       //this.endBody = 1;
@@ -155,7 +157,6 @@ class VoteVisual {
 
     //Logic for Senate
     if (this.bodyCount == 1) {
-      console.log("VC IN LOGIC FOR SENATE");
       strokeWeight(10);
       translate(this.offSet * this.bodyCount, 0);
 
@@ -203,6 +204,8 @@ class VoteVisual {
       strokeWeight(10);
 
       var translateVal = this.bodyCount;
+
+      // OC move translation to left when only 1 legislaive body
       if (this.engine.numLegislativeBodies == 1) {
         translateVal = this.bodyCount - 1;
       }
@@ -245,6 +248,8 @@ class VoteVisual {
       strokeWeight(10);
 
       var translateVal = this.bodyCount;
+
+      // OC move translation to left when only 1 legislaive body
       if (this.engine.numLegislativeBodies == 1) {
         translateVal = this.bodyCount - 1;
       }
@@ -727,6 +732,8 @@ class VoteVisual {
     //NEED TO CHANGE LATER FOR MORE THAN 3 BODIES
     for (let i = 0; i < engine.numBodies; i++) {
       fill(this.tColor); //fill(255);
+
+      // OC adjust placement of text based on total number of voting bodies
       var ip;
       if (engine.numLegislativeBodies == 1) 
         ip = i - 1;
