@@ -452,17 +452,17 @@ this.numBodies = currentConfig.numLegislativeBodies + 2; // add 2 for vp and pre
     //AB: finding problem with x's
     // print("body #: " + bodyCount + " No Vote Bool: " + noVoteBool);
 
-    if (this.bodyCount == 1) { // for 2 legislative bodies
-      // simulate vp tiebreaker vote
-      this.yay = 50;
-      this.nay = 50;
-    }
-
-    // if (this.bodyCount == 0) { // for 1 legislative bodies
+    // if (this.bodyCount == 1) { // for 2 legislative bodies
     //   // simulate vp tiebreaker vote
     //   this.yay = 50;
     //   this.nay = 50;
     // }
+
+    // OC simulate tie breaker vote for 1 legislative body
+    if (this.bodyCount == 0) {
+      this.yay = round(this.numHouse / 2);
+      this.nay = this.numHouse - this.yay;
+    }
 
     this.storeBodyVotes();
   }
@@ -540,6 +540,8 @@ this.numBodies = currentConfig.numLegislativeBodies + 2; // add 2 for vp and pre
       this.bodyPass[1] = true;
       this.superThreshIndex[1] = true;
       this.stopVoteArr[1] = false;
+      if (this.bodyCount == 1)
+      this.yay = this.numSenate;
     }
 
     console.log("body pass: " + this.bodyPass);
@@ -558,15 +560,14 @@ this.numBodies = currentConfig.numLegislativeBodies + 2; // add 2 for vp and pre
         this.bodyPass[this.bodyCount] = true;
         this.superThreshIndex[this.bodyCount] = true;
         //AB logic if senate initiates tie breaker
-      } else if (this.yay == this.numCon * this.perPass) {
-        console.log("tie-breaker result logic, label: " + this.bodyLabel);
-        if (this.numLegislativeBodies == 1 && this.bodyLabel == "HOUSE OF REPRESENTATIVES") {
-        this.bodyPass[this.bodyCount] = true;
-        this.vpVote = true;
-        } else if (this.bodyLabel == "SENATE") {
+      } else if (this.yay == this.numCon * this.perPass && this.bodyLabel == "SENATE") {
           this.bodyPass[this.bodyCount] = true;
           this.vpVote = true;
-        }
+      } else if (this.yay == this.numCon * this.perPass && (this.numLegislativeBodies == 1) && this.bodyLabel == "HOUSE OF REPRESENTATIVES") {
+          // OC tie breaker for 1 legislative body
+          this.bodyPass[this.bodyCount] = true;
+          this.vpVote = true;
+          this.stopVoteArr[this.bodyCount] = false;
       } else if (this.yay > this.numCon * this.perPass) {
         this.bodyPass[this.bodyCount] = true;
         this.superThreshIndex[this.bodyCount] = false;
@@ -674,6 +675,9 @@ this.numBodies = currentConfig.numLegislativeBodies + 2; // add 2 for vp and pre
                   this.superThreshIndex[0] == false ||
                   this.superThreshIndex[1] == false) {
                   this.voteResults[i] = "BILL IS APPROVED";
+                } else if (this.bodyPass[i-1] == true && this.bodyPass[i] == true) {
+                  // OC vp votes and passes bill AND pres passes bill");
+                  this.voteResults[i] = "BILL IS APPROVED";
                 } else if (this.bodyPass[i] == false) {
                   this.voteResults[i] = "BILL IS NOT APPROVED";
                 }
@@ -721,6 +725,10 @@ this.numBodies = currentConfig.numLegislativeBodies + 2; // add 2 for vp and pre
                   this.voteResults[i] = "BILL IS APPROVED WITH SUPERMAJORITY";
                 } else if ((currentBodyLabel == 'SENATE' || currentBodyLabel == 'LEGISLATIVE CHAMBER 2') 
                               && this.bodyPass[0] == true && this.bodyPass[1] == true && this.vpVote == true) {
+                  this.voteResults[i] = "TIE-BREAKER VOTE INITIATED";
+                } else if (this.numLegislativeBodies == 1 && currentBodyLabel == 'LEGISLATIVE CHAMBER 1'
+                              && this.bodyPass[0] == true && this.bodyPass[1] == true && this.vpVote == true) {
+                  // OC tie-breaker text for 1 legislative body
                   this.voteResults[i] = "TIE-BREAKER VOTE INITIATED";
                 } else if (this.bodyPass[i] == false) {
                   this.voteResults[i] = "BILL IS NOT APPROVED";
