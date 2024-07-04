@@ -501,9 +501,16 @@ function sLegislative() {
     if (userNumLegislative == 1) {
       document.getElementById("slider1").style.display = "block";
       document.getElementById("slider2").style.display = "none";
+      document.getElementById("chamber-label-2-p1").style.display = "none";
+      // document.getElementById("slider-text-2").style.display = "none";
+      // document.getElementById("slider-text-2").innerHTML = "";
     } else if (userNumLegislative == 2) {
       document.getElementById("slider1").style.display = "block";
       document.getElementById("slider2").style.display = "block";
+      document.getElementById("chamber-label-2-p1").innerHTML = "<p id='slider-text-2'>SECOND LEGISLATIVE CHAMBER</p>";
+      document.getElementById("chamber-label-2-p1").style.display = "block";
+      // document.getElementById("slider-text-2").style.display = "block";
+      // document.getElementById("slider-text-2").innerHTML = "TESTING";
       // = "none" for 3rd body slider
     } else {
       // = "block" for all 3 body sliders
@@ -787,11 +794,27 @@ function sMembers() {
     if (userNumLegislative == 1) {
       document.getElementById("slider6").style.display = "block";
       document.getElementById("slider7").style.display = "none";
+      document.getElementById("chamber-label-2-p3").style.display = "none";
+      // document.getElementById("slider-text-2").style.display = "none";
+      // document.getElementById("slider-text-2").innerHTML = "";
+    //   var sliderText2 = document.getElementById("slider-text-2");
+    // console.log("slider-text-2 visibility:", window.getComputedStyle(sliderText2).display);
+    // console.log("slider-text-2 content:", sliderText2.textContent);
     } else if (userNumLegislative == 2) {
+      console.log("should load both slider6 and slider7 with text");
       document.getElementById("slider6").style.display = "block";
       document.getElementById("slider7").style.display = "block";
-      // = "none" for 3rd body slider
-    } else {
+      document.getElementById("chamber-label-2-p3").innerHTML = "<p id='slider-text-2'>SECOND LEGISLATIVE CHAMBER</p>";
+      document.getElementById("chamber-label-2-p3").style.display = "block";
+      //document.getElementById("slider7").innerHTML = "<p id='slider-text-2'>SECOND LEGISLATIVE CHAMBER</p>";
+      // document.getElementById("slider-text-2").style.display = "block";
+      // document.getElementById("slider-text-2").innerHTML = "TESTING";
+      // Check if the <p> tag inside slider7 is visible and has text
+    var sliderText2 = document.getElementById("slider-text-2");
+    console.log("slider-text-2 visibility:", window.getComputedStyle(sliderText2).display);
+    console.log("slider-text-2 content:", sliderText2.textContent);
+    // document.getElementById("slider-text-2").innerHTML = "TESTING";
+  } else {
       // = "block" for all 3 body sliders
     }
 
