@@ -296,7 +296,7 @@ function inputVar() {
   //How Many Voting Bodies (house, senate, president, VP = 4) *for V2 - see TODO at top
   engine.numLegislativeBodies = parseFloat(userNumLegislative);
   //engine.numBodies = parseFloat(userNumLegislative) + 2; // OC add 2 for vp and pres
-  engine.numBodies = 4;
+  engine.numBodies = 5;
   console.log("USER NUM BODIES: " + engine.numBodies);
 
 

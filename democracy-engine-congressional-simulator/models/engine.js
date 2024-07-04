@@ -41,6 +41,7 @@ stressOffset;
 
 //Number voting members
 numHouse; // = 435
+numHouse2 = 435;
 numSenate; // = 100;
 numPres; // = 1;
 numVP; // = 1;
@@ -49,6 +50,11 @@ numVP; // = 1;
 perDemHouse; // = 0.505;
 perRepHouse; // = 0.485;
 perIndHouse; // = 0.00;
+
+//Demographics of House2 as decimal percentages 1 = 100%
+perDemHouse2 = 0.505;
+perRepHouse2 = 0.485;
+perIndHouse2 = 0.00;
 
 //Demographics of Senate as decimal percentages 1 = 100%
 perDemSenate; // = 0.48;
@@ -74,7 +80,7 @@ repYaythresh; // = 0.3;
 indYaythresh; // = 0.5;
 
 //How Many Voting Bodies (house, senate, president = 3) *see to DO at top of code
-numBodies; // = 4; // total number of voting bodies
+numBodies; // = 4; // total number of voting bodies --> 5
 numLegislativeBodies; // number of legislative bodies (1-3)
 //defNumBody;//delete?
 
@@ -138,7 +144,7 @@ forUser;
 // OC signal used to determine when finalDisplay() runs (finalDisplay funct is in the scenes)
 //finalDisplayBool = false;
 
-voteResults = ["","","",""];
+voteResults = ["","","","",""];
 // OC stores decisions for each body (bill approved/not): [chamber1, chamber2, vp, pres]
 
 decisionTxt = ""; // OC final decision string
@@ -183,7 +189,7 @@ this.demYaythresh = currentConfig.threshold.demYay;
 this.repYaythresh = currentConfig.threshold.repYay;
 this.indYaythresh = currentConfig.threshold.indYay;
 this.numLegislativeBodies = currentConfig.numLegislativeBodies;
-this.numBodies = currentConfig.numLegislativeBodies + 2; // add 2 for vp and president
+this.numBodies = 5; //currentConfig.numLegislativeBodies + 3; // add 2 for vp and president
 
   }
 
@@ -234,8 +240,52 @@ this.numBodies = currentConfig.numLegislativeBodies + 2; // add 2 for vp and pre
       // }
     }
 
-    //Logic for Senate
+    
+    //Logic for House 2
     if (this.bodyCount == 1) {
+      if (!this.forUser) { // if original config, skip this part
+              // make house2 automatically pass
+      this.bodyPass[1] = true;
+      this.superThreshIndex[1] = true;
+      this.stopVoteArr[1] = false;
+      if (this.bodyCount == 1)
+        this.yay = this.numHouse2;
+      this.nextBody();
+      continue;
+    }
+
+      if (this.endBody == 1) {
+        this.resetCount();
+        this.endBody = 0;
+      }
+
+      // Setup variables first time we pass through a new body
+      if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
+        this.test = 0;
+        print('bodyCount = ')
+        print(this.bodyCount);
+        this.allVotes[this.ix] = [];
+        this.voteResults[this.ix] = "";
+
+        ///Set number of voting memebers
+        this.numCon = this.numHouse2;
+        this.bodyLabel = 'HOUSE 2';
+
+        //Set Demographics for each body
+        this.numDem = round(this.numCon * this.perDemHouse2);
+        this.numRep = round(this.numCon * this.perRepHouse2);
+        this.numWild = round(this.numCon * this.perIndHouse2);
+
+        print('Count = ' + this.count); //fortesting
+        print('Count1 = ' + this.count1); //fortesting
+        print('Count2 = ' + this.count2); //fortesting
+      }
+
+    }
+
+
+    //Logic for Senate
+    if (this.bodyCount == 2) {
 
       if (this.endBody == 1) {
         this.resetCount();
@@ -267,7 +317,7 @@ this.numBodies = currentConfig.numLegislativeBodies + 2; // add 2 for vp and pre
     }
 
     //AB logic for VP if Senate needs a tiebreaker
-    if (this.bodyCount == 2) {
+    if (this.bodyCount == 3) {
       print("votingBodyCounts[0][0]= " + this.votingBodyCounts[0][0] + "votingBodyCounts[0][1] = " + this.votingBodyCounts[0][1]);
       // print("votingBodyCounts[1][0]= " + this.votingBodyCounts[1][0] + "votingBodyCounts[1][1] = " + this.votingBodyCounts[1][1]);
 
@@ -301,7 +351,7 @@ this.numBodies = currentConfig.numLegislativeBodies + 2; // add 2 for vp and pre
     }
 
     //Logic for President
-    if (this.bodyCount == 3) {
+    if (this.bodyCount == 4) {
 
       if (this.endBody == 1) {
         this.resetCount();
@@ -333,6 +383,7 @@ this.numBodies = currentConfig.numLegislativeBodies + 2; // add 2 for vp and pre
       this.nextBody();
       continue; // skip process of voting
     }
+
     // OC loops through each member of each body
       for (this.jx = 0; this.jx < this.numCon; this.jx++) { 
         if (this.count < this.numCon - 1 && this.count1 < 1) {
@@ -517,17 +568,17 @@ this.numBodies = currentConfig.numLegislativeBodies + 2; // add 2 for vp and pre
    */
   stopVoteLogic() {
     //AB if the vp vote is not needed, no vote is necessary
-    if (this.bodyCount == 2 && this.vpVote == false) {
+    if (this.bodyCount == 3 && this.vpVote == false) {
       this.stopVoteBool = true;
       this.stopVoteCount++;
     }
     //if the vp votes and it's a NO, then bill dies
-    else if (this.vpVote == true && this.bodyPass[2] === false) {
+    else if (this.vpVote == true && this.bodyPass[3] === false) {
       this.stopVoteBool = true;
       this.stopVoteCount++;
     }
     //AB if the first or second body is not a pass,  bill dies thus preventing other bodies to vote
-    else if (this.bodyPass[0] === false || this.bodyPass[1] === false) {
+    else if (this.bodyPass[0] === false || this.bodyPass[1] === false || this.bodyPass[2] == false) {
       this.stopVoteBool = true;
       this.stopVoteCount++;
     } else {
@@ -542,11 +593,26 @@ this.numBodies = currentConfig.numLegislativeBodies + 2; // add 2 for vp and pre
 
     // OC for 1 legislative body (house), make senate automatically pass
     if (this.numLegislativeBodies == 1) {
+      this.bodyPass[2] = true;
+      this.superThreshIndex[2] = true;
+      this.stopVoteArr[2] = false;
+      if (this.bodyCount == 2)
+        this.yay = this.numSenate;
+
+      // also make house 2 automatically pass
       this.bodyPass[1] = true;
       this.superThreshIndex[1] = true;
       this.stopVoteArr[1] = false;
       if (this.bodyCount == 1)
-      this.yay = this.numSenate;
+      this.yay = this.numHouse2;
+
+    } else if (this.numLegislativeBodies == 2) { // use original house [0] and senate [2]
+      // make house2 automatically pass
+      this.bodyPass[1] = true;
+      this.superThreshIndex[1] = true;
+      this.stopVoteArr[1] = false;
+      if (this.bodyCount == 1)
+        this.yay = this.numHouse2;
     }
 
     console.log("body pass: " + this.bodyPass);
@@ -652,8 +718,14 @@ this.numBodies = currentConfig.numLegislativeBodies + 2; // add 2 for vp and pre
               currentBodyLabel = 'SENATE';
             }
           } else if (i == 2) {
-            currentBodyLabel = 'VICE PRESIDENCY';
+            if (this.forUser) {
+              currentBodyLabel = 'LEGISLATIVE CHAMBER 3';
+            } else {
+              currentBodyLabel = 'SENATE';
+            }
           } else if (i == 3) {
+            currentBodyLabel = 'VICE PRESIDENCY';
+          } else if (i == 4) {
             // print("I AM IN PRESIDENT b4 LOGIC");
             currentBodyLabel = 'PRESIDENCY';
           }
@@ -670,25 +742,26 @@ this.numBodies = currentConfig.numLegislativeBodies + 2; // add 2 for vp and pre
               // presidents has voted
               if (this.stopVoteArr[i] == false) {
 
-                if (this.bodyPass[0] === true && this.bodyPass[1] === true && this.bodyPass[3] === false) {
-                  if (this.superThreshIndex[0] === true && this.superThreshIndex[1] === true) {
+                if (this.bodyPass[0] === true && this.bodyPass[1] === true && this.bodyPass[2] === true &&this.bodyPass[4] === false) {
+                  if (this.superThreshIndex[0] === true && this.superThreshIndex[1] === true && this.superThreshIndex[2] === true) {
                     this.voteResults[i] = "VETO OVERRIDE BY SUPERMAJORITY IN ALL LEGISLATIVE CHAMBERS";
                   } else {
                     this.voteResults[i] = "PRESIDENTIAL VETO: BILL IS NOT APPROVED";
                   }
                 } else if (this.bodyPass[i] == true &&
                   this.superThreshIndex[0] == false ||
-                  this.superThreshIndex[1] == false) {
+                  this.superThreshIndex[1] == false ||
+                  this.superThreshIndex[2] == false) {
                   this.voteResults[i] = "BILL IS APPROVED";
                 } else if (this.bodyPass[i-1] == true && this.bodyPass[i] == true) {
-                  // OC vp votes and passes bill AND pres passes bill");
+                  // OC vp votes [i-1] (or [3] for new) and passes bill AND pres passes bill [i] ([4] for new)");
                   this.voteResults[i] = "BILL IS APPROVED";
                 } else if (this.bodyPass[i] == false) {
                   this.voteResults[i] = "BILL IS NOT APPROVED";
                 }
               } else { // president has not voted
 
-                if (this.bodyPass[0] == false || this.bodyPass[1] == false) {
+                if (this.bodyPass[0] == false || this.bodyPass[1] == false || this.bodyPass[2] == false) {
                   this.voteResults[i] = "BILL IS NOT APPROVED BY ALL CHAMBERS: PRESIDENT DOES NOT VOTE";
                   this.votingBodyCounts[i][0] = null; // OC set to null so that no count of votes is saved to db
                   this.votingBodyCounts[i][1] = null;
@@ -702,12 +775,12 @@ this.numBodies = currentConfig.numLegislativeBodies + 2; // add 2 for vp and pre
             } else if (currentBodyLabel == 'VICE PRESIDENCY') {
               if (this.stopVoteArr[i] == false && this.vpVote == true) { // vp votes
                 
-                if (this.bodyPass[0] == false || this.bodyPass[1] == false) {
+                if (this.bodyPass[0] == false || this.bodyPass[1] == false || this.bodyPass[2] == false) {
                   //text('\n\n\nBILL IS NOT APPROVED BY ALL CHAMBERS: NO VICE PRESIDENTIAL VOTE', i * dispW + padX, this.dHeight * (3 / 4), dispW - padX, dispH);
                   this.voteResults[i] = "BILL IS NOT APPROVED BY ALL CHAMBERS: NO VICE PRESIDENTIAL VOTE";
                   this.votingBodyCounts[i][0] = null;
                   this.votingBodyCounts[i][1] = null;
-                } else if (this.bodyPass[0] == true && this.bodyPass[1] == true && this.vpVote == true) {
+                } else if (this.bodyPass[0] == true && this.bodyPass[1] == true && this.bodyPass[2] == true && this.vpVote == true) {
                   if (this.bodyPass[i] == false) {
                     //text('\nBILL IS NOT APPROVED', (i) * dispW + padX, this.dHeight * (3 / 4), dispW - padX, dispH);
                     this.voteResults[i] = "BILL IS NOT APPROVED";
@@ -732,7 +805,7 @@ this.numBodies = currentConfig.numLegislativeBodies + 2; // add 2 for vp and pre
                               && this.bodyPass[0] == true && this.bodyPass[1] == true && this.vpVote == true) {
                   this.voteResults[i] = "TIE-BREAKER VOTE INITIATED";
                 } else if (this.numLegislativeBodies == 1 && currentBodyLabel == 'LEGISLATIVE CHAMBER 1'
-                              && this.bodyPass[0] == true && this.bodyPass[1] == true && this.vpVote == true) {
+                              && this.bodyPass[0] == true && this.bodyPass[1] == true && this.bodyPass[2] == true && this.vpVote == true) {
                   // OC tie-breaker text for 1 legislative body
                   this.voteResults[i] = "TIE-BREAKER VOTE INITIATED";
                 } else if (this.bodyPass[i] == false) {
@@ -750,20 +823,20 @@ this.numBodies = currentConfig.numLegislativeBodies + 2; // add 2 for vp and pre
           }
 
           //regular pass
-          if (this.bodyPass[0] === true && this.bodyPass[1] === true && this.vpVote == true && this.bodyPass[2] == false) {
+          if (this.bodyPass[0] === true && this.bodyPass[1] === true && this.bodyPass[2] === true && this.vpVote == true && this.bodyPass[3] == false) {
             decisionText = "DECISION: BILL DOES NOT BECOME LAW DUE TO TIE-BREAKER VOTE BY VICE PRESIDENT";
-          } else if (this.bodyPass[0] === true && this.bodyPass[1] === true && this.bodyPass[3] === true) {
+          } else if (this.bodyPass[0] === true && this.bodyPass[1] === true && this.bodyPass[2] === true && this.bodyPass[4] === true) {
             decisionText = "DECISION: BILL BECOMES LAW";
 
-          } else if (this.bodyPass[0] === true && this.bodyPass[1] === true && this.bodyPass[3] === false) {
-            if (this.superThreshIndex[0] === true && this.superThreshIndex[1] === true) {
+          } else if (this.bodyPass[0] === true && this.bodyPass[1] === true && this.bodyPass[2] === true && this.bodyPass[4] === false) {
+            if (this.superThreshIndex[0] === true && this.superThreshIndex[1] === true && this.superThreshIndex[2] === true) {
               decisionText = "DECISION: BILL BECOMES LAW BY SUPERMAJORITY";
 
             } else {
               decisionText = "DECISION: BILL DOES NOT BECOME LAW DUE TO PRESIDENTIAL VETO";
 
             }
-          } else if (this.bodyPass[0] == false || this.bodyPass[1] == false) {
+          } else if (this.bodyPass[0] == false || this.bodyPass[1] == false || this.bodyPass[2] == false) {
             decisionText = "DECISION: BILL DOES NOT BECOME LAW";
           }
           this.decisionTxt = decisionText;

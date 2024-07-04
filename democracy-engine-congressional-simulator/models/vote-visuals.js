@@ -107,9 +107,13 @@ class VoteVisual {
     // OC centers vote drawings based on total of voting bodies
     if (this.engine.numLegislativeBodies == 1) {
       this.numBodies = 3;
-    } else {
+    } else if (this.engine.numLegislativeBodies == 2){
+      this.numBodies = 4;
+    }  else {
       this.numBodies = this.engine.numBodies;
     }
+
+    //print('VISUAL CLASS numBodies = ' + this.numBodies);
 
     // Logic for House
     if (this.bodyCount == 0) {
@@ -151,14 +155,70 @@ class VoteVisual {
 
     // OC skip bodyCount == 1 (senate) when only 1 legislative body
     if (this.bodyCount == 1 && this.engine.numLegislativeBodies == 1) {
-      this.bodyCount++;
+      this.bodyCount += 2; // skip house2 and senate
       //this.endBody = 1;
+    } else if (this.bodyCount == 1 && this.engine.numLegislativeBodies == 2) {
+      this.bodyCount++; // skip house2
     }
 
-    //Logic for Senate
+    //Logic for House2
     if (this.bodyCount == 1) {
       strokeWeight(10);
       translate(this.offSet * this.bodyCount, 0);
+
+      if (this.endBody == 1) {
+        this.resetCount();
+        this.endBody = 0;
+      }
+
+      // Setup variables first time we pass through a new body
+      if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
+        // if (this.engine.numLegislativeBodies == 1) {
+        //   this.bodyCount++;
+        // } else {
+        this.test = 0;
+        print('VISUAL CLASS bodyCount = ')
+        print(this.bodyCount);
+
+        ///Set number of voting memebers
+        this.numCon = this.engine.numHouse2;
+        this.bodyLabel = 'HOUSE 2';
+
+        //Set Demographics for each body
+        this.numDem = round(this.numCon * this.engine.perDemHouse2);
+        this.numRep = round(this.numCon * this.engine.perRepHouse2);
+        this.numWild = round(this.numCon * this.engine.perIndHouse2);
+
+
+        //Figure out how big to draw the circles and how far to space them out
+        this.skip = floor(.97 * (sqrt(this.offSet * this.dHeight / this.numCon)));
+        print('Skip = ' + this.skip); //testing
+        this.x = this.skip / 2;
+        this.y = this.skip / 2;
+
+        print('v Count = ' + this.count); //fortesting
+        print('v Count1 = ' + this.count1); //fortesting
+        print('v Count2 = ' + this.count2); //fortesting
+        //}
+      }
+
+    }
+
+    //Logic for Senate
+    if (this.bodyCount == 2) {
+      strokeWeight(10);
+
+      var translateVal = this.bodyCount;
+      // OC move translation to left when only 1 legislaive body
+      if (this.engine.numLegislativeBodies == 1) {
+      //   translateVal = this.bodyCount - 1;
+      // }
+        translateVal = this.bodyCount - 2;
+      } else if (this.engine.numLegislativeBodies == 2) {
+        translateVal = this.bodyCount - 1;
+      }
+      translate(this.offSet * translateVal, 0);
+      //translate(this.offSet * this.bodyCount, 0);
 
       if (this.endBody == 1) {
         this.resetCount();
@@ -199,7 +259,7 @@ class VoteVisual {
     }
 
     //AB logic for VP if Senate needs a tiebreaker
-    if (this.bodyCount == 2) {
+    if (this.bodyCount == 3) {
       
       strokeWeight(10);
 
@@ -207,6 +267,10 @@ class VoteVisual {
 
       // OC move translation to left when only 1 legislaive body
       if (this.engine.numLegislativeBodies == 1) {
+      //   translateVal = this.bodyCount - 1;
+      // }
+        translateVal = this.bodyCount - 2;
+      } else if (this.engine.numLegislativeBodies == 2) {
         translateVal = this.bodyCount - 1;
       }
 
@@ -244,13 +308,17 @@ class VoteVisual {
     }
 
     //Logic for President
-    if (this.bodyCount == 3) {
+    if (this.bodyCount == 4) {
       strokeWeight(10);
 
       var translateVal = this.bodyCount;
 
       // OC move translation to left when only 1 legislaive body
       if (this.engine.numLegislativeBodies == 1) {
+      //   translateVal = this.bodyCount - 1;
+      // }
+        translateVal = this.bodyCount - 2;
+      } else if (this.engine.numLegislativeBodies == 2) {
         translateVal = this.bodyCount - 1;
       }
 
@@ -500,20 +568,21 @@ class VoteVisual {
    */
   stopVoteLogic() {
     //AB if the vp vote is not needed, no vote is necessary
-    if (this.bodyCount == 2 && this.engine.vpVote == false) {
+    if (this.bodyCount == 3 && this.engine.vpVote == false) {
       this.stopVoteBool = true;
       // this.stopVoteCount++; // used in the engine, not for drawing
       console.log("stop vote logic 1"); // for testing
     }
     //if the vp votes and it's a NO, then bill dies
-    else if (this.bodyCount > 2 && this.engine.vpVote == true && this.engine.bodyPass[2] === false) {
+    else if (this.bodyCount > 3 && this.engine.vpVote == true && this.engine.bodyPass[3] === false) {
       this.stopVoteBool = true;
       // this.stopVoteCount++;
       console.log("stop vote logic 2"); // for testing
     }
     //AB if the first or second body is not a pass,  bill dies thus preventing other bodies to vote
     //OC check that voting of the house or senate was already drawn to screen before checking bodyPass for it
-    else if ((this.bodyCount >= 1 && this.engine.bodyPass[0] === false) || (this.bodyCount > 1 && this.engine.bodyPass[1] === false)) {
+    else if ((this.bodyCount >= 1 && this.engine.bodyPass[0] === false) || (this.bodyCount > 1 && this.engine.bodyPass[1] === false) 
+      || (this.bodyCount > 2 && this.engine.bodyPass[2] === false)) {
       this.stopVoteBool = true;
       // this.stopVoteCount++;
       console.log("stop vote logic 3"); // for testing
@@ -631,10 +700,18 @@ class VoteVisual {
       if (i == 0) {
         currentBodyLabel = 'HOUSE';
       } else if (i == 1) {
-        currentBodyLabel = 'SENATE';
+        currentBodyLabel = 'HOUSE 2';
+        if (engine.numLegislativeBodies <= 2) {
+          continue;
+        }
       } else if (i == 2) {
-        currentBodyLabel = 'VICE PRESIDENCY';
+        currentBodyLabel = 'SENATE';
+        // if (engine.numLegislativeBodies == 1) { // only 1 legislative chamber
+        //   continue; // OC skip results if only 1 legislative body
+        // }
       } else if (i == 3) {
+        currentBodyLabel = 'VICE PRESIDENCY';
+      } else if (i == 4) {
         // print("I AM IN PRESIDENT b4 LOGIC");
         currentBodyLabel = 'PRESIDENCY';
       }
@@ -736,20 +813,28 @@ class VoteVisual {
       // OC adjust placement of text based on total number of voting bodies
       var ip;
       if (engine.numLegislativeBodies == 1) 
+        ip = i - 2;//ip = i - 1;
+      else if (engine.numLegislativeBodies == 2)
         ip = i - 1;
-      else 
+      else
         ip = i;
 
       if (i == 0) {
         currentBodyLabel = 'LEGISLATIVE CHAMBER 1';
       } else if (i == 1) {
-        if (engine.numLegislativeBodies == 1) {
+        currentBodyLabel = 'LEGISLATIVE CHAMBER 2';
+        if (engine.numLegislativeBodies <= 2) {
+          continue; // OC skip if either 1 legislative body or only 2 
+          // OC for 2, it uses legislative chamber 3 as the senate rather than this one
+        }
+      } else if (i == 2) {
+        currentBodyLabel = 'LEGISLATIVE CHAMBER 3';
+        if (engine.numLegislativeBodies == 1) { // only 1 legislative chamber
           continue; // OC skip results if only 1 legislative body
         }
-        currentBodyLabel = 'LEGISLATIVE CHAMBER 2';
-      } else if (i == 2) {
-        currentBodyLabel = 'VICE PRESIDENCY';
       } else if (i == 3) {
+        currentBodyLabel = 'VICE PRESIDENCY';
+      } else if (i == 4) {
         // print("I AM IN PRESIDENT b4 LOGIC");
         currentBodyLabel = 'PRESIDENCY';
       }
@@ -791,18 +876,21 @@ class VoteVisual {
           }
         } else {
           textSize(22);
-          text(currentBodyLabel, i * dispW + padX, padY, dispW - padX, dispH);
+          if (currentBodyLabel == 'LEGISLATIVE CHAMBER 1') {
+            ip = i;
+          }
+          text(currentBodyLabel, (ip) * dispW + padX, padY, dispW - padX, dispH);
 
           if (engine.stopVoteArr[i] == false) { // body voted, so display yes/no counts
             textSize(20);
-            text("\n\n\nVOTES \n", i * dispW + padX, padY, dispW - padX, dispH);
+            text("\n\n\nVOTES \n", (ip) * dispW + padX, padY, dispW - padX, dispH);
             textSize(16);
-            text("\n\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", i * dispW + padX, padY);
+            text("\n\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", (ip) * dispW + padX, padY);
             textSize(20);
-            text('\n\n\n' + engine.voteResults[i], i * dispW + padX, this.dHeight / 4, dispW - padX, dispH);
+            text('\n\n\n' + engine.voteResults[i], (ip) * dispW + padX, this.dHeight / 4, dispW - padX, dispH);
           } else { // did not vote
             textSize(20);
-            text('\n\n\n' + engine.voteResults[i], i * dispW + padX, padY, dispW - padX, dispH);
+            text('\n\n\n' + engine.voteResults[i], (ip) * dispW + padX, padY, dispW - padX, dispH);
           }
         }
       }

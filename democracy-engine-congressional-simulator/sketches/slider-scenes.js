@@ -440,6 +440,7 @@ function sLegislative() {
 
   var slider1 = document.getElementById('slider1');
   var slider2 = document.getElementById('slider2');
+  // create var for third legislative chamber
   var slider3 = document.getElementById('slider3');
   var slider4 = document.getElementById('slider4');
   var curNumHouse = parseInt(engine.numHouse);
