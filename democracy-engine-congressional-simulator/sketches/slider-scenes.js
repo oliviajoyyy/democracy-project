@@ -614,14 +614,14 @@ function sLegislative() {
       });
 
       // OC update slider for 2nd body if user chose >=2 bodies
-      //if (userNumLegislative >= 2) {
+      if (userNumLegislative >= 2) {
         slider2.noUiSlider.on('update', function (values, handle) {
           userNumSenate = values[0];
           // rangeSliderValueElement.innerHTML = userNumHouse + " " + userNumSenate + " " + userNumPres + " " + userNumVP;
         });
-      // } else {
-      //     userNumSenate = 0; // set senate members to 0
-      // }
+      } else {
+          userNumSenate = 0; // set senate members to 0 later, in sMembers
+      }
 
       // if (userNumLegislative == 3) {
       //   // update new slider
@@ -773,7 +773,7 @@ function sMembers() {
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
     // cursor();
-    //checkNumBodies();
+    checkNumBodies();
     sliders();
 
   }
@@ -814,10 +814,6 @@ function sMembers() {
   }
 
   function sliders() {
-    var userNumSenateHelper = userNumSenate;
-    if (userNumLegislative < 2) {
-        userNumSenateHelper = 100;
-    }
 
     if (userEdits == true) {
       //when user chooses 1 party the first time, no sliders get created.
@@ -874,11 +870,11 @@ function sMembers() {
       
 
       for (var i = 0; i < userNumParties - 1; i++) {
-        userNumSenateRan[i] = Math.ceil(Math.random() * userNumSenateHelper)
+        userNumSenateRan[i] = Math.ceil(Math.random() * userNumSenate)
         if (i > 0) {
           for (var j = 0; j < userNumSenateRan.length - 1; j++) {
             if (userNumSenateRan[i] == userNumSenateRan[j]) {
-              userNumSenateRan[i] = parseInt(Math.ceil(Math.random() * userNumSenateHelper));
+              userNumSenateRan[i] = parseInt(Math.ceil(Math.random() * userNumSenate));
             }
           }
         }
@@ -945,7 +941,7 @@ function sMembers() {
         start: userNumSenateRan,
         range: {
           'min': [0],
-          'max': [userNumSenateHelper]
+          'max': [userNumSenate]
         },
         cssPrefix: 'noUi-',
         tooltips: false,
@@ -1081,18 +1077,18 @@ function sMembers() {
         userPerSenateBody = [];
         var numPerSenateBody = [];
 
-       // if (userNumLegislative >= 2) { // for >=2 legislative bodies
+       if (userNumLegislative >= 2) { // for >=2 legislative bodies
         slider7.noUiSlider.on('update', function (values, handle) {
           for (var i = 0; i <= values.length; i++) {
             if (i == 0) {
               userPerSenateBody[i] = values[i];
             } else if (i == values.length) {
-              userPerSenateBody[i] = userNumSenateHelper - values[i - 1];
+              userPerSenateBody[i] = userNumSenate - values[i - 1];
             } else {
               userPerSenateBody[i] = values[i] - values[i - 1];
             }
             numPerSenateBody[i] = userPerSenateBody[i];
-            senPercentage = userPerSenateBody[i] / userNumSenateHelper;
+            senPercentage = userPerSenateBody[i] / userNumSenate;
             senPercentage = roundNum(senPercentage, 2);
             userPerSenateBody[i] = senPercentage;
           }
@@ -1107,14 +1103,14 @@ function sMembers() {
           }
           mouseOver(slider7, value2);
         });
-      // } else { // set members for each party to 0 when no 2nd legislative body
-      //   userPerSenateBody[0] = 0; // for 3 parties
-      //   userPerSenateBody[1] = 0;
-      //   userPerSenateBody[2] = 0;
-      // }
+      } else { // set members for each party to 0 when no 2nd legislative body
+        userPerSenateBody[0] = 0;
+        userPerSenateBody[1] = 0;
+        userPerSenateBody[2] = 0;
+      }
 
       // OC TODO same for new slider and val
-      // if (userNumLegislative == 3) { }
+      // if (userNumLegislative == 3) { } else { // set to 0 for each party }
 
         userPerVPBody = [];
         var numPerVPBody = [];

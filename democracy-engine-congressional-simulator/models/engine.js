@@ -269,7 +269,7 @@ this.numBodies = currentConfig.numLegislativeBodies + 2; // add 2 for vp and pre
     //AB logic for VP if Senate needs a tiebreaker
     if (this.bodyCount == 2) {
       print("votingBodyCounts[0][0]= " + this.votingBodyCounts[0][0] + "votingBodyCounts[0][1] = " + this.votingBodyCounts[0][1]);
-      print("votingBodyCounts[1][0]= " + this.votingBodyCounts[1][0] + "votingBodyCounts[1][1] = " + this.votingBodyCounts[1][1]);
+      // print("votingBodyCounts[1][0]= " + this.votingBodyCounts[1][0] + "votingBodyCounts[1][1] = " + this.votingBodyCounts[1][1]);
 
       // if (votingBodyCounts[1][0] == votingBodyCounts[1][1] && vpVote == true) {
       //   vpVote = true;
@@ -328,6 +328,11 @@ this.numBodies = currentConfig.numLegislativeBodies + 2; // add 2 for vp and pre
       }
     }
 
+    // OC numCon == 0 when the current legislative body is not included in the configuration
+    if (this.numCon == 0) {
+      this.nextBody();
+      continue; // skip process of voting
+    }
     // OC loops through each member of each body
       for (this.jx = 0; this.jx < this.numCon; this.jx++) { 
         if (this.count < this.numCon - 1 && this.count1 < 1) {
