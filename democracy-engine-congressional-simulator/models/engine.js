@@ -459,10 +459,10 @@ this.numBodies = currentConfig.numLegislativeBodies + 2; // add 2 for vp and pre
     // }
 
     // OC simulate tie breaker vote for 1 legislative body
-    if (this.bodyCount == 0) {
-      this.yay = round(this.numHouse / 2);
-      this.nay = this.numHouse - this.yay;
-    }
+    // if (this.bodyCount == 0) {
+    //   this.yay = round(this.numHouse / 2);
+    //   this.nay = this.numHouse - this.yay;
+    // }
 
     this.storeBodyVotes();
   }

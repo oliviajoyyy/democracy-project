@@ -446,6 +446,7 @@ function sLegislative() {
   var curNumSen = parseInt(engine.numSenate);
   var curNumVP = parseInt(engine.numVP);
   var curNumPres = parseInt(engine.numPres);
+  userNumLegislative = parseFloat(userNumLegislative);
 
 
   this.setup = function () {
@@ -481,6 +482,7 @@ function sLegislative() {
 
     // changeText(" ");
 
+    checkNumBodies();
     sliders();
     //button();
     document.getElementById("top").style.display = "block";
@@ -491,6 +493,24 @@ function sLegislative() {
 
   this.draw = function () {
 
+  }
+
+  // OC display sliders based on number of legislative bodies chosen on previous page
+  function checkNumBodies() {
+    if (userNumLegislative == 1) {
+      document.getElementById("slider1").style.display = "block";
+      document.getElementById("slider2").style.display = "none";
+    } else if (userNumLegislative == 2) {
+      document.getElementById("slider1").style.display = "block";
+      document.getElementById("slider2").style.display = "block";
+      // = "none" for 3rd body slider
+    } else {
+      // = "block" for all 3 body sliders
+    }
+
+    // OC always show vp and pres sliders
+    document.getElementById("slider3").style.display = "block";
+    document.getElementById("slider4").style.display = "block";
   }
 
   function sliders() {
@@ -541,6 +561,8 @@ function sLegislative() {
         })
       });
 
+      // OC TODO create slider for 3rd legislative body
+
       noUiSlider.create(slider3, {
         start: curNumVP,
         range: {
@@ -590,10 +612,24 @@ function sLegislative() {
         userNumHouse = values[0]
         // rangeSliderValueElement.innerHTML = userNumHouse + " " + userNumSenate + " " + userNumPres + " " + userNumVP;
       });
-      slider2.noUiSlider.on('update', function (values, handle) {
-        userNumSenate = values[0];
-        // rangeSliderValueElement.innerHTML = userNumHouse + " " + userNumSenate + " " + userNumPres + " " + userNumVP;
-      });
+
+      // OC update slider for 2nd body if user chose >=2 bodies
+      //if (userNumLegislative >= 2) {
+        slider2.noUiSlider.on('update', function (values, handle) {
+          userNumSenate = values[0];
+          // rangeSliderValueElement.innerHTML = userNumHouse + " " + userNumSenate + " " + userNumPres + " " + userNumVP;
+        });
+      // } else {
+      //     userNumSenate = 0; // set senate members to 0
+      // }
+
+      // if (userNumLegislative == 3) {
+      //   // update new slider
+      // } else {
+      //   // update new var to 0
+      // }
+
+      // always update vp and pres
       slider3.noUiSlider.on('update', function (values, handle) {
         userNumVP = values[0];
         // rangeSliderValueElement.innerHTML = userNumHouse + " " + userNumSenate + " " + userNumPres + " " + userNumVP;
@@ -717,6 +753,7 @@ function sMembers() {
 
   var slider6 = document.getElementById('slider6');
   var slider7 = document.getElementById('slider7');
+  // OC TODO var for new slider
   var slider8 = document.getElementById('slider8');
   var slider9 = document.getElementById('slider9');
 
@@ -736,11 +773,30 @@ function sMembers() {
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
     // cursor();
+    //checkNumBodies();
     sliders();
 
   }
   this.draw = function () {
 
+  }
+
+    // OC display sliders based on number of legislative bodies chosen
+  function checkNumBodies() {
+    if (userNumLegislative == 1) {
+      document.getElementById("slider6").style.display = "block";
+      document.getElementById("slider7").style.display = "none";
+    } else if (userNumLegislative == 2) {
+      document.getElementById("slider6").style.display = "block";
+      document.getElementById("slider7").style.display = "block";
+      // = "none" for 3rd body slider
+    } else {
+      // = "block" for all 3 body sliders
+    }
+
+    // OC always show vp and pres sliders
+    document.getElementById("slider8").style.display = "block";
+    document.getElementById("slider9").style.display = "block";
   }
 
   function mouseOver(slider, value) {
@@ -758,6 +814,11 @@ function sMembers() {
   }
 
   function sliders() {
+    var userNumSenateHelper = userNumSenate;
+    if (userNumLegislative < 2) {
+        userNumSenateHelper = 100;
+    }
+
     if (userEdits == true) {
       //when user chooses 1 party the first time, no sliders get created.
       //The second round needs to create the sliders.
@@ -770,6 +831,7 @@ function sMembers() {
       else {
         slider6.noUiSlider.destroy();
         slider7.noUiSlider.destroy();
+        // OC TODO destroy() new slider
         slider8.noUiSlider.destroy();
         slider9.noUiSlider.destroy();
         createSlider();
@@ -809,12 +871,14 @@ function sMembers() {
 
       // userNumHouseConn = JSON.parse(userNumHouseConn);
 
+      
+
       for (var i = 0; i < userNumParties - 1; i++) {
-        userNumSenateRan[i] = Math.ceil(Math.random() * userNumSenate)
+        userNumSenateRan[i] = Math.ceil(Math.random() * userNumSenateHelper)
         if (i > 0) {
           for (var j = 0; j < userNumSenateRan.length - 1; j++) {
             if (userNumSenateRan[i] == userNumSenateRan[j]) {
-              userNumSenateRan[i] = parseInt(Math.ceil(Math.random() * userNumSenate));
+              userNumSenateRan[i] = parseInt(Math.ceil(Math.random() * userNumSenateHelper));
             }
           }
         }
@@ -822,6 +886,8 @@ function sMembers() {
       }
       userNumSenateRan.sort((a, b) => a - b);
       console.log(userNumSenateRan);
+
+      // OC TODO same for 3rd legislative body
 
 
       for (var i = 0; i < userNumParties - 1; i++) {
@@ -879,7 +945,7 @@ function sMembers() {
         start: userNumSenateRan,
         range: {
           'min': [0],
-          'max': [userNumSenate]
+          'max': [userNumSenateHelper]
         },
         cssPrefix: 'noUi-',
         tooltips: false,
@@ -892,6 +958,8 @@ function sMembers() {
           decimals: 0
         })
       });
+
+      // OC TODO create new slider
 
       noUiSlider.create(slider8, {
         start: userNumVPRan,
@@ -939,16 +1007,19 @@ function sMembers() {
 
       var handle6 = slider6.querySelectorAll('.noUi-handle');
       var handle7 = slider7.querySelectorAll('.noUi-handle');
+      // OC TODO create new handle for new slider
       var handle8 = slider8.querySelectorAll('.noUi-handle');
       var handle9 = slider9.querySelectorAll('.noUi-handle');
 
       var value1 = document.getElementById('value-1');
       var value2 = document.getElementById('value-2');
+      // OC TODO create another for new slider
       var value3 = document.getElementById('value-3');
       var value4 = document.getElementById('value-4');
 
       // var rangeSliderValueElement = document.getElementById('slider-value');
 
+      // OC TODO add new color?
       var classes = ['c-1-color', 'c-2-color', 'c-3-color', 'c-4-color', 'c-5-color'];
 
       for (var i = 0; i < handle6.length; i++) {
@@ -959,6 +1030,8 @@ function sMembers() {
         handle7[i].classList.add(classes[i]);
 
       }
+
+      // OC TODO same for new handle
 
       for (var i = 0; i < handle8.length; i++) {
         handle8[i].classList.add(classes[i]);
@@ -1007,17 +1080,19 @@ function sMembers() {
 
         userPerSenateBody = [];
         var numPerSenateBody = [];
+
+       // if (userNumLegislative >= 2) { // for >=2 legislative bodies
         slider7.noUiSlider.on('update', function (values, handle) {
           for (var i = 0; i <= values.length; i++) {
             if (i == 0) {
               userPerSenateBody[i] = values[i];
             } else if (i == values.length) {
-              userPerSenateBody[i] = userNumSenate - values[i - 1];
+              userPerSenateBody[i] = userNumSenateHelper - values[i - 1];
             } else {
               userPerSenateBody[i] = values[i] - values[i - 1];
             }
             numPerSenateBody[i] = userPerSenateBody[i];
-            senPercentage = userPerSenateBody[i] / userNumSenate;
+            senPercentage = userPerSenateBody[i] / userNumSenateHelper;
             senPercentage = roundNum(senPercentage, 2);
             userPerSenateBody[i] = senPercentage;
           }
@@ -1032,7 +1107,14 @@ function sMembers() {
           }
           mouseOver(slider7, value2);
         });
+      // } else { // set members for each party to 0 when no 2nd legislative body
+      //   userPerSenateBody[0] = 0; // for 3 parties
+      //   userPerSenateBody[1] = 0;
+      //   userPerSenateBody[2] = 0;
+      // }
 
+      // OC TODO same for new slider and val
+      // if (userNumLegislative == 3) { }
 
         userPerVPBody = [];
         var numPerVPBody = [];
