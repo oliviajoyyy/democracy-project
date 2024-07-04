@@ -44,6 +44,9 @@ var userNumLegislative; // number of legislative bodies (1-3)
 var userNumHouse;
 var userPerHouseBody;
 
+var userNumHouse2;
+var userPerHouse2Body;
+
 var userNumSenate;
 var userPerSenateBody;
 
@@ -55,6 +58,7 @@ var userPerVPBody;
 
 var userNumParties;
 var userNumHouseRan;
+var userNumHouse2Ran;
 var userNumSenateRan;
 var userNumPresRan;
 var userNumVPRan;
@@ -251,6 +255,7 @@ function inputVar() {
 
   //Number voting members
   engine.numHouse = userNumHouse;
+  engine.numHouse2 = userNumHouse2;
   engine.numSenate = userNumSenate;
   engine.numPres = userNumPres;
   engine.numVP = userNumVP;
@@ -260,6 +265,11 @@ function inputVar() {
   engine.perDemHouse = userPerHouseBody[0];
   engine.perRepHouse = userPerHouseBody[1];
   engine.perIndHouse = userPerHouseBody[2];
+
+  //Demographics of House 2 as decimal percentages 1 = 100%
+  // engine.perDemHouse2 = userPerHouse2Body[0];
+  // engine.perRepHouse2 = userPerHouse2Body[1];
+  // engine.perIndHouse2 = userPerHouse2Body[2];
 
   //Demographics of Senate as decimal percentages 1 = 100%
   engine.perDemSenate = userPerSenateBody[0];

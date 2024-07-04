@@ -438,12 +438,15 @@ function sBodies() {
 //user input page for for amount of members in each legislative body
 function sLegislative() {
 
-  var slider1 = document.getElementById('slider1');
-  var slider2 = document.getElementById('slider2');
+  var slider1 = document.getElementById('slider1'); // original house
+  var slider1a; // = document.getElementById('slider1a'); // house2
+  var slider2; // = document.getElementById('slider2'); // senate
   // create var for third legislative chamber
-  var slider3 = document.getElementById('slider3');
-  var slider4 = document.getElementById('slider4');
+  var slider3; // = document.getElementById('slider3'); // vp
+  var slider4; // = document.getElementById('slider4'); // pres
+   
   var curNumHouse = parseInt(engine.numHouse);
+  var curNumHouse2 = parseInt(engine.numHouse2);
   var curNumSen = parseInt(engine.numSenate);
   var curNumVP = parseInt(engine.numVP);
   var curNumPres = parseInt(engine.numPres);
@@ -497,28 +500,85 @@ function sLegislative() {
   }
 
   // OC display sliders based on number of legislative bodies chosen on previous page
+  // OC set id of sliders based on number of chambers so that css can place them in order with no gaps
   function checkNumBodies() {
+
+    // always show chamber 1 slider
+    document.getElementById("slider1").style.display = "block";
+
     if (userNumLegislative == 1) {
-      document.getElementById("slider1").style.display = "block";
-      document.getElementById("slider2").style.display = "none";
-      document.getElementById("chamber-label-2-p1").style.display = "none";
+      document.getElementById("s2-p1").innerHTML = "<div id='slider2'><p id='slider-text-2'>VICE PRESIDENCY</div>";
+      document.getElementById("s2-p1").style.display = "block";
+      document.getElementById("s3-p1").innerHTML = "<div id='slider3'><p id='slider-text-3'>PRESIDENCY</div>";
+      document.getElementById("s3-p1").style.display = "block";
+      document.getElementById("s4-p1").innerHTML = "<div id='slider4'><p id='slider-text-4'>SECOND LEGISLATIVE CHAMBER</div>";
+      document.getElementById("s4-p1").style.display = "none";
+      document.getElementById("s5-p1").innerHTML = "<div id='slider4a'><p id='slider-text-5'>THIRD LEGISLATIVE CHAMBER</div>";
+      document.getElementById("s5-p1").style.display = "none";
+
+      slider1a = document.getElementById('slider4a'); // house2 chamber, set slider but not used
+      slider2 = document.getElementById('slider4'); // 3rd (senate) chamber, set slider but not used
+      slider3 = document.getElementById('slider2'); // vp
+      slider4 = document.getElementById('slider3'); // pres
+
+      // document.getElementById("slider1").style.display = "block";
+      // document.getElementById("slider2").style.display = "none";
+      // document.getElementById("chamber-label-2-p1").style.display = "none";
+      // document.getElementById("slider4a").style.display = "none";
+
       // document.getElementById("slider-text-2").style.display = "none";
       // document.getElementById("slider-text-2").innerHTML = "";
     } else if (userNumLegislative == 2) {
-      document.getElementById("slider1").style.display = "block";
-      document.getElementById("slider2").style.display = "block";
-      document.getElementById("chamber-label-2-p1").innerHTML = "<p id='slider-text-2'>SECOND LEGISLATIVE CHAMBER</p>";
-      document.getElementById("chamber-label-2-p1").style.display = "block";
+      // show second chamber slider
+      document.getElementById("s2-p1").innerHTML = "<div id='slider2'><p id='slider-text-2'>SECOND LEGISLATIVE CHAMBER</div>";
+      document.getElementById("s2-p1").style.display = "block";
+      document.getElementById("s3-p1").innerHTML = "<div id='slider3'><p id='slider-text-3'>VICE PRESIDENCY</div>";
+      document.getElementById("s3-p1").style.display = "block";
+      document.getElementById("s4-p1").innerHTML = "<div id='slider4'><p id='slider-text-4'>PRESIDENCY</div>";
+      document.getElementById("s4-p1").style.display = "block";
+      document.getElementById("s5-p1").innerHTML = "<div id='slider4a'><p id='slider-text-5'>THIRD LEGISLATIVE CHAMBER</div>";
+      document.getElementById("s5-p1").style.display = "none";
+
+      slider1a = document.getElementById('slider4a'); // house2, set slider but not used
+      slider2 = document.getElementById('slider2'); // 3rd (senate) chamber
+      slider3 = document.getElementById('slider3'); // vp
+      slider4 = document.getElementById('slider4'); // pres
+
+      // document.getElementById("slider1").style.display = "block";
+      // document.getElementById("slider2").style.display = "block";
+      // document.getElementById("chamber-label-2-p1").innerHTML = "<p id='slider-text-2'>SECOND LEGISLATIVE CHAMBER</p>";
+      // document.getElementById("chamber-label-2-p1").style.display = "block";
+      // document.getElementById("slider4a").style.display = "none";
+
       // document.getElementById("slider-text-2").style.display = "block";
       // document.getElementById("slider-text-2").innerHTML = "TESTING";
       // = "none" for 3rd body slider
     } else {
       // = "block" for all 3 body sliders
+      document.getElementById("s2-p1").innerHTML = "<div id='slider2'><p id='slider-text-2'>SECOND LEGISLATIVE CHAMBER</div>";
+      document.getElementById("s2-p1").style.display = "block";
+      document.getElementById("s3-p1").innerHTML = "<div id='slider3'><p id='slider-text-3'>THIRD LEGISLATIVE CHAMBER</div>";
+      document.getElementById("s3-p1").style.display = "block";
+      document.getElementById("s4-p1").innerHTML = "<div id='slider4'><p id='slider-text-4'>VICE PRESIDENCY</div>";
+      document.getElementById("s4-p1").style.display = "block";
+      document.getElementById("s5-p1").innerHTML = "<div id='slider4a'><p id='slider-text-5'>VICE PRESIDENCY</div>";
+      document.getElementById("s5-p1").style.display = "block";
+
+      slider1a = document.getElementById('slider2'); // house2, set slider but not used
+      slider2 = document.getElementById('slider3'); // 3rd (senate) chamber
+      slider3 = document.getElementById('slider4'); // vp
+      slider4 = document.getElementById('slider5'); // pres
+
+      // document.getElementById("slider1").style.display = "block";
+      // document.getElementById("slider2").style.display = "block";
+      // document.getElementById("chamber-label-2-p1").innerHTML = "<p id='slider-text-2'>SECOND LEGISLATIVE CHAMBER</p>";
+      // document.getElementById("chamber-label-2-p1").style.display = "block";
+      // document.getElementById("slider4a").style.display = "block";
     }
 
-    // OC always show vp and pres sliders
-    document.getElementById("slider3").style.display = "block";
-    document.getElementById("slider4").style.display = "block";
+    // OC always show chamber 1, vp and pres sliders
+    // document.getElementById("slider3").style.display = "block";
+    // document.getElementById("slider4").style.display = "block";
   }
 
   function sliders() {
@@ -607,6 +667,25 @@ function sLegislative() {
           decimals: 0
         })
       });
+
+
+      noUiSlider.create(slider1a, {
+        start: curNumHouse2,
+        range: {
+          'min': [1],
+          'max': [500]
+        },
+        cssPrefix: 'noUi-',
+        tooltips: true,
+        pips: {
+          mode: 'range',
+          density: 'range',
+        },
+        step: 1,
+        format: wNumb({
+          decimals: 0
+        })
+      });
     }
 
 
@@ -616,12 +695,25 @@ function sLegislative() {
       //connecting values to html, each tab value is stored in an array
       // var rangeSliderValueElement = document.getElementById('slider-value');
 
+      // house
       slider1.noUiSlider.on('update', function (values, handle) {
         userNumHouse = values[0]
         // rangeSliderValueElement.innerHTML = userNumHouse + " " + userNumSenate + " " + userNumPres + " " + userNumVP;
       });
 
+      // house2
+      if (userNumLegislative == 3) {
+        // update new slider
+        slider1a.noUiSlider.on('update', function (values, handle) {
+          userNumHouse2 = values[0];
+        });
+      } else {
+        // update new var to 0
+        userNumHouse2 = 0;
+      }
+
       // OC update slider for 2nd body if user chose >=2 bodies
+      // senate
       if (userNumLegislative >= 2) {
         slider2.noUiSlider.on('update', function (values, handle) {
           userNumSenate = values[0];
@@ -630,12 +722,6 @@ function sLegislative() {
       } else {
           userNumSenate = 0; // set senate members to 0 later, in sMembers
       }
-
-      // if (userNumLegislative == 3) {
-      //   // update new slider
-      // } else {
-      //   // update new var to 0
-      // }
 
       // always update vp and pres
       slider3.noUiSlider.on('update', function (values, handle) {

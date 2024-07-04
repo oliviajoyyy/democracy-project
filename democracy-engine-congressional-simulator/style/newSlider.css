@@ -98,6 +98,15 @@
   margin-left: 35%;
 }
 
+#slider4a {
+  z-index: 100;
+  margin-top: 70vh;
+  position: fixed;
+  top: 0;
+  width: 30%;
+  margin-left: 35%;
+}
+
 
 /* 72px between each text */
 #slider-text-1 {
@@ -134,6 +143,16 @@
   display: block;
   z-index: 100;
   margin-top: 59vh;
+  position: fixed;
+  top: 0;
+  right: 70%;
+  font-size: .8em;
+}
+
+#slider-text-5 {
+  display: block;
+  z-index: 100;
+  margin-top: 69vh;
   position: fixed;
   top: 0;
   right: 70%;
