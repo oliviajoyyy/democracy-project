@@ -697,6 +697,15 @@ class VoteVisual {
     //NEED TO CHANGE LATER FOR MORE THAN 3 BODIES
     for (let i = 0; i < engine.numBodies; i++) {
       fill(this.tColor);
+
+      // OC adjust placement of text based on total number of voting bodies
+      var ip = i;
+      // if (engine.numLegislativeBodies == 1) 
+      //   ip = i - 2;//ip = i - 1;
+      // else if (engine.numLegislativeBodies == 2)
+      //   ip = i - 1;
+      // else
+
       if (i == 0) {
         currentBodyLabel = 'HOUSE';
       } else if (i == 1) {
@@ -706,14 +715,17 @@ class VoteVisual {
         }
       } else if (i == 2) {
         currentBodyLabel = 'SENATE';
-        // if (engine.numLegislativeBodies == 1) { // only 1 legislative chamber
-        //   continue; // OC skip results if only 1 legislative body
-        // }
+        ip = i - 0.65;
+        if (engine.numLegislativeBodies == 1) { // only 1 legislative chamber
+          continue; // OC skip results if only 1 legislative body
+        }
       } else if (i == 3) {
         currentBodyLabel = 'VICE PRESIDENCY';
+        ip = i - 0.2;
       } else if (i == 4) {
         // print("I AM IN PRESIDENT b4 LOGIC");
         currentBodyLabel = 'PRESIDENCY';
+        ip = i - 0.2;
       }
 
       // show text on screen
@@ -722,49 +734,49 @@ class VoteVisual {
 
         if (currentBodyLabel == 'PRESIDENCY') {
           textSize(22);
-          text(currentBodyLabel, (i - 1) * dispW + padX, padY, dispW, dispH);
+          text(currentBodyLabel, (ip - 1) * dispW + padX, padY, dispW, dispH);
           textAlign(LEFT);
 
           if (engine.stopVoteArr[i] == false) { // president voted, so display yes/no counts
             textSize(20);
-            text("\n\nVOTES \n", (i - 1) * dispW + padX, padY, dispW, dispH);
+            text("\n\nVOTES \n", (ip - 1) * dispW + padX, padY, dispW, dispH);
             textSize(16);
-            text("\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", (i - 1) * dispW + padX, padY, dispW, dispH);
+            text("\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", (ip - 1) * dispW + padX, padY, dispW, dispH);
             textSize(20);
-            text('\n' + engine.voteResults[i], (i - 1) * dispW + padX, this.dHeight / 4, dispW - padX, dispH);
+            text('\n' + engine.voteResults[i], (ip - 1) * dispW + padX, this.dHeight / 4, dispW - padX, dispH);
           } else { // president did not vote, so only adjust placement of text
             textSize(20);
-            text('\n\n' + engine.voteResults[i], (i - 1) * dispW + padX, padY, dispW - padX, dispH);
+            text('\n\n' + engine.voteResults[i], (ip - 1) * dispW + padX, padY, dispW - padX, dispH);
           }
         } else if (currentBodyLabel == 'VICE PRESIDENCY') {
           textSize(22);
-          text(currentBodyLabel, i * dispW + padX, this.dHeight / 2, dispW, dispH);
+          text(currentBodyLabel, ip * dispW + padX, this.dHeight / 2 + 20, dispW, dispH);
 
           if (engine.stopVoteArr[i] == false && engine.vpVote == true) { // vp voted, so display yes/no counts
             textSize(20);
-            text("\n\nVOTES \n", i * dispW + padX, this.dHeight / 2, dispW, dispH);
+            text("\n\nVOTES \n", ip * dispW + padX, this.dHeight / 2, dispW, dispH);
             textSize(16);
-            text("\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", i * dispW + padX, this.dHeight / 2, dispW - padX, dispH);
+            text("\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", ip * dispW + padX, this.dHeight / 2, dispW - padX, dispH);
             textSize(20);
-            text('\n' + engine.voteResults[i], (i) * dispW + padX, this.dHeight * (3 / 4), dispW - padX, dispH);
+            text('\n' + engine.voteResults[i], (ip) * dispW + padX, this.dHeight * (3 / 4), dispW - padX, dispH);
           } else { // did not vote
             textSize(20);
-            text('\n\n' + engine.voteResults[i], i * dispW + padX, this.dHeight / 2, dispW - padX, dispH);
+            text('\n\n' + engine.voteResults[i], ip * dispW + padX, this.dHeight / 2, dispW - padX, dispH);
           }
         } else {
           textSize(22);
-          text(currentBodyLabel, i * dispW + padX, padY, dispW - padX, dispH);
+          text(currentBodyLabel, ip * dispW + padX, padY, dispW - padX, dispH);
 
           if (engine.stopVoteArr[i] == false) { // body voted, so display yes/no counts
             textSize(20);
-            text("\n\nVOTES \n", i * dispW + padX, padY, dispW - padX, dispH);
+            text("\n\nVOTES \n", ip * dispW + padX, padY, dispW - padX, dispH);
             textSize(16);
-            text("\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", i * dispW + padX, padY, dispW, dispH);
+            text("\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", ip * dispW + padX, padY, dispW, dispH);
             textSize(20);
-            text('\n' + engine.voteResults[i], i * dispW + padX, this.dHeight / 4, dispW - padX, dispH);
+            text('\n' + engine.voteResults[i], ip * dispW + padX, this.dHeight / 4, dispW - padX, dispH);
           } else { // did not vote
             textSize(20);
-            text('\n\n' + engine.voteResults[i], i * dispW + padX, padY, dispW - padX, dispH);
+            text('\n\n' + engine.voteResults[i], ip * dispW + padX, padY, dispW - padX, dispH);
           }
         }
       }
@@ -828,7 +840,11 @@ class VoteVisual {
           // OC for 2, it uses legislative chamber 3 as the senate rather than this one
         }
       } else if (i == 2) {
-        currentBodyLabel = 'LEGISLATIVE CHAMBER 3';
+        if (engine.numLegislativeBodies == 2) {
+          currentBodyLabel = 'LEGISLATIVE CHAMBER 2';
+        } else {
+          currentBodyLabel = 'LEGISLATIVE CHAMBER 3';
+        }
         if (engine.numLegislativeBodies == 1) { // only 1 legislative chamber
           continue; // OC skip results if only 1 legislative body
         }

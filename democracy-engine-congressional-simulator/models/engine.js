@@ -715,7 +715,7 @@ this.numBodies = 5; //currentConfig.numLegislativeBodies + 3; // add 2 for vp an
             if (this.forUser) {
               currentBodyLabel = 'LEGISLATIVE CHAMBER 2';
             } else {
-              currentBodyLabel = 'SENATE';
+              currentBodyLabel = 'HOUSE 2';
             }
           } else if (i == 2) {
             if (this.forUser) {
