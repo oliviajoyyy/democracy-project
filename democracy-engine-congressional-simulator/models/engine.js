@@ -508,8 +508,15 @@ this.numBodies = 5; //currentConfig.numLegislativeBodies + 3; // add 2 for vp an
     //AB: finding problem with x's
     // print("body #: " + bodyCount + " No Vote Bool: " + noVoteBool);
 
+    // AB
     // if (this.bodyCount == 1) { // for 2 legislative bodies
     //   // simulate vp tiebreaker vote
+    //   this.yay = 50;
+    //   this.nay = 50;
+    // }
+
+    // OC simulate vp tiebreaker for 2 bodies, with logic for 3
+    // if (this.bodyCount == 2) { // bodyCount 2 is now senate
     //   this.yay = 50;
     //   this.nay = 50;
     // }
