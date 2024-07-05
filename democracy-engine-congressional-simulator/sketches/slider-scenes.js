@@ -1772,12 +1772,29 @@ function sResults() {
 
   function inputTxt() {
 
+    // OC if 2 bodies, "Second Legislative Chamber" is for the senate
+    //    if 3 bodies, "Third Legislative Chamber" is for the senate
     userOutputText.innerHTML =
       "<div><h3>First Legislative Chamber</h3>" +
       "<p>Voting Members: " + userNumHouse +
       "<br>Members in Political Party A: " + Math.round(userPerHouseBody[0] * userNumHouse) +
       "<br>Members in Political Party B: " + Math.round(userPerHouseBody[1] * userNumHouse) +
-      "<br>Members in Political Party C: " + Math.round(userPerHouseBody[2] * userNumHouse) +
+      "<br>Members in Political Party C: " + Math.round(userPerHouseBody[2] * userNumHouse); // +
+
+      if (userNumLegislative == 2) {
+      userOutputText.innerHTML +=
+      "</p><h3>Second Legislative Chamber</h3>" +
+      "<p>Voting Members: " + userNumSenate +
+      "<br>Members in Political Party A: " + Math.round(userPerSenateBody[0] * userNumSenate) +
+      "<br>Members in Political Party B: " + Math.round(userPerSenateBody[1] * userNumSenate) +
+      "<br>Members in Political Party C: " + Math.round(userPerSenateBody[2] * userNumSenate) +
+      "</p><h3>Third Legislative Chamber</h3>" +
+      "<p>Voting Members: " + userNumHouse2 +
+      "<br>Members in Political Party A: " + Math.round(userPerHouse2Body[0] * userNumHouse2) +
+      "<br>Members in Political Party B: " + Math.round(userPerHouse2Body[1] * userNumHouse2) +
+      "<br>Members in Political Party C: " + Math.round(userPerHouse2Body[2] * userNumHouse2); // +
+      } else {
+      userOutputText.innerHTML +=
       "</p><h3>Second Legislative Chamber</h3>" +
       "<p>Voting Members: " + userNumHouse2 +
       "<br>Members in Political Party A: " + Math.round(userPerHouse2Body[0] * userNumHouse2) +
@@ -1787,7 +1804,10 @@ function sResults() {
       "<p>Voting Members: " + userNumSenate +
       "<br>Members in Political Party A: " + Math.round(userPerSenateBody[0] * userNumSenate) +
       "<br>Members in Political Party B: " + Math.round(userPerSenateBody[1] * userNumSenate) +
-      "<br>Members in Political Party C: " + Math.round(userPerSenateBody[2] * userNumSenate) +
+      "<br>Members in Political Party C: " + Math.round(userPerSenateBody[2] * userNumSenate);
+      }
+
+      userOutputText.innerHTML +=
       "</p><h3>Vice Presidency</h3>" +
       "<p>Voting Members: " + userNumVP +
       "<br>Members in Political Party A: " + Math.round(userPerPresBody[0] * userNumVP) +
@@ -1904,12 +1924,29 @@ function sDisplay() {
   }
 
   function inputTxt() {
+    // OC if 2 bodies, "Second Legislative Chamber" is for the senate
+    //    if 3 bodies, "Third Legislative Chamber" is for the senate
     userOutputText.innerHTML =
       "<div><h3>First Legislative Chamber</h3>" +
       "<p>Voting Members: " + userNumHouse +
       "<br>Members in Political Party A: " + Math.round(userPerHouseBody[0] * userNumHouse) +
       "<br>Members in Political Party B: " + Math.round(userPerHouseBody[1] * userNumHouse) +
-      "<br>Members in Political Party C: " + Math.round(userPerHouseBody[2] * userNumHouse) +
+      "<br>Members in Political Party C: " + Math.round(userPerHouseBody[2] * userNumHouse); // +
+
+      if (userNumLegislative == 2) {
+      userOutputText.innerHTML +=
+      "</p><h3>Second Legislative Chamber</h3>" +
+      "<p>Voting Members: " + userNumSenate +
+      "<br>Members in Political Party A: " + Math.round(userPerSenateBody[0] * userNumSenate) +
+      "<br>Members in Political Party B: " + Math.round(userPerSenateBody[1] * userNumSenate) +
+      "<br>Members in Political Party C: " + Math.round(userPerSenateBody[2] * userNumSenate) +
+      "</p><h3>Third Legislative Chamber</h3>" +
+      "<p>Voting Members: " + userNumHouse2 +
+      "<br>Members in Political Party A: " + Math.round(userPerHouse2Body[0] * userNumHouse2) +
+      "<br>Members in Political Party B: " + Math.round(userPerHouse2Body[1] * userNumHouse2) +
+      "<br>Members in Political Party C: " + Math.round(userPerHouse2Body[2] * userNumHouse2); // +
+      } else {
+      userOutputText.innerHTML +=
       "</p><h3>Second Legislative Chamber</h3>" +
       "<p>Voting Members: " + userNumHouse2 +
       "<br>Members in Political Party A: " + Math.round(userPerHouse2Body[0] * userNumHouse2) +
@@ -1919,7 +1956,10 @@ function sDisplay() {
       "<p>Voting Members: " + userNumSenate +
       "<br>Members in Political Party A: " + Math.round(userPerSenateBody[0] * userNumSenate) +
       "<br>Members in Political Party B: " + Math.round(userPerSenateBody[1] * userNumSenate) +
-      "<br>Members in Political Party C: " + Math.round(userPerSenateBody[2] * userNumSenate) +
+      "<br>Members in Political Party C: " + Math.round(userPerSenateBody[2] * userNumSenate);
+      }
+
+      userOutputText.innerHTML +=
       "</p><h3>Vice Presidency</h3>" +
       "<p>Voting Members: " + userNumVP +
       "<br>Members in Political Party A: " + Math.round(userPerPresBody[0] * userNumVP) +
