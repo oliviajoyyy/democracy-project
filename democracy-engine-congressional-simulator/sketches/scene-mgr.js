@@ -169,7 +169,10 @@ function nextScene() {
   } else if (mgr.isCurrent(sDefault)) {
    //mgr.showScene(sLegislative);
    mgr.showScene(sBodies);
-  }
+  } else if (mgr.isCurrent(sDisplay)) {
+    //mgr.showScene(sLegislative);
+    mgr.showScene(sBodies);
+   }
 
 }
 
@@ -267,9 +270,9 @@ function inputVar() {
   engine.perIndHouse = userPerHouseBody[2];
 
   //Demographics of House 2 as decimal percentages 1 = 100%
-  // engine.perDemHouse2 = userPerHouse2Body[0];
-  // engine.perRepHouse2 = userPerHouse2Body[1];
-  // engine.perIndHouse2 = userPerHouse2Body[2];
+  engine.perDemHouse2 = userPerHouse2Body[0];
+  engine.perRepHouse2 = userPerHouse2Body[1];
+  engine.perIndHouse2 = userPerHouse2Body[2];
 
   //Demographics of Senate as decimal percentages 1 = 100%
   engine.perDemSenate = userPerSenateBody[0];
