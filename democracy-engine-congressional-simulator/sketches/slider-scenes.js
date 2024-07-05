@@ -486,6 +486,7 @@ function sLegislative() {
 
     // changeText(" ");
 
+    //destroySliders();
     checkNumBodies();
     sliders();
     //button();
@@ -499,6 +500,16 @@ function sLegislative() {
 
   }
 
+  // function destroySliders() {
+  //   if (userEditCount >= 1) {
+  //     slider1.noUiSlider.destroy();
+  //     slider1a.noUiSlider.destroy();
+  //     slider2.noUiSlider.destroy();
+  //     slider3.noUiSlider.destroy();
+  //     slider4.noUiSlider.destroy();
+  //   }
+  // }
+
   // OC display sliders based on number of legislative bodies chosen on previous page
   // OC set id of sliders based on number of chambers so that css can place them in order with no gaps
   function checkNumBodies() {
@@ -507,15 +518,15 @@ function sLegislative() {
     document.getElementById("slider1").style.display = "block";
 
     if (userNumLegislative == 1) {
-      document.getElementById("s2-p1").innerHTML = "<div id='slider2'><p id='slider-text-2'>VICE PRESIDENCY</div>";
+      document.getElementById("s2-p1").innerHTML = "<div id='slider2'><p id='slider-text-2'>VICE PRESIDENCY</p></div>";
       document.getElementById("s2-p1").style.display = "block";
-      document.getElementById("s3-p1").innerHTML = "<div id='slider3'><p id='slider-text-3'>PRESIDENCY</div>";
+      document.getElementById("s3-p1").innerHTML = "<div id='slider3'><p id='slider-text-3'>PRESIDENCY</p></div>";
       document.getElementById("s3-p1").style.display = "block";
-      document.getElementById("s4-p1").innerHTML = "<div id='slider4'><p id='slider-text-4'>SECOND LEGISLATIVE CHAMBER</div>";
+      document.getElementById("s4-p1").innerHTML = "<div id='slider4'><p id='slider-text-4'>SECOND LEGISLATIVE CHAMBER</p></div>";
       document.getElementById("s4-p1").style.display = "none";
-      document.getElementById("s5-p1").innerHTML = "<div id='slider4a'><p id='slider-text-5'>THIRD LEGISLATIVE CHAMBER</div>";
+      document.getElementById("s5-p1").innerHTML = "<div id='slider4a'><p id='slider-text-5'>THIRD LEGISLATIVE CHAMBER</p></div>";
       document.getElementById("s5-p1").style.display = "none";
-
+      
       slider1a = document.getElementById('slider4a'); // house2 chamber, set slider but not used
       slider2 = document.getElementById('slider4'); // 3rd (senate) chamber, set slider but not used
       slider3 = document.getElementById('slider2'); // vp
@@ -530,13 +541,13 @@ function sLegislative() {
       // document.getElementById("slider-text-2").innerHTML = "";
     } else if (userNumLegislative == 2) {
       // show second chamber slider
-      document.getElementById("s2-p1").innerHTML = "<div id='slider2'><p id='slider-text-2'>SECOND LEGISLATIVE CHAMBER</div>";
+      document.getElementById("s2-p1").innerHTML = "<div id='slider2'><p id='slider-text-2'>SECOND LEGISLATIVE CHAMBER</p></div>";
       document.getElementById("s2-p1").style.display = "block";
-      document.getElementById("s3-p1").innerHTML = "<div id='slider3'><p id='slider-text-3'>VICE PRESIDENCY</div>";
+      document.getElementById("s3-p1").innerHTML = "<div id='slider3'><p id='slider-text-3'>VICE PRESIDENCY</p></div>";
       document.getElementById("s3-p1").style.display = "block";
-      document.getElementById("s4-p1").innerHTML = "<div id='slider4'><p id='slider-text-4'>PRESIDENCY</div>";
+      document.getElementById("s4-p1").innerHTML = "<div id='slider4'><p id='slider-text-4'>PRESIDENCY</p></div>";
       document.getElementById("s4-p1").style.display = "block";
-      document.getElementById("s5-p1").innerHTML = "<div id='slider4a'><p id='slider-text-5'>THIRD LEGISLATIVE CHAMBER</div>";
+      document.getElementById("s5-p1").innerHTML = "<div id='slider4a'><p id='slider-text-5'>THIRD LEGISLATIVE CHAMBER</p></div>";
       document.getElementById("s5-p1").style.display = "none";
 
       slider1a = document.getElementById('slider4a'); // house2, set slider but not used
@@ -555,19 +566,19 @@ function sLegislative() {
       // = "none" for 3rd body slider
     } else {
       // = "block" for all 3 body sliders
-      document.getElementById("s2-p1").innerHTML = "<div id='slider2'><p id='slider-text-2'>SECOND LEGISLATIVE CHAMBER</div>";
+      document.getElementById("s2-p1").innerHTML = "<div id='slider2'><p id='slider-text-2'>SECOND LEGISLATIVE CHAMBER</p></div>";
       document.getElementById("s2-p1").style.display = "block";
-      document.getElementById("s3-p1").innerHTML = "<div id='slider3'><p id='slider-text-3'>THIRD LEGISLATIVE CHAMBER</div>";
+      document.getElementById("s3-p1").innerHTML = "<div id='slider3'><p id='slider-text-3'>THIRD LEGISLATIVE CHAMBER</p></div>";
       document.getElementById("s3-p1").style.display = "block";
-      document.getElementById("s4-p1").innerHTML = "<div id='slider4'><p id='slider-text-4'>VICE PRESIDENCY</div>";
+      document.getElementById("s4-p1").innerHTML = "<div id='slider4'><p id='slider-text-4'>VICE PRESIDENCY</p></div>";
       document.getElementById("s4-p1").style.display = "block";
-      document.getElementById("s5-p1").innerHTML = "<div id='slider4a'><p id='slider-text-5'>VICE PRESIDENCY</div>";
+      document.getElementById("s5-p1").innerHTML = "<div id='slider4a'><p id='slider-text-5'>PRESIDENCY</p></div>";
       document.getElementById("s5-p1").style.display = "block";
 
       slider1a = document.getElementById('slider2'); // house2, set slider but not used
       slider2 = document.getElementById('slider3'); // 3rd (senate) chamber
       slider3 = document.getElementById('slider4'); // vp
-      slider4 = document.getElementById('slider5'); // pres
+      slider4 = document.getElementById('slider4a'); // pres
 
       // document.getElementById("slider1").style.display = "block";
       // document.getElementById("slider2").style.display = "block";
