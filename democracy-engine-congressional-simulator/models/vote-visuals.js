@@ -154,10 +154,10 @@ class VoteVisual {
     // }
 
     // OC skip bodyCount == 1 (senate) when only 1 legislative body
-    if (this.bodyCount == 1 && this.engine.numLegislativeBodies == 1) {
+    if (this.engine.numLegislativeBodies == 1 && this.bodyCount == 1) {
       this.bodyCount += 2; // skip house2 and senate
       //this.endBody = 1;
-    } else if (this.bodyCount == 1 && this.engine.numLegislativeBodies == 2) {
+    } else if (this.engine.numLegislativeBodies == 2 && this.bodyCount == 1) {
       this.bodyCount++; // skip house2
     }
 
@@ -362,6 +362,8 @@ class VoteVisual {
       }
     }
 
+    // OC if statment needed so that it runs on art101 server
+    //if (!(this.engine.numLegislativeBodies == 2 && this.bodyCount == 1)) {
     // Need to make sure we are not over our number of congressional body numCon and readjusts skip if too big
     if (this.count < this.numCon - 1 && this.count1 < 1) {
 
@@ -383,6 +385,7 @@ class VoteVisual {
       }
 
     }
+  //}
 
   }
 
