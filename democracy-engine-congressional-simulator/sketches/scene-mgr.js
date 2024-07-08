@@ -284,7 +284,7 @@ function inputVar() {
   engine.perRepPres = userPerPresBody[1];
   engine.perIndPres = userPerPresBody[2];
 
-  //Demographics of President as decimal percentages
+  //Demographics of Vice President as decimal percentages
   engine.perDemVP = userPerVPBody[0];
   engine.perRepVP = userPerVPBody[1];
   engine.perIndVP = userPerVPBody[2];
@@ -298,18 +298,17 @@ function inputVar() {
   console.log("ind yay thresh: " + engine.indYaythresh);
 
   //supermajority Cutoff for override of presidential veto
-
   engine.superThresh = parseFloat(userSuperThresh) / 100.0;
   console.log("superThresh: " + engine.superThresh);
-  //supermajority in a body
 
+  //supermajority in a body
   engine.perPass = parseFloat(userBodyPass) / 100.0;
   console.log("per pass: " + engine.perPass);
 
   //How Many Voting Bodies (house, senate, president, VP = 4) *for V2 - see TODO at top
   engine.numLegislativeBodies = parseFloat(userNumLegislative);
   //engine.numBodies = parseFloat(userNumLegislative) + 2; // OC add 2 for vp and pres
-  engine.numBodies = 5;
+  engine.numBodies = 5; // OC numBodies always 5 as place holders for house, house2, senate, vp, president
   console.log("USER NUM BODIES: " + engine.numBodies);
 
 
@@ -320,18 +319,19 @@ function inputVar() {
   // //Planets Stress Value
   // stressPlanet = userStressPlanet.value();
 
+  // reset values for calculations
   engine.bodyCount = 0;
+  engine.bodyPass = [];
   engine.resetCount();
   engine.resetDraw();
-  engine.superThreshIndex = [];
   engine.votingBodyCounts = [];
-  engine.bodyPass = [];
+  engine.superThreshIndex = [];
 
   visual.bodyCount = 0;
+  visual.bodyPass = [];
   visual.resetCount();
   visual.resetDraw();
-  visual.bodyPass = [];
-
+  
   removeField();
   // resetSliders();
   userEdits = true;

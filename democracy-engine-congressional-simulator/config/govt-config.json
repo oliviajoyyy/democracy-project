@@ -1,8 +1,17 @@
 {
+    "numLegislativeBodies": 2,
+
     "house": {
         "totalMembers": 435,
         "democrats": 220,
         "republicans": 211,
+        "independent": 0
+    },
+
+    "house2": {
+        "totalMembers": 0,
+        "democrats": 0,
+        "republicans": 0,
         "independent": 0
     },
 
@@ -34,8 +43,6 @@
         "repYay": 0.3,
         "indYay": 0.5
     },
-
-    "numLegislativeBodies": 2,
 
     "bills": [
         {

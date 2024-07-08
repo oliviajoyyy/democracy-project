@@ -41,7 +41,7 @@ stressOffset;
 
 //Number voting members
 numHouse; // = 435
-numHouse2 = 435;
+numHouse2; // = 435;
 numSenate; // = 100;
 numPres; // = 1;
 numVP; // = 1;
@@ -52,9 +52,9 @@ perRepHouse; // = 0.485;
 perIndHouse; // = 0.00;
 
 //Demographics of House2 as decimal percentages 1 = 100%
-perDemHouse2 = 0.505;
-perRepHouse2 = 0.485;
-perIndHouse2 = 0.00;
+perDemHouse2; // = 0.505;
+perRepHouse2; // = 0.485;
+perIndHouse2; // = 0.00;
 
 //Demographics of Senate as decimal percentages 1 = 100%
 perDemSenate; // = 0.48;
@@ -149,47 +149,57 @@ voteResults = ["","","","",""];
 
 decisionTxt = ""; // OC final decision string
 
-// OC for loop variables
+// OC for loop variables, to use across different functions
 ix;
 jx;
 
-allVotes = []; // OC 2D array keep track of "yay"/"nay" votes for each member of each body: bodyCount, array of votes
+allVotes = []; // OC 2D array keep track of "yay"/"nay" votes for each member of each body: bodyCount, array of its votes
 
+govtJSON;
 
-  constructor (currentConfig) {
+  constructor (govtJSON) {
+    this.govtJSON = govtJSON;
+
+    this.numLegislativeBodies = govtJSON.numLegislativeBodies;
+    this.numBodies = 5; // OC numBodies always 5 as placeholders for house, house2, senate, vp, pres
+
     //Number of voting members
-    this.numHouse = currentConfig.house.totalMembers;
-    this.numSenate = currentConfig.senate.totalMembers;
-    this.numVP = currentConfig.vicePres.totalMembers;
-    this.numPres = currentConfig.president.totalMembers;
+    this.numHouse = govtJSON.house.totalMembers;
+    this.nunHouse2 = govtJSON.house2.totalMembers;
+    this.numSenate = govtJSON.senate.totalMembers;
+    this.numVP = govtJSON.vicePres.totalMembers;
+    this.numPres = govtJSON.president.totalMembers;
 
     //Demographics of House as decimal percentages 1 = 100%
-this.perDemHouse = currentConfig.house.democrats / this.numHouse;
-this.perRepHouse = currentConfig.house.republicans / this.numHouse;
-this.perIndHouse = currentConfig.house.independent / this.numHouse;
+this.perDemHouse = govtJSON.house.democrats / this.numHouse;
+this.perRepHouse = govtJSON.house.republicans / this.numHouse;
+this.perIndHouse = govtJSON.house.independent / this.numHouse;
+
+//Demographics of House as decimal percentages 1 = 100%
+this.perDemHouse2 = govtJSON.house2.democrats / this.numHouse;
+this.perRepHouse2 = govtJSON.house2.republicans / this.numHouse;
+this.perIndHouse2 = govtJSON.house2.independent / this.numHouse;
 
 //Demographics of Senate as decimal percentages 1 = 100%
-this.perDemSenate = currentConfig.senate.democrats / this.numSenate;
-this.perRepSenate = currentConfig.senate.republicans / this.numSenate;
-this.perIndSenate = currentConfig.senate.independent / this.numSenate;
+this.perDemSenate = govtJSON.senate.democrats / this.numSenate;
+this.perRepSenate = govtJSON.senate.republicans / this.numSenate;
+this.perIndSenate = govtJSON.senate.independent / this.numSenate;
 
 //Demographics of Vice President as decimal percentages 1 = 100%
-this.perDemVP = currentConfig.vicePres.democrats / this.numVP;
-this.perRepVP = currentConfig.vicePres.republicans / this.numVP;
-this.perIndVP = currentConfig.vicePres.independent / this.numVP;
+this.perDemVP = govtJSON.vicePres.democrats / this.numVP;
+this.perRepVP = govtJSON.vicePres.republicans / this.numVP;
+this.perIndVP = govtJSON.vicePres.independent / this.numVP;
 
 //Demographics of President as decimal percentages 1 = 100%
-this.perDemPres = currentConfig.president.democrats / this.numPres;
-this.perRepPres = currentConfig.president.reppublicans / this.numPres;
-this.perIndPres = currentConfig.president.independent / this.numPres;
+this.perDemPres = govtJSON.president.democrats / this.numPres;
+this.perRepPres = govtJSON.president.reppublicans / this.numPres;
+this.perIndPres = govtJSON.president.independent / this.numPres;
 
-this.superThresh = currentConfig.threshold.supermajority;
-this.perPass = currentConfig.threshold.majority;
-this.demYaythresh = currentConfig.threshold.demYay;
-this.repYaythresh = currentConfig.threshold.repYay;
-this.indYaythresh = currentConfig.threshold.indYay;
-this.numLegislativeBodies = currentConfig.numLegislativeBodies;
-this.numBodies = 5; //currentConfig.numLegislativeBodies + 3; // add 2 for vp and president
+this.superThresh = govtJSON.threshold.supermajority;
+this.perPass = govtJSON.threshold.majority;
+this.demYaythresh = govtJSON.threshold.demYay;
+this.repYaythresh = govtJSON.threshold.repYay;
+this.indYaythresh = govtJSON.threshold.indYay;
 
   }
 
