@@ -1,11 +1,19 @@
 {
-    "background": "#012244",
-    "headerFooterBkg": "#3c1b36",
-    "text": "#ffffff",
-    "button": "#012266",
-    "activeNav": "#5785ba",
-    "link": "#88b6eb",
+    "background": "#99deab",
+    "headerFooterBkg": "#77bebf",
+    "text": "#000000",
+    "button": "#84a39b",
+    "activeNav": "#c42727",
+    "link": "#f03e3e",
     "linkHover": "#c47cb7",
-    "textOverlay": "#000000",
-    "rectColor": "#ffffff"
+    "textOverlay": "#ffffff",
+    "rectColor": "#873737",
+
+    "bkgImg1": "url('../assets/gridandfloorplan-dark.svg')",
+    "bkgImg2": "url('../assets/2gearslight-dark.svg')",
+    "numberLineIcon": "url('../assets/numberline-dark.svg')",
+    "simulatorIcon": "url('../assets/simulator-icon-dark.svg')",
+    "mediaIcon": "url('../assets/media-icon-dark.svg')",
+    "aboutIcon": "url('../assets/about-icon-dark.svg')",
+    "codeIcon": "url('../assets/code-icon-dark.svg')"
 }

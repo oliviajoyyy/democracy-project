@@ -1,22 +1,16 @@
-:root {
-  --bkg-color: #012244;
-  --header-foter-bkg: #3c1b36;
-  --text-color: white;
-}
-
 * {
   box-sizing: border-box;
 }
 
 body {
-  background: var(--bkg-color); /* #012244; */
+  background: #012244;
   /*  rh ad*/
   margin: 0;
   background-origin: content-box, padding-box;
 }
 
 .bkgd-img-1 {
-  background: var(--bkg-color); /* #012244; */
+  background: #012244;
   /*  rh ad*/
   margin: 0;
   /* background-image: url('https://projects.cadre.sjsu.edu/democracyproject/assets/hero.svg'); */
@@ -30,7 +24,7 @@ body {
   background-origin: content-box, padding-box;
 }
 .bkgd-img-2 {
-  background: var(--bkg-color); /* #012244; */ 
+  background: #012244;
   /*  rh ad*/
   margin: 0;
   /* background-image: url('https://projects.cadre.sjsu.edu/democracyproject/assets/hero.svg'); */
@@ -52,7 +46,7 @@ header {
   height: auto;
   z-index: 1;
   position: fixed;
-  background-color: var(--header-foter-bkg); /* #3c1b36; */
+  background-color: #3c1b36;
   /* background-color: #012244; */
 }
 
@@ -71,7 +65,7 @@ header ul li {
 }
 
 header ul li a {
-  color: var(--text-color); /* white; */
+  color: white;
   text-decoration: none;
 }
 
@@ -95,7 +89,7 @@ header ul li img {
 }
 
 .active-homepage {
-  color: var(--text-color); /* white; */
+  color: white;
   font-weight: bold;
   font-size: 26px;
 }
@@ -133,7 +127,7 @@ div img {
 }
 
 h1 {
-  color: var(--text-color); /* white; */
+  color: white;
   text-align: center;
   font-family: 'Work Sans', sans-serif;
   font-size: 50px;
@@ -143,7 +137,7 @@ h1 {
 }
 
 h2 {
-  color: var(--text-color); /* white; */
+  color: white;
   text-align: center;
   font-family: 'Work Sans', sans-serif;
   font-size: 30px;
@@ -153,7 +147,7 @@ h2 {
 }
 
 h3 {
-  color: var(--text-color); /* white; */
+  color: white;
   text-align: center;
   font-size: 30px;
   font-weight: normal;
@@ -166,7 +160,7 @@ a:hover {
   color:#c47cb7;
 }
 p {
-  color: var(--text-color); /* white; */
+  color: white;
   /* text-align: justify; */
   font-size: 18px;
   font-family: 'Work Sans', sans-serif;
@@ -176,7 +170,7 @@ p {
 }
 
 ul li {
-  color: var(--text-color); /* white; */
+  color: white;
   /* text-align: justify; */
   font-size: 15px;
   font-family: 'Work Sans', sans-serif;
@@ -203,8 +197,8 @@ div.col {
 footer {
   text-align: center;
   margin: auto;
-  background-color: var(--header-foter-bkg); /* #3c1b36; */
-  color: var(--text-color); /* white; */
+  background-color: #3c1b36;
+  color: white;
   margin-bottom: 0px;
   /* rh update from 10 px*/
   position: fixed;
@@ -231,7 +225,7 @@ footer ul li {
 
 footer ul li a {
   padding: 5px;
-  color: var(--text-color); /* white; */
+  color: white;
   text-decoration: none;
 }
 
@@ -316,7 +310,7 @@ div.body-header {
   font-size: 17px;
   border: none;
   outline: none;
-  color: var(--text-color); /* white; */
+  color: white;
   padding: 14px 16px;
   background-color: inherit;
   font-family: inherit;
@@ -364,7 +358,7 @@ div.body-header {
     position: absolute;
     right: 17px;
     top: 5;
-    color: var(--text-color); /* white; */
+    color: white;
   }
 
   p {
