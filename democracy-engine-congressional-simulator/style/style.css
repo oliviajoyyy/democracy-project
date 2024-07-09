@@ -1,6 +1,7 @@
 :root {
-  --bkg-color: #012244;
-  --header-footer-bkg: #3c1b36;
+  --bkg-color: #99deab; /* #012244; */ 
+  --header-footer-bkg: #77bebf; /* #3c1b36; */
+  /* OC note: set these default bkg-color & header-footer-bkg vars to same custom color from json to load more smoothly */
   --text-color: white;
   --button: #012266;
   --link-hover: #c47cb7;

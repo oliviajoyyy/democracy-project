@@ -2,7 +2,6 @@ fetch('/democracy-engine-congressional-simulator/config/color-config.json')
     .then(response => response.json())
     .then(data => {
         document.documentElement.style.setProperty('--bkg-color', data.background);
-        document.documentElement.style.setProperty('--bkg-opacity', hexToRgba(data.background, 0.6));
         document.documentElement.style.setProperty('--header-footer-bkg', data.headerFooterBkg);
         document.documentElement.style.setProperty('--text-color', data.text);
         document.documentElement.style.setProperty('--button', data.button);

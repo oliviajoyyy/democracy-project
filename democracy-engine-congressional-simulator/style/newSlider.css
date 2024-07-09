@@ -1,10 +1,8 @@
 :root {
-  --bkg-color: #012244;
-  --bkg-opacity: #012244;
-  --header-footer-bkg: #3c1b36;
+  --bkg-color: #99deab; /* #012244; */ 
+  /* OC note: set default bkg-color to same custom color from json to load more smoothly */
   --text-color: white;
   --button: #012266;
-  --link-hover: #c47cb7;
   --scroll-bar: #012255;
   --scroll-bar-hover: #012266;
 }
