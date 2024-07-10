@@ -1,5 +1,5 @@
 :root {
-  --bkg-color: #99deab; /* #012244; */ 
+  --bkg-color: #d5eddc; /* #012244; */ 
   /* OC note: set default bkg-color to same custom color from json to load more smoothly */
   --text-color: white;
   --button: #012266;
