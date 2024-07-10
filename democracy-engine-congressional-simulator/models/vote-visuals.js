@@ -782,6 +782,7 @@ class VoteVisual {
       }
       // changeText(engine.decisionTxt); // change final decision text at bottom of screen
     }
+    this.displayContext(engine);
   }
 
   /**
@@ -870,10 +871,10 @@ class VoteVisual {
             textSize(16);
             text("\n\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", (ip) * dispW + padX, padY);
             textSize(20);
-            text('\n\n\n' + engine.voteResults[i], (ip) * dispW + padX, this.dHeight / 4, dispW - padX, dispH);
+            text('\n\n' + engine.voteResults[i], (ip) * dispW + padX, this.dHeight / 4, dispW - padX, dispH);
           } else { // president not voted, so adjust placement of text
             textSize(20);
-            text('\n\n\n\n' + engine.voteResults[i], (ip) * dispW + padX, padY, dispW - padX, dispH);
+            text('\n\n\n' + engine.voteResults[i], (ip) * dispW + padX, padY, dispW - padX, dispH);
           }
         } else if (currentBodyLabel == 'VICE PRESIDENCY') {
           textSize(22);
@@ -885,7 +886,7 @@ class VoteVisual {
             textSize(16);
             text("\n\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", (ip) * dispW + padX, padY);
             textSize(20);
-            text('\n\n\n' + engine.voteResults[i], (ip) * dispW + padX, this.dHeight / 4, dispW - padX, dispH);
+            text('\n\n' + engine.voteResults[i], (ip) * dispW + padX, this.dHeight / 4, dispW - padX, dispH);
           } else { // did not vote
             textSize(20);
             text('\n\n\n' + engine.voteResults[i], (ip) * dispW + padX, padY, dispW - padX, dispH);
@@ -903,7 +904,7 @@ class VoteVisual {
             textSize(16);
             text("\n\n\n\n\nYES: " + engine.votingBodyCounts[i][0] + "\nNO: " + engine.votingBodyCounts[i][1] + "\n ", (ip) * dispW + padX, padY);
             textSize(20);
-            text('\n\n\n' + engine.voteResults[i], (ip) * dispW + padX, this.dHeight / 4, dispW - padX, dispH);
+            text('\n\n' + engine.voteResults[i], (ip) * dispW + padX, this.dHeight / 4, dispW - padX, dispH);
           } else { // did not vote
             textSize(20);
             text('\n\n\n' + engine.voteResults[i], (ip) * dispW + padX, padY, dispW - padX, dispH);
@@ -911,6 +912,31 @@ class VoteVisual {
         }
       }
     }
+    this.displayContext(engine);
+  }
+
+  displayContext(engine) {
+    var bills = engine.govtJSON.bills; // array of 10 bills from govt configuration
+    let ran = floor(random(10)); // get an integer 0-9
+    var bill = bills[ran]; // get random bill
+    push();
+    let padY = 40;
+    let padX = 10;
+    let offsetY = 0;
+    if (this.forUser) {
+      offsetY = 20;
+    }
+    textSize(22);
+    text("BILL VOTED ON", padX, height/2 + offsetY);
+    textSize(20);
+    text(bill.title, padX, padY + height/2 + offsetY);
+    textSize(16);
+    if (engine.forUser) {
+      text(bill.description, padX, (padY * 2) + height/2 + offsetY, width - padX);
+    } else {
+      text(bill.description, padX, (padY * 2) + height/2 + offsetY, width - padX - this.offSet);
+    }
+    pop();
 
   }
 

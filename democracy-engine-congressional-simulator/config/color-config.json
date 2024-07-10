@@ -1,13 +1,13 @@
 {
-    "background": "#99deab",
-    "headerFooterBkg": "#77bebf",
+    "background": "#d5eddc",
+    "headerFooterBkg": "#76b7e8",
     "text": "#000000",
     "button": "#84a39b",
     "activeNav": "#c42727",
     "link": "#f03e3e",
     "linkHover": "#c47cb7",
     "textOverlay": "#ffffff",
-    "rectColor": "#873737",
+    "rectColor": "#a31f1f",
 
     "bkgImg1": "url('../assets/gridandfloorplan-dark.svg')",
     "bkgImg2": "url('../assets/2gearslight-dark.svg')",

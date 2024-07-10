@@ -8,8 +8,8 @@ fetch('/democracy-engine-congressional-simulator/config/color-config.json')
         document.documentElement.style.setProperty('--active-nav', data.activeNav);
         document.documentElement.style.setProperty('--link', data.link);
         document.documentElement.style.setProperty('--link-hover', data.linkHover);
-        document.documentElement.style.setProperty('--scroll-bar', data.rectColor);
-        document.documentElement.style.setProperty('--scroll-bar-hover', hexToRgba(data.rectColor, 0.5));
+        document.documentElement.style.setProperty('--scroll-bar', data.headerFooterBkg);
+        document.documentElement.style.setProperty('--scroll-bar-hover', hexToRgba(data.headerFooterBkg, 0.6));
 
         document.documentElement.style.setProperty('--bkg-img-1', data.bkgImg1);
         document.documentElement.style.setProperty('--bkg-img-2', data.bkgImg2);
