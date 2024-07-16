@@ -2,21 +2,36 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ResultSchema = new Schema({
-    chamber1Yes: Number, // votingBodyCounts[0][0], [0][1]
-    chamber1No: Number, 
-    chamber1Result: String, // voteResults[0]
 
-    chamber2Yes: Number, // votingBodyCounts[1][0], [1][1]
-    chamber2No: Number,
-    chamber2Result: String, // voteResults[1]
+    chamber1: {
+        yes: Number,
+        no: Number,
+        result: String
+    },
 
-    vpYes: Number,
-    vpNo: Number,
-    vpResult: String,
+    chamber2: {
+        yes: Number,
+        no: Number,
+        result: String
+    },
 
-    presYes: Number,
-    presNo: Number,
-    presResult: String,
+    chamber3: {
+        yes: Number,
+        no: Number,
+        result: String
+    },
+
+    vicePres: {
+        yes: Number,
+        no: Number,
+        result: String
+    },
+
+    president: {
+        yes: Number,
+        no: Number,
+        result: String
+    },
 
     finalDecision: String // decisionTxt
 });

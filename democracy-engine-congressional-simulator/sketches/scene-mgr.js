@@ -85,8 +85,18 @@ var textColor;
 var colorOverlay;
 var rectColor;
 
+// json
 var govtConfig;
 var colorConfig;
+
+var sessionObj; // session obj holds array of json configurations, which holds array of json results
+var configs = []; // array of json objects
+var results = []; // array of json objects
+var sessionID = "ID" + userEditCount;
+
+// to keep track of array indicies
+var configIX = 0;
+var resultIX = 0;
 
 
 function preload() {
@@ -249,6 +259,14 @@ function defResult() {
 
 //User Input Values for Congressional Reconfiguration
 function inputVar() {
+
+  // OC if coming from the user engine page or the user display page, 
+  // increment resultIX bc using the same configuration
+  if (mgr.isCurrent(democracyEngineUser) || mgr.isCurrent(sDisplay)) {
+    resultIX++;
+    console.log("incremented resultIX: " + resultIX);
+  }
+
   document.body.style.backgroundColor = bColor;
   changeText(" ");
   if(!document.getElementById('disp-btn')){
@@ -263,6 +281,7 @@ function inputVar() {
   engine.numPres = userNumPres;
   engine.numVP = userNumVP;
 
+  engine.numParties = userNumParties;
 
   //Demographics of House as decimal percentages 1 = 100%
   engine.perDemHouse = userPerHouseBody[0];
@@ -382,4 +401,237 @@ function roundNum(value, decimals) {
 //changes the text on the HTML body for final voting decision
 function changeText(text) {
   document.getElementById("result").innerHTML = text;
+}
+
+// OC call when app first opened and at end of saveSession
+function newSession() {
+  // generate new session ID
+  sessionID = "ID" + userEditCount;
+
+  // new (reset) config array (and result array) = []
+  configs = [];
+  results = [];
+
+  // reset IX vars = 0
+  configIX = 0;
+  resultIX = 0;
+
+  // new session global var
+  sessionObj = {
+    "uniqueID": sessionID,
+    "config": configs
+  }
+  
+}
+
+function saveSession() {
+  addSession(sessionObj); // add session to the database
+  newSession(); // create new session
+}
+
+// OC call after results are displayed to the screen
+// configIX and resultIX get updated as app is used
+function updateSession() {
+  //addResult(resultIX);
+  addConfig();
+  addResult(configIX); // add result to this configuration
+  //addConfig();
+
+  sessionObj = {
+    "uniqueID": sessionID,
+    "config": configs
+  }
+  // sessionObj = {
+  //   "uniqueID": sessionID,
+  //   "config": configs
+  // }
+  console.log(sessionObj);
+}
+
+function addConfig() {
+  // create/add json object at this ix in the config array
+
+  // OC note - engine logic uses house and senate for 2 chambers, not house2, so swap chamber2 and chamber3 values
+  if (engine.numLegislativeBodies == 2) {
+    configs[configIX] = {
+            numLegislativeBodies: engine.numLegislativeBodies,
+            numParties: engine.numParties,
+
+            chamber1: {
+                totalMembers: engine.numHouse,
+                pctPartyA: engine.perDemHouse,
+                pctPartyB: engine.perRepHouse,
+                pctPartyC: engine.perIndHouse
+            },
+
+            chamber2: {
+              totalMembers: engine.numSenate,
+                pctPartyA: engine.perDemSenate,
+                pctPartyB: engine.perRepSenate,
+                pctPartyC: engine.perIndSenate
+            },
+
+            chamber3: {
+              totalMembers: engine.numHouse2,
+              pctPartyA: engine.perDemHouse2,
+              pctPartyB: engine.perRepHouse2,
+              pctPartyC: engine.perIndHouse2
+            },
+
+            vicePres: {
+                totalMembers: engine.numVP,
+                pctPartyA: engine.perDemVP,
+                pctPartyB: engine.perRepVP,
+                pctPartyC: engine.perIndVP
+            },
+
+            president: {
+                totalMembers: engine.numPres,
+                pctPartyA: engine.perDemPres,
+                pctPartyB: engine.perRepPres,
+                pctPartyC: engine.perIndPres
+            },
+
+            threshold: {
+                supermajority: engine.superThresh,
+                majority: engine.perPass,
+                yayPartyA: engine.demYaythresh,
+                yayPartyB: engine.repYaythresh,
+                yayPartyC: engine.indYaythesh
+            },
+
+            result: results // OC just set the resutls array, then call addResult afterward
+    } 
+  } else {
+    configs[configIX] = {
+      numLegislativeBodies: engine.numLegislativeBodies,
+      numParties: engine.numParties,
+
+      chamber1: {
+          totalMembers: engine.numHouse,
+          pctPartyA: engine.perDemHouse,
+          pctPartyB: engine.perRepHouse,
+          pctPartyC: engine.perIndHouse
+      },
+
+      chamber2: {
+          totalMembers: engine.numHouse2,
+          pctPartyA: engine.perDemHouse2,
+          pctPartyB: engine.perRepHouse2,
+          pctPartyC: engine.perIndHouse2
+      },
+
+      chamber3: {
+          totalMembers: engine.numSenate,
+          pctPartyA: engine.perDemSenate,
+          pctPartyB: engine.perRepSenate,
+          pctPartyC: engine.perIndSenate
+      },
+
+      vicePres: {
+          totalMembers: engine.numVP,
+          pctPartyA: engine.perDemVP,
+          pctPartyB: engine.perRepVP,
+          pctPartyC: engine.perIndVP
+      },
+
+      president: {
+          totalMembers: engine.numPres,
+          pctPartyA: engine.perDemPres,
+          pctPartyB: engine.perRepPres,
+          pctPartyC: engine.perIndPres
+      },
+
+      threshold: {
+          supermajority: engine.superThresh,
+          majority: engine.perPass,
+          yayPartyA: engine.demYaythresh,
+          yayPartyB: engine.repYaythresh,
+          yayPartyC: engine.indYaythesh
+      },
+
+      result: results // OC just set the resutls array, then call addResult afterward
+} 
+  }
+
+  
+  //addResult(configIX);
+}
+
+// OC add json obj of the result to the result array for this configuration
+function addResult(pConfigIX) {
+  // for this configuration, add the result to the array
+  // OC note - engine logic uses house and senate for 2 chambers, not house2, so swap chamber2 and chamber3 values
+  if (engine.numLegislativeBodies == 2) {
+    results[resultIX] = {
+      chamber1: {
+        yes: engine.votingBodyCounts[0][0],
+        no: engine.votingBodyCounts[0][1],
+        result: engine.voteResults[0]
+      },
+  
+      chamber2: {
+          yes: engine.votingBodyCounts[2][0],
+          no: engine.votingBodyCounts[2][1],
+          result: engine.voteResults[2]
+      },
+  
+      chamber3: {
+          yes: engine.votingBodyCounts[1][0],
+          no: engine.votingBodyCounts[1][1],
+          result: null
+      },
+  
+      vicePres: {
+          yes: engine.votingBodyCounts[3][0],
+          no: engine.votingBodyCounts[3][1],
+          result: engine.voteResults[3]
+      },
+  
+      president: {
+          yes: engine.votingBodyCounts[4][0],
+          no: engine.votingBodyCounts[4][1],
+          result: engine.voteResults[4]
+      },
+  
+      finalDecision: engine.decisionTxt
+    }
+  } else {
+    results[resultIX] = {
+      chamber1: {
+        yes: engine.votingBodyCounts[0][0],
+        no: engine.votingBodyCounts[0][1],
+        result: engine.voteResults[0]
+      },
+  
+      chamber2: {
+          yes: engine.votingBodyCounts[1][0],
+          no: engine.votingBodyCounts[1][1],
+          result: engine.voteResults[1]
+      },
+  
+      chamber3: {
+          yes: engine.votingBodyCounts[2][0],
+          no: engine.votingBodyCounts[2][1],
+          result: engine.voteResults[2]
+      },
+  
+      vicePres: {
+          yes: engine.votingBodyCounts[3][0],
+          no: engine.votingBodyCounts[3][1],
+          result: engine.voteResults[3]
+      },
+  
+      president: {
+          yes: engine.votingBodyCounts[4][0],
+          no: engine.votingBodyCounts[4][1],
+          result: engine.voteResults[4]
+      },
+  
+      finalDecision: engine.decisionTxt
+    }
+  }
+  configs[pConfigIX].result = results;
+  console.log(configs[pConfigIX].result);
+  
 }

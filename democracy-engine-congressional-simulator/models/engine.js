@@ -84,6 +84,8 @@ numBodies; // = 4; // total number of voting bodies --> 5
 numLegislativeBodies; // number of legislative bodies (1-3)
 //defNumBody;//delete?
 
+numParties;
+
 //******These are NOT user determined*********
 
 //We will use these in the setup function to map the sensor value to stress index
@@ -615,13 +617,21 @@ this.indYaythresh = govtJSON.threshold.indYay;
       this.stopVoteArr[2] = false;
       if (this.bodyCount == 2)
         this.yay = this.numSenate;
+      this.votingBodyCounts[2] = [];
+      this.votingBodyCounts[2][0] = null;
+      this.votingBodyCounts[2][1] = null;
+      this.voteResults[2] = null;
 
       // also make house 2 automatically pass
       this.bodyPass[1] = true;
       this.superThreshIndex[1] = true;
       this.stopVoteArr[1] = false;
       if (this.bodyCount == 1)
-      this.yay = this.numHouse2;
+        this.yay = this.numHouse2;
+      this.votingBodyCounts[1] = [];
+      this.votingBodyCounts[1][0] = null;
+      this.votingBodyCounts[1][1] = null;
+      this.voteResults[1] = null;
 
     } else if (this.numLegislativeBodies == 2) { // use original house [0] and senate [2]
       // make house2 automatically pass
@@ -630,6 +640,10 @@ this.indYaythresh = govtJSON.threshold.indYay;
       this.stopVoteArr[1] = false;
       if (this.bodyCount == 1)
         this.yay = this.numHouse2;
+      this.votingBodyCounts[1] = [];
+      this.votingBodyCounts[1][0] = null;
+      this.votingBodyCounts[1][1] = null;
+      this.voteResults[1] = null;
     }
 
     console.log("body pass: " + this.bodyPass);
@@ -818,7 +832,7 @@ this.indYaythresh = govtJSON.threshold.indYay;
            
                 if (this.bodyPass[i] == true && this.superThreshIndex[i] == true) {
                   this.voteResults[i] = "BILL IS APPROVED WITH SUPERMAJORITY";
-                } else if ((currentBodyLabel == 'SENATE' || currentBodyLabel == 'LEGISLATIVE CHAMBER 2') 
+                } else if ((currentBodyLabel == 'SENATE' || currentBodyLabel == 'LEGISLATIVE CHAMBER 3') 
                               && this.bodyPass[0] == true && this.bodyPass[1] == true && this.vpVote == true) {
                   this.voteResults[i] = "TIE-BREAKER VOTE INITIATED";
                 } else if (this.numLegislativeBodies == 1 && currentBodyLabel == 'LEGISLATIVE CHAMBER 1'

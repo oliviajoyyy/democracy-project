@@ -71,6 +71,7 @@ function democracyEngineUser() {
       if (visual.userInputState) {
         finalDisplay();
         //addSession(toSchema(engine)); // OC save session to db after displaying to screen
+        updateSession();
       }
     //}
 
@@ -125,6 +126,8 @@ function democracyEngineUser() {
 
   //Reloads the page if user would like to reset values
   function userRecount() {
+    // save session to db then reload the page
+    saveSession();
     location.reload();
     //reset();
   }
@@ -859,6 +862,13 @@ function sParties() {
           userPerVPBody[0] = 1.0;
           userNumParties = parseInt(userNumParties);
           onePartyBool = true;
+
+          userNumHouse = parseInt(userNumHouse);
+          userNumHouse2 = parseInt(userNumHouse2)
+          userNumPres = parseInt(userNumPres);
+          userNumVP = parseInt(userNumVP);
+          userNumSenate = parseInt(userNumSenate);
+          userNumParties = parseInt(userNumParties);
 
         }
 
@@ -1730,6 +1740,9 @@ function sResults() {
   }
 
   this.enter = function () {
+    configIX = userEditCount; // OC config array index always 1 less than editCount
+    results = []; // OC new results array since it is a new config
+    resultIX = 0; // OC reset resultIX bc new configuration
     userEditCount++;
     console.log("user edit count: " + userEditCount);
     console.log("user result page");
