@@ -497,7 +497,7 @@ function addConfig() {
                 majority: engine.perPass,
                 yayPartyA: engine.demYaythresh,
                 yayPartyB: engine.repYaythresh,
-                yayPartyC: engine.indYaythesh
+                yayPartyC: engine.indYaythresh
             },
 
             result: results // OC just set the resutls array, then call addResult afterward
