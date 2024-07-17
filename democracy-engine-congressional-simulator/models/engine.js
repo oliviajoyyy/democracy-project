@@ -158,51 +158,72 @@ jx;
 allVotes = []; // OC 2D array keep track of "yay"/"nay" votes for each member of each body: bodyCount, array of its votes
 
 govtJSON;
+historicalActs;
 
-  constructor (govtJSON) {
+  constructor (govtJSON, historicalActs) {
     this.govtJSON = govtJSON;
-
-    this.numLegislativeBodies = govtJSON.numLegislativeBodies;
+    this.historicalActs = historicalActs;
     this.numBodies = 5; // OC numBodies always 5 as placeholders for house, house2, senate, vp, pres
+    this.setDefaultParams();
+  }
 
-    //Number of voting members
-    this.numHouse = govtJSON.house.totalMembers;
-    this.nunHouse2 = govtJSON.house2.totalMembers;
-    this.numSenate = govtJSON.senate.totalMembers;
-    this.numVP = govtJSON.vicePres.totalMembers;
-    this.numPres = govtJSON.president.totalMembers;
+  setDefaultParams() {
+    this.numLegislativeBodies = this.govtJSON.numLegislativeBodies;
+    this.numParties = this.govtJSON.numParties;
 
+    // Number of voting members total and for each party, for each body
+    this.numHouse = this.govtJSON.chamber1.totalMembers;
     //Demographics of House as decimal percentages 1 = 100%
-this.perDemHouse = govtJSON.house.democrats / this.numHouse;
-this.perRepHouse = govtJSON.house.republicans / this.numHouse;
-this.perIndHouse = govtJSON.house.independent / this.numHouse;
+    this.perDemHouse = this.govtJSON.chamber1.partyA / this.numHouse;
+    this.perRepHouse = this.govtJSON.chamber1.partyB / this.numHouse;
+    this.perIndHouse = this.govtJSON.chamber1.partyC / this.numHouse;
 
-//Demographics of House as decimal percentages 1 = 100%
-this.perDemHouse2 = govtJSON.house2.democrats / this.numHouse;
-this.perRepHouse2 = govtJSON.house2.republicans / this.numHouse;
-this.perIndHouse2 = govtJSON.house2.independent / this.numHouse;
+    // with 2 parties, engine logic skips chamber 2 (house2) - so set chamber2 from the config file to senate
+    if (this.numParties == 2) {
+      this.nunHouse2 = this.govtJSON.chamber3.totalMembers;
+      //Demographics of House as decimal percentages 1 = 100%
+      this.perDemHouse2 = this.govtJSON.chamber3.partyA / this.numHouse2;
+      this.perRepHouse2 = this.govtJSON.chamber3.partyB / this.numHouse2;
+      this.perIndHouse2 = this.govtJSON.chamber3.partyC / this.numHouse2;
 
-//Demographics of Senate as decimal percentages 1 = 100%
-this.perDemSenate = govtJSON.senate.democrats / this.numSenate;
-this.perRepSenate = govtJSON.senate.republicans / this.numSenate;
-this.perIndSenate = govtJSON.senate.independent / this.numSenate;
+      this.numSenate = this.govtJSON.chamber2.totalMembers;
+      //Demographics of Senate as decimal percentages 1 = 100%
+      this.perDemSenate = this.govtJSON.chamber2.partyA / this.numSenate;
+      this.perRepSenate = this.govtJSON.chamber2.partyB / this.numSenate;
+      this.perIndSenate = this.govtJSON.chamber2.partyC / this.numSenate;
 
-//Demographics of Vice President as decimal percentages 1 = 100%
-this.perDemVP = govtJSON.vicePres.democrats / this.numVP;
-this.perRepVP = govtJSON.vicePres.republicans / this.numVP;
-this.perIndVP = govtJSON.vicePres.independent / this.numVP;
+    } else { // can set in order
+      this.nunHouse2 = this.govtJSON.chamber2.totalMembers;
+      //Demographics of House as decimal percentages 1 = 100%
+      this.perDemHouse2 = this.govtJSON.chamber2.partyA / this.numHouse2;
+      this.perRepHouse2 = this.govtJSON.chamber2.partyB / this.numHouse2;
+      this.perIndHouse2 = this.govtJSON.chamber2.partyC / this.numHouse2;
 
-//Demographics of President as decimal percentages 1 = 100%
-this.perDemPres = govtJSON.president.democrats / this.numPres;
-this.perRepPres = govtJSON.president.reppublicans / this.numPres;
-this.perIndPres = govtJSON.president.independent / this.numPres;
+      this.numSenate = this.govtJSON.chamber3.totalMembers;
+      //Demographics of Senate as decimal percentages 1 = 100%
+      this.perDemSenate = this.govtJSON.chamber3.partyA / this.numSenate;
+      this.perRepSenate = this.govtJSON.chamber3.partyB / this.numSenate;
+      this.perIndSenate = this.govtJSON.chamber3.partyC / this.numSenate;
+    }
 
-this.superThresh = govtJSON.threshold.supermajority;
-this.perPass = govtJSON.threshold.majority;
-this.demYaythresh = govtJSON.threshold.demYay;
-this.repYaythresh = govtJSON.threshold.repYay;
-this.indYaythresh = govtJSON.threshold.indYay;
+    this.numVP = this.govtJSON.vicePres.totalMembers;
+    //Demographics of Vice President as decimal percentages 1 = 100%
+    this.perDemVP = this.govtJSON.vicePres.partyA / this.numVP;
+    this.perRepVP = this.govtJSON.vicePres.partyB / this.numVP;
+    this.perIndVP = this.govtJSON.vicePres.partyC / this.numVP;
 
+    this.numPres = this.govtJSON.president.totalMembers;
+    //Demographics of President as decimal percentages 1 = 100%
+    this.perDemPres = this.govtJSON.president.partyA / this.numPres;
+    this.perRepPres = this.govtJSON.president.partyB / this.numPres;
+    this.perIndPres = this.govtJSON.president.partyC / this.numPres;
+
+    this.perPass = this.govtJSON.percentMajority; // as decimal percentages
+    this.superThresh = this.govtJSON.percentSupermajority;
+    
+    this.demYaythresh = this.govtJSON.probabilityYesVote.partyA;
+    this.repYaythresh = this.govtJSON.probabilityYesVote.partyB;
+    this.indYaythresh = this.govtJSON.probabilityYesVote.partyC;
   }
 
   /**

@@ -59,20 +59,63 @@ function democracyEngineUser() {
     //   console.log("RESULT " + (frameCount-1999) + " : " + engine.voteResults);
     // }
 
-    engine.currentCongLogic(userEdits);
     
+    //if (resultIX < MAX_SIM_RESULTS -1) {
+
+    // OC run voting simulation 10 times on this configuration
+    for (let i=resultIX; i < MAX_SIM_RESULTS; i++) {
+        
+        engine.bodyCount = 0;
+          engine.bodyPass = [];
+          engine.resetCount();
+          engine.resetDraw();
+          engine.votingBodyCounts = [];
+          engine.superThreshIndex = [];
+        engine.currentCongLogic(userEdits);
+        //let engineSim = new DemocracyEngine
+        updateSession();
+        resultIX++;
+    }
+      //}
 
     // OC when engine is done with voting calculation, show votes
     //if (engine.finalDisplayBool) {
 
+      // if (resultIX == 0) {
+        //engine.currentCongLogic(userEdits);
+
+    // OC display the last voting result
     visual.displayVoting(engine);
 
       // OC when visual display of rectangles is done, show buttons
-      if (visual.userInputState) {
+      if (visual.userInputState) { // && resultIX == 0) {
         finalDisplay();
+        //updateSession();
+        //resultIX++;
         //addSession(toSchema(engine)); // OC save session to db after displaying to screen
-        updateSession();
       }
+    //}
+      
+    
+      
+    //} else {
+
+    // if (resultIX<MAX_SIM_RESULTS -1) {
+    //      //inputVar();
+    //      //resultIX++;
+    //      engine.bodyCount = 0;
+    //       engine.bodyPass = [];
+    //       engine.resetCount();
+    //       engine.resetDraw();
+    //       engine.votingBodyCounts = [];
+    //       engine.superThreshIndex = [];
+    //      engine.currentCongLogic(userEdits);
+    //      updateSession();
+         
+    //   }
+      
+    //   resultIX++;
+    //}
     //}
 
   }
@@ -84,7 +127,7 @@ function democracyEngineUser() {
     setTimeout(function () {
       document.body.style.backgroundColor = colorOverlay;
       userInput(); // show buttons
-      visual.finalTextDisplayUser(engine, helvFont, colorOverlay);
+      visual.finalTextDisplayUser(engine, helvFont, colorOverlay, resultIX-1);
       changeText(engine.decisionTxt); // change final decision text at bottom of screen 
     }, 1500); // 1.5 seconds before text overlay shows
 
@@ -1740,7 +1783,11 @@ function sResults() {
   }
 
   this.enter = function () {
-    configIX = userEditCount; // OC config array index always 1 less than editCount
+    configIX = userEditCount; // OC config array index is 1 less than editCount until it reaches max attempts
+    if (configIX > MAX_CONFIG_ATTEMPTS - 1) {
+      configs.shift(); // remove first entered in array
+      configIX == MAX_CONFIG_ATTEMPTS - 1; // decrement IX to last position in array
+    }
     results = []; // OC new results array since it is a new config
     resultIX = 0; // OC reset resultIX bc new configuration
     userEditCount++;

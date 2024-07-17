@@ -11,8 +11,13 @@ const SessionSchema = new Schema({
     uniqueID: String,
 
     // user configuration properties
-    config: [ConfigSchema] 
+    configHistory: [ConfigSchema],
 
+    finalConfig: {
+        config: ConfigSchema,
+        ownerEndorsement: Number, // 1 or 0
+        publicEndorsement: Number // incremented
+    }
 });
 
 module.exports = mongoose.model("Session", SessionSchema, "sessions");

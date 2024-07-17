@@ -80,6 +80,8 @@ class VoteVisual {
   forUser; // OC bool to indicate if the govt config was set by the user
   userInputState = false; // OC boolean to indicate when to show buttons for next user input for engine config
 
+  resIX;
+
   /**
    * Sets loading image and background color properties
    * @param {image} img - loading image bitmap
@@ -790,7 +792,8 @@ class VoteVisual {
    * @param {DemocracyEngine} engine 
    * @param {Font} font 
    */
-  finalTextDisplayUser(engine, font, colorOverlay) {
+  finalTextDisplayUser(engine, font, colorOverlay, resIX) {
+    this.resIX = resIX;
     let currentBodyLabel;
 
     let columnAmount = this.numBodies;
@@ -916,9 +919,13 @@ class VoteVisual {
   }
 
   displayContext(engine) {
-    var bills = engine.govtJSON.bills; // array of 10 bills from govt configuration
-    let ran = floor(random(10)); // get an integer 0-9
-    var bill = bills[ran]; // get random bill
+    var bills = engine.historicalActs; // array of 10 bills from govt configuration
+    if (engine.forUser) {
+      var bill = bills[this.resIX];
+    } else {
+      let ran = floor(random(10)); // get an integer 0-9
+      var bill = bills[ran]; // get random bill
+    }
     push();
     let padY = 40;
     let padX = 10;

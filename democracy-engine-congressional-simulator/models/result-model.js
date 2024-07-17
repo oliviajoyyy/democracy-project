@@ -3,6 +3,8 @@ const Schema = mongoose.Schema;
 
 const ResultSchema = new Schema({
 
+    actTitle: String,
+
     chamber1: {
         yes: Number,
         no: Number,
