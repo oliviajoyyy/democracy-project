@@ -179,21 +179,22 @@ historicalActs;
     this.perIndHouse = this.govtJSON.chamber1.partyC / this.numHouse;
 
     // with 2 parties, engine logic skips chamber 2 (house2) - so set chamber2 from the config file to senate
-    if (this.numParties == 2) {
-      this.nunHouse2 = this.govtJSON.chamber3.totalMembers;
-      //Demographics of House as decimal percentages 1 = 100%
-      this.perDemHouse2 = this.govtJSON.chamber3.partyA / this.numHouse2;
-      this.perRepHouse2 = this.govtJSON.chamber3.partyB / this.numHouse2;
-      this.perIndHouse2 = this.govtJSON.chamber3.partyC / this.numHouse2;
+    // if (this.numParties == 2) {
+    //   this.nunHouse2 = this.govtJSON.chamber3.totalMembers;
+    //   //Demographics of House as decimal percentages 1 = 100%
+    //   this.perDemHouse2 = this.govtJSON.chamber3.partyA / this.numHouse2;
+    //   this.perRepHouse2 = this.govtJSON.chamber3.partyB / this.numHouse2;
+    //   this.perIndHouse2 = this.govtJSON.chamber3.partyC / this.numHouse2;
 
-      this.numSenate = this.govtJSON.chamber2.totalMembers;
-      //Demographics of Senate as decimal percentages 1 = 100%
-      this.perDemSenate = this.govtJSON.chamber2.partyA / this.numSenate;
-      this.perRepSenate = this.govtJSON.chamber2.partyB / this.numSenate;
-      this.perIndSenate = this.govtJSON.chamber2.partyC / this.numSenate;
+    //   this.numSenate = this.govtJSON.chamber2.totalMembers;
+    //   //Demographics of Senate as decimal percentages 1 = 100%
+    //   this.perDemSenate = this.govtJSON.chamber2.partyA / this.numSenate;
+    //   this.perRepSenate = this.govtJSON.chamber2.partyB / this.numSenate;
+    //   this.perIndSenate = this.govtJSON.chamber2.partyC / this.numSenate;
 
-    } else { // can set in order
-      this.nunHouse2 = this.govtJSON.chamber2.totalMembers;
+    // } else { // can set in order
+      this.numHouse2 = this.govtJSON.chamber2.totalMembers;
+      console.log("numHouse2 " + this.govtJSON.chamber2.totalMembers);
       //Demographics of House as decimal percentages 1 = 100%
       this.perDemHouse2 = this.govtJSON.chamber2.partyA / this.numHouse2;
       this.perRepHouse2 = this.govtJSON.chamber2.partyB / this.numHouse2;
@@ -204,7 +205,7 @@ historicalActs;
       this.perDemSenate = this.govtJSON.chamber3.partyA / this.numSenate;
       this.perRepSenate = this.govtJSON.chamber3.partyB / this.numSenate;
       this.perIndSenate = this.govtJSON.chamber3.partyC / this.numSenate;
-    }
+    //}
 
     this.numVP = this.govtJSON.vicePres.totalMembers;
     //Demographics of Vice President as decimal percentages 1 = 100%
@@ -242,7 +243,7 @@ historicalActs;
       // Setup variables first time we pass through the first body
       if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
         this.test = 0;
-        print('bodyCount = ')
+        print('bodyCount lc1 = ' + this.bodyCount);
         print(this.bodyCount);
         this.allVotes[this.ix] = []; // OC initialize empty array for votes in this body
         this.voteResults[this.ix] = "";
@@ -276,16 +277,16 @@ historicalActs;
     
     //Logic for House 2
     if (this.bodyCount == 1) {
-      if (!this.forUser) { // if original config, skip this part
-              // make house2 automatically pass
-      this.bodyPass[1] = true;
-      this.superThreshIndex[1] = true;
-      this.stopVoteArr[1] = false;
-      if (this.bodyCount == 1)
-        this.yay = this.numHouse2;
-      this.nextBody();
-      continue;
-    }
+    //   if (!this.forUser) { // if original config, skip this part
+    //           // make house2 automatically pass
+    //   this.bodyPass[1] = true;
+    //   this.superThreshIndex[1] = true;
+    //   this.stopVoteArr[1] = false;
+    //   if (this.bodyCount == 1)
+    //     this.yay = this.numHouse2;
+    //   this.nextBody();
+    //   continue;
+    // }
 
       if (this.endBody == 1) {
         this.resetCount();
@@ -295,21 +296,22 @@ historicalActs;
       // Setup variables first time we pass through a new body
       if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
         this.test = 0;
-        print('bodyCount = ')
+        print('bodyCount lc2 = ' + this.bodyCount);
         print(this.bodyCount);
         this.allVotes[this.ix] = [];
         this.voteResults[this.ix] = "";
 
         ///Set number of voting memebers
         this.numCon = this.numHouse2;
-        this.bodyLabel = 'HOUSE 2';
+        this.bodyLabel = 'SENATE';
+        console.log("senate num con " + this.numCon);
 
         //Set Demographics for each body
         this.numDem = round(this.numCon * this.perDemHouse2);
         this.numRep = round(this.numCon * this.perRepHouse2);
         this.numWild = round(this.numCon * this.perIndHouse2);
 
-        print('Count = ' + this.count); //fortesting
+        print('Count lc2 = ' + this.count); //fortesting
         print('Count1 = ' + this.count1); //fortesting
         print('Count2 = ' + this.count2); //fortesting
       }
@@ -319,6 +321,16 @@ historicalActs;
 
     //Logic for Senate
     if (this.bodyCount == 2) {
+      if (!this.forUser) { // if original config, skip this part
+        // make senate automatically pass
+        this.bodyPass[2] = true;
+        this.superThreshIndex[2] = true;
+        this.stopVoteArr[2] = false;
+        if (this.bodyCount == 2)
+          this.yay = this.numSenate;
+        this.nextBody();
+        continue;
+        }
 
       if (this.endBody == 1) {
         this.resetCount();
@@ -328,14 +340,14 @@ historicalActs;
       // Setup variables first time we pass through a new body
       if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
         this.test = 0;
-        print('bodyCount = ')
+        print('bodyCount lc3 = ')
         print(this.bodyCount);
         this.allVotes[this.ix] = [];
         this.voteResults[this.ix] = "";
 
         ///Set number of voting memebers
         this.numCon = this.numSenate;
-        this.bodyLabel = 'SENATE';
+        this.bodyLabel = 'LEGISLATIVE CHAMBER 3';
 
         //Set Demographics for each body
         this.numDem = round(this.numCon * this.perDemSenate);
@@ -541,6 +553,12 @@ historicalActs;
     //AB: finding problem with x's
     // print("body #: " + bodyCount + " No Vote Bool: " + noVoteBool);
 
+    // OC simulate vp tiebreaker for 3 bodies
+    if (this.bodyCount == 2) { // bodyCount 2 is now senate
+      this.yay = round(this.numSenate / 2);
+      this.nay = this.numSenate - this.yay;
+    }
+
     // AB
     // if (this.bodyCount == 1) { // for 2 legislative bodies
     //   // simulate vp tiebreaker vote
@@ -548,6 +566,7 @@ historicalActs;
     //   this.nay = 50;
     // }
 
+    // OC dont use this
     // OC simulate vp tiebreaker for 2 bodies, with logic for 3
     // if (this.bodyCount == 2) { // bodyCount 2 is now senate
     //   this.yay = 50;
@@ -655,16 +674,27 @@ historicalActs;
       this.voteResults[1] = null;
 
     } else if (this.numLegislativeBodies == 2) { // use original house [0] and senate [2]
-      // make house2 automatically pass
-      this.bodyPass[1] = true;
-      this.superThreshIndex[1] = true;
-      this.stopVoteArr[1] = false;
-      if (this.bodyCount == 1)
-        this.yay = this.numHouse2;
-      this.votingBodyCounts[1] = [];
-      this.votingBodyCounts[1][0] = null;
-      this.votingBodyCounts[1][1] = null;
-      this.voteResults[1] = null;
+      // // make house2 automatically pass
+      // this.bodyPass[1] = true;
+      // this.superThreshIndex[1] = true;
+      // this.stopVoteArr[1] = false;
+      // if (this.bodyCount == 1)
+      //   this.yay = this.numHouse2;
+      // this.votingBodyCounts[1] = [];
+      // this.votingBodyCounts[1][0] = null;
+      // this.votingBodyCounts[1][1] = null;
+      // this.voteResults[1] = null;
+
+      // make senate [2] automatically pass house1 [0], house2[1], senate[2]
+      this.bodyPass[2] = true;
+      this.superThreshIndex[2] = true;
+      this.stopVoteArr[2] = false;
+      if (this.bodyCount == 2)
+        this.yay = this.numSenate;
+      this.votingBodyCounts[2] = [];
+      this.votingBodyCounts[2][0] = null;
+      this.votingBodyCounts[2][1] = null;
+      this.voteResults[2] = null;
     }
 
     console.log("body pass: " + this.bodyPass);
@@ -683,7 +713,10 @@ historicalActs;
         this.bodyPass[this.bodyCount] = true;
         this.superThreshIndex[this.bodyCount] = true;
         //AB logic if senate initiates tie breaker
-      } else if (this.yay == this.numCon * this.perPass && this.bodyLabel == "SENATE") {
+      } else if (this.yay == this.numCon * this.perPass && (this.numLegislativeBodies == 3) && this.bodyLabel == "LEGISLATIVE CHAMBER 3") {
+        this.bodyPass[this.bodyCount] = true;
+        this.vpVote = true;
+      } else if (this.yay == this.numCon * this.perPass && (this.numLegislativeBodies == 2) && this.bodyLabel == "SENATE") {
           this.bodyPass[this.bodyCount] = true;
           this.vpVote = true;
       } else if (this.yay == this.numCon * this.perPass && (this.numLegislativeBodies == 1) && this.bodyLabel == "HOUSE OF REPRESENTATIVES") {
@@ -736,6 +769,7 @@ historicalActs;
 
   nextBody() {
     this.bodyCount++;
+    console.log("bodyCount: " + this.bodyCount);
   }
 
   /**
@@ -767,14 +801,13 @@ historicalActs;
             if (this.forUser) {
               currentBodyLabel = 'LEGISLATIVE CHAMBER 2';
             } else {
-              currentBodyLabel = 'HOUSE 2';
-            }
-          } else if (i == 2) {
-            if (this.forUser) {
-              currentBodyLabel = 'LEGISLATIVE CHAMBER 3';
-            } else {
+              //currentBodyLabel = 'HOUSE 2';
               currentBodyLabel = 'SENATE';
             }
+          } else if (i == 2) {
+
+              currentBodyLabel = 'LEGISLATIVE CHAMBER 3';
+
           } else if (i == 3) {
             currentBodyLabel = 'VICE PRESIDENCY';
           } else if (i == 4) {
@@ -853,8 +886,11 @@ historicalActs;
            
                 if (this.bodyPass[i] == true && this.superThreshIndex[i] == true) {
                   this.voteResults[i] = "BILL IS APPROVED WITH SUPERMAJORITY";
-                } else if ((currentBodyLabel == 'SENATE' || currentBodyLabel == 'LEGISLATIVE CHAMBER 3') 
-                              && this.bodyPass[0] == true && this.bodyPass[1] == true && this.vpVote == true) {
+                } else if (currentBodyLabel == 'LEGISLATIVE CHAMBER 3'
+                  && this.bodyPass[0] == true && this.bodyPass[1] == true && this.vpVote == true) {
+                  this.voteResults[i] = "TIE-BREAKER VOTE INITIATED";
+                } else if ((currentBodyLabel == 'SENATE' || currentBodyLabel == 'LEGISLATIVE CHAMBER 2') 
+                              && this.bodyPass[0] == true && this.vpVote == true) {
                   this.voteResults[i] = "TIE-BREAKER VOTE INITIATED";
                 } else if (this.numLegislativeBodies == 1 && currentBodyLabel == 'LEGISLATIVE CHAMBER 1'
                               && this.bodyPass[0] == true && this.bodyPass[1] == true && this.bodyPass[2] == true && this.vpVote == true) {

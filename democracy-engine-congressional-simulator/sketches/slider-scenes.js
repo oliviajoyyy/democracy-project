@@ -590,22 +590,39 @@ function sLegislative() {
       // document.getElementById("slider-text-2").innerHTML = "";
     } else if (userNumLegislative == 2) {
       // show second chamber slider
+      // document.getElementById("s1-p1").innerHTML = "<div class='first-slider' id='slider1'><p id='slider-text-1'>FIRST LEGISLATIVE CHAMBER</p></div>";
+      // document.getElementById("s1-p1").style.display = "block";
+      // document.getElementById("s2-p1").innerHTML = "<div id='slider2'><p id='slider-text-2'>SECOND LEGISLATIVE CHAMBER</p></div>";
+      // document.getElementById("s2-p1").style.display = "block";
+      // document.getElementById("s3-p1").innerHTML = "<div id='slider3'><p id='slider-text-3'>VICE PRESIDENCY</p></div>";
+      // document.getElementById("s3-p1").style.display = "block";
+      // document.getElementById("s4-p1").innerHTML = "<div id='slider4'><p id='slider-text-4'>PRESIDENCY</p></div>";
+      // document.getElementById("s4-p1").style.display = "block";
+      // document.getElementById("s5-p1").innerHTML = "<div id='slider4a'><p id='slider-text-5'>THIRD LEGISLATIVE CHAMBER</p></div>";
+      // document.getElementById("s5-p1").style.display = "none";
+
+      // slider1 = document.getElementById('slider1');
+      // slider1a = document.getElementById('slider4a'); // house2, set slider but not used
+      // slider2 = document.getElementById('slider2'); // 3rd (senate) chamber
+      // slider3 = document.getElementById('slider3'); // vp
+      // slider4 = document.getElementById('slider4'); // pres
+
       document.getElementById("s1-p1").innerHTML = "<div class='first-slider' id='slider1'><p id='slider-text-1'>FIRST LEGISLATIVE CHAMBER</p></div>";
       document.getElementById("s1-p1").style.display = "block";
       document.getElementById("s2-p1").innerHTML = "<div id='slider2'><p id='slider-text-2'>SECOND LEGISLATIVE CHAMBER</p></div>";
       document.getElementById("s2-p1").style.display = "block";
-      document.getElementById("s3-p1").innerHTML = "<div id='slider3'><p id='slider-text-3'>VICE PRESIDENCY</p></div>";
-      document.getElementById("s3-p1").style.display = "block";
-      document.getElementById("s4-p1").innerHTML = "<div id='slider4'><p id='slider-text-4'>PRESIDENCY</p></div>";
+      document.getElementById("s3-p1").innerHTML = "<div id='slider3'><p id='slider-text-3'>THIRD LEGISLATIVE CHAMBER</p></div>";
+      document.getElementById("s3-p1").style.display = "none";
+      document.getElementById("s4-p1").innerHTML = "<div id='slider4'><p id='slider-text-4'>VICE PRESIDENCY</p></div>";
       document.getElementById("s4-p1").style.display = "block";
-      document.getElementById("s5-p1").innerHTML = "<div id='slider4a'><p id='slider-text-5'>THIRD LEGISLATIVE CHAMBER</p></div>";
-      document.getElementById("s5-p1").style.display = "none";
+      document.getElementById("s5-p1").innerHTML = "<div id='slider4a'><p id='slider-text-5'>PRESIDENCY</p></div>";
+      document.getElementById("s5-p1").style.display = "block";
 
       slider1 = document.getElementById('slider1');
-      slider1a = document.getElementById('slider4a'); // house2, set slider but not used
-      slider2 = document.getElementById('slider2'); // 3rd (senate) chamber
-      slider3 = document.getElementById('slider3'); // vp
-      slider4 = document.getElementById('slider4'); // pres
+      slider1a = document.getElementById('slider2'); // house2, set slider but not used
+      slider2 = document.getElementById('slider3'); // 3rd (senate) chamber
+      slider3 = document.getElementById('slider4'); // vp
+      slider4 = document.getElementById('slider4a'); // pres
 
       // document.getElementById("slider1").style.display = "block";
       // document.getElementById("slider2").style.display = "block";
@@ -771,7 +788,7 @@ function sLegislative() {
       });
 
       // house2
-      if (userNumLegislative == 3) {
+      if (userNumLegislative >= 2) {
         // update new slider
         slider1a.noUiSlider.on('update', function (values, handle) {
           userNumHouse2 = values[0];
@@ -783,7 +800,7 @@ function sLegislative() {
 
       // OC update slider for 2nd body if user chose >=2 bodies
       // senate
-      if (userNumLegislative >= 2) {
+      if (userNumLegislative == 3) {
         slider2.noUiSlider.on('update', function (values, handle) {
           userNumSenate = values[0];
           // rangeSliderValueElement.innerHTML = userNumHouse + " " + userNumSenate + " " + userNumPres + " " + userNumVP;
@@ -989,28 +1006,51 @@ function sMembers() {
 
     } else if (userNumLegislative == 2) {
       // show second chamber slider
+      // document.getElementById("s1-p3").innerHTML = "<p id='slider-text-1'>FIRST LEGISLATIVE CHAMBER</p><div class='first-slider' id='slider6'></div>";
+      // document.getElementById("s1-p3").style.display = "block";
+      // document.getElementById("s2-p3").innerHTML = "<p id='slider-text-2'>SECOND LEGISLATIVE CHAMBER</p><div id='slider7'></div>";
+      // document.getElementById("s2-p3").style.display = "block";
+      // document.getElementById("s3-p3").innerHTML = "<p id='slider-text-3'>VICE PRESIDENCY</p><div id='slider8'></div>";
+      // document.getElementById("s3-p3").style.display = "block";
+      // document.getElementById("s4-p3").innerHTML = "<p id='slider-text-4'>PRESIDENCY</p><div id='slider9'></div>";
+      // document.getElementById("s4-p3").style.display = "block";
+      // document.getElementById("s5-p3").innerHTML = "<p id='slider-text-5'>THIRD LEGISLATIVE CHAMBER</p><div id='slider9a'></div>";
+      // document.getElementById("s5-p3").style.display = "none";
+      
+      // slider6 = document.getElementById('slider6'); // house
+      // slider6a = document.getElementById('slider9a'); // house2 chamber, set slider but not used
+      // slider7 = document.getElementById('slider7'); // 3rd (senate) chamber, set slider but not used
+      // slider8 = document.getElementById('slider8'); // vp
+      // slider9 = document.getElementById('slider9'); // pres
+
+      // value1 = document.getElementById('value-1');
+      // value1a = document.getElementById('value-5');
+      // value2 = document.getElementById('value-2');
+      // value3 = document.getElementById('value-3');
+      // value4 = document.getElementById('value-4');
+
       document.getElementById("s1-p3").innerHTML = "<p id='slider-text-1'>FIRST LEGISLATIVE CHAMBER</p><div class='first-slider' id='slider6'></div>";
       document.getElementById("s1-p3").style.display = "block";
       document.getElementById("s2-p3").innerHTML = "<p id='slider-text-2'>SECOND LEGISLATIVE CHAMBER</p><div id='slider7'></div>";
       document.getElementById("s2-p3").style.display = "block";
-      document.getElementById("s3-p3").innerHTML = "<p id='slider-text-3'>VICE PRESIDENCY</p><div id='slider8'></div>";
-      document.getElementById("s3-p3").style.display = "block";
-      document.getElementById("s4-p3").innerHTML = "<p id='slider-text-4'>PRESIDENCY</p><div id='slider9'></div>";
+      document.getElementById("s3-p3").innerHTML = "<p id='slider-text-3'>THIRD LEGISLATIVE CHAMBER</p><div id='slider8'></div>";
+      document.getElementById("s3-p3").style.display = "none";
+      document.getElementById("s4-p3").innerHTML = "<p id='slider-text-4'>VICE PRESIDENCY</p><div id='slider9'></div>";
       document.getElementById("s4-p3").style.display = "block";
-      document.getElementById("s5-p3").innerHTML = "<p id='slider-text-5'>THIRD LEGISLATIVE CHAMBER</p><div id='slider9a'></div>";
-      document.getElementById("s5-p3").style.display = "none";
+      document.getElementById("s5-p3").innerHTML = "<p id='slider-text-5'>PRESIDENCY</p><div id='slider9a'></div>";
+      document.getElementById("s5-p3").style.display = "block";
       
       slider6 = document.getElementById('slider6'); // house
-      slider6a = document.getElementById('slider9a'); // house2 chamber, set slider but not used
-      slider7 = document.getElementById('slider7'); // 3rd (senate) chamber, set slider but not used
-      slider8 = document.getElementById('slider8'); // vp
-      slider9 = document.getElementById('slider9'); // pres
+      slider6a = document.getElementById('slider7'); // house2 chamber, set slider but not used
+      slider7 = document.getElementById('slider8'); // 3rd (senate) chamber, set slider but not used
+      slider8 = document.getElementById('slider9'); // vp
+      slider9 = document.getElementById('slider9a'); // pres
 
       value1 = document.getElementById('value-1');
-      value1a = document.getElementById('value-5');
-      value2 = document.getElementById('value-2');
-      value3 = document.getElementById('value-3');
-      value4 = document.getElementById('value-4');
+      value1a = document.getElementById('value-2');
+      value2 = document.getElementById('value-3');
+      value3 = document.getElementById('value-4');
+      value4 = document.getElementById('value-5');
 
     } else {
       // = "block" for all 3 body sliders
@@ -1362,7 +1402,7 @@ function sMembers() {
         userPerSenateBody = [];
         var numPerSenateBody = [];
 
-       if (userNumLegislative >= 2) { // for >=2 legislative bodies
+       if (userNumLegislative == 3) { // for >=2 legislative bodies
         slider7.noUiSlider.on('update', function (values, handle) {
           for (var i = 0; i <= values.length; i++) {
             if (i == 0) {
@@ -1397,7 +1437,7 @@ function sMembers() {
       // OC TODO same for new slider and val
       userPerHouse2Body = [];
       var numPerHouse2Body = [];
-      if (userNumLegislative == 3) { 
+      if (userNumLegislative >= 2) { 
         slider6a.noUiSlider.on('update', function (values, handle) {
           for (var i = 0; i <= values.length; i++) {
             if (i == 0) {
@@ -1841,19 +1881,19 @@ function sResults() {
       "<br>Members in Political Party B: " + Math.round(userPerHouseBody[1] * userNumHouse) +
       "<br>Members in Political Party C: " + Math.round(userPerHouseBody[2] * userNumHouse); // +
 
-      if (userNumLegislative == 2) {
-      userOutputText.innerHTML +=
-      "</p><h3>Second Legislative Chamber</h3>" +
-      "<p>Voting Members: " + userNumSenate +
-      "<br>Members in Political Party A: " + Math.round(userPerSenateBody[0] * userNumSenate) +
-      "<br>Members in Political Party B: " + Math.round(userPerSenateBody[1] * userNumSenate) +
-      "<br>Members in Political Party C: " + Math.round(userPerSenateBody[2] * userNumSenate) +
-      "</p><h3>Third Legislative Chamber</h3>" +
-      "<p>Voting Members: " + userNumHouse2 +
-      "<br>Members in Political Party A: " + Math.round(userPerHouse2Body[0] * userNumHouse2) +
-      "<br>Members in Political Party B: " + Math.round(userPerHouse2Body[1] * userNumHouse2) +
-      "<br>Members in Political Party C: " + Math.round(userPerHouse2Body[2] * userNumHouse2); // +
-      } else {
+      // if (userNumLegislative == 2) {
+      // userOutputText.innerHTML +=
+      // "</p><h3>Second Legislative Chamber</h3>" +
+      // "<p>Voting Members: " + userNumSenate +
+      // "<br>Members in Political Party A: " + Math.round(userPerSenateBody[0] * userNumSenate) +
+      // "<br>Members in Political Party B: " + Math.round(userPerSenateBody[1] * userNumSenate) +
+      // "<br>Members in Political Party C: " + Math.round(userPerSenateBody[2] * userNumSenate) +
+      // "</p><h3>Third Legislative Chamber</h3>" +
+      // "<p>Voting Members: " + userNumHouse2 +
+      // "<br>Members in Political Party A: " + Math.round(userPerHouse2Body[0] * userNumHouse2) +
+      // "<br>Members in Political Party B: " + Math.round(userPerHouse2Body[1] * userNumHouse2) +
+      // "<br>Members in Political Party C: " + Math.round(userPerHouse2Body[2] * userNumHouse2); // +
+      // } else {
       userOutputText.innerHTML +=
       "</p><h3>Second Legislative Chamber</h3>" +
       "<p>Voting Members: " + userNumHouse2 +
@@ -1865,7 +1905,7 @@ function sResults() {
       "<br>Members in Political Party A: " + Math.round(userPerSenateBody[0] * userNumSenate) +
       "<br>Members in Political Party B: " + Math.round(userPerSenateBody[1] * userNumSenate) +
       "<br>Members in Political Party C: " + Math.round(userPerSenateBody[2] * userNumSenate);
-      }
+      //}
 
       userOutputText.innerHTML +=
       "</p><h3>Vice Presidency</h3>" +
@@ -1993,19 +2033,19 @@ function sDisplay() {
       "<br>Members in Political Party B: " + Math.round(userPerHouseBody[1] * userNumHouse) +
       "<br>Members in Political Party C: " + Math.round(userPerHouseBody[2] * userNumHouse); // +
 
-      if (userNumLegislative == 2) {
-      userOutputText.innerHTML +=
-      "</p><h3>Second Legislative Chamber</h3>" +
-      "<p>Voting Members: " + userNumSenate +
-      "<br>Members in Political Party A: " + Math.round(userPerSenateBody[0] * userNumSenate) +
-      "<br>Members in Political Party B: " + Math.round(userPerSenateBody[1] * userNumSenate) +
-      "<br>Members in Political Party C: " + Math.round(userPerSenateBody[2] * userNumSenate) +
-      "</p><h3>Third Legislative Chamber</h3>" +
-      "<p>Voting Members: " + userNumHouse2 +
-      "<br>Members in Political Party A: " + Math.round(userPerHouse2Body[0] * userNumHouse2) +
-      "<br>Members in Political Party B: " + Math.round(userPerHouse2Body[1] * userNumHouse2) +
-      "<br>Members in Political Party C: " + Math.round(userPerHouse2Body[2] * userNumHouse2); // +
-      } else {
+      // if (userNumLegislative == 2) {
+      // userOutputText.innerHTML +=
+      // "</p><h3>Second Legislative Chamber</h3>" +
+      // "<p>Voting Members: " + userNumSenate +
+      // "<br>Members in Political Party A: " + Math.round(userPerSenateBody[0] * userNumSenate) +
+      // "<br>Members in Political Party B: " + Math.round(userPerSenateBody[1] * userNumSenate) +
+      // "<br>Members in Political Party C: " + Math.round(userPerSenateBody[2] * userNumSenate) +
+      // "</p><h3>Third Legislative Chamber</h3>" +
+      // "<p>Voting Members: " + userNumHouse2 +
+      // "<br>Members in Political Party A: " + Math.round(userPerHouse2Body[0] * userNumHouse2) +
+      // "<br>Members in Political Party B: " + Math.round(userPerHouse2Body[1] * userNumHouse2) +
+      // "<br>Members in Political Party C: " + Math.round(userPerHouse2Body[2] * userNumHouse2); // +
+      // } else {
       userOutputText.innerHTML +=
       "</p><h3>Second Legislative Chamber</h3>" +
       "<p>Voting Members: " + userNumHouse2 +
@@ -2017,7 +2057,7 @@ function sDisplay() {
       "<br>Members in Political Party A: " + Math.round(userPerSenateBody[0] * userNumSenate) +
       "<br>Members in Political Party B: " + Math.round(userPerSenateBody[1] * userNumSenate) +
       "<br>Members in Political Party C: " + Math.round(userPerSenateBody[2] * userNumSenate);
-      }
+      //}
 
       userOutputText.innerHTML +=
       "</p><h3>Vice Presidency</h3>" +
@@ -2085,10 +2125,14 @@ function sDefault() {
       "<br>Members in Independent Party: " + Math.round(engine.perIndHouse * engine.numHouse) +
       "<br>Members in Republican Party: " + Math.round(engine.perRepHouse * engine.numHouse) +
       "</p><h3>Senate</h3>" +
-      "<p>Voting Members: " + engine.numSenate +
-      "<br>Members in Democrat Party: " + Math.round(engine.perDemSenate * engine.numSenate) +
-      "<br>Members in Independent Party: " + Math.round(engine.perIndSenate * engine.numSenate) +
-      "<br>Members in Republican Party: " + Math.round(engine.perRepSenate * engine.numSenate) +
+      "<p>Voting Members: " + engine.numHouse2 +
+      "<br>Members in Democrat Party: " + Math.round(engine.perDemSenate * engine.numHouse2) +
+      "<br>Members in Independent Party: " + Math.round(engine.perIndSenate * engine.numHouse2) +
+      "<br>Members in Republican Party: " + Math.round(engine.perRepSenate * engine.numHouse2) +
+      // "<p>Voting Members: " + engine.numSenate +
+      // "<br>Members in Democrat Party: " + Math.round(engine.perDemSenate * engine.numSenate) +
+      // "<br>Members in Independent Party: " + Math.round(engine.perIndSenate * engine.numSenate) +
+      // "<br>Members in Republican Party: " + Math.round(engine.perRepSenate * engine.numSenate) +
       "</p><h3>Vice Presidency</h3>" +
       "<p>Voting Members: " + engine.numVP +
       "<br>Members in Democrat Party: " + Math.round(engine.perDemVP * engine.numVP) +

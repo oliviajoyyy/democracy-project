@@ -419,7 +419,7 @@ function newSession() {
   // new (reset) config array (and result array) = []
   configs = [];
   results = [];
-  finalConfig;
+  //finalConfig;
 
   // reset IX vars = 0
   configIX = 0;

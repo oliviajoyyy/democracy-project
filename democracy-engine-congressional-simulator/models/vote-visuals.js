@@ -159,7 +159,7 @@ class VoteVisual {
     if (this.bodyCount == 1 && this.engine.numLegislativeBodies == 1) {
       this.bodyCount += 2; // skip house2 and senate
       //this.endBody = 1;
-    } else if (this.bodyCount == 1 && this.engine.numLegislativeBodies == 2) {
+    } else if (this.bodyCount == 2 && this.engine.numLegislativeBodies == 2) {
       this.bodyCount++; // skip house2
     }
 
@@ -184,7 +184,7 @@ class VoteVisual {
 
         ///Set number of voting memebers
         this.numCon = this.engine.numHouse2;
-        this.bodyLabel = 'HOUSE 2';
+        this.bodyLabel = 'SENATE';
 
         //Set Demographics for each body
         this.numDem = round(this.numCon * this.engine.perDemHouse2);
@@ -238,7 +238,7 @@ class VoteVisual {
 
         ///Set number of voting memebers
         this.numCon = this.engine.numSenate;
-        this.bodyLabel = 'SENATE';
+        this.bodyLabel = 'LEGISLATIVE CHAMBER 3';
 
         //Set Demographics for each body
         this.numDem = round(this.numCon * this.engine.perDemSenate);
@@ -248,6 +248,7 @@ class VoteVisual {
 
         //Figure out how big to draw the circles and how far to space them out
         this.skip = floor(.97 * (sqrt(this.offSet * this.dHeight / this.numCon)));
+        console.log("con: " + this.numCon);
         print('Skip = ' + this.skip); //testing
         this.x = this.skip / 2;
         this.y = this.skip / 2;
@@ -711,16 +712,24 @@ class VoteVisual {
       if (i == 0) {
         currentBodyLabel = 'HOUSE';
       } else if (i == 1) {
-        currentBodyLabel = 'HOUSE 2';
-        if (engine.numLegislativeBodies <= 2) {
-          continue;
-        }
-      } else if (i == 2) {
         currentBodyLabel = 'SENATE';
-        ip = i - 0.65;
+        // if (engine.numLegislativeBodies <= 2) {
+        //   continue;
+        // }
         if (engine.numLegislativeBodies == 1) { // only 1 legislative chamber
           continue; // OC skip results if only 1 legislative body
         }
+
+      } else if (i == 2) {
+        currentBodyLabel = 'LEGISLATIVE CHAMBER 3';
+        ip = i - 0.65;
+        // if (engine.numLegislativeBodies == 1) { // only 1 legislative chamber
+        //   continue; // OC skip results if only 1 legislative body
+        // }
+        if (engine.numLegislativeBodies <= 2) {
+            continue;
+          }
+
       } else if (i == 3) {
         currentBodyLabel = 'VICE PRESIDENCY';
         ip = i - 0.2;
@@ -839,18 +848,26 @@ class VoteVisual {
         currentBodyLabel = 'LEGISLATIVE CHAMBER 1';
       } else if (i == 1) {
         currentBodyLabel = 'LEGISLATIVE CHAMBER 2';
+        // if (engine.numLegislativeBodies <= 2) {
+        //   continue; // OC skip if either 1 legislative body or only 2 
+        //   // OC for 2, it uses legislative chamber 3 as the senate rather than this one
+        // }
+        if (engine.numLegislativeBodies == 1) { // only 1 legislative chamber
+          continue; // OC skip results if only 1 legislative body
+        }
+        
+      } else if (i == 2) {
+        // if (engine.numLegislativeBodies == 2) {
+        //   currentBodyLabel = 'LEGISLATIVE CHAMBER 2';
+        // } else {
+          currentBodyLabel = 'LEGISLATIVE CHAMBER 3';
+        //}
+        // if (engine.numLegislativeBodies == 1) { // only 1 legislative chamber
+        //   continue; // OC skip results if only 1 legislative body
+        // }
         if (engine.numLegislativeBodies <= 2) {
           continue; // OC skip if either 1 legislative body or only 2 
           // OC for 2, it uses legislative chamber 3 as the senate rather than this one
-        }
-      } else if (i == 2) {
-        if (engine.numLegislativeBodies == 2) {
-          currentBodyLabel = 'LEGISLATIVE CHAMBER 2';
-        } else {
-          currentBodyLabel = 'LEGISLATIVE CHAMBER 3';
-        }
-        if (engine.numLegislativeBodies == 1) { // only 1 legislative chamber
-          continue; // OC skip results if only 1 legislative body
         }
       } else if (i == 3) {
         currentBodyLabel = 'VICE PRESIDENCY';
@@ -896,7 +913,7 @@ class VoteVisual {
           }
         } else {
           textSize(22);
-          if (currentBodyLabel == 'LEGISLATIVE CHAMBER 1') {
+          if (currentBodyLabel == 'LEGISLATIVE CHAMBER 1' || currentBodyLabel == 'LEGISLATIVE CHAMBER 2' ) {
             ip = i;
           }
           text(currentBodyLabel, (ip) * dispW + padX, padY, dispW - padX, dispH);
