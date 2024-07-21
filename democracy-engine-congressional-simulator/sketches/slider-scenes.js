@@ -1,3 +1,692 @@
+function startUp() {
+  let continueBtn, testBtn;
+
+  this.setup = function () {
+    textFont(helvFont);
+    let dWidth = windowWidth * .8;
+    let dHeight = windowHeight * .8;
+    let canvas = createCanvas(dWidth, dHeight);
+    let canvasDiv = document.getElementById('vote');
+    canvas.parent(canvasDiv);
+    background(bColor);
+  }
+
+  this.enter = function () {
+    // gui = createGui();
+    // continueBtn = createButton("Continue", width/2, height/2);
+    console.log("start up scene");
+
+    document.getElementById("page-container").style.display = "block";
+    document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1>";
+    
+    document.getElementById("main-btn-div").style.display = "none";
+    document.getElementById("start-desc").style.display = "none";
+    document.getElementById("top").style.display = "none";
+    document.getElementById("page0").style.display = "none";
+    document.getElementById("page1").style.display = "none";
+    document.getElementById("page2").style.display = "none";
+    document.getElementById("page3").style.display = "none";
+    document.getElementById("page4").style.display = "none";
+    document.getElementById("page5").style.display = "none";
+    document.getElementById("page6").style.display = "none";
+    document.getElementById("slider-value").style.display = "none";
+    document.getElementById("vote").style.display = "none";
+    document.getElementById("slider-disp").style.display = "none";
+    document.getElementById("sim-info").style.display = "none";
+
+    let buttonDiv = document.getElementById('button-div');
+
+    continueBtn = createButton('Continue');
+    continueBtn.id('continue-btn');
+    continueBtn.class('buttons');
+    continueBtn.parent(buttonDiv);
+
+    // buttonDiv.innerHTML += "<br>";
+
+    testBtn = createButton('Hardware Test');
+    testBtn.id('test-btn');
+    testBtn.class('buttons');
+    testBtn.parent(buttonDiv);
+
+    setTimeout(function () {
+        if (mgr.isCurrent(startUp)) { // OC prevents prgm from moving to test screen if already moved on from the first screen
+          clickedTest();
+        }
+        }, 5000); // goes to test scene after 30 seconds // 5 for testing
+  }
+
+  this.draw = function () {
+
+    continueBtn.mousePressed(clickedContinue);
+    testBtn.mousePressed(clickedTest);
+
+  }
+
+  function clickedContinue() {
+    removeBtns();
+    mgr.showScene(briefDescription);
+  }
+
+  function clickedTest() {
+    removeBtns();
+    mgr.showScene(hardwareTest);
+  }
+
+  function removeBtns() {
+    continueBtn.remove();
+    testBtn.remove();
+  }
+}
+
+
+function briefDescription() {
+  let newSessionBtn, loadSessionBtn, aboutBtn;
+
+  this.setup = function () {
+    textFont(helvFont);
+    let dWidth = windowWidth * .8;
+    let dHeight = windowHeight * .8;
+    let canvas = createCanvas(dWidth, dHeight);
+    let canvasDiv = document.getElementById('vote');
+    canvas.parent(canvasDiv);
+    background(bColor);
+  }
+
+  this.enter = function () {
+    // gui = createGui();
+    // continueBtn = createButton("Continue", width/2, height/2);
+    console.log("start up scene");
+
+    document.getElementById("page-container").style.display = "block";
+    document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1><h2>Description</h2>";
+    document.getElementById("main-btn-div").style.display = "none";
+    document.getElementById("start-desc").style.display = "block";
+    document.getElementById("start-desc").innerHTML = "<p>The legislative apparatus of the current US government is represented in default mode, which will initially run through one legislative cycle. The user may configure alternative values in subsequent cycles in order to evaluate the effects of systemic changes to the mechanism of governance.</p>";
+    document.getElementById("top").style.display = "none";
+    document.getElementById("page0").style.display = "none";
+    document.getElementById("page1").style.display = "none";
+    document.getElementById("page2").style.display = "none";
+    document.getElementById("page3").style.display = "none";
+    document.getElementById("page4").style.display = "none";
+    document.getElementById("page5").style.display = "none";
+    document.getElementById("page6").style.display = "none";
+    document.getElementById("slider-value").style.display = "none";
+    document.getElementById("vote").style.display = "none";
+    document.getElementById("slider-disp").style.display = "none";
+    document.getElementById("sim-info").style.display = "none";
+
+    let buttonDiv = document.getElementById('button-div');
+
+    newSessionBtn = createButton('New Session');
+    newSessionBtn.id('new-session-btn');
+    newSessionBtn.class('buttons');
+    newSessionBtn.parent(buttonDiv);
+
+    // document.getElementById("main-btn-div").innerHTML += "<br>";
+
+    loadSessionBtn = createButton('Load Session');
+    loadSessionBtn.id('load-session-btn');
+    loadSessionBtn.class('buttons');
+    loadSessionBtn.parent(buttonDiv);
+
+    aboutBtn = createButton('About the Project');
+    aboutBtn.id('about-btn');
+    aboutBtn.class('buttons');
+    aboutBtn.parent(buttonDiv);
+    
+
+  }
+
+  this.draw = function () {
+
+    newSessionBtn.mousePressed(clickedNew);
+    loadSessionBtn.mousePressed(clickedLoad);
+    aboutBtn.mousePressed(clickedAbout);
+
+  }
+
+  function clickedNew() {
+    removeBtns();
+    mgr.showScene(newSessionScene);
+  }
+
+  function clickedLoad() {
+    removeBtns();
+    mgr.showScene(loadSessionS1);
+  }
+
+  function clickedAbout() {
+    removeBtns();
+    mgr.showScene(aboutProject);
+  }
+
+
+  function removeBtns() {
+    newSessionBtn.remove();
+    loadSessionBtn.remove();
+    aboutBtn.remove();
+  }
+}
+
+
+function hardwareTest() {
+  let backBtn, testBtn;
+
+  this.setup = function () {
+    textFont(helvFont);
+    let dWidth = windowWidth * .8;
+    let dHeight = windowHeight * .8;
+    let canvas = createCanvas(dWidth, dHeight);
+    let canvasDiv = document.getElementById('vote');
+    canvas.parent(canvasDiv);
+    background(bColor);
+  }
+
+  this.enter = function () {
+    // gui = createGui();
+    // continueBtn = createButton("Continue", width/2, height/2);
+    console.log("start up scene");
+
+    document.getElementById("page-container").style.display = "block";
+    document.getElementById("main-header").innerHTML = "<h1>Hardware & DB Test </h1>";
+
+    document.getElementById("main-btn-div").style.display = "none";
+    document.getElementById("start-desc").style.display = "none";
+    document.getElementById("top").style.display = "none";
+    document.getElementById("page0").style.display = "none";
+    document.getElementById("page1").style.display = "none";
+    document.getElementById("page2").style.display = "none";
+    document.getElementById("page3").style.display = "none";
+    document.getElementById("page4").style.display = "none";
+    document.getElementById("page5").style.display = "none";
+    document.getElementById("page6").style.display = "none";
+    document.getElementById("slider-value").style.display = "none";
+    document.getElementById("vote").style.display = "none";
+    document.getElementById("slider-disp").style.display = "none";
+    document.getElementById("sim-info").style.display = "none";
+
+    let buttonDiv = document.getElementById('button-div');
+
+    backBtn = createButton('Back to Start Up');
+    backBtn.id('back-btn');
+    backBtn.class('buttons');
+    backBtn.parent(buttonDiv);
+
+    // buttonDiv.innerHTML += "<br>";
+
+    testBtn = createButton('Hardware DB Test');
+    testBtn.id('test-btn');
+    testBtn.class('buttons');
+    testBtn.parent(buttonDiv);
+
+  }
+
+  this.draw = function () {
+    backBtn.mousePressed(clickedBack);
+    // testBtn.mousePressed(clickedTest);
+  }
+
+  function clickedBack() {
+    removeBtns();
+    mgr.showScene(briefDescription);
+  }
+
+  function clickedTest() {
+    removeBtns();
+    //mgr.showScene(democracyEngineUser); // scene TBA
+  }
+
+  function removeBtns() {
+    backBtn.remove();
+    testBtn.remove();
+  }
+}
+
+function aboutProject() {
+  let backBtn;
+  
+  this.setup = function () {
+    textFont(helvFont);
+    let dWidth = windowWidth * .8;
+    let dHeight = windowHeight * .8;
+    let canvas = createCanvas(dWidth, dHeight);
+    let canvasDiv = document.getElementById('vote');
+    canvas.parent(canvasDiv);
+    background(bColor);
+  }
+
+  this.enter = function () {
+    // gui = createGui();
+    // continueBtn = createButton("Continue", width/2, height/2);
+    console.log("start up scene");
+
+    document.getElementById("page-container").style.display = "block";
+    document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1><h2>More Information</h2>";
+    document.getElementById("main-btn-div").style.display = "none";
+    document.getElementById("start-desc").style.display = "block";
+    document.getElementById("start-desc").innerHTML = "<p>[Detailed project description & link to external page]</p>";
+    document.getElementById("top").style.display = "none";
+    document.getElementById("page0").style.display = "none";
+    document.getElementById("page1").style.display = "none";
+    document.getElementById("page2").style.display = "none";
+    document.getElementById("page3").style.display = "none";
+    document.getElementById("page4").style.display = "none";
+    document.getElementById("page5").style.display = "none";
+    document.getElementById("page6").style.display = "none";
+    document.getElementById("slider-value").style.display = "none";
+    document.getElementById("vote").style.display = "none";
+    document.getElementById("slider-disp").style.display = "none";
+    document.getElementById("sim-info").style.display = "none";
+
+    let buttonDiv = document.getElementById('button-div');
+
+    backBtn = createButton('Back to Start Up');
+    backBtn.id('back-btn');
+    backBtn.class('buttons');
+    backBtn.parent(buttonDiv);
+  }
+
+  this.draw = function () {
+    backBtn.mousePressed(clickedBack);
+  }
+
+  function clickedBack() {
+    removeBtns();
+    mgr.showScene(briefDescription);
+  }
+
+  function removeBtns() {
+    backBtn.remove();
+  }
+}
+
+
+function newSessionScene() {
+  let backBtn, nextBtn;
+  
+  this.setup = function () {
+    textFont(helvFont);
+    let dWidth = windowWidth * .8;
+    let dHeight = windowHeight * .8;
+    let canvas = createCanvas(dWidth, dHeight);
+    let canvasDiv = document.getElementById('vote');
+    canvas.parent(canvasDiv);
+    background(bColor);
+  }
+
+  this.enter = function () {
+    // gui = createGui();
+    // continueBtn = createButton("Continue", width/2, height/2);
+    console.log("start up scene");
+
+    document.getElementById("page-container").style.display = "block";
+    document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1><h2>New Session</h2>";
+    document.getElementById("main-btn-div").style.display = "none";
+
+
+    document.getElementById("start-desc").style.display = "block";
+    document.getElementById("start-desc").innerHTML = "<p>[Description here on how to use the interface]";
+    document.getElementById("start-desc").innerHTML += "<br>[Show timestamp-based name as ID for new session]</p>";
+
+    document.getElementById("top").style.display = "none";
+    document.getElementById("page0").style.display = "none";
+    document.getElementById("page1").style.display = "none";
+    document.getElementById("page2").style.display = "none";
+    document.getElementById("page3").style.display = "none";
+    document.getElementById("page4").style.display = "none";
+    document.getElementById("page5").style.display = "none";
+    document.getElementById("page6").style.display = "none";
+    document.getElementById("slider-value").style.display = "none";
+    document.getElementById("vote").style.display = "none";
+    document.getElementById("slider-disp").style.display = "none";
+    document.getElementById("sim-info").style.display = "none";
+
+    let buttonDiv = document.getElementById('button-div');
+
+    backBtn = createButton('Start Over');
+    backBtn.id('back-btn');
+    backBtn.class('buttons');
+    backBtn.parent(buttonDiv);
+
+    nextBtn = createButton('Next');
+    nextBtn.id('next-btn-1');
+    nextBtn.class('buttons');
+    nextBtn.parent(buttonDiv);
+  }
+
+  this.draw = function () {
+    backBtn.mousePressed(clickedBack);
+    nextBtn.mousePressed(clickedNext);
+  }
+
+  function clickedBack() {
+    removeBtns();
+    mgr.showScene(briefDescription);
+  }
+
+  function clickedNext() {
+    removeBtns();
+    mgr.showScene(democracyEngineUser);
+  }
+
+  function removeBtns() {
+    backBtn.remove();
+    nextBtn.remove();
+  }
+}
+
+function loadSessionS1() {
+  let backBtn, nextBtn;
+  
+  this.setup = function () {
+    textFont(helvFont);
+    let dWidth = windowWidth * .8;
+    let dHeight = windowHeight * .8;
+    let canvas = createCanvas(dWidth, dHeight);
+    let canvasDiv = document.getElementById('vote');
+    canvas.parent(canvasDiv);
+    background(bColor);
+  }
+
+  this.enter = function () {
+    // gui = createGui();
+    // continueBtn = createButton("Continue", width/2, height/2);
+    console.log("start up scene");
+
+    document.getElementById("page-container").style.display = "block";
+    document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1><h2>Select Session</h2>";
+    document.getElementById("main-btn-div").style.display = "none";
+
+
+    document.getElementById("start-desc").style.display = "block";
+    document.getElementById("start-desc").innerHTML = "<p>[Description here on how to use the interface]";
+    document.getElementById("start-desc").innerHTML += "<br>[List of previous sessions (fr db), includes timestamp & ID]</p>";
+
+    document.getElementById("top").style.display = "none";
+    document.getElementById("page0").style.display = "none";
+    document.getElementById("page1").style.display = "none";
+    document.getElementById("page2").style.display = "none";
+    document.getElementById("page3").style.display = "none";
+    document.getElementById("page4").style.display = "none";
+    document.getElementById("page5").style.display = "none";
+    document.getElementById("page6").style.display = "none";
+    document.getElementById("slider-value").style.display = "none";
+    document.getElementById("vote").style.display = "none";
+    document.getElementById("slider-disp").style.display = "none";
+    document.getElementById("sim-info").style.display = "none";
+
+    let buttonDiv = document.getElementById('button-div');
+
+    backBtn = createButton('Start Over');
+    backBtn.id('back-btn');
+    backBtn.class('buttons');
+    backBtn.parent(buttonDiv);
+
+    nextBtn = createButton('Next');
+    nextBtn.id('next-btn-1');
+    nextBtn.class('buttons');
+    nextBtn.parent(buttonDiv);
+  }
+
+  this.draw = function () {
+    backBtn.mousePressed(clickedBack);
+    nextBtn.mousePressed(clickedNext);
+  }
+
+  function clickedBack() {
+    removeBtns();
+    mgr.showScene(briefDescription);
+  }
+
+  function clickedNext() {
+    removeBtns();
+    mgr.showScene(loadSessionS2);
+  }
+
+  function removeBtns() {
+    backBtn.remove();
+    nextBtn.remove();
+  }
+}
+
+function loadSessionS2() {
+  let backBtn, nextBtn;
+  
+  this.setup = function () {
+    textFont(helvFont);
+    let dWidth = windowWidth * .8;
+    let dHeight = windowHeight * .8;
+    let canvas = createCanvas(dWidth, dHeight);
+    let canvasDiv = document.getElementById('vote');
+    canvas.parent(canvasDiv);
+    background(bColor);
+  }
+
+  this.enter = function () {
+    // gui = createGui();
+    // continueBtn = createButton("Continue", width/2, height/2);
+    console.log("start up scene");
+
+    document.getElementById("page-container").style.display = "block";
+    document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1><h2>Load Session</h2>";
+    document.getElementById("main-btn-div").style.display = "none";
+
+
+    document.getElementById("start-desc").style.display = "block";
+    document.getElementById("start-desc").innerHTML = "<p>[Description here on how to use the interface]";
+    document.getElementById("start-desc").innerHTML += "<br>[Show timestamp-based name as ID for new (loaded) session]</p>";
+
+    document.getElementById("top").style.display = "none";
+    document.getElementById("page0").style.display = "none";
+    document.getElementById("page1").style.display = "none";
+    document.getElementById("page2").style.display = "none";
+    document.getElementById("page3").style.display = "none";
+    document.getElementById("page4").style.display = "none";
+    document.getElementById("page5").style.display = "none";
+    document.getElementById("page6").style.display = "none";
+    document.getElementById("slider-value").style.display = "none";
+    document.getElementById("vote").style.display = "none";
+    document.getElementById("slider-disp").style.display = "none";
+    document.getElementById("sim-info").style.display = "none";
+
+    let buttonDiv = document.getElementById('button-div');
+
+    backBtn = createButton('Start Over');
+    backBtn.id('back-btn');
+    backBtn.class('buttons');
+    backBtn.parent(buttonDiv);
+
+    nextBtn = createButton('Next');
+    nextBtn.id('next-btn-1');
+    nextBtn.class('buttons');
+    nextBtn.parent(buttonDiv);
+  }
+
+  this.draw = function () {
+    backBtn.mousePressed(clickedBack);
+    nextBtn.mousePressed(clickedNext);
+  }
+
+  function clickedBack() {
+    removeBtns();
+    mgr.showScene(briefDescription);
+  }
+
+  function clickedNext() {
+    removeBtns();
+    mgr.showScene(democracyEngineUser);
+  }
+
+  function removeBtns() {
+    backBtn.remove();
+    nextBtn.remove();
+  }
+}
+
+
+//democracy simulater, connected to user values
+function configVisual() {
+  console.log("democracy userEdits: " + userEdits);
+
+  this.setup = function () {
+
+    textFont(helvFont);
+    let dWidth = windowWidth * .8;
+    let dHeight = windowHeight * .8;
+    let canvas = createCanvas(dWidth, dHeight);
+    let canvasDiv = document.getElementById('vote');
+    canvas.parent(canvasDiv);
+    background(bColor);
+    // dispButton();
+    // let fs = fullscreen();
+    // fullscreen(!fs);
+
+  }
+
+
+
+  this.enter = function () {
+    
+    //redraws canvas with new width and height when user simulator restarts
+    if (reconfigBool == true) {
+      // windowResized();
+      visual.dWidth = windowWidth * .8;
+      visual.dHeight = windowHeight * .8;
+      canvas = createCanvas(visual.dWidth, visual.dHeight);
+      let canvasDiv = document.getElementById('vote');
+      canvas.parent(canvasDiv);
+      reconfigBool = false;
+    }
+
+    document.getElementById("page-container").style.display = "none";
+    document.getElementById("top").style.display = "none";
+    document.getElementById("page0").style.display = "none";
+    document.getElementById("page1").style.display = "none";
+    document.getElementById("page2").style.display = "none";
+    document.getElementById("page3").style.display = "none";
+    document.getElementById("page4").style.display = "none";
+    document.getElementById("page5").style.display = "none";
+    document.getElementById("page6").style.display = "none";
+    document.getElementById("slider-value").style.display = "none";
+    document.getElementById("vote").style.display = "block";
+    document.getElementById("slider-disp").style.display = "none";
+    document.getElementById("sim-info").style.display = "none";
+    document.getElementById("main-btn-div").style.display = "none";
+
+    console.log(mgr.isCurrent(democracyEngineUser));
+
+  }
+
+  // run the simulator for user configuration
+  this.draw = function () {
+
+    // if (frameCount >= 2000 && frameCount < 2120) { // for testing multiple runs
+    //   //engine = new DemocracyEngine();
+    //   inputVar();
+    // engine.currentCongLogic(userEdits);
+    //   console.log("RESULT " + (frameCount-1999) + " : " + engine.voteResults);
+    // }
+
+    // OC run voting simulation 10 times on this configuration
+    for (let i=resultIX; i < MAX_SIM_RESULTS; i++) {
+        
+        engine.bodyCount = 0;
+          engine.bodyPass = [];
+          engine.resetCount();
+          engine.resetDraw();
+          engine.votingBodyCounts = [];
+          engine.superThreshIndex = [];
+        engine.currentCongLogic(userEdits);
+        //let engineSim = new DemocracyEngine
+        updateSession();
+        resultIX++;
+    }
+
+    // OC display the last voting result
+    visual.displayVoting(engine);
+
+      // OC when visual display of rectangles is done, show buttons
+      if (visual.userInputState) { // && resultIX == 0) {
+        finalDisplay();
+        
+        //updateSession();
+        //resultIX++;
+        //addSession(toSchema(engine)); // OC save session to db after displaying to screen
+      }
+
+      //showPanes();
+    }
+
+  // Displays the voting results as text on the screen
+  // also displays buttons
+  function finalDisplay() {
+
+    setTimeout(function () {
+      document.body.style.backgroundColor = colorOverlay;
+      userInput(); // show buttons
+      visual.finalTextDisplayUser(engine, helvFont, colorOverlay, resultIX-1);
+      changeText(engine.decisionTxt); // change final decision text at bottom of screen 
+    }, 1500); // 1.5 seconds before text overlay shows
+
+    //engine.finalDisplayBool = false;
+    visual.userInputState = false;
+
+  }
+
+  //Once Bill Pass result has been calculated users can enter in their own variables to reconfigure congress or recalculate the vote with the same parameters
+  function userInput() {
+
+    recalBtn = createButton('RECALCULATE VOTE');
+    recalBtn.id('recal-btn');
+    recalBtn.class('buttons');
+    recalBtn.mousePressed(inputVar);
+
+    buttonRC = createButton('RECONFIGURE GOVERNMENT');
+    buttonRC.id('rec-btn');
+    buttonRC.class('buttons');
+    buttonRC.mousePressed(nextScene);
+
+    buttonRes = createButton('RUN DEFAULT SETTINGS');
+    buttonRes.id('res-btn');
+    buttonRes.class('buttons');
+    buttonRes.mousePressed(userRecount);
+
+    emailBtn = createButton('EMAIL YOUR RESULTS');
+    emailBtn.id('email-btn');
+    emailBtn.class('buttons');
+    emailBtn.mousePressed(emailFunc);
+
+    let buttonDiv = document.getElementById('button-div');
+    emailBtn.parent(buttonDiv);
+    buttonRC.parent(buttonDiv);
+    buttonRes.parent(buttonDiv);
+    recalBtn.parent(buttonDiv);
+
+  }
+
+  //Reloads the page if user would like to reset values
+  function userRecount() {
+    // save session to db then reload the page
+    saveSession();
+    location.reload();
+    //reset();
+  }
+
+
+  function userVars() {
+    //AB added this here for less confusion for the user
+    buttonRC.remove();
+    // background(0);
+    changeText(" ");
+  }
+}
+
+
+
+
+// --------------------------------------------------------------------------------
+
+
 //democracy simulater, connected to user values
 function democracyEngineUser() {
   console.log("democracy userEdits: " + userEdits);
@@ -32,6 +721,7 @@ function democracyEngineUser() {
       reconfigBool = false;
     }
 
+    document.getElementById("page-container").style.display = "none";
     document.getElementById("top").style.display = "none";
     document.getElementById("page0").style.display = "none";
     document.getElementById("page1").style.display = "none";
@@ -44,6 +734,7 @@ function democracyEngineUser() {
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
+    document.getElementById("main-btn-div").style.display = "none";
 
     console.log(mgr.isCurrent(democracyEngineUser));
 
@@ -59,9 +750,6 @@ function democracyEngineUser() {
     //   console.log("RESULT " + (frameCount-1999) + " : " + engine.voteResults);
     // }
 
-    
-    //if (resultIX < MAX_SIM_RESULTS -1) {
-
     // OC run voting simulation 10 times on this configuration
     for (let i=resultIX; i < MAX_SIM_RESULTS; i++) {
         
@@ -76,13 +764,6 @@ function democracyEngineUser() {
         updateSession();
         resultIX++;
     }
-      //}
-
-    // OC when engine is done with voting calculation, show votes
-    //if (engine.finalDisplayBool) {
-
-      // if (resultIX == 0) {
-        //engine.currentCongLogic(userEdits);
 
     // OC display the last voting result
     visual.displayVoting(engine);
@@ -90,35 +771,14 @@ function democracyEngineUser() {
       // OC when visual display of rectangles is done, show buttons
       if (visual.userInputState) { // && resultIX == 0) {
         finalDisplay();
+        
         //updateSession();
         //resultIX++;
         //addSession(toSchema(engine)); // OC save session to db after displaying to screen
       }
-    //}
-      
-    
-      
-    //} else {
 
-    // if (resultIX<MAX_SIM_RESULTS -1) {
-    //      //inputVar();
-    //      //resultIX++;
-    //      engine.bodyCount = 0;
-    //       engine.bodyPass = [];
-    //       engine.resetCount();
-    //       engine.resetDraw();
-    //       engine.votingBodyCounts = [];
-    //       engine.superThreshIndex = [];
-    //      engine.currentCongLogic(userEdits);
-    //      updateSession();
-         
-    //   }
-      
-    //   resultIX++;
-    //}
-    //}
-
-  }
+      //showPanes();
+    }
 
   // Displays the voting results as text on the screen
   // also displays buttons
@@ -335,8 +995,11 @@ function sBodies() {
 
     background(bColor);
     document.body.style.backgroundColor = bColor;
+    if (document.getElementById('rec-btn'))
     buttonRC.remove();
+  if (document.getElementById('res-btn'))
     buttonRes.remove();
+  if (document.getElementById('def-btn'))
     buttonDef.remove();
     if (userEdits == true) {
       dispBtn.remove();

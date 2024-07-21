@@ -75,7 +75,7 @@ var userEditCount = 0;
 
 //user inputs are enabled
 var userEdits = false;
-var reconfigBool = false;
+var reconfigBool = true;
 var onePartyBool = false;
 
 // colors
@@ -101,6 +101,8 @@ var configIX = 0;
 var resultIX = 0;
 var MAX_CONFIG_ATTEMPTS = 3; // 10th config is final config
 var MAX_SIM_RESULTS = 10;
+
+var showPanesBool = false;
 
 
 function preload() {
@@ -131,7 +133,8 @@ function setup() {
 
   noStroke();
   mgr = new SceneManager();
-  mgr.addScene(democracyEngineOrigin);
+  mgr.addScene(startUp);
+  //mgr.addScene(democracyEngineOrigin);
   mgr.addScene(democracyEngineUser);
   mgr.addScene(sBodies);
   mgr.addScene(sLegislative);
@@ -663,3 +666,28 @@ function addResult(pConfigIX) {
   console.log(configs[pConfigIX].simResults);
   
 }
+
+// function keyPressed() {
+//   if (key == ' ') {
+//     if (showPanesBool) {
+//       showPanes();
+//       showPanesBool = false;
+//     } else {
+//       hidePanes();
+//       showPanesBool = true;
+//     }
+//   }
+//   console.log("pane bool" + showPanesBool);
+//   key = '';
+// }
+
+// function showPanes() {
+//   fill(bColor);
+//   rect(0, 0, width, height);
+// }
+
+// function hidePanes() {
+//   //visual.displayVoting(engine);
+//   visual.displayImmediate();
+//   // visual.finalTextDisplayUser(engine, helvFont, colorOverlay, resultIX-1);
+// }
