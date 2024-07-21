@@ -366,7 +366,14 @@ function newSessionScene() {
 
   function clickedNext() {
     removeBtns();
-    mgr.showScene(democracyEngineUser);
+    engine.setDefaultParams();
+      // reset values for calculations
+    engine.completeReset();
+    visual.completeReset();
+    userEdits = false;
+    reconfigBool = true;
+  
+    mgr.showScene(sBodies);
   }
 
   function removeBtns() {
@@ -573,7 +580,7 @@ function configVisual() {
     document.getElementById("sim-info").style.display = "none";
     document.getElementById("main-btn-div").style.display = "none";
 
-    console.log(mgr.isCurrent(democracyEngineUser));
+    console.log(mgr.isCurrent(configVisual));
 
   }
 
@@ -583,36 +590,40 @@ function configVisual() {
     // if (frameCount >= 2000 && frameCount < 2120) { // for testing multiple runs
     //   //engine = new DemocracyEngine();
     //   inputVar();
-    // engine.currentCongLogic(userEdits);
+     engine.currentCongLogic(userEdits);
     //   console.log("RESULT " + (frameCount-1999) + " : " + engine.voteResults);
     // }
 
     // OC run voting simulation 10 times on this configuration
-    for (let i=resultIX; i < MAX_SIM_RESULTS; i++) {
+    // for (let i=resultIX; i < MAX_SIM_RESULTS; i++) {
         
-        engine.bodyCount = 0;
-          engine.bodyPass = [];
-          engine.resetCount();
-          engine.resetDraw();
-          engine.votingBodyCounts = [];
-          engine.superThreshIndex = [];
-        engine.currentCongLogic(userEdits);
-        //let engineSim = new DemocracyEngine
-        updateSession();
-        resultIX++;
-    }
+    //     engine.bodyCount = 0;
+    //       engine.bodyPass = [];
+    //       engine.resetCount();
+    //       engine.resetDraw();
+    //       engine.votingBodyCounts = [];
+    //       engine.superThreshIndex = [];
+    //     engine.currentCongLogic(userEdits);
+    //     //let engineSim = new DemocracyEngine
+    //     updateSession();
+    //     resultIX++;
+    // }
 
     // OC display the last voting result
-    visual.displayVoting(engine);
+    console.log("numBodies in cv: " + this.numBodies);
+    // visual.displayImmediate(engine);
+    // params set and vals reset in prev scene when button is clicked
+    visual.displayImmediateBlank(engine);
+
 
       // OC when visual display of rectangles is done, show buttons
-      if (visual.userInputState) { // && resultIX == 0) {
-        finalDisplay();
+      //if (visual.userInputState) { // && resultIX == 0) {
+        //finalDisplay(); // only displays once
         
         //updateSession();
         //resultIX++;
         //addSession(toSchema(engine)); // OC save session to db after displaying to screen
-      }
+      //}
 
       //showPanes();
     }
@@ -976,12 +987,22 @@ function sBodies() {
   this.setup = function () {
     textSize(15);
     noStroke();
+    if (reconfigBool == true) {
+      // windowResized();
+      visual.dWidth = windowWidth * .8;
+      visual.dHeight = windowHeight * .8;
+      canvas = createCanvas(visual.dWidth, visual.dHeight);
+      let canvasDiv = document.getElementById('vote');
+      canvas.parent(canvasDiv);
+      reconfigBool = false;
+    }
 
   }
 
   this.enter = function () {
 
     console.log("0 Slider Page");
+    document.getElementById("page-container").style.display = "none";
     document.getElementById("page0").style.display = "block";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
@@ -990,22 +1011,26 @@ function sBodies() {
     document.getElementById("page5").style.display = "none";
     document.getElementById("page6").style.display = "none";
     document.getElementById("slider-value").style.display = "none";
-    document.getElementById("vote").style.display = "none";
+    document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
 
-    background(bColor);
-    document.body.style.backgroundColor = bColor;
+    // background(bColor);
+    // document.body.style.backgroundColor = bColor;
+    // // engine.currentCongLogic(true);
+    // visual.ix = 0;
+    // visual.displayImmediateBlank(engine);
+
     if (document.getElementById('rec-btn'))
     buttonRC.remove();
   if (document.getElementById('res-btn'))
     buttonRes.remove();
   if (document.getElementById('def-btn'))
     buttonDef.remove();
-    if (userEdits == true) {
-      dispBtn.remove();
-      recalBtn.remove();
-      emailBtn.remove();
-    }
+    // if (userEdits == true) {
+    //   dispBtn.remove();
+    //   recalBtn.remove();
+    //   emailBtn.remove();
+    // }
 
     changeText(" ");
 
@@ -1018,6 +1043,13 @@ function sBodies() {
   }
 
   this.draw = function () {
+    // background(bColor);
+    // document.body.style.backgroundColor = bColor;
+    // // engine.currentCongLogic(true);
+    // visual.ix = 0;
+    // visual.displayImmediateBlank(engine);
+
+    paneToggle();
 
   }
 

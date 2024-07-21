@@ -554,17 +554,17 @@ historicalActs;
     // print("body #: " + bodyCount + " No Vote Bool: " + noVoteBool);
 
     // OC simulate vp tiebreaker for 3 bodies
-    if (this.bodyCount == 2) { // bodyCount 2 is now senate
-      this.yay = round(this.numSenate / 2);
-      this.nay = this.numSenate - this.yay;
-    }
+    // if (this.bodyCount == 2) { // bodyCount 2 is now senate
+    //   this.yay = round(this.numSenate / 2);
+    //   this.nay = this.numSenate - this.yay;
+    // }
 
     // AB
-    // if (this.bodyCount == 1) { // for 2 legislative bodies
-    //   // simulate vp tiebreaker vote
-    //   this.yay = 50;
-    //   this.nay = 50;
-    // }
+    if (this.bodyCount == 1) { // for 2 legislative bodies
+      // simulate vp tiebreaker vote
+      this.yay = 50;
+      this.nay = 50;
+    }
 
     // OC dont use this
     // OC simulate vp tiebreaker for 2 bodies, with logic for 3
@@ -597,6 +597,15 @@ historicalActs;
     this.yay = 0;
     this.nay = 0;
     this.endBody = 0;
+  }
+
+  completeReset() {
+    this.bodyCount = 0;
+    this.bodyPass = [];
+    this.resetCount();
+    this.resetDraw();
+    this.votingBodyCounts = [];
+    this.superThreshIndex = [];
   }
 
   /**
