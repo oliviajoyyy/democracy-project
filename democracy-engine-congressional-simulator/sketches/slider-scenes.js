@@ -372,6 +372,8 @@ function newSessionScene() {
     visual.completeReset();
     userEdits = false;
     reconfigBool = true;
+
+    engine.currentCongLogic(true); // uncomment if drawing to screen real time
   
     mgr.showScene(sBodies);
   }
@@ -521,7 +523,15 @@ function loadSessionS2() {
 
   function clickedNext() {
     removeBtns();
-    mgr.showScene(democracyEngineUser);
+    engine.setDefaultParams();
+    // reset values for calculations
+    engine.completeReset();
+    visual.completeReset();
+    userEdits = false;
+    reconfigBool = true;
+
+    engine.currentCongLogic(true); // uncomment if drawing to screen real time
+    mgr.showScene(sBodies);
   }
 
   function removeBtns() {
@@ -1048,6 +1058,10 @@ function sBodies() {
     // // engine.currentCongLogic(true);
     // visual.ix = 0;
     // visual.displayImmediateBlank(engine);
+    
+    // visual.displayImmediate(engine);
+
+    visual.displayVoting(engine); // draws in real time, reset was when previous scene button clicked - not every time this scene is entered
 
     paneToggle();
 

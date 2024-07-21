@@ -694,60 +694,42 @@ function keyPressed() {
 
 function paneToggle() {
   if (showPanesBool) {
-    background(bColor);
-    document.body.style.backgroundColor = bColor;
-    // engine.currentCongLogic(true);
-    // visual.ix = 0;
-    visual.completeReset();
-    visual.displayImmediateBlank(engine);
+    // ---------------------------------------------- for drawing to screen immediately
+    //background(bColor);
+    //document.body.style.backgroundColor = bColor;
+    // engine.currentCongLogic(true); // leave comented out
+    // visual.ix = 0; // leave commented out
+    //visual.completeReset();
+    //visual.displayImmediateBlank(engine);
+    // -----------------------------------------------
+
+    // ----------------------------------------------- for drawing in real time, reset was when previous scene button clicked
+    // visual.displayVoting(engine);
+
+    // -----------------------------------------------
 
     // draw rect where panes should be
-    push();
-    translate(-100,0);
-    rect(0, 0, width, height/2);
-    pop();
+    // push();
+    //translate(-100,0);
+    //rect(0, 0, width, height/2);
+    // pop();
 
     // if (mgr.isCurrent(SCENE));
     // = "block" whichever html div page corresponds to that scene
     document.getElementById("top").style.display = "block";
     if (mgr.isCurrent(sBodies)) {
       document.getElementById("page0").style.display = "block";
-    } //else if (mgr.isCurrent(sLegislative)) {
-    //   mgr.showScene(sParties);
-    // } else if (mgr.isCurrent(sParties) && userNumParties <= 1) {
-    //   mgr.showScene(sBodyPass);
-    // } else if (mgr.isCurrent(sParties)) {
-    //   mgr.showScene(sMembers);
-    // } else if (mgr.isCurrent(sMembers)) {
-    //   mgr.showScene(sBodyPass);
-    // } else if (mgr.isCurrent(sBodyPass)) {
-    //   mgr.showScene(sYesVotes);
-    // } else if (mgr.isCurrent(sYesVotes)) {
-    //   mgr.showScene(sResults);
-    // }  else if (mgr.isCurrent(sResults) && userEditCount < 2) {
-    //   mgr.showScene(sInfo);
-    // }  else if (mgr.isCurrent(sInfo) && userEdits == true) {
-    //   mgr.showScene(democracyEngineUser);
-    // } else if (mgr.isCurrent(democracyEngineUser)) {
-    //   // OC update config count var here?
-    //   //mgr.showScene(sLegislative);
-    //   mgr.showScene(sBodies);
-    // } else if (mgr.isCurrent(sDefault)) {
-    //  //mgr.showScene(sLegislative);
-    //  mgr.showScene(sBodies);
-    // } else if (mgr.isCurrent(sDisplay)) {
-    //   //mgr.showScene(sLegislative);
-    //   mgr.showScene(sBodies);
-    //  }
+    } 
     
   } else {
-    // redraw background and blank boxes
-    background(bColor);
-    document.body.style.backgroundColor = bColor;
-    // engine.currentCongLogic(true);
-    // visual.ix = 0;
-    visual.completeReset();
-    visual.displayImmediateBlank(engine);
+    // ---------------------------------------------- for drawing to screen immediately
+    //background(bColor);
+    //document.body.style.backgroundColor = bColor;
+    // engine.currentCongLogic(true); // leave comented out
+    // visual.ix = 0; // leave commented out
+    //visual.completeReset();
+    //visual.displayImmediateBlank(engine);
+    // -----------------------------------------------
     
     // = "none" for all html div
     if (mgr.isCurrent(sBodies)) {
