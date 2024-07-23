@@ -1,10 +1,12 @@
 :root {
   --bkg-color: #d5eddc; /* #012244; */ 
+  --header-footer-bkg: #76b7e8; /* #3c1b36; */
   /* OC note: set default bkg-color to same custom color from json to load more smoothly */
   --text-color: white;
   --button: #012266;
   --scroll-bar: #012255;
   --scroll-bar-hover: #012266;
+  --pane-bkg: #d9cb50;
 }
 
 /* width */
@@ -32,7 +34,7 @@
 
 .noUi-target {
   border: dashed;
-  background-color: var(--bkg-color); /* #012244; */
+  background-color: var(--pane-bkg); /* #012244; */
   border-color: var(--text-color); /* white; */
   height: 1px;
   border-width: 1px;
@@ -164,8 +166,17 @@
   font-size: .8em;
 }
 
-#page1, #page2, #page3, #page4, #page5 {
+#page0, #page1, #page2, #page3, #page4, #page5 {
   display: none;
+}
+
+.pane-bkg {
+    width: 70%;
+    height: 65%;
+    background-color: var(--pane-bkg);
+    position: absolute;
+    top: 12%;
+    left: 15%;
 }
 
 #slider-value {
@@ -332,7 +343,3 @@
   z-index: 100;
 }
 
-/*
-#slider-pages{
-}
-*/

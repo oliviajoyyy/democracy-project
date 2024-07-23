@@ -148,12 +148,13 @@
         "background": "#d5eddc",
         "headerFooterBkg": "#76b7e8",
         "text": "#000000",
-        "button": "#84a39b",
+        "button": "#d9cb50",
         "activeNav": "#c42727",
         "link": "#f03e3e",
         "linkHover": "#c47cb7",
         "textOverlay": "#ffffff",
-        "rectColor": "#a31f1f"
+        "rectColor": "#a31f1f",
+        "paneBkg": "#84a39b"
     }
     
 }

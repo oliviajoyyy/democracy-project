@@ -103,7 +103,7 @@ var MAX_CONFIG_ATTEMPTS = 3; // 10th config is final config
 var MAX_SIM_RESULTS = 10;
 
 var showPanesBool = true;
-
+// var paneArrow = false; // allows for arrow keys to move to next pane (controlled why which scene its on)
 
 function preload() {
   helvFont = loadFont('../democracy-engine-congressional-simulator/assets/font/HelveticaNeue-Regular.otf');
@@ -195,6 +195,43 @@ function nextScene() {
     mgr.showScene(sBodies);
    }
 
+}
+
+function nextPane() {
+  if (mgr.isCurrent(sBodies)) {
+    mgr.showScene(sLegislative);
+  } else if (mgr.isCurrent(sLegislative)) {
+    mgr.showScene(sParties);
+  } else if (mgr.isCurrent(sParties) && userNumParties <= 1) {
+    mgr.showScene(sBodyPass);
+  } else if (mgr.isCurrent(sParties)) {
+    mgr.showScene(sMembers);
+  } else if (mgr.isCurrent(sMembers)) {
+    mgr.showScene(sBodyPass);
+  } else if (mgr.isCurrent(sBodyPass)) {
+    mgr.showScene(sYesVotes);
+  } else if (mgr.isCurrent(sYesVotes)) {
+    mgr.showScene(sResults);
+  }  else if (mgr.isCurrent(sResults) && userEditCount < 2) {
+    mgr.showScene(sInfo);
+  }  else if (mgr.isCurrent(sInfo) && userEdits == true) {
+    // mgr.showScene(democracyEngineUser);  
+    mgr.showScene(sBodies);
+  } else if (mgr.isCurrent(sDefault)) {
+   //mgr.showScene(sLegislative);
+   mgr.showScene(sBodies);
+  } else if (mgr.isCurrent(sDisplay)) {
+    //mgr.showScene(sLegislative);
+    mgr.showScene(sBodies);
+   }
+}
+
+function previousPane() {
+  if (mgr.isCurrent(sLegislative)) {
+    mgr.showScene(sBodies);
+  } else if (mgr.isCurrent(sParties)) {
+    mgr.showScene(sLegislative);
+  }
 }
 
 // function lastScene() {
@@ -667,20 +704,6 @@ function addResult(pConfigIX) {
   
 }
 
-// function keyPressed() {
-//   if (key == ' ') {
-//     if (showPanesBool) {
-//       showPanes();
-//       showPanesBool = false;
-//     } else {
-//       hidePanes();
-//       showPanesBool = true;
-//     }
-//   }
-//   console.log("pane bool" + showPanesBool);
-//   key = '';
-// }
-
 function keyPressed() {
   if (keyCode == RETURN) {
     if (showPanesBool == false) {
@@ -689,7 +712,13 @@ function keyPressed() {
     else {
       showPanesBool = false;
     }
+  } else if (key == '.' || key == '>') {//else if (keyCode == RIGHT_ARROW) {
+    nextPane();
+  } else if (key == ',' || key == '<') {//else if (keyCode == LEFT_ARROW) {
+    previousPane();
   }
+  keyCode == null;
+  key = '';
 }
 
 function paneToggle() {
@@ -719,7 +748,11 @@ function paneToggle() {
     document.getElementById("top").style.display = "block";
     if (mgr.isCurrent(sBodies)) {
       document.getElementById("page0").style.display = "block";
-    } 
+    } else if (mgr.isCurrent(sLegislative)) {
+      document.getElementById("page1").style.display = "block";
+    } else if (mgr.isCurrent(sParties)) {
+      document.getElementById("page2").style.display = "block";
+    }
     
   } else {
     // ---------------------------------------------- for drawing to screen immediately
@@ -732,10 +765,12 @@ function paneToggle() {
     // -----------------------------------------------
     
     // = "none" for all html div
-    if (mgr.isCurrent(sBodies)) {
+    // if (mgr.isCurrent(sBodies)) {
       document.getElementById("top").style.display = "none";
       document.getElementById("page0").style.display = "none";
-    }
+      document.getElementById("page1").style.display = "none";
+      document.getElementById("page2").style.display = "none";
+    // }
   }
 
 }

@@ -15,6 +15,7 @@ function startUp() {
     // gui = createGui();
     // continueBtn = createButton("Continue", width/2, height/2);
     console.log("start up scene");
+    // paneArrow = false; // cannot use arrow key to move to next scene
 
     document.getElementById("page-container").style.display = "block";
     document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1>";
@@ -1007,6 +1008,9 @@ function sBodies() {
       reconfigBool = false;
     }
 
+    createSlider();
+    sliderVals();
+
   }
 
   this.enter = function () {
@@ -1044,7 +1048,8 @@ function sBodies() {
 
     changeText(" ");
 
-    sliders();
+    // sliders();
+    sliderVals();
     button();
     document.getElementById("top").style.display = "block";
     document.getElementById("top").innerHTML = "NUMBER OF LEGISLATIVE BODIES";
@@ -1067,15 +1072,15 @@ function sBodies() {
 
   }
 
-  function sliders() {
-    console.log("user edits boool: " + userEdits);
-    if (userEdits == true) {
-      sliderVals();
+  // function sliders() {
+  //   console.log("user edits boool: " + userEdits);
+  //   if (userEdits == true) {
+  //     sliderVals();
 
-    } else {
-      createSlider();
-      sliderVals();
-    }
+  //   } else {
+  //     createSlider();
+  //     sliderVals();
+  //   }
 
     function createSlider() {
 
@@ -1096,61 +1101,6 @@ function sBodies() {
           decimals: 0
         })
       });
-
-      // noUiSlider.create(slider2, {
-      //   start: curNumSen,
-      //   range: {
-      //     'min': [1],
-      //     'max': [500]
-      //   },
-      //   cssPrefix: 'noUi-',
-      //   tooltips: true,
-      //   pips: {
-      //     mode: 'range',
-      //     density: 'range',
-      //   },
-      //   step: 1,
-      //   format: wNumb({
-      //     decimals: 0
-      //   })
-      // });
-
-      // noUiSlider.create(slider3, {
-      //   start: curNumVP,
-      //   range: {
-      //     'min': [1],
-      //     'max': [500]
-      //   },
-      //   cssPrefix: 'noUi-',
-      //   tooltips: true,
-      //   pips: {
-      //     mode: 'range',
-      //     density: 'range',
-      //   },
-      //   step: 1,
-      //   format: wNumb({
-      //     decimals: 0
-      //   })
-      // });
-
-
-      // noUiSlider.create(slider4, {
-      //   start: curNumPres,
-      //   range: {
-      //     'min': [1],
-      //     'max': [500]
-      //   },
-      //   cssPrefix: 'noUi-',
-      //   tooltips: true,
-      //   pips: {
-      //     mode: 'range',
-      //     density: 'range',
-      //   },
-      //   step: 1,
-      //   format: wNumb({
-      //     decimals: 0
-      //   })
-      // });
     }
 
 
@@ -1164,21 +1114,8 @@ function sBodies() {
         userNumLegislative = values[0];
         // rangeSliderValueElement.innerHTML = userNumHouse + " " + userNumSenate + " " + userNumPres + " " + userNumVP;
       });
-      // slider2.noUiSlider.on('update', function (values, handle) {
-      //   //userNumSenate = values[0];
-      //   // rangeSliderValueElement.innerHTML = userNumHouse + " " + userNumSenate + " " + userNumPres + " " + userNumVP;
-      // });
-      // slider3.noUiSlider.on('update', function (values, handle) {
-      //   //userNumVP = values[0];
-      //   // rangeSliderValueElement.innerHTML = userNumHouse + " " + userNumSenate + " " + userNumPres + " " + userNumVP;
-      // });
-      // slider4.noUiSlider.on('update', function (values, handle) {
-      //   //userNumPres = values[0];
-      //   // rangeSliderValueElement.innerHTML = userNumHouse + " " + userNumSenate + " " + userNumPres + " " + userNumVP;
-      // });
-
     }
-  }
+  //}
 
   function button() {
     var sidePad = 20;
@@ -1225,7 +1162,7 @@ function sLegislative() {
     document.getElementById("page5").style.display = "none";
     document.getElementById("page6").style.display = "none";
     document.getElementById("slider-value").style.display = "none";
-    document.getElementById("vote").style.display = "none";
+    document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
 
     // background(bColor);
@@ -1252,6 +1189,9 @@ function sLegislative() {
   }
 
   this.draw = function () {
+    // draws in real time, reset was when previous scene button clicked - not every time this scene is entered
+    visual.displayVoting(engine);
+    paneToggle();
 
   }
 
@@ -1546,7 +1486,8 @@ function sParties() {
   var slider5 = document.getElementById('slider5');
 
   this.setup = function () {
-
+    createSlider();
+    sliderVals();
   }
   this.enter = function () {
     console.log("2nd Slider Page");
@@ -1560,27 +1501,30 @@ function sParties() {
     document.getElementById("page5").style.display = "none";
     document.getElementById("page6").style.display = "none";
     document.getElementById("slider-value").style.display = "none";
-    document.getElementById("vote").style.display = "none";
+    document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
-    sliders();
+    //sliders();
+    sliderVals();
     // button();
   }
   this.draw = function () {
     // imageMode(CENTER);
     // image(blueHydrangea, width / 6, 50, 100, 100);
+    visual.displayVoting(engine);
+    paneToggle();
   }
 
-  function sliders() {
-    if (userEdits == true) {
-      sliderVals();
-    } else {
-      createSlider();
-      sliderVals();
-      // if (userNumParties == parseInt(1)) {
-      //   userEditCount += 1;
-      //   console.log("one party count: " + userEditCount);
-      // }
-    }
+  // function sliders() {
+  //   if (userEdits == true) {
+  //     sliderVals();
+  //   } else {
+  //     createSlider();
+  //     sliderVals();
+  //     // if (userNumParties == parseInt(1)) {
+  //     //   userEditCount += 1;
+  //     //   console.log("one party count: " + userEditCount);
+  //     // }
+  //   }
 
     function createSlider() {
 
@@ -1643,7 +1587,7 @@ function sParties() {
 
       });
     }
-  }
+  //}
 }
 
 //user input page for number of members in each party
