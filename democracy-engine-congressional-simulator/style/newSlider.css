@@ -12,7 +12,7 @@
 /* width */
 ::-webkit-scrollbar {
   width: 15px;
-  background: var(--button); /* var(--text-color); /* #012233; */
+  background: var(--pane-bkg); /* var(--text-color); /* #012233; */
 }
 
 /* Track */
@@ -166,7 +166,7 @@
   font-size: .8em;
 }
 
-#page0, #page1, #page2, #page3, #page4, #page5, #page6, #page7, #page9, #page10 {
+#page1, #page2, #page3, #page4, #page5, #page6, #page7, #page8 #page9, #page10 {
   display: none;
 }
 
@@ -297,7 +297,7 @@
 #slider-disp {
   border-radius: 3px;
   display: none;
-  background-color: var(--button); /* #012266; */
+  background-color: var(--pane-bkg); /* #012266; */
   width: 40vw;
   height: 50vh;
   margin-left: 30vw;

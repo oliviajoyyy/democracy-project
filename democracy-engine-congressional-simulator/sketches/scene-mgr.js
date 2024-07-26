@@ -42,19 +42,19 @@ var userInputX = 20;
 var userNumLegislative; // number of legislative bodies (1-3)
 
 var userNumHouse;
-var userPerHouseBody;
+var userPerHouseBody = []; // array for % of members in each party [0] = party a
 
 var userNumHouse2;
-var userPerHouse2Body;
+var userPerHouse2Body = [];
 
 var userNumSenate;
-var userPerSenateBody;
+var userPerSenateBody = [];
 
 var userNumPres;
-var userPerPresBody;
+var userPerPresBody = [];
 
 var userNumVP;
-var userPerVPBody;
+var userPerVPBody = [];
 
 var userNumParties;
 var userNumHouseRan;
@@ -217,7 +217,7 @@ function nextPane() {
     mgr.showScene(sMembersVP);
   } else if (mgr.isCurrent(sMembersVP)) {
     mgr.showScene(sMembersPres);
-  } else if (mgr.isCurrent(sMembers)) {
+  } else if (mgr.isCurrent(sMembersPres)) {
     mgr.showScene(sBodyPass);
   } else if (mgr.isCurrent(sBodyPass)) {
     mgr.showScene(sYesVotes);
@@ -256,6 +256,10 @@ function previousPane() {
     mgr.showScene(sMembersThirdChamber);
   } else if (mgr.isCurrent(sMembersPres)) {
     mgr.showScene(sMembersVP);
+  } else if (mgr.isCurrent(sBodyPass)) {
+    mgr.showScene(sMembersPres);
+  } else if (mgr.isCurrent(sYesVotes)) {
+    mgr.showScene(sBodyPass);
   }
 }
 
@@ -772,15 +776,25 @@ function paneToggle() {
     // = "block" whichever html div page corresponds to that scene
     document.getElementById("top").style.display = "block";
     if (mgr.isCurrent(sBodies)) {
-      document.getElementById("page0").style.display = "block";
-    } else if (mgr.isCurrent(sLegislative)) {
       document.getElementById("page1").style.display = "block";
-    } else if (mgr.isCurrent(sParties)) {
+    } else if (mgr.isCurrent(sLegislative)) {
       document.getElementById("page2").style.display = "block";
-    } else if (mgr.isCurrent(sMembersFirstChamber)) {
+    } else if (mgr.isCurrent(sParties)) {
       document.getElementById("page3").style.display = "block";
-    } else if (mgr.isCurrent(sMembersSecondChamber)) {
+    } else if (mgr.isCurrent(sMembersFirstChamber)) {
       document.getElementById("page4").style.display = "block";
+    } else if (mgr.isCurrent(sMembersSecondChamber)) {
+      document.getElementById("page5").style.display = "block";
+    } else if (mgr.isCurrent(sMembersThirdChamber)) {
+      document.getElementById("page6").style.display = "block";
+    } else if (mgr.isCurrent(sMembersVP)) {
+      document.getElementById("page7").style.display = "block";
+    } else if (mgr.isCurrent(sMembersPres)) {
+      document.getElementById("page8").style.display = "block";
+    } else if (mgr.isCurrent(sBodyPass)) {
+      document.getElementById("page9").style.display = "block";
+    } else if (mgr.isCurrent(sYesVotes)) {
+      document.getElementById("page10").style.display = "block";
     }
     
   } else {
@@ -796,11 +810,16 @@ function paneToggle() {
     // = "none" for all html div
     // if (mgr.isCurrent(sBodies)) {
       document.getElementById("top").style.display = "none";
-      document.getElementById("page0").style.display = "none";
       document.getElementById("page1").style.display = "none";
       document.getElementById("page2").style.display = "none";
       document.getElementById("page3").style.display = "none";
       document.getElementById("page4").style.display = "none";
+      document.getElementById("page5").style.display = "none";
+      document.getElementById("page6").style.display = "none";
+      document.getElementById("page7").style.display = "none";
+      document.getElementById("page8").style.display = "none";
+      document.getElementById("page9").style.display = "none";
+      document.getElementById("page10").style.display = "none";
     // }
   }
 

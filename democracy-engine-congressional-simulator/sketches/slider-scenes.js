@@ -23,7 +23,6 @@ function startUp() {
     document.getElementById("main-btn-div").style.display = "none";
     document.getElementById("start-desc").style.display = "none";
     document.getElementById("top").style.display = "none";
-    document.getElementById("page0").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
@@ -31,6 +30,10 @@ function startUp() {
     document.getElementById("page5").style.display = "none";
     document.getElementById("page6").style.display = "none";
     document.getElementById("page7").style.display = "none";
+    document.getElementById("page8").style.display = "none";
+    document.getElementById("page9").style.display = "none";
+    document.getElementById("page10").style.display = "none";
+    document.getElementById("page11").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
@@ -105,7 +108,6 @@ function briefDescription() {
     document.getElementById("start-desc").style.display = "block";
     document.getElementById("start-desc").innerHTML = "<p>The legislative apparatus of the current US government is represented in default mode, which will initially run through one legislative cycle. The user may configure alternative values in subsequent cycles in order to evaluate the effects of systemic changes to the mechanism of governance.</p>";
     document.getElementById("top").style.display = "none";
-    document.getElementById("page0").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
@@ -113,6 +115,10 @@ function briefDescription() {
     document.getElementById("page5").style.display = "none";
     document.getElementById("page6").style.display = "none";
     document.getElementById("page7").style.display = "none";
+    document.getElementById("page8").style.display = "none";
+    document.getElementById("page9").style.display = "none";
+    document.getElementById("page10").style.display = "none";
+    document.getElementById("page11").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
@@ -196,7 +202,6 @@ function hardwareTest() {
     document.getElementById("main-btn-div").style.display = "none";
     document.getElementById("start-desc").style.display = "none";
     document.getElementById("top").style.display = "none";
-    document.getElementById("page0").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
@@ -204,6 +209,10 @@ function hardwareTest() {
     document.getElementById("page5").style.display = "none";
     document.getElementById("page6").style.display = "none";
     document.getElementById("page7").style.display = "none";
+    document.getElementById("page8").style.display = "none";
+    document.getElementById("page9").style.display = "none";
+    document.getElementById("page10").style.display = "none";
+    document.getElementById("page11").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
@@ -270,7 +279,6 @@ function aboutProject() {
     document.getElementById("start-desc").style.display = "block";
     document.getElementById("start-desc").innerHTML = "<p>[Detailed project description & link to external page]</p>";
     document.getElementById("top").style.display = "none";
-    document.getElementById("page0").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
@@ -278,6 +286,10 @@ function aboutProject() {
     document.getElementById("page5").style.display = "none";
     document.getElementById("page6").style.display = "none";
     document.getElementById("page7").style.display = "none";
+    document.getElementById("page8").style.display = "none";
+    document.getElementById("page9").style.display = "none";
+    document.getElementById("page10").style.display = "none";
+    document.getElementById("page11").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
@@ -334,13 +346,17 @@ function newSessionScene() {
     document.getElementById("start-desc").innerHTML += "<br>[Show timestamp-based name as ID for new session]</p>";
 
     document.getElementById("top").style.display = "none";
-    document.getElementById("page0").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
     document.getElementById("page4").style.display = "none";
     document.getElementById("page5").style.display = "none";
     document.getElementById("page6").style.display = "none";
+    document.getElementById("page7").style.display = "none";
+    document.getElementById("page8").style.display = "none";
+    document.getElementById("page9").style.display = "none";
+    document.getElementById("page10").style.display = "none";
+    document.getElementById("page11").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
@@ -417,7 +433,6 @@ function loadSessionS1() {
     document.getElementById("start-desc").innerHTML += "<br>[List of previous sessions (fr db), includes timestamp & ID]</p>";
 
     document.getElementById("top").style.display = "none";
-    document.getElementById("page0").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
@@ -425,6 +440,10 @@ function loadSessionS1() {
     document.getElementById("page5").style.display = "none";
     document.getElementById("page6").style.display = "none";
     document.getElementById("page7").style.display = "none";
+    document.getElementById("page8").style.display = "none";
+    document.getElementById("page9").style.display = "none";
+    document.getElementById("page10").style.display = "none";
+    document.getElementById("page11").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
@@ -492,7 +511,6 @@ function loadSessionS2() {
     document.getElementById("start-desc").innerHTML += "<br>[Show timestamp-based name as ID for new (loaded) session]</p>";
 
     document.getElementById("top").style.display = "none";
-    document.getElementById("page0").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
@@ -500,6 +518,10 @@ function loadSessionS2() {
     document.getElementById("page5").style.display = "none";
     document.getElementById("page6").style.display = "none";
     document.getElementById("page7").style.display = "none";
+    document.getElementById("page8").style.display = "none";
+    document.getElementById("page9").style.display = "none";
+    document.getElementById("page10").style.display = "none";
+    document.getElementById("page11").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
@@ -584,7 +606,6 @@ function configVisual() {
 
     document.getElementById("page-container").style.display = "none";
     document.getElementById("top").style.display = "none";
-    document.getElementById("page0").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
@@ -592,6 +613,10 @@ function configVisual() {
     document.getElementById("page5").style.display = "none";
     document.getElementById("page6").style.display = "none";
     document.getElementById("page7").style.display = "none";
+    document.getElementById("page8").style.display = "none";
+    document.getElementById("page9").style.display = "none";
+    document.getElementById("page10").style.display = "none";
+    document.getElementById("page11").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
@@ -752,7 +777,6 @@ function democracyEngineUser() {
 
     document.getElementById("page-container").style.display = "none";
     document.getElementById("top").style.display = "none";
-    document.getElementById("page0").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
@@ -760,6 +784,10 @@ function democracyEngineUser() {
     document.getElementById("page5").style.display = "none";
     document.getElementById("page6").style.display = "none";
     document.getElementById("page7").style.display = "none";
+    document.getElementById("page8").style.display = "none";
+    document.getElementById("page9").style.display = "none";
+    document.getElementById("page10").style.display = "none";
+    document.getElementById("page11").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
@@ -892,7 +920,6 @@ function democracyEngineOrigin() {
   this.enter = function () {
 
     document.getElementById("top").style.display = "none";
-    document.getElementById("page0").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
@@ -900,6 +927,10 @@ function democracyEngineOrigin() {
     document.getElementById("page5").style.display = "none";
     document.getElementById("page6").style.display = "none";
     document.getElementById("page7").style.display = "none";
+    document.getElementById("page8").style.display = "none";
+    document.getElementById("page9").style.display = "none";
+    document.getElementById("page10").style.display = "none";
+    document.getElementById("page11").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
@@ -1026,14 +1057,17 @@ function sBodies() {
 
     console.log("0 Slider Page");
     document.getElementById("page-container").style.display = "none";
-    document.getElementById("page0").style.display = "block";
-    document.getElementById("page1").style.display = "none";
+    document.getElementById("page1").style.display = "block";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
     document.getElementById("page4").style.display = "none";
     document.getElementById("page5").style.display = "none";
     document.getElementById("page6").style.display = "none";
     document.getElementById("page7").style.display = "none";
+    document.getElementById("page8").style.display = "none";
+    document.getElementById("page9").style.display = "none";
+    document.getElementById("page10").style.display = "none";
+    document.getElementById("page11").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
@@ -1164,14 +1198,17 @@ function sLegislative() {
   this.enter = function () {
 
     console.log("1st Slider Page");
-    document.getElementById("page0").style.display = "none";
-    document.getElementById("page1").style.display = "block";
-    document.getElementById("page2").style.display = "none";
+    document.getElementById("page1").style.display = "none";
+    document.getElementById("page2").style.display = "block";
     document.getElementById("page3").style.display = "none";
     document.getElementById("page4").style.display = "none";
     document.getElementById("page5").style.display = "none";
     document.getElementById("page6").style.display = "none";
     document.getElementById("page7").style.display = "none";
+    document.getElementById("page8").style.display = "none";
+    document.getElementById("page9").style.display = "none";
+    document.getElementById("page10").style.display = "none";
+    document.getElementById("page11").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
@@ -1458,6 +1495,9 @@ function sLegislative() {
       } else {
         // update new var to 0
         userNumHouse2 = 0;
+        userPerHouse2Body[0] = 0;
+        userPerHouse2Body[1] = 0;
+        userPerHouse2Body[2] = 0;
       }
 
       // OC update slider for 2nd body if user chose >=2 bodies
@@ -1470,6 +1510,9 @@ function sLegislative() {
         });
       } else {
           userNumSenate = 0; // set senate members to 0 later, in sMembers
+          userPerSenateBody[0] = 0;
+          userPerSenateBody[1] = 0;
+          userPerSenateBody[2] = 0;
       }
 
       // always update vp and pres
@@ -1509,14 +1552,17 @@ function sParties() {
     console.log("2nd Slider Page");
     document.getElementById("top").style.display = "block";
     document.getElementById("top").innerHTML = "NUMBER OF POLITICAL PARTIES";
-    document.getElementById("page0").style.display = "none";
     document.getElementById("page1").style.display = "none";
-    document.getElementById("page2").style.display = "block";
-    document.getElementById("page3").style.display = "none";
+    document.getElementById("page2").style.display = "none";
+    document.getElementById("page3").style.display = "block";
     document.getElementById("page4").style.display = "none";
     document.getElementById("page5").style.display = "none";
     document.getElementById("page6").style.display = "none";
     document.getElementById("page7").style.display = "none";
+    document.getElementById("page8").style.display = "none";
+    document.getElementById("page9").style.display = "none";
+    document.getElementById("page10").style.display = "none";
+    document.getElementById("page11").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
@@ -1634,14 +1680,17 @@ function sMembersFirstChamber() {
     console.log("Slider Page Chamber 1 Party Members ");
     document.getElementById("top").style.display = "block";
     document.getElementById("top").innerHTML = "NUMBER OF VOTING MEMBERS FOR FIRST CHAMBER";
-    document.getElementById("page0").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
-    document.getElementById("page3").style.display = "block";
-    document.getElementById("page4").style.display = "none";
+    document.getElementById("page3").style.display = "none";
+    document.getElementById("page4").style.display = "block";
     document.getElementById("page5").style.display = "none";
     document.getElementById("page6").style.display = "none";
     document.getElementById("page7").style.display = "none";
+    document.getElementById("page8").style.display = "none";
+    document.getElementById("page9").style.display = "none";
+    document.getElementById("page10").style.display = "none";
+    document.getElementById("page11").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
@@ -1832,14 +1881,14 @@ function sMembersSecondChamber() {
     console.log("Slider Page Chamber 2 Party Members ");
     document.getElementById("top").style.display = "block";
     document.getElementById("top").innerHTML = "NUMBER OF VOTING MEMBERS FOR SECOND CHAMBER";
-    document.getElementById("page0").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
-    document.getElementById("page4").style.display = "block";
-    document.getElementById("page5").style.display = "none";
+    document.getElementById("page4").style.display = "none";
+    document.getElementById("page5").style.display = "block";
     document.getElementById("page6").style.display = "none";
     document.getElementById("page7").style.display = "none";
+    document.getElementById("page8").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
@@ -2016,13 +2065,13 @@ function sMembersSecondChamber() {
     console.log("Slider Page Chamber 2 Party Members ");
     document.getElementById("top").style.display = "block";
     document.getElementById("top").innerHTML = "NUMBER OF VOTING MEMBERS FOR SECOND CHAMBER";
-    document.getElementById("page0").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
-    document.getElementById("page4").style.display = "block";
+    document.getElementById("page4").style.display = "none";
+    document.getElementById("page5").style.display = "block";
     document.getElementById("page5").style.display = "none";
-    document.getElementById("page6").style.display = "none";
+    document.getElementById("page7").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
@@ -2182,14 +2231,17 @@ function sMembersThirdChamber() {
     console.log("Slider Page Chamber 3 Party Members ");
     document.getElementById("top").style.display = "block";
     document.getElementById("top").innerHTML = "NUMBER OF VOTING MEMBERS FOR THIRD CHAMBER";
-    document.getElementById("page0").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
     document.getElementById("page4").style.display = "none";
+    document.getElementById("page5").style.display = "none";
     document.getElementById("page5").style.display = "block";
-    document.getElementById("page6").style.display = "none";
     document.getElementById("page7").style.display = "none";
+    document.getElementById("page8").style.display = "none";
+    document.getElementById("page9").style.display = "none";
+    document.getElementById("page10").style.display = "none";
+    document.getElementById("page11").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
@@ -2361,14 +2413,17 @@ function sMembersVP() {
     console.log("Slider Page VP Party Members ");
     document.getElementById("top").style.display = "block";
     document.getElementById("top").innerHTML = "NUMBER OF VOTING MEMBERS FOR VICE PRESIDENCY";
-    document.getElementById("page0").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
     document.getElementById("page4").style.display = "none";
     document.getElementById("page5").style.display = "none";
-    document.getElementById("page6").style.display = "block";
-    document.getElementById("page7").style.display = "none";
+    document.getElementById("page5").style.display = "none";
+    document.getElementById("page7").style.display = "block";
+    document.getElementById("page8").style.display = "none";
+    document.getElementById("page9").style.display = "none";
+    document.getElementById("page10").style.display = "none";
+    document.getElementById("page11").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
@@ -2541,14 +2596,17 @@ function sMembersPres() {
     console.log("Slider Page Pres Party Members ");
     document.getElementById("top").style.display = "block";
     document.getElementById("top").innerHTML = "NUMBER OF VOTING MEMBERS FOR PRESIDENCY";
-    document.getElementById("page0").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
     document.getElementById("page4").style.display = "none";
     document.getElementById("page5").style.display = "none";
-    document.getElementById("page6").style.display = "none";
-    document.getElementById("page7").style.display = "block";
+    document.getElementById("page5").style.display = "none";
+    document.getElementById("page7").style.display = "none";
+    document.getElementById("page8").style.display = "block";
+    document.getElementById("page9").style.display = "none";
+    document.getElementById("page10").style.display = "none";
+    document.getElementById("page11").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
@@ -2720,14 +2778,14 @@ function sMembers() {
   this.enter = function () {
     console.log("3rd Slider Page");
     document.getElementById("top").innerHTML = "NUMBER OF VOTING MEMBERS AFFILIATED WITH EACH POLITICAL PARTY";
-    document.getElementById("page0").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
-    document.getElementById("page3").style.display = "block";
-    document.getElementById("page4").style.display = "none";
+    document.getElementById("page3").style.display = "none";
+    document.getElementById("page4").style.display = "block";
     document.getElementById("page5").style.display = "none";
     document.getElementById("page6").style.display = "none";
     document.getElementById("page7").style.display = "none";
+    document.getElementById("page8").style.display = "none";
     document.getElementById("slider-value").style.display = "block";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
@@ -3314,15 +3372,17 @@ function sBodyPass() {
   this.enter = function () {
     // noCursor();
     console.log("4th Slider Page");
-    document.getElementById("top").innerHTML = "PERCENTAGE OF VOTES REQUIRED FOR APPROVAL OF BILL BY EACH LEGISLATIVE CHAMBER";
-    document.getElementById("page0").style.display = "none";
+    document.getElementById("top").innerHTML = "PERCENTAGE OF VOTES REQUIRED FOR APPROVAL BY EACH CHAMBER";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
-    document.getElementById("page9").style.display = "block";
+    document.getElementById("page4").style.display = "none";
     document.getElementById("page5").style.display = "none";
-    document.getElementById("page6").style.display = "none";
     document.getElementById("page7").style.display = "none";
+    document.getElementById("page8").style.display = "none";
+    document.getElementById("page9").style.display = "block";
+    document.getElementById("page10").style.display = "none";
+    document.getElementById("page11").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
@@ -3430,14 +3490,17 @@ function sYesVotes() {
 
     console.log("5th slider page");
     document.getElementById("top").innerHTML = "PROBABILITY OF AN AFFIRMATIVE VOTE BY A PARTY MEMBER";
-    document.getElementById("page0").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
     document.getElementById("page4").style.display = "none";
-    document.getElementById("page10").style.display = "block";
+    document.getElementById("page5").style.display = "none";
     document.getElementById("page6").style.display = "none";
     document.getElementById("page7").style.display = "none";
+    document.getElementById("page8").style.display = "none";
+    document.getElementById("page9").style.display = "none";
+    document.getElementById("page10").style.display = "block";
+    document.getElementById("page11").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     checkParties();
@@ -3599,12 +3662,16 @@ function sResults() {
     console.log("user edit count: " + userEditCount);
     console.log("user result page");
     document.getElementById("top").innerHTML = "DEMOCRACY ENGINE SIMULATOR INPUTS";
-    document.getElementById("page0").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
     document.getElementById("page4").style.display = "none";
     document.getElementById("page5").style.display = "none";
+    document.getElementById("page6").style.display = "none";
+    document.getElementById("page7").style.display = "none";
+    document.getElementById("page8").style.display = "none";
+    document.getElementById("page9").style.display = "none";
+    document.getElementById("page10").style.display = "none";
     document.getElementById("page11").style.display = "block";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
@@ -3724,7 +3791,6 @@ function sInfo() {
   this.enter = function () {
     console.log("simulator info page");
     document.getElementById("top").innerHTML = " ";
-    document.getElementById("page0").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
@@ -3732,6 +3798,10 @@ function sInfo() {
     document.getElementById("page5").style.display = "none";
     document.getElementById("page6").style.display = "none";
     document.getElementById("page7").style.display = "none";
+    document.getElementById("page8").style.display = "none";
+    document.getElementById("page9").style.display = "none";
+    document.getElementById("page10").style.display = "none";
+    document.getElementById("page11").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
@@ -3770,12 +3840,16 @@ function sDisplay() {
 
     console.log("user display page");
     document.getElementById("top").innerHTML = "DEMOCRACY ENGINE SIMULATOR INPUT DISPLAY";
-    document.getElementById("page0").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
     document.getElementById("page4").style.display = "none";
     document.getElementById("page5").style.display = "none";
+    document.getElementById("page6").style.display = "none";
+    document.getElementById("page7").style.display = "none";
+    document.getElementById("page8").style.display = "none";
+    document.getElementById("page9").style.display = "none";
+    document.getElementById("page10").style.display = "none";
     document.getElementById("page11").style.display = "block";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
@@ -3864,7 +3938,6 @@ function sDefault() {
 
     console.log("default settings display page");
     document.getElementById("top").innerHTML = " ";
-    document.getElementById("page0").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
@@ -3872,6 +3945,10 @@ function sDefault() {
     document.getElementById("page5").style.display = "none";
     document.getElementById("page6").style.display = "none";
     document.getElementById("page7").style.display = "none";
+    document.getElementById("page8").style.display = "none";
+    document.getElementById("page9").style.display = "none";
+    document.getElementById("page10").style.display = "none";
+    document.getElementById("page11").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "block";
