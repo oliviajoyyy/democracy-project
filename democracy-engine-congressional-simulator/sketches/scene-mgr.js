@@ -202,10 +202,21 @@ function nextPane() {
     mgr.showScene(sLegislative);
   } else if (mgr.isCurrent(sLegislative)) {
     mgr.showScene(sParties);
-  } else if (mgr.isCurrent(sParties) && userNumParties <= 1) {
-    mgr.showScene(sBodyPass);
   } else if (mgr.isCurrent(sParties)) {
-    mgr.showScene(sMembers);
+    // mgr.showScene(sMembers);
+    mgr.showScene(sMembersFirstChamber);
+  } else if (mgr.isCurrent(sMembersFirstChamber) && userNumLegislative == 1) { 
+    mgr.showScene(sMembersVP);
+  } else if (mgr.isCurrent(sMembersFirstChamber) && userNumLegislative >= 2) {
+    mgr.showScene(sMembersSecondChamber);
+  } else if (mgr.isCurrent(sMembersSecondChamber) && userNumLegislative == 3) {
+    mgr.showScene(sMembersThirdChamber);
+  } else if (mgr.isCurrent(sMembersSecondChamber) && userNumLegislative == 2) {
+    mgr.showScene(sMembersVP);
+  } else if (mgr.isCurrent(sMembersThirdChamber)) {
+    mgr.showScene(sMembersVP);
+  } else if (mgr.isCurrent(sMembersVP)) {
+    mgr.showScene(sMembersPres);
   } else if (mgr.isCurrent(sMembers)) {
     mgr.showScene(sBodyPass);
   } else if (mgr.isCurrent(sBodyPass)) {
@@ -231,6 +242,20 @@ function previousPane() {
     mgr.showScene(sBodies);
   } else if (mgr.isCurrent(sParties)) {
     mgr.showScene(sLegislative);
+  } else if (mgr.isCurrent(sMembersFirstChamber)) {
+    mgr.showScene(sParties);
+  } else if (mgr.isCurrent(sMembersSecondChamber)) {
+    mgr.showScene(sMembersFirstChamber);
+  } else if (mgr.isCurrent(sMembersThirdChamber)) {
+    mgr.showScene(sMembersSecondChamber);
+  } else if (mgr.isCurrent(sMembersVP) && userNumLegislative == 1) {
+    mgr.showScene(sMembersFirstChamber);
+  } else if (mgr.isCurrent(sMembersVP) && userNumLegislative == 2) {
+    mgr.showScene(sMembersSecondChamber);
+  } else if (mgr.isCurrent(sMembersVP) && userNumLegislative == 3) {
+    mgr.showScene(sMembersThirdChamber);
+  } else if (mgr.isCurrent(sMembersPres)) {
+    mgr.showScene(sMembersVP);
   }
 }
 
@@ -752,6 +777,10 @@ function paneToggle() {
       document.getElementById("page1").style.display = "block";
     } else if (mgr.isCurrent(sParties)) {
       document.getElementById("page2").style.display = "block";
+    } else if (mgr.isCurrent(sMembersFirstChamber)) {
+      document.getElementById("page3").style.display = "block";
+    } else if (mgr.isCurrent(sMembersSecondChamber)) {
+      document.getElementById("page4").style.display = "block";
     }
     
   } else {
@@ -770,6 +799,8 @@ function paneToggle() {
       document.getElementById("page0").style.display = "none";
       document.getElementById("page1").style.display = "none";
       document.getElementById("page2").style.display = "none";
+      document.getElementById("page3").style.display = "none";
+      document.getElementById("page4").style.display = "none";
     // }
   }
 

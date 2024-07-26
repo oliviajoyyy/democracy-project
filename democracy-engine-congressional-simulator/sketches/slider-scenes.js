@@ -30,7 +30,8 @@ function startUp() {
     document.getElementById("page4").style.display = "none";
     document.getElementById("page5").style.display = "none";
     document.getElementById("page6").style.display = "none";
-    document.getElementById("slider-value").style.display = "none";
+    document.getElementById("page7").style.display = "none";
+    // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
@@ -111,7 +112,8 @@ function briefDescription() {
     document.getElementById("page4").style.display = "none";
     document.getElementById("page5").style.display = "none";
     document.getElementById("page6").style.display = "none";
-    document.getElementById("slider-value").style.display = "none";
+    document.getElementById("page7").style.display = "none";
+    // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
@@ -201,7 +203,8 @@ function hardwareTest() {
     document.getElementById("page4").style.display = "none";
     document.getElementById("page5").style.display = "none";
     document.getElementById("page6").style.display = "none";
-    document.getElementById("slider-value").style.display = "none";
+    document.getElementById("page7").style.display = "none";
+    // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
@@ -274,7 +277,8 @@ function aboutProject() {
     document.getElementById("page4").style.display = "none";
     document.getElementById("page5").style.display = "none";
     document.getElementById("page6").style.display = "none";
-    document.getElementById("slider-value").style.display = "none";
+    document.getElementById("page7").style.display = "none";
+    // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
@@ -337,7 +341,7 @@ function newSessionScene() {
     document.getElementById("page4").style.display = "none";
     document.getElementById("page5").style.display = "none";
     document.getElementById("page6").style.display = "none";
-    document.getElementById("slider-value").style.display = "none";
+    // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
@@ -420,7 +424,8 @@ function loadSessionS1() {
     document.getElementById("page4").style.display = "none";
     document.getElementById("page5").style.display = "none";
     document.getElementById("page6").style.display = "none";
-    document.getElementById("slider-value").style.display = "none";
+    document.getElementById("page7").style.display = "none";
+    // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
@@ -494,7 +499,8 @@ function loadSessionS2() {
     document.getElementById("page4").style.display = "none";
     document.getElementById("page5").style.display = "none";
     document.getElementById("page6").style.display = "none";
-    document.getElementById("slider-value").style.display = "none";
+    document.getElementById("page7").style.display = "none";
+    // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
@@ -585,7 +591,8 @@ function configVisual() {
     document.getElementById("page4").style.display = "none";
     document.getElementById("page5").style.display = "none";
     document.getElementById("page6").style.display = "none";
-    document.getElementById("slider-value").style.display = "none";
+    document.getElementById("page7").style.display = "none";
+    // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
@@ -752,7 +759,8 @@ function democracyEngineUser() {
     document.getElementById("page4").style.display = "none";
     document.getElementById("page5").style.display = "none";
     document.getElementById("page6").style.display = "none";
-    document.getElementById("slider-value").style.display = "none";
+    document.getElementById("page7").style.display = "none";
+    // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
@@ -891,7 +899,8 @@ function democracyEngineOrigin() {
     document.getElementById("page4").style.display = "none";
     document.getElementById("page5").style.display = "none";
     document.getElementById("page6").style.display = "none";
-    document.getElementById("slider-value").style.display = "none";
+    document.getElementById("page7").style.display = "none";
+    // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
 
@@ -1024,7 +1033,8 @@ function sBodies() {
     document.getElementById("page4").style.display = "none";
     document.getElementById("page5").style.display = "none";
     document.getElementById("page6").style.display = "none";
-    document.getElementById("slider-value").style.display = "none";
+    document.getElementById("page7").style.display = "none";
+    // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
 
@@ -1131,11 +1141,11 @@ function sBodies() {
 function sLegislative() {
 
   var slider1 = document.getElementById('slider1'); // original house
-  var slider1a;// = document.getElementById('s2-p1'); // house2
-  var slider2;// = document.getElementById('s3-p1'); // senate
+  var slider2;// = document.getElementById('s2-p1'); // house2
+  var slider3;// = document.getElementById('s3-p1'); // senate
   // create var for third legislative chamber
-  var slider3;// = document.getElementById('s4-p1'); // vp
-  var slider4;// = document.getElementById('s5-p1'); // pres
+  var slider4;// = document.getElementById('s4-p1'); // vp
+  var slider5;// = document.getElementById('s5-p1'); // pres
    
   var curNumHouse = parseInt(engine.numHouse);
   var curNumHouse2 = parseInt(engine.numHouse2);
@@ -1161,7 +1171,8 @@ function sLegislative() {
     document.getElementById("page4").style.display = "none";
     document.getElementById("page5").style.display = "none";
     document.getElementById("page6").style.display = "none";
-    document.getElementById("slider-value").style.display = "none";
+    document.getElementById("page7").style.display = "none";
+    // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
 
@@ -1198,10 +1209,10 @@ function sLegislative() {
   // function destroySliders() {
   //   if (userEditCount >= 1) {
   //     slider1.noUiSlider.destroy();
-  //     slider1a.noUiSlider.destroy();
   //     slider2.noUiSlider.destroy();
   //     slider3.noUiSlider.destroy();
   //     slider4.noUiSlider.destroy();
+  //     slider5.noUiSlider.destroy();
   //   }
   // }
 
@@ -1225,10 +1236,10 @@ function sLegislative() {
       document.getElementById("s5-p1").style.display = "none";
       
       slider1 = document.getElementById('slider1');
-      slider1a = document.getElementById('slider4'); // house2 chamber, set slider but not used
-      slider2 = document.getElementById('slider4a'); // 3rd (senate) chamber, set slider but not used
-      slider3 = document.getElementById('slider2'); // vp
-      slider4 = document.getElementById('slider3'); // pres
+      slider2 = document.getElementById('slider4'); // house2 chamber, set slider but not used
+      slider3 = document.getElementById('slider4a'); // 3rd (senate) chamber, set slider but not used
+      slider4 = document.getElementById('slider2'); // vp
+      slider5 = document.getElementById('slider3'); // pres
 
       // document.getElementById("slider1").style.display = "block";
       // document.getElementById("slider2").style.display = "none";
@@ -1251,27 +1262,27 @@ function sLegislative() {
       // document.getElementById("s5-p1").style.display = "none";
 
       // slider1 = document.getElementById('slider1');
-      // slider1a = document.getElementById('slider4a'); // house2, set slider but not used
-      // slider2 = document.getElementById('slider2'); // 3rd (senate) chamber
-      // slider3 = document.getElementById('slider3'); // vp
-      // slider4 = document.getElementById('slider4'); // pres
+      // slider2 = document.getElementById('slider4a'); // house2, set slider but not used
+      // slider3 = document.getElementById('slider2'); // 3rd (senate) chamber
+      // slider4 = document.getElementById('slider3'); // vp
+      // slider5 = document.getElementById('slider4'); // pres
 
       document.getElementById("s1-p1").innerHTML = "<div class='first-slider' id='slider1'><p id='slider-text-1'>FIRST CHAMBER</p></div>";
       document.getElementById("s1-p1").style.display = "block";
       document.getElementById("s2-p1").innerHTML = "<div id='slider2'><p id='slider-text-2'>SECOND CHAMBER</p></div>";
       document.getElementById("s2-p1").style.display = "block";
-      document.getElementById("s3-p1").innerHTML = "<div id='slider3'><p id='slider-text-3'>THIRD CHAMBER</p></div>";
-      document.getElementById("s3-p1").style.display = "none";
-      document.getElementById("s4-p1").innerHTML = "<div id='slider4'><p id='slider-text-4'>VICE PRESIDENCY</p></div>";
+      document.getElementById("s3-p1").innerHTML = "<div id='slider3'><p id='slider-text-3'>VICE PRESIDENCY</p></div>";
+      document.getElementById("s3-p1").style.display = "block";
+      document.getElementById("s4-p1").innerHTML = "<div id='slider4'><p id='slider-text-4'>PRESIDENCY</p></div>";
       document.getElementById("s4-p1").style.display = "block";
-      document.getElementById("s5-p1").innerHTML = "<div id='slider4a'><p id='slider-text-5'>PRESIDENCY</p></div>";
-      document.getElementById("s5-p1").style.display = "block";
+      document.getElementById("s5-p1").innerHTML = "<div id='slider4a'><p id='slider-text-5'>THIRD CHAMBER</p></div>";
+      document.getElementById("s5-p1").style.display = "none";
 
       slider1 = document.getElementById('slider1');
-      slider1a = document.getElementById('slider2'); // house2, set slider but not used
-      slider2 = document.getElementById('slider3'); // 3rd (senate) chamber
-      slider3 = document.getElementById('slider4'); // vp
-      slider4 = document.getElementById('slider4a'); // pres
+      slider2 = document.getElementById('slider2'); // house2, set slider but not used
+      slider3 = document.getElementById('slider4a'); // 3rd (senate) chamber
+      slider4 = document.getElementById('slider3'); // vp
+      slider5 = document.getElementById('slider4'); // pres
 
       // document.getElementById("slider1").style.display = "block";
       // document.getElementById("slider2").style.display = "block";
@@ -1296,10 +1307,10 @@ function sLegislative() {
       document.getElementById("s5-p1").style.display = "block";
 
       slider1 = document.getElementById('slider1');
-      slider1a = document.getElementById('slider2'); // house2, set slider but not used
-      slider2 = document.getElementById('slider3'); // 3rd (senate) chamber
-      slider3 = document.getElementById('slider4'); // vp
-      slider4 = document.getElementById('slider4a'); // pres
+      slider2 = document.getElementById('slider2'); // house2, set slider but not used
+      slider3 = document.getElementById('slider3'); // 3rd (senate) chamber
+      slider4 = document.getElementById('slider4'); // vp
+      slider5 = document.getElementById('slider4a'); // pres
 
       // document.getElementById("slider1").style.display = "block";
       // document.getElementById("slider2").style.display = "block";
@@ -1317,7 +1328,7 @@ function sLegislative() {
     console.log("user edits boool: " + userEdits);
     if (userEdits == true) {
       //slider1.noUiSlider.destroy();
-      //slider1a.noUiSlider.destroy();
+      //slider2.noUiSlider.destroy();
       createSlider();
       sliderVals();
 
@@ -1346,7 +1357,7 @@ function sLegislative() {
         })
       });
 
-      noUiSlider.create(slider2, {
+      noUiSlider.create(slider3, {
         start: curNumSen,
         range: {
           'min': [1],
@@ -1366,7 +1377,7 @@ function sLegislative() {
 
       // OC TODO create slider for 3rd legislative body
 
-      noUiSlider.create(slider3, {
+      noUiSlider.create(slider4, {
         start: curNumVP,
         range: {
           'min': [1],
@@ -1385,7 +1396,7 @@ function sLegislative() {
       });
 
 
-      noUiSlider.create(slider4, {
+      noUiSlider.create(slider5, {
         start: curNumPres,
         range: {
           'min': [1],
@@ -1404,7 +1415,7 @@ function sLegislative() {
       });
 
 
-      noUiSlider.create(slider1a, {
+      noUiSlider.create(slider2, {
         start: curNumHouse2,
         range: {
           'min': [1],
@@ -1432,15 +1443,17 @@ function sLegislative() {
 
       // house
       slider1.noUiSlider.on('update', function (values, handle) {
-        userNumHouse = values[0]
+        userNumHouse = values[0];
+        curNumHouse = userNumHouse;
         // rangeSliderValueElement.innerHTML = userNumHouse + " " + userNumSenate + " " + userNumPres + " " + userNumVP;
       });
 
       // house2
       if (userNumLegislative >= 2) {
         // update new slider
-        slider1a.noUiSlider.on('update', function (values, handle) {
+        slider2.noUiSlider.on('update', function (values, handle) {
           userNumHouse2 = values[0];
+          curNumHouse2 = userNumHouse2;
         });
       } else {
         // update new var to 0
@@ -1450,8 +1463,9 @@ function sLegislative() {
       // OC update slider for 2nd body if user chose >=2 bodies
       // senate
       if (userNumLegislative == 3) {
-        slider2.noUiSlider.on('update', function (values, handle) {
+        slider3.noUiSlider.on('update', function (values, handle) {
           userNumSenate = values[0];
+          curNumSen = userNumSenate;
           // rangeSliderValueElement.innerHTML = userNumHouse + " " + userNumSenate + " " + userNumPres + " " + userNumVP;
         });
       } else {
@@ -1459,12 +1473,14 @@ function sLegislative() {
       }
 
       // always update vp and pres
-      slider3.noUiSlider.on('update', function (values, handle) {
+      slider4.noUiSlider.on('update', function (values, handle) {
         userNumVP = values[0];
+        curNumVP = userNumVP;
         // rangeSliderValueElement.innerHTML = userNumHouse + " " + userNumSenate + " " + userNumPres + " " + userNumVP;
       });
-      slider4.noUiSlider.on('update', function (values, handle) {
+      slider5.noUiSlider.on('update', function (values, handle) {
         userNumPres = values[0];
+        curNumPres = userNumPres;
         // rangeSliderValueElement.innerHTML = userNumHouse + " " + userNumSenate + " " + userNumPres + " " + userNumVP;
       });
 
@@ -1500,7 +1516,8 @@ function sParties() {
     document.getElementById("page4").style.display = "none";
     document.getElementById("page5").style.display = "none";
     document.getElementById("page6").style.display = "none";
-    document.getElementById("slider-value").style.display = "none";
+    document.getElementById("page7").style.display = "none";
+    // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
     //sliders();
@@ -1590,6 +1607,1098 @@ function sParties() {
   //}
 }
 
+function sMembersFirstChamber() {
+
+  var slider1;// = document.getElementById('slider-1a'); // party a
+  var slider2;// = document.getElementById('slider-1b');; // party b
+  var slider3; // = document.getElementById('slider-1c');; // party c
+  var curNumHouse = parseInt(userNumHouse) //parseInt(engine.numHouse); // current number of total members in chamber 1
+  var slider1max; // = parseInt(userNumHouse);
+  var slider2max; // = floor(slider1max / 2);
+  var slider3max; // = slider1max - slider2max;
+
+  this.setup = function () {
+    // slider1max = parseInt(userNumHouse);
+    // slider2max = floor(slider1max / 2);
+    // slider3max = slider1max - slider2max;
+
+    // createSlider();
+    // sliderVals();
+  }
+
+  this.enter = function () {
+    slider1max = parseInt(userNumHouse);
+    slider2max = floor(slider1max / 2);
+    slider3max = slider1max - slider2max;
+
+    console.log("Slider Page Chamber 1 Party Members ");
+    document.getElementById("top").style.display = "block";
+    document.getElementById("top").innerHTML = "NUMBER OF VOTING MEMBERS FOR FIRST CHAMBER";
+    document.getElementById("page0").style.display = "none";
+    document.getElementById("page1").style.display = "none";
+    document.getElementById("page2").style.display = "none";
+    document.getElementById("page3").style.display = "block";
+    document.getElementById("page4").style.display = "none";
+    document.getElementById("page5").style.display = "none";
+    document.getElementById("page6").style.display = "none";
+    document.getElementById("page7").style.display = "none";
+    // document.getElementById("slider-value").style.display = "none";
+    document.getElementById("vote").style.display = "block";
+    document.getElementById("slider-disp").style.display = "none";
+
+    checkNumBodies();
+    sliders();
+    //sliderVals();
+
+    
+  }
+
+  this.draw = function () {
+    visual.displayVoting(engine);
+    paneToggle();
+    console.log("Party A: " + userPerHouseBody[0] + " Party B: " + userPerHouseBody[1] + " Party C: " + userPerHouseBody[2]);
+  }
+
+  function checkNumBodies() {
+    document.getElementById("s1-p3").innerHTML = "<div class='first-slider' id='slider-1a'><p id='slider-text-1'>POLITICAL PARTY A</p></div>";
+    document.getElementById("s2-p3").innerHTML = "<div id='slider-1b'><p id='slider-text-2'>POLITICAL PARTY B</p></div>";
+    document.getElementById("s3-p3").innerHTML = "<div id='slider-1c'><p id='slider-text-3'>POLITICAL PARTY C</p></div>";
+
+    if (userNumParties == 1) {
+      document.getElementById("s1-p3").style.display = "block";
+      document.getElementById("s2-p3").style.display = "none";
+      document.getElementById("s3-p3").style.display = "none";
+      // document.getElementById("slider-1a").style.display = "block";
+      // document.getElementById("slider-1b").style.display = "none";
+      // document.getElementById("slider-1c").style.display = "none";
+
+    } else if (userNumParties == 2) {
+      console.log("here first chamber");
+      document.getElementById("s1-p3").style.display = "block";
+      document.getElementById("s2-p3").style.display = "block";
+      document.getElementById("s3-p3").style.display = "none";
+      // document.getElementById("slider-1a").style.display = "block";
+      // document.getElementById("slider-1b").style.display = "block";
+      // document.getElementById("slider-1c").style.display = "none";
+    } else {
+      document.getElementById("s1-p3").style.display = "block";
+      document.getElementById("s2-p3").style.display = "block";
+      document.getElementById("s3-p3").style.display = "block";
+      // document.getElementById("slider-1a").style.display = "block";
+      // document.getElementById("slider-1b").style.display = "block";
+      // document.getElementById("slider-1c").style.display = "block";
+    }
+    slider1 = document.getElementById('slider-1a'); // party a
+    slider2 = document.getElementById('slider-1b');; // party b
+    slider3 = document.getElementById('slider-1c');; // party c
+
+  }
+
+  function sliders() {
+    console.log("user edits boool: " + userEdits);
+    // if (userEdits == true) {
+      //slider1.noUiSlider.destroy();
+      //slider2.noUiSlider.destroy();
+      createSlider();
+      sliderVals();
+
+    // } else {
+    //   createSlider();
+    //   sliderVals();
+    // }
+
+    function createSlider() {
+
+      noUiSlider.create(slider1, {
+        start: floor(slider1max/2), // fix later where to start
+        range: {
+          'min': [1],
+          'max': [slider1max]
+        },
+        cssPrefix: 'noUi-',
+        tooltips: true,
+        pips: {
+          mode: 'range',
+          density: 'range',
+        },
+        step: 1,
+        format: wNumb({
+          decimals: 0
+        })
+      });
+
+      noUiSlider.create(slider2, {
+        start: floor(slider2max/2), // fix later where to start
+        range: {
+          'min': [1],
+          'max': [slider2max]
+        },
+        cssPrefix: 'noUi-',
+        tooltips: true,
+        pips: {
+          mode: 'range',
+          density: 'range',
+        },
+        step: 1,
+        format: wNumb({
+          decimals: 0
+        })
+      });
+
+      noUiSlider.create(slider3, {
+        start: floor(slider3max/2), // fix later where to start
+        range: {
+          'min': [1],
+          'max': [slider3max]
+        },
+        cssPrefix: 'noUi-',
+        tooltips: true,
+        pips: {
+          mode: 'range',
+          density: 'range',
+        },
+        step: 1,
+        format: wNumb({
+          decimals: 0
+        })
+      });
+    }
+
+    function sliderVals() {
+      //connecting values to html, each tab value is stored in an array
+      // var rangeSliderValueElement = document.getElementById('slider-value');
+
+      userPerHouseBody = [];
+      var numPerHouseBody = [];
+      var housePercentage; // helper var
+
+      // house
+      slider1.noUiSlider.on('update', function (values, handle) {
+        userPerHouseBody[0] = values[0];
+        numPerHouseBody[0] = userPerHouseBody[0];
+        housePercentage = userPerHouseBody[0] / userNumHouse;
+        housePercentage = roundNum(housePercentage, 2);
+        userPerHouseBody[0] = housePercentage;
+      });
+
+      if (userNumParties >= 2) { // party a and b
+        slider2.noUiSlider.on('update', function (values, handle) {
+          userPerHouseBody[1] = values[0];
+          numPerHouseBody[1] = userPerHouseBody[1];
+          housePercentage = userPerHouseBody[1] / userNumHouse;
+          housePercentage = roundNum(housePercentage, 2);
+          userPerHouseBody[1] = housePercentage;
+        });
+      } else { // set party b to 0
+        userPerHouseBody[1] = 0;
+      }
+
+      if (userNumParties == 3) { // party a b c
+        slider3.noUiSlider.on('update', function (values, handle) {
+          userPerHouseBody[2] = values[0];
+          numPerHouseBody[2] = userPerHouseBody[2];
+          housePercentage = userPerHouseBody[2] / userNumHouse;
+          housePercentage = roundNum(housePercentage, 2);
+          userPerHouseBody[2] = housePercentage;
+        });
+      } else { // set party c to 0
+        userPerHouseBody[2] = 0;
+      }
+
+    }
+
+  }
+}
+
+function sMembersSecondChamber() {
+
+  var slider1;// = document.getElementById('slider-1a'); // party a
+  var slider2;// = document.getElementById('slider-1b');; // party b
+  var slider3; // = document.getElementById('slider-1c');; // party c
+  var curNumHouse2 = parseInt(userNumHouse2) //parseInt(engine.numHouse); // current number of total members in chamber 1
+  var slider1max; // = parseInt(userNumHouse);
+  var slider2max; // = floor(slider1max / 2);
+  var slider3max; // = slider1max - slider2max;
+
+  this.setup = function () {
+
+  }
+
+  this.enter = function () {
+    slider1max = parseInt(userNumHouse2);
+    slider2max = floor(slider1max / 2);
+    slider3max = slider1max - slider2max;
+
+    console.log("Slider Page Chamber 2 Party Members ");
+    document.getElementById("top").style.display = "block";
+    document.getElementById("top").innerHTML = "NUMBER OF VOTING MEMBERS FOR SECOND CHAMBER";
+    document.getElementById("page0").style.display = "none";
+    document.getElementById("page1").style.display = "none";
+    document.getElementById("page2").style.display = "none";
+    document.getElementById("page3").style.display = "none";
+    document.getElementById("page4").style.display = "block";
+    document.getElementById("page5").style.display = "none";
+    document.getElementById("page6").style.display = "none";
+    document.getElementById("page7").style.display = "none";
+    // document.getElementById("slider-value").style.display = "none";
+    document.getElementById("vote").style.display = "block";
+    document.getElementById("slider-disp").style.display = "none";
+
+    checkNumBodies();
+    sliders();
+    //sliderVals();
+    
+  }
+
+  this.draw = function () {
+    visual.displayVoting(engine);
+    paneToggle();
+    console.log("Party A: " + userPerHouse2Body[0] + " Party B: " + userPerHouse2Body[1] + " Party C: " + userPerHouse2Body[2]);
+  }
+
+  function checkNumBodies() {
+    document.getElementById("s1-p4").innerHTML = "<div class='first-slider' id='slider-2a'><p id='slider-text-1'>POLITICAL PARTY A</p></div>";
+    document.getElementById("s2-p4").innerHTML = "<div id='slider-2b'><p id='slider-text-2'>POLITICAL PARTY B</p></div>";
+    document.getElementById("s3-p4").innerHTML = "<div id='slider-2c'><p id='slider-text-3'>POLITICAL PARTY C</p></div>";
+
+    if (userNumParties == 1) {
+      document.getElementById("s1-p4").style.display = "block";
+      document.getElementById("s2-p4").style.display = "none";
+      document.getElementById("s3-p4").style.display = "none";
+
+    } else if (userNumParties == 2) {
+      document.getElementById("s1-p4").style.display = "block";
+      document.getElementById("s2-p4").style.display = "block";
+      document.getElementById("s3-p4").style.display = "none";
+
+    } else {
+      document.getElementById("s1-p4").style.display = "block";
+      document.getElementById("s2-p4").style.display = "block";
+      document.getElementById("s3-p4").style.display = "block";
+
+    }
+    slider1 = document.getElementById('slider-2a'); // party a
+    slider2 = document.getElementById('slider-2b');; // party b
+    slider3 = document.getElementById('slider-2c');; // party c
+
+  }
+
+  function sliders() {
+    console.log("user edits boool: " + userEdits);
+    createSlider();
+    sliderVals();
+
+    function createSlider() {
+
+      noUiSlider.create(slider1, {
+        start: floor(slider1max/2), // fix later where to start
+        range: {
+          'min': [1],
+          'max': [slider1max]
+        },
+        cssPrefix: 'noUi-',
+        tooltips: true,
+        pips: {
+          mode: 'range',
+          density: 'range',
+        },
+        step: 1,
+        format: wNumb({
+          decimals: 0
+        })
+      });
+
+      noUiSlider.create(slider2, {
+        start: floor(slider2max/2), // fix later where to start
+        range: {
+          'min': [1],
+          'max': [slider2max]
+        },
+        cssPrefix: 'noUi-',
+        tooltips: true,
+        pips: {
+          mode: 'range',
+          density: 'range',
+        },
+        step: 1,
+        format: wNumb({
+          decimals: 0
+        })
+      });
+
+      noUiSlider.create(slider3, {
+        start: floor(slider3max/2), // fix later where to start
+        range: {
+          'min': [1],
+          'max': [slider3max]
+        },
+        cssPrefix: 'noUi-',
+        tooltips: true,
+        pips: {
+          mode: 'range',
+          density: 'range',
+        },
+        step: 1,
+        format: wNumb({
+          decimals: 0
+        })
+      });
+    }
+
+    function sliderVals() {
+      //connecting values to html, each tab value is stored in an array
+      // var rangeSliderValueElement = document.getElementById('slider-value');
+
+      userPerHouse2Body = [];
+      var numPerHouse2Body = [];
+      var house2Percentage; // helper var
+
+      // house
+      slider1.noUiSlider.on('update', function (values, handle) {
+        userPerHouse2Body[0] = values[0];
+        numPerHouse2Body[0] = userPerHouse2Body[0];
+        house2Percentage = userPerHouse2Body[0] / userNumHouse2;
+        house2Percentage = roundNum(house2Percentage, 2);
+        userPerHouse2Body[0] = house2Percentage;
+      });
+
+      if (userNumParties >= 2) { // party a and b
+        slider2.noUiSlider.on('update', function (values, handle) {
+          userPerHouse2Body[1] = values[0];
+          numPerHouse2Body[1] = userPerHouse2Body[1];
+          house2Percentage = userPerHouse2Body[1] / userNumHouse2;
+          house2Percentage = roundNum(house2Percentage, 2);
+          userPerHouse2Body[1] = house2Percentage;
+        });
+      } else { // set party b to 0
+        userPerHouse2Body[1] = 0;
+      }
+
+      if (userNumParties == 3) { // party a b c
+        slider3.noUiSlider.on('update', function (values, handle) {
+          userPerHouse2Body[2] = values[0];
+          numPerHouse2Body[2] = userPerHouse2Body[2];
+          house2Percentage = userPerHouse2Body[2] / userNumHouse2;
+          house2Percentage = roundNum(house2Percentage, 2);
+          userPerHouse2Body[2] = house2Percentage;
+        });
+      } else { // set party c to 0
+        userPerHouse2Body[2] = 0;
+      }
+    }
+  }
+}
+
+/*
+function sMembersSecondChamber() {
+
+  var slider1 = document.getElementById('slider-2a'); // party a
+  var slider2 = document.getElementById('slider-2b');; // party b
+  var slider3 = document.getElementById('slider-2c');; // party c
+  var slider1max; // = parseInt(userNumHouse2);
+  var slider2max; // = floor(slider1max / 2);
+  var slider3max; // = slider1max - slider2max;
+
+  this.setup = function () {
+    slider1max = parseInt(userNumHouse2);
+    slider2max = floor(slider1max / 2);
+    slider3max = slider1max - slider2max;
+
+    createSlider();
+    sliderVals();
+  }
+
+  this.enter = function () {
+    slider1max = parseInt(userNumHouse2);
+    slider2max = floor(slider1max / 2);
+    slider3max = slider1max - slider2max;
+
+    console.log("Slider Page Chamber 2 Party Members ");
+    document.getElementById("top").style.display = "block";
+    document.getElementById("top").innerHTML = "NUMBER OF VOTING MEMBERS FOR SECOND CHAMBER";
+    document.getElementById("page0").style.display = "none";
+    document.getElementById("page1").style.display = "none";
+    document.getElementById("page2").style.display = "none";
+    document.getElementById("page3").style.display = "none";
+    document.getElementById("page4").style.display = "block";
+    document.getElementById("page5").style.display = "none";
+    document.getElementById("page6").style.display = "none";
+    // document.getElementById("slider-value").style.display = "none";
+    document.getElementById("vote").style.display = "block";
+    document.getElementById("slider-disp").style.display = "none";
+
+    checkNumBodies();
+    // sliders();
+    sliderVals();
+
+    
+  }
+
+  this.draw = function () {
+    visual.displayVoting(engine);
+    paneToggle();
+    console.log("Party A: " + userPerHouse2Body[0] + " Party B: " + userPerHouse2Body[1] + " Party C: " + userPerHouse2Body[2]);
+  }
+
+  function checkNumBodies() {
+    if (userNumParties == 1) {
+      document.getElementById("slider-2a").style.display = "block";
+      document.getElementById("slider-2b").style.display = "none";
+      document.getElementById("slider-2c").style.display = "none";
+
+    } else if (userNumParties == 2) {
+      document.getElementById("slider-2a").style.display = "block";
+      document.getElementById("slider-2b").style.display = "block";
+      document.getElementById("slider-2c").style.display = "none";
+    } else {
+      document.getElementById("slider-2a").style.display = "block";
+      document.getElementById("slider-2b").style.display = "block";
+      document.getElementById("slider-2c").style.display = "block";
+
+    }
+  }
+
+    function createSlider() {
+
+      noUiSlider.create(slider1, {
+        start: floor(slider1max/2), // fix later where to start
+        range: {
+          'min': [1],
+          'max': [slider1max]
+        },
+        cssPrefix: 'noUi-',
+        tooltips: true,
+        pips: {
+          mode: 'range',
+          density: 'range',
+        },
+        step: 1,
+        format: wNumb({
+          decimals: 0
+        })
+      });
+
+      noUiSlider.create(slider2, {
+        start: floor(slider2max/2), // fix later where to start
+        range: {
+          'min': [1],
+          'max': [slider2max]
+        },
+        cssPrefix: 'noUi-',
+        tooltips: true,
+        pips: {
+          mode: 'range',
+          density: 'range',
+        },
+        step: 1,
+        format: wNumb({
+          decimals: 0
+        })
+      });
+
+      noUiSlider.create(slider3, {
+        start: floor(slider3max/2), // fix later where to start
+        range: {
+          'min': [1],
+          'max': [slider3max]
+        },
+        cssPrefix: 'noUi-',
+        tooltips: true,
+        pips: {
+          mode: 'range',
+          density: 'range',
+        },
+        step: 1,
+        format: wNumb({
+          decimals: 0
+        })
+      });
+    }
+
+    function sliderVals() {
+      //connecting values to html, each tab value is stored in an array
+      // var rangeSliderValueElement = document.getElementById('slider-value');
+
+      userPerHouse2Body = [];
+      var numPerHouse2Body = [];
+      var house2Percentage; // helper var
+
+      // house
+      slider1.noUiSlider.on('update', function (values, handle) {
+        userPerHouse2Body[0] = values[0];
+        numPerHouse2Body[0] = userPerHouse2Body[0];
+        house2Percentage = userPerHouse2Body[0] / userNumHouse2;
+        house2Percentage = roundNum(house2Percentage, 2);
+        userPerHouse2Body[0] = house2Percentage;
+      });
+
+      if (userNumParties >= 2) { // party a and b
+        slider2.noUiSlider.on('update', function (values, handle) {
+          userPerHouse2Body[1] = values[0];
+          numPerHouse2Body[1] = userPerHouse2Body[1];
+          house2Percentage = userPerHouse2Body[1] / userNumHouse2;
+          house2Percentage = roundNum(house2Percentage, 2);
+          userPerHouse2Body[1] = house2Percentage;
+        });
+      } else { // set party b to 0
+        userPerHouse2Body[1] = 0;
+      }
+
+      if (userNumParties == 3) { // party a b c
+        slider3.noUiSlider.on('update', function (values, handle) {
+          userPerHouse2Body[2] = values[0];
+          numPerHouse2Body[2] = userPerHouse2Body[2];
+          house2Percentage = userPerHouse2Body[2] / userNumHouse2;
+          house2Percentage = roundNum(house2Percentage, 2);
+          userPerHouse2Body[2] = house2Percentage;
+        });
+      } else { // set party c to 0
+        userPerHouse2Body[2] = 0;
+      }
+
+    }
+}
+*/
+
+function sMembersThirdChamber() {
+
+  var slider1;// = document.getElementById('slider-1a'); // party a
+  var slider2;// = document.getElementById('slider-1b');; // party b
+  var slider3; // = document.getElementById('slider-1c');; // party c
+  var curNumSenate = parseInt(userNumSenate) //parseInt(engine.numHouse); // current number of total members in chamber 1
+  var slider1max; // = parseInt(userNumHouse);
+  var slider2max; // = floor(slider1max / 2);
+  var slider3max; // = slider1max - slider2max;
+
+  this.setup = function () {
+
+  }
+
+  this.enter = function () {
+    slider1max = parseInt(userNumSenate);
+    slider2max = floor(slider1max / 2);
+    slider3max = slider1max - slider2max;
+
+    console.log("Slider Page Chamber 3 Party Members ");
+    document.getElementById("top").style.display = "block";
+    document.getElementById("top").innerHTML = "NUMBER OF VOTING MEMBERS FOR THIRD CHAMBER";
+    document.getElementById("page0").style.display = "none";
+    document.getElementById("page1").style.display = "none";
+    document.getElementById("page2").style.display = "none";
+    document.getElementById("page3").style.display = "none";
+    document.getElementById("page4").style.display = "none";
+    document.getElementById("page5").style.display = "block";
+    document.getElementById("page6").style.display = "none";
+    document.getElementById("page7").style.display = "none";
+    // document.getElementById("slider-value").style.display = "none";
+    document.getElementById("vote").style.display = "block";
+    document.getElementById("slider-disp").style.display = "none";
+
+    checkNumBodies();
+    sliders();
+    //sliderVals();
+    
+  }
+
+  this.draw = function () {
+    visual.displayVoting(engine);
+    paneToggle();
+    console.log("Party A: " + userPerSenateBody[0] + " Party B: " + userPerSenateBody[1] + " Party C: " + userPerSenateBody[2]);
+  }
+
+  function checkNumBodies() {
+    document.getElementById("s1-p5").innerHTML = "<div class='first-slider' id='slider-3a'><p id='slider-text-1'>POLITICAL PARTY A</p></div>";
+    document.getElementById("s2-p5").innerHTML = "<div id='slider-3b'><p id='slider-text-2'>POLITICAL PARTY B</p></div>";
+    document.getElementById("s3-p5").innerHTML = "<div id='slider-3c'><p id='slider-text-3'>POLITICAL PARTY C</p></div>";
+
+    if (userNumParties == 1) {
+      document.getElementById("s1-p5").style.display = "block";
+      document.getElementById("s2-p5").style.display = "none";
+      document.getElementById("s3-p5").style.display = "none";
+
+    } else if (userNumParties == 2) {
+      document.getElementById("s1-p5").style.display = "block";
+      document.getElementById("s2-p5").style.display = "block";
+      document.getElementById("s3-p5").style.display = "none";
+
+    } else {
+      document.getElementById("s1-p5").style.display = "block";
+      document.getElementById("s2-p5").style.display = "block";
+      document.getElementById("s3-p5").style.display = "block";
+
+    }
+    slider1 = document.getElementById('slider-3a'); // party a
+    slider2 = document.getElementById('slider-3b');; // party b
+    slider3 = document.getElementById('slider-3c');; // party c
+
+  }
+
+  function sliders() {
+    console.log("user edits boool: " + userEdits);
+    createSlider();
+    sliderVals();
+
+    function createSlider() {
+
+      noUiSlider.create(slider1, {
+        start: floor(slider1max/2), // fix later where to start
+        range: {
+          'min': [1],
+          'max': [slider1max]
+        },
+        cssPrefix: 'noUi-',
+        tooltips: true,
+        pips: {
+          mode: 'range',
+          density: 'range',
+        },
+        step: 1,
+        format: wNumb({
+          decimals: 0
+        })
+      });
+
+      noUiSlider.create(slider2, {
+        start: floor(slider2max/2), // fix later where to start
+        range: {
+          'min': [1],
+          'max': [slider2max]
+        },
+        cssPrefix: 'noUi-',
+        tooltips: true,
+        pips: {
+          mode: 'range',
+          density: 'range',
+        },
+        step: 1,
+        format: wNumb({
+          decimals: 0
+        })
+      });
+
+      noUiSlider.create(slider3, {
+        start: floor(slider3max/2), // fix later where to start
+        range: {
+          'min': [1],
+          'max': [slider3max]
+        },
+        cssPrefix: 'noUi-',
+        tooltips: true,
+        pips: {
+          mode: 'range',
+          density: 'range',
+        },
+        step: 1,
+        format: wNumb({
+          decimals: 0
+        })
+      });
+    }
+
+    function sliderVals() {
+      //connecting values to html, each tab value is stored in an array
+      // var rangeSliderValueElement = document.getElementById('slider-value');
+
+      userPerSenateBody = [];
+      var numPerSenateBody = [];
+      var senatePercentage; // helper var
+
+      // house
+      slider1.noUiSlider.on('update', function (values, handle) {
+        userPerSenateBody[0] = values[0];
+        numPerSenateBody[0] = userPerSenateBody[0];
+        senatePercentage = userPerSenateBody[0] / userNumSenate;
+        senatePercentage = roundNum(senatePercentage, 2);
+        userPerSenateBody[0] = senatePercentage;
+      });
+
+      if (userNumParties >= 2) { // party a and b
+        slider2.noUiSlider.on('update', function (values, handle) {
+          userPerSenateBody[1] = values[0];
+          numPerSenateBody[1] = userPerSenateBody[1];
+          senatePercentage = userPerSenateBody[1] / userNumSenate;
+          senatePercentage = roundNum(senatePercentage, 2);
+          userPerSenateBody[1] = senatePercentage;
+        });
+      } else { // set party b to 0
+        userPerSenateBody[1] = 0;
+      }
+
+      if (userNumParties == 3) { // party a b c
+        slider3.noUiSlider.on('update', function (values, handle) {
+          userPerSenateBody[2] = values[0];
+          numPerSenateBody[2] = userPerSenateBody[2];
+          senatePercentage = userPerSenateBody[2] / userNumSenate;
+          senatePercentage = roundNum(senatePercentage, 2);
+          userPerSenateBody[2] = senatePercentage;
+        });
+      } else { // set party c to 0
+        userPerSenateBody[2] = 0;
+      }
+    }
+  }
+}
+
+function sMembersVP() {
+
+  var slider1;// = document.getElementById('slider-1a'); // party a
+  var slider2;// = document.getElementById('slider-1b');; // party b
+  var slider3; // = document.getElementById('slider-1c');; // party c
+  var curNumVP = parseInt(userNumVP) //parseInt(engine.numHouse); // current number of total members in chamber 1
+  var slider1max; // = parseInt(userNumHouse);
+  var slider2max; // = floor(slider1max / 2);
+  var slider3max; // = slider1max - slider2max;
+
+  this.setup = function () {
+
+  }
+
+  this.enter = function () {
+    slider1max = parseInt(userNumVP);
+    slider2max = floor(slider1max / 2);
+    slider3max = slider1max - slider2max;
+
+    console.log("Slider Page VP Party Members ");
+    document.getElementById("top").style.display = "block";
+    document.getElementById("top").innerHTML = "NUMBER OF VOTING MEMBERS FOR VICE PRESIDENCY";
+    document.getElementById("page0").style.display = "none";
+    document.getElementById("page1").style.display = "none";
+    document.getElementById("page2").style.display = "none";
+    document.getElementById("page3").style.display = "none";
+    document.getElementById("page4").style.display = "none";
+    document.getElementById("page5").style.display = "none";
+    document.getElementById("page6").style.display = "block";
+    document.getElementById("page7").style.display = "none";
+    // document.getElementById("slider-value").style.display = "none";
+    document.getElementById("vote").style.display = "block";
+    document.getElementById("slider-disp").style.display = "none";
+
+    checkNumBodies();
+    sliders();
+    //sliderVals();
+    
+  }
+
+  this.draw = function () {
+    visual.displayVoting(engine);
+    paneToggle();
+    console.log("Party A: " + userPerVPBody[0] + " Party B: " + userPerVPBody[1] + " Party C: " + userPerVPBody[2]);
+  }
+
+  function checkNumBodies() {
+    document.getElementById("s1-p6").innerHTML = "<div class='first-slider' id='slider-vp-a'><p id='slider-text-1'>POLITICAL PARTY A</p></div>";
+    document.getElementById("s2-p6").innerHTML = "<div id='slider-vp-b'><p id='slider-text-2'>POLITICAL PARTY B</p></div>";
+    document.getElementById("s3-p6").innerHTML = "<div id='slider-vp-c'><p id='slider-text-3'>POLITICAL PARTY C</p></div>";
+
+    if (userNumParties == 1) {
+      document.getElementById("s1-p6").style.display = "block";
+      document.getElementById("s2-p6").style.display = "none";
+      document.getElementById("s3-p6").style.display = "none";
+
+    } else if (userNumParties == 2) {
+      document.getElementById("s1-p6").style.display = "block";
+      document.getElementById("s2-p6").style.display = "block";
+      document.getElementById("s3-p6").style.display = "none";
+
+    } else {
+      document.getElementById("s1-p6").style = "block";
+      document.getElementById("s2-p6").style = "block";
+      document.getElementById("s3-p6").style = "block";
+
+    }
+    slider1 = document.getElementById('slider-vp-a'); // party a
+    slider2 = document.getElementById('slider-vp-b');; // party b
+    slider3 = document.getElementById('slider-vp-c');; // party c
+
+  }
+
+  function sliders() {
+    console.log("user edits boool: " + userEdits);
+    createSlider();
+    sliderVals();
+
+    function createSlider() {
+
+      noUiSlider.create(slider1, {
+        start: floor(slider1max/2), // fix later where to start
+        range: {
+          'min': [1],
+          'max': [slider1max]
+        },
+        cssPrefix: 'noUi-',
+        tooltips: true,
+        pips: {
+          mode: 'range',
+          density: 'range',
+        },
+        step: 1,
+        format: wNumb({
+          decimals: 0
+        })
+      });
+
+      noUiSlider.create(slider2, {
+        start: floor(slider2max/2), // fix later where to start
+        range: {
+          'min': [1],
+          'max': [slider2max]
+        },
+        cssPrefix: 'noUi-',
+        tooltips: true,
+        pips: {
+          mode: 'range',
+          density: 'range',
+        },
+        step: 1,
+        format: wNumb({
+          decimals: 0
+        })
+      });
+
+      noUiSlider.create(slider3, {
+        start: floor(slider3max/2), // fix later where to start
+        range: {
+          'min': [1],
+          'max': [slider3max]
+        },
+        cssPrefix: 'noUi-',
+        tooltips: true,
+        pips: {
+          mode: 'range',
+          density: 'range',
+        },
+        step: 1,
+        format: wNumb({
+          decimals: 0
+        })
+      });
+    }
+
+    function sliderVals() {
+      //connecting values to html, each tab value is stored in an array
+      // var rangeSliderValueElement = document.getElementById('slider-value');
+
+      userPerVPBody = [];
+      var numPerVPBody = [];
+      var vpPercentage; // helper var
+
+      // house
+      slider1.noUiSlider.on('update', function (values, handle) {
+        userPerVPBody[0] = values[0];
+        numPerVPBody[0] = userPerVPBody[0];
+        vpPercentage = userPerVPBody[0] / userNumVP;
+        vpPercentage = roundNum(vpPercentage, 2);
+        userPerVPBody[0] = vpPercentage;
+      });
+
+      if (userNumParties >= 2) { // party a and b
+        slider2.noUiSlider.on('update', function (values, handle) {
+          userPerVPBody[1] = values[0];
+          numPerVPBody[1] = userPerVPBody[1];
+          vpPercentage = userPerVPBody[1] / userNumVP;
+          vpPercentage = roundNum(vpPercentage, 2);
+          userPerVPBody[1] = vpPercentage;
+        });
+      } else { // set party b to 0
+        userPerVPBody[1] = 0;
+      }
+
+      if (userNumParties == 3) { // party a b c
+        slider3.noUiSlider.on('update', function (values, handle) {
+          userPerVPBody[2] = values[0];
+          numPerVPBody[2] = userPerVPBody[2];
+          vpPercentage = userPerVPBody[2] / userNumVP;
+          vpPercentage = roundNum(vpPercentage, 2);
+          userPerVPBody[2] = vpPercentage;
+        });
+      } else { // set party c to 0
+        userPerVPBody[2] = 0;
+      }
+    }
+  }
+}
+
+
+function sMembersPres() {
+
+  var slider1;// = document.getElementById('slider-1a'); // party a
+  var slider2;// = document.getElementById('slider-1b');; // party b
+  var slider3; // = document.getElementById('slider-1c');; // party c
+  var curNumPres = parseInt(userNumPres) //parseInt(engine.numHouse); // current number of total members in chamber 1
+  var slider1max; // = parseInt(userNumHouse);
+  var slider2max; // = floor(slider1max / 2);
+  var slider3max; // = slider1max - slider2max;
+
+  this.setup = function () {
+
+  }
+
+  this.enter = function () {
+    slider1max = parseInt(userNumPres);
+    slider2max = floor(slider1max / 2);
+    slider3max = slider1max - slider2max;
+
+    console.log("Slider Page Pres Party Members ");
+    document.getElementById("top").style.display = "block";
+    document.getElementById("top").innerHTML = "NUMBER OF VOTING MEMBERS FOR PRESIDENCY";
+    document.getElementById("page0").style.display = "none";
+    document.getElementById("page1").style.display = "none";
+    document.getElementById("page2").style.display = "none";
+    document.getElementById("page3").style.display = "none";
+    document.getElementById("page4").style.display = "none";
+    document.getElementById("page5").style.display = "none";
+    document.getElementById("page6").style.display = "none";
+    document.getElementById("page7").style.display = "block";
+    // document.getElementById("slider-value").style.display = "none";
+    document.getElementById("vote").style.display = "block";
+    document.getElementById("slider-disp").style.display = "none";
+
+    checkNumBodies();
+    sliders();
+    //sliderVals();
+    
+  }
+
+  this.draw = function () {
+    visual.displayVoting(engine);
+    paneToggle();
+    console.log("Party A: " + userPerPresBody[0] + " Party B: " + userPerPresBody[1] + " Party C: " + userPerPresBody[2]);
+  }
+
+  function checkNumBodies() {
+    document.getElementById("s1-p7").innerHTML = "<div class='first-slider' id='slider-pres-a'><p id='slider-text-1'>POLITICAL PARTY A</p></div>";
+    document.getElementById("s2-p7").innerHTML = "<div id='slider-pres-b'><p id='slider-text-2'>POLITICAL PARTY B</p></div>";
+    document.getElementById("s3-p7").innerHTML = "<div id='slider-pres-c'><p id='slider-text-3'>POLITICAL PARTY C</p></div>";
+
+    if (userNumParties == 1) {
+      document.getElementById("s1-p7").style.display = "block";
+      document.getElementById("s2-p7").style.display = "none";
+      document.getElementById("s3-p7").style.display = "none";
+
+    } else if (userNumParties == 2) {
+      document.getElementById("s1-p7").style.display = "block";
+      document.getElementById("s2-p7").style.display = "block";
+      document.getElementById("s3-p7").style.display = "none";
+
+    } else {
+      document.getElementById("s1-p7").style = "block";
+      document.getElementById("s2-p7").style = "block";
+      document.getElementById("s3-p7").style = "block";
+
+    }
+    slider1 = document.getElementById('slider-pres-a'); // party a
+    slider2 = document.getElementById('slider-pres-b');; // party b
+    slider3 = document.getElementById('slider-pres-c');; // party c
+
+  }
+
+  function sliders() {
+    console.log("user edits boool: " + userEdits);
+    createSlider();
+    sliderVals();
+
+    function createSlider() {
+
+      noUiSlider.create(slider1, {
+        start: floor(slider1max/2), // fix later where to start
+        range: {
+          'min': [1],
+          'max': [slider1max]
+        },
+        cssPrefix: 'noUi-',
+        tooltips: true,
+        pips: {
+          mode: 'range',
+          density: 'range',
+        },
+        step: 1,
+        format: wNumb({
+          decimals: 0
+        })
+      });
+
+      noUiSlider.create(slider2, {
+        start: floor(slider2max/2), // fix later where to start
+        range: {
+          'min': [1],
+          'max': [slider2max]
+        },
+        cssPrefix: 'noUi-',
+        tooltips: true,
+        pips: {
+          mode: 'range',
+          density: 'range',
+        },
+        step: 1,
+        format: wNumb({
+          decimals: 0
+        })
+      });
+
+      noUiSlider.create(slider3, {
+        start: floor(slider3max/2), // fix later where to start
+        range: {
+          'min': [1],
+          'max': [slider3max]
+        },
+        cssPrefix: 'noUi-',
+        tooltips: true,
+        pips: {
+          mode: 'range',
+          density: 'range',
+        },
+        step: 1,
+        format: wNumb({
+          decimals: 0
+        })
+      });
+    }
+
+    function sliderVals() {
+      //connecting values to html, each tab value is stored in an array
+      // var rangeSliderValueElement = document.getElementById('slider-value');
+
+      userPerPresBody = [];
+      var numPerPresBody = [];
+      var presPercentage; // helper var
+
+      // house
+      slider1.noUiSlider.on('update', function (values, handle) {
+        userPerPresBody[0] = values[0];
+        numPerPresBody[0] = userPerPresBody[0];
+        presPercentage = userPerPresBody[0] / userNumPres;
+        presPercentage = roundNum(presPercentage, 2);
+        userPerPresBody[0] = presPercentage;
+      });
+
+      if (userNumParties >= 2) { // party a and b
+        slider2.noUiSlider.on('update', function (values, handle) {
+          userPerPresBody[1] = values[0];
+          numPerPresBody[1] = userPerPresBody[1];
+          presPercentage = userPerPresBody[1] / userNumPres;
+          presPercentage = roundNum(presPercentage, 2);
+          userPerPresBody[1] = presPercentage;
+        });
+      } else { // set party b to 0
+        userPerPresBody[1] = 0;
+      }
+
+      if (userNumParties == 3) { // party a b c
+        slider3.noUiSlider.on('update', function (values, handle) {
+          userPerPresBody[2] = values[0];
+          numPerPresBody[2] = userPerPresBody[2];
+          presPercentage = userPerPresBody[2] / userNumPres;
+          presPercentage = roundNum(presPercentage, 2);
+          userPerPresBody[2] = presPercentage;
+        });
+      } else { // set party c to 0
+        userPerPresBody[2] = 0;
+      }
+    }
+  }
+}
+
+
 //user input page for number of members in each party
 function sMembers() {
 
@@ -1618,6 +2727,7 @@ function sMembers() {
     document.getElementById("page4").style.display = "none";
     document.getElementById("page5").style.display = "none";
     document.getElementById("page6").style.display = "none";
+    document.getElementById("page7").style.display = "none";
     document.getElementById("slider-value").style.display = "block";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
@@ -2209,10 +3319,11 @@ function sBodyPass() {
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
-    document.getElementById("page4").style.display = "block";
+    document.getElementById("page9").style.display = "block";
     document.getElementById("page5").style.display = "none";
     document.getElementById("page6").style.display = "none";
-    document.getElementById("slider-value").style.display = "none";
+    document.getElementById("page7").style.display = "none";
+    // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
     // let millisecond;
@@ -2324,10 +3435,11 @@ function sYesVotes() {
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
     document.getElementById("page4").style.display = "none";
-    document.getElementById("page5").style.display = "block";
+    document.getElementById("page10").style.display = "block";
     document.getElementById("page6").style.display = "none";
+    document.getElementById("page7").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
-    document.getElementById("slider-value").style.display = "none";
+    // document.getElementById("slider-value").style.display = "none";
     checkParties();
     sliders();
 
@@ -2493,8 +3605,8 @@ function sResults() {
     document.getElementById("page3").style.display = "none";
     document.getElementById("page4").style.display = "none";
     document.getElementById("page5").style.display = "none";
-    document.getElementById("page6").style.display = "block";
-    document.getElementById("slider-value").style.display = "none";
+    document.getElementById("page11").style.display = "block";
+    // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "block";
     document.getElementById("sim-info").style.display = "none";
@@ -2619,7 +3731,8 @@ function sInfo() {
     document.getElementById("page4").style.display = "none";
     document.getElementById("page5").style.display = "none";
     document.getElementById("page6").style.display = "none";
-    document.getElementById("slider-value").style.display = "none";
+    document.getElementById("page7").style.display = "none";
+    // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "block";
@@ -2663,8 +3776,8 @@ function sDisplay() {
     document.getElementById("page3").style.display = "none";
     document.getElementById("page4").style.display = "none";
     document.getElementById("page5").style.display = "none";
-    document.getElementById("page6").style.display = "block";
-    document.getElementById("slider-value").style.display = "none";
+    document.getElementById("page11").style.display = "block";
+    // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "block";
     document.getElementById("sim-info").style.display = "none";
@@ -2758,7 +3871,8 @@ function sDefault() {
     document.getElementById("page4").style.display = "none";
     document.getElementById("page5").style.display = "none";
     document.getElementById("page6").style.display = "none";
-    document.getElementById("slider-value").style.display = "none";
+    document.getElementById("page7").style.display = "none";
+    // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "block";
     document.getElementById("sim-info").style.display = "none";
