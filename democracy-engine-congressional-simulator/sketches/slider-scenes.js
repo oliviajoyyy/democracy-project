@@ -15,6 +15,7 @@ function startUp() {
     // gui = createGui();
     // continueBtn = createButton("Continue", width/2, height/2);
     console.log("start up scene");
+    background(bColor);
     // paneArrow = false; // cannot use arrow key to move to next scene
 
     document.getElementById("page-container").style.display = "block";
@@ -1026,17 +1027,7 @@ let updateBtn, nextPaneBtn, prevPaneBtn;
 
 //user input page for number of legislative bodies (1-3)
 function sBodies() {
-  
-
   var slider1 = document.getElementById('slider01');
-  // var slider2 = document.getElementById('slider02');
-  // var slider3 = document.getElementById('slider03');
-  // var slider4 = document.getElementById('slider04');
-  // var curNumHouse = parseInt(engine.numHouse);
-  // var curNumSen = parseInt(engine.numSenate);
-  // var curNumVP = parseInt(engine.numVP);
-  // var curNumPres = parseInt(engine.numPres);
-
 
   this.setup = function () {
     textSize(15);
@@ -1076,32 +1067,16 @@ function sBodies() {
     document.getElementById("slider-disp").style.display = "none";
 
     // background(bColor);
-    // document.body.style.backgroundColor = bColor;
+    document.body.style.backgroundColor = bColor;
     // // engine.currentCongLogic(true);
     // visual.ix = 0;
     // visual.displayImmediateBlank(engine);
 
-    if (document.getElementById('rec-btn'))
-    buttonRC.remove();
-  if (document.getElementById('res-btn'))
-    buttonRes.remove();
-  if (document.getElementById('def-btn'))
-    buttonDef.remove();
-    // if (userEdits == true) {
-    //   dispBtn.remove();
-    //   recalBtn.remove();
-    //   emailBtn.remove();
-    // }
-
     changeText(" ");
 
-    // sliders();
     sliderVals();
-    //button();
     document.getElementById("top").style.display = "block";
     document.getElementById("top").innerHTML = "NUMBER OF LEGISLATIVE BODIES";
-
-    // let buttonDiv = document.getElementById('button-div');
 
     if (!document.getElementById('prev-pane-btn')) {
       prevPaneBtn = createButton('Back');
@@ -1157,7 +1132,6 @@ function sBodies() {
     //removeButtons();
     //engine.setDefaultParams();
     setEngineParams();
-    //engine.numLegislativeBodies = userNumLegislative;
     engine.numSenate = 1; // just to give default value
 
     // reset values for calculations
@@ -1170,16 +1144,6 @@ function sBodies() {
   function removeButtons() {
     updateBtn.remove();
   }
-
-  // function sliders() {
-  //   console.log("user edits boool: " + userEdits);
-  //   if (userEdits == true) {
-  //     sliderVals();
-
-  //   } else {
-  //     createSlider();
-  //     sliderVals();
-  //   }
 
     function createSlider() {
 
@@ -1214,27 +1178,18 @@ function sBodies() {
         // rangeSliderValueElement.innerHTML = userNumHouse + " " + userNumSenate + " " + userNumPres + " " + userNumVP;
       });
     }
-  //}
 
-  function button() {
-    var sidePad = 20;
-
-    nextButton = createButton('NEXT');
-    nextButton.id("next-btn");
-    //position of next button is handled in css
-    nextButton.mousePressed(nextScene);
-  }
 }
 
 //user input page for for amount of members in each legislative body
 function sLegislative() {
 
   var slider1 = document.getElementById('slider1'); // original house
-  var slider2;// = document.getElementById('s2-p1'); // house2
-  var slider3;// = document.getElementById('s3-p1'); // senate
+  var slider2;// = document.getElementById('s2-p2'); // house2
+  var slider3;// = document.getElementById('s3-p2'); // senate
   // create var for third legislative chamber
-  var slider4;// = document.getElementById('s4-p1'); // vp
-  var slider5;// = document.getElementById('s5-p1'); // pres
+  var slider4;// = document.getElementById('s4-p2'); // vp
+  var slider5;// = document.getElementById('s5-p2'); // pres
    
   var curNumHouse = parseInt(engine.numHouse);
   var curNumHouse2 = parseInt(engine.numHouse2);
@@ -1295,16 +1250,7 @@ function sLegislative() {
   function clickedUpdate() {
     document.getElementById("update-btn").disabled = true; // diable after clicking it
 
-    // set default params
-    //engine.setDefaultParams();
     setEngineParams();
-    // engine.numLegislativeBodies = userNumLegislative;
-    // engine.numHouse = userNumHouse;
-    // engine.numHouse2 = userNumHouse2;
-    // engine.numSenate = userNumSenate;
-    // engine.numVP = userNumVP;
-    // engine.numPres = userNumPres;
-    //engine.numSenate = 1; // just to give default value
 
     // reset values for calculations
     engine.completeReset();
@@ -1313,34 +1259,21 @@ function sLegislative() {
     reconfigBool = true;
   }
 
-  // function destroySliders() {
-  //   if (userEditCount >= 1) {
-  //     slider1.noUiSlider.destroy();
-  //     slider2.noUiSlider.destroy();
-  //     slider3.noUiSlider.destroy();
-  //     slider4.noUiSlider.destroy();
-  //     slider5.noUiSlider.destroy();
-  //   }
-  // }
-
   // OC display sliders based on number of legislative bodies chosen on previous page
   // OC set id of sliders based on number of chambers so that css can place them in order with no gaps
   function checkNumBodies() {
 
-    // always show chamber 1 slider
-    //document.getElementById("slider1").style.display = "block";
-
     if (userNumLegislative == 1) {
-      document.getElementById("s1-p1").innerHTML = "<div class='first-slider' id='slider1'><p id='slider-text-1'>FIRST CHAMBER</p></div>";
-      document.getElementById("s1-p1").style.display = "block";
-      document.getElementById("s2-p1").innerHTML = "<div id='slider2'><p id='slider-text-2'>VICE PRESIDENCY</p></div>";
-      document.getElementById("s2-p1").style.display = "block";
-      document.getElementById("s3-p1").innerHTML = "<div id='slider3'><p id='slider-text-3'>PRESIDENCY</p></div>";
-      document.getElementById("s3-p1").style.display = "block";
-      document.getElementById("s4-p1").innerHTML = "<div id='slider4'><p id='slider-text-4'>SECOND CHAMBER</p></div>";
-      document.getElementById("s4-p1").style.display = "none";
-      document.getElementById("s5-p1").innerHTML = "<div id='slider4a'><p id='slider-text-5'>THIRD CHAMBER</p></div>";
-      document.getElementById("s5-p1").style.display = "none";
+      document.getElementById("s1-p2").innerHTML = "<div class='first-slider' id='slider1'><p id='slider-text-1'>FIRST CHAMBER</p></div>";
+      document.getElementById("s1-p2").style.display = "block";
+      document.getElementById("s2-p2").innerHTML = "<div id='slider2'><p id='slider-text-2'>VICE PRESIDENCY</p></div>";
+      document.getElementById("s2-p2").style.display = "block";
+      document.getElementById("s3-p2").innerHTML = "<div id='slider3'><p id='slider-text-3'>PRESIDENCY</p></div>";
+      document.getElementById("s3-p2").style.display = "block";
+      document.getElementById("s4-p2").innerHTML = "<div id='slider4'><p id='slider-text-4'>SECOND CHAMBER</p></div>";
+      document.getElementById("s4-p2").style.display = "none";
+      document.getElementById("s5-p2").innerHTML = "<div id='slider4a'><p id='slider-text-5'>THIRD CHAMBER</p></div>";
+      document.getElementById("s5-p2").style.display = "none";
       
       slider1 = document.getElementById('slider1');
       slider2 = document.getElementById('slider4'); // house2 chamber, set slider but not used
@@ -1348,42 +1281,18 @@ function sLegislative() {
       slider4 = document.getElementById('slider2'); // vp
       slider5 = document.getElementById('slider3'); // pres
 
-      // document.getElementById("slider1").style.display = "block";
-      // document.getElementById("slider2").style.display = "none";
-      // document.getElementById("chamber-label-2-p1").style.display = "none";
-      // document.getElementById("slider4a").style.display = "none";
-
-      // document.getElementById("slider-text-2").style.display = "none";
-      // document.getElementById("slider-text-2").innerHTML = "";
     } else if (userNumLegislative == 2) {
       // show second chamber slider
-      // document.getElementById("s1-p1").innerHTML = "<div class='first-slider' id='slider1'><p id='slider-text-1'>FIRST LEGISLATIVE CHAMBER</p></div>";
-      // document.getElementById("s1-p1").style.display = "block";
-      // document.getElementById("s2-p1").innerHTML = "<div id='slider2'><p id='slider-text-2'>SECOND LEGISLATIVE CHAMBER</p></div>";
-      // document.getElementById("s2-p1").style.display = "block";
-      // document.getElementById("s3-p1").innerHTML = "<div id='slider3'><p id='slider-text-3'>VICE PRESIDENCY</p></div>";
-      // document.getElementById("s3-p1").style.display = "block";
-      // document.getElementById("s4-p1").innerHTML = "<div id='slider4'><p id='slider-text-4'>PRESIDENCY</p></div>";
-      // document.getElementById("s4-p1").style.display = "block";
-      // document.getElementById("s5-p1").innerHTML = "<div id='slider4a'><p id='slider-text-5'>THIRD LEGISLATIVE CHAMBER</p></div>";
-      // document.getElementById("s5-p1").style.display = "none";
-
-      // slider1 = document.getElementById('slider1');
-      // slider2 = document.getElementById('slider4a'); // house2, set slider but not used
-      // slider3 = document.getElementById('slider2'); // 3rd (senate) chamber
-      // slider4 = document.getElementById('slider3'); // vp
-      // slider5 = document.getElementById('slider4'); // pres
-
-      document.getElementById("s1-p1").innerHTML = "<div class='first-slider' id='slider1'><p id='slider-text-1'>FIRST CHAMBER</p></div>";
-      document.getElementById("s1-p1").style.display = "block";
-      document.getElementById("s2-p1").innerHTML = "<div id='slider2'><p id='slider-text-2'>SECOND CHAMBER</p></div>";
-      document.getElementById("s2-p1").style.display = "block";
-      document.getElementById("s3-p1").innerHTML = "<div id='slider3'><p id='slider-text-3'>VICE PRESIDENCY</p></div>";
-      document.getElementById("s3-p1").style.display = "block";
-      document.getElementById("s4-p1").innerHTML = "<div id='slider4'><p id='slider-text-4'>PRESIDENCY</p></div>";
-      document.getElementById("s4-p1").style.display = "block";
-      document.getElementById("s5-p1").innerHTML = "<div id='slider4a'><p id='slider-text-5'>THIRD CHAMBER</p></div>";
-      document.getElementById("s5-p1").style.display = "none";
+      document.getElementById("s1-p2").innerHTML = "<div class='first-slider' id='slider1'><p id='slider-text-1'>FIRST CHAMBER</p></div>";
+      document.getElementById("s1-p2").style.display = "block";
+      document.getElementById("s2-p2").innerHTML = "<div id='slider2'><p id='slider-text-2'>SECOND CHAMBER</p></div>";
+      document.getElementById("s2-p2").style.display = "block";
+      document.getElementById("s3-p2").innerHTML = "<div id='slider3'><p id='slider-text-3'>VICE PRESIDENCY</p></div>";
+      document.getElementById("s3-p2").style.display = "block";
+      document.getElementById("s4-p2").innerHTML = "<div id='slider4'><p id='slider-text-4'>PRESIDENCY</p></div>";
+      document.getElementById("s4-p2").style.display = "block";
+      document.getElementById("s5-p2").innerHTML = "<div id='slider4a'><p id='slider-text-5'>THIRD CHAMBER</p></div>";
+      document.getElementById("s5-p2").style.display = "none";
 
       slider1 = document.getElementById('slider1');
       slider2 = document.getElementById('slider2'); // house2, set slider but not used
@@ -1391,58 +1300,31 @@ function sLegislative() {
       slider4 = document.getElementById('slider3'); // vp
       slider5 = document.getElementById('slider4'); // pres
 
-      // document.getElementById("slider1").style.display = "block";
-      // document.getElementById("slider2").style.display = "block";
-      // document.getElementById("chamber-label-2-p1").innerHTML = "<p id='slider-text-2'>SECOND LEGISLATIVE CHAMBER</p>";
-      // document.getElementById("chamber-label-2-p1").style.display = "block";
-      // document.getElementById("slider4a").style.display = "none";
-
-      // document.getElementById("slider-text-2").style.display = "block";
-      // document.getElementById("slider-text-2").innerHTML = "TESTING";
-      // = "none" for 3rd body slider
     } else {
       // = "block" for all 3 body sliders
-      document.getElementById("s1-p1").innerHTML = "<div class='first-slider' id='slider1'><p id='slider-text-1'>FIRST CHAMBER</p></div>";
-      document.getElementById("s1-p1").style.display = "block";
-      document.getElementById("s2-p1").innerHTML = "<div id='slider2'><p id='slider-text-2'>SECOND CHAMBER</p></div>";
-      document.getElementById("s2-p1").style.display = "block";
-      document.getElementById("s3-p1").innerHTML = "<div id='slider3'><p id='slider-text-3'>THIRD CHAMBER</p></div>";
-      document.getElementById("s3-p1").style.display = "block";
-      document.getElementById("s4-p1").innerHTML = "<div id='slider4'><p id='slider-text-4'>VICE PRESIDENCY</p></div>";
-      document.getElementById("s4-p1").style.display = "block";
-      document.getElementById("s5-p1").innerHTML = "<div id='slider4a'><p id='slider-text-5'>PRESIDENCY</p></div>";
-      document.getElementById("s5-p1").style.display = "block";
+      document.getElementById("s1-p2").innerHTML = "<div class='first-slider' id='slider1'><p id='slider-text-1'>FIRST CHAMBER</p></div>";
+      document.getElementById("s1-p2").style.display = "block";
+      document.getElementById("s2-p2").innerHTML = "<div id='slider2'><p id='slider-text-2'>SECOND CHAMBER</p></div>";
+      document.getElementById("s2-p2").style.display = "block";
+      document.getElementById("s3-p2").innerHTML = "<div id='slider3'><p id='slider-text-3'>THIRD CHAMBER</p></div>";
+      document.getElementById("s3-p2").style.display = "block";
+      document.getElementById("s4-p2").innerHTML = "<div id='slider4'><p id='slider-text-4'>VICE PRESIDENCY</p></div>";
+      document.getElementById("s4-p2").style.display = "block";
+      document.getElementById("s5-p2").innerHTML = "<div id='slider4a'><p id='slider-text-5'>PRESIDENCY</p></div>";
+      document.getElementById("s5-p2").style.display = "block";
 
       slider1 = document.getElementById('slider1');
       slider2 = document.getElementById('slider2'); // house2, set slider but not used
       slider3 = document.getElementById('slider3'); // 3rd (senate) chamber
       slider4 = document.getElementById('slider4'); // vp
       slider5 = document.getElementById('slider4a'); // pres
-
-      // document.getElementById("slider1").style.display = "block";
-      // document.getElementById("slider2").style.display = "block";
-      // document.getElementById("chamber-label-2-p1").innerHTML = "<p id='slider-text-2'>SECOND LEGISLATIVE CHAMBER</p>";
-      // document.getElementById("chamber-label-2-p1").style.display = "block";
-      // document.getElementById("slider4a").style.display = "block";
     }
-
-    // OC always show chamber 1, vp and pres sliders
-    // document.getElementById("slider3").style.display = "block";
-    // document.getElementById("slider4").style.display = "block";
   }
 
   function sliders() {
     console.log("user edits boool: " + userEdits);
-    if (userEdits == true) {
-      //slider1.noUiSlider.destroy();
-      //slider2.noUiSlider.destroy();
-      createSlider();
-      sliderVals();
-
-    } else {
-      createSlider();
-      sliderVals();
-    }
+    createSlider();
+    sliderVals();
 
     function createSlider() {
 
@@ -1599,15 +1481,6 @@ function sLegislative() {
 
     }
   }
-
-  // function button() {
-  //   var sidePad = 20;
-
-  //   nextButton = createButton('NEXT');
-  //   nextButton.id("next-btn");
-  //   //position of next button is handled in css
-  //   nextButton.mousePressed(nextScene);
-  // }
 }
 
 //user input page for number of parties, current maximum of 3
@@ -1636,9 +1509,7 @@ function sParties() {
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
-    //sliders();
     sliderVals();
-    // button();
 
     // OC disable update button on this pane for now - not sure what to update visually
     document.getElementById("update-btn").disabled = true;
@@ -1649,18 +1520,6 @@ function sParties() {
     visual.displayImmediateBlank(engine);
     paneToggle();
   }
-
-  // function sliders() {
-  //   if (userEdits == true) {
-  //     sliderVals();
-  //   } else {
-  //     createSlider();
-  //     sliderVals();
-  //     // if (userNumParties == parseInt(1)) {
-  //     //   userEditCount += 1;
-  //     //   console.log("one party count: " + userEditCount);
-  //     // }
-  //   }
 
     function createSlider() {
 
@@ -1723,7 +1582,6 @@ function sParties() {
 
       });
     }
-  //}
 }
 
 function sMembersFirstChamber() {
@@ -1732,18 +1590,13 @@ function sMembersFirstChamber() {
   var slider2;// = document.getElementById('slider-1b');; // party b
   var slider3; // = document.getElementById('slider-1c');; // party c
   var curNumHouse = parseInt(userNumHouse) //parseInt(engine.numHouse); // current number of total members in chamber 1
-  var slider1max; // = parseInt(userNumHouse);
-  var slider2max; // = floor(slider1max / 2);
-  var slider3max; // = slider1max - slider2max;
+  // var slider1max; // = parseInt(userNumHouse);
+  // var slider2max; // = floor(slider1max / 2);
+  // var slider3max; // = slider1max - slider2max;
   var maxSlider;
 
   this.setup = function () {
-    // slider1max = parseInt(userNumHouse);
-    // slider2max = floor(slider1max / 2);
-    // slider3max = slider1max - slider2max;
 
-    // createSlider();
-    // sliderVals();
   }
 
   this.enter = function () {
@@ -1754,9 +1607,9 @@ function sMembersFirstChamber() {
     // } else {
       maxSlider = parseInt(userNumHouse);
     //}
-    slider1max = parseInt(userNumHouse);
-    slider2max = floor(slider1max / 2);
-    slider3max = slider1max - slider2max;
+    // slider1max = parseInt(userNumHouse);
+    // slider2max = floor(slider1max / 2);
+    // slider3max = slider1max - slider2max;
 
     console.log("Slider Page Chamber 1 Party Members ");
     document.getElementById("top").style.display = "block";
@@ -1778,9 +1631,6 @@ function sMembersFirstChamber() {
 
     checkNumBodies();
     sliders();
-    //sliderVals();
-
-    
   }
 
   this.draw = function () {
@@ -1849,16 +1699,8 @@ function sMembersFirstChamber() {
 
   function sliders() {
     console.log("user edits boool: " + userEdits);
-    // if (userEdits == true) {
-      //slider1.noUiSlider.destroy();
-      //slider2.noUiSlider.destroy();
-      createSlider();
-      sliderVals();
-
-    // } else {
-    //   createSlider();
-    //   sliderVals();
-    // }
+    createSlider();
+    sliderVals();
 
     function createSlider() {
 
@@ -2044,18 +1886,20 @@ function sMembersSecondChamber() {
   var slider2;// = document.getElementById('slider-1b');; // party b
   var slider3; // = document.getElementById('slider-1c');; // party c
   var curNumHouse2 = parseInt(userNumHouse2) //parseInt(engine.numHouse); // current number of total members in chamber 1
-  var slider1max; // = parseInt(userNumHouse);
-  var slider2max; // = floor(slider1max / 2);
-  var slider3max; // = slider1max - slider2max;
+  var maxSlider;
+  // var slider1max; // = parseInt(userNumHouse);
+  // var slider2max; // = floor(slider1max / 2);
+  // var slider3max; // = slider1max - slider2max;
 
   this.setup = function () {
 
   }
 
   this.enter = function () {
-    slider1max = parseInt(userNumHouse2);
-    slider2max = floor(slider1max / 2);
-    slider3max = slider1max - slider2max;
+    maxSlider = parseInt(userNumHouse2);
+    // slider1max = parseInt(userNumHouse2);
+    // slider2max = floor(slider1max / 2);
+    // slider3max = slider1max - slider2max;
 
     console.log("Slider Page Chamber 2 Party Members ");
     document.getElementById("top").style.display = "block";
@@ -2076,9 +1920,7 @@ function sMembersSecondChamber() {
     document.getElementById("slider-disp").style.display = "none";
 
     checkNumBodies();
-    sliders();
-    //sliderVals();
-    
+    sliders();    
   }
 
   this.draw = function () {
@@ -2122,10 +1964,10 @@ function sMembersSecondChamber() {
     function createSlider() {
 
       noUiSlider.create(slider1, {
-        start: floor(slider1max/2), // fix later where to start
+        start: floor(maxSlider/2), // fix later where to start
         range: {
           'min': [1],
-          'max': [slider1max]
+          'max': [maxSlider]
         },
         cssPrefix: 'noUi-',
         tooltips: true,
@@ -2140,10 +1982,10 @@ function sMembersSecondChamber() {
       });
 
       noUiSlider.create(slider2, {
-        start: floor(slider2max/2), // fix later where to start
+        start: floor(maxSlider/2), // fix later where to start
         range: {
           'min': [1],
-          'max': [slider2max]
+          'max': [maxSlider]
         },
         cssPrefix: 'noUi-',
         tooltips: true,
@@ -2158,10 +2000,10 @@ function sMembersSecondChamber() {
       });
 
       noUiSlider.create(slider3, {
-        start: floor(slider3max/2), // fix later where to start
+        start: floor(maxSlider/2), // fix later where to start
         range: {
           'min': [1],
-          'max': [slider3max]
+          'max': [maxSlider]
         },
         cssPrefix: 'noUi-',
         tooltips: true,
@@ -2219,177 +2061,6 @@ function sMembersSecondChamber() {
     }
   }
 }
-
-/*
-function sMembersSecondChamber() {
-
-  var slider1 = document.getElementById('slider-2a'); // party a
-  var slider2 = document.getElementById('slider-2b');; // party b
-  var slider3 = document.getElementById('slider-2c');; // party c
-  var slider1max; // = parseInt(userNumHouse2);
-  var slider2max; // = floor(slider1max / 2);
-  var slider3max; // = slider1max - slider2max;
-
-  this.setup = function () {
-    slider1max = parseInt(userNumHouse2);
-    slider2max = floor(slider1max / 2);
-    slider3max = slider1max - slider2max;
-
-    createSlider();
-    sliderVals();
-  }
-
-  this.enter = function () {
-    slider1max = parseInt(userNumHouse2);
-    slider2max = floor(slider1max / 2);
-    slider3max = slider1max - slider2max;
-
-    console.log("Slider Page Chamber 2 Party Members ");
-    document.getElementById("top").style.display = "block";
-    document.getElementById("top").innerHTML = "NUMBER OF VOTING MEMBERS FOR SECOND CHAMBER";
-    document.getElementById("page1").style.display = "none";
-    document.getElementById("page2").style.display = "none";
-    document.getElementById("page3").style.display = "none";
-    document.getElementById("page4").style.display = "none";
-    document.getElementById("page5").style.display = "block";
-    document.getElementById("page5").style.display = "none";
-    document.getElementById("page7").style.display = "none";
-    // document.getElementById("slider-value").style.display = "none";
-    document.getElementById("vote").style.display = "block";
-    document.getElementById("slider-disp").style.display = "none";
-
-    checkNumBodies();
-    // sliders();
-    sliderVals();
-
-    
-  }
-
-  this.draw = function () {
-    visual.displayVoting(engine);
-    paneToggle();
-    console.log("Party A: " + userPerHouse2Body[0] + " Party B: " + userPerHouse2Body[1] + " Party C: " + userPerHouse2Body[2]);
-  }
-
-  function checkNumBodies() {
-    if (userNumParties == 1) {
-      document.getElementById("slider-2a").style.display = "block";
-      document.getElementById("slider-2b").style.display = "none";
-      document.getElementById("slider-2c").style.display = "none";
-
-    } else if (userNumParties == 2) {
-      document.getElementById("slider-2a").style.display = "block";
-      document.getElementById("slider-2b").style.display = "block";
-      document.getElementById("slider-2c").style.display = "none";
-    } else {
-      document.getElementById("slider-2a").style.display = "block";
-      document.getElementById("slider-2b").style.display = "block";
-      document.getElementById("slider-2c").style.display = "block";
-
-    }
-  }
-
-    function createSlider() {
-
-      noUiSlider.create(slider1, {
-        start: floor(slider1max/2), // fix later where to start
-        range: {
-          'min': [1],
-          'max': [slider1max]
-        },
-        cssPrefix: 'noUi-',
-        tooltips: true,
-        pips: {
-          mode: 'range',
-          density: 'range',
-        },
-        step: 1,
-        format: wNumb({
-          decimals: 0
-        })
-      });
-
-      noUiSlider.create(slider2, {
-        start: floor(slider2max/2), // fix later where to start
-        range: {
-          'min': [1],
-          'max': [slider2max]
-        },
-        cssPrefix: 'noUi-',
-        tooltips: true,
-        pips: {
-          mode: 'range',
-          density: 'range',
-        },
-        step: 1,
-        format: wNumb({
-          decimals: 0
-        })
-      });
-
-      noUiSlider.create(slider3, {
-        start: floor(slider3max/2), // fix later where to start
-        range: {
-          'min': [1],
-          'max': [slider3max]
-        },
-        cssPrefix: 'noUi-',
-        tooltips: true,
-        pips: {
-          mode: 'range',
-          density: 'range',
-        },
-        step: 1,
-        format: wNumb({
-          decimals: 0
-        })
-      });
-    }
-
-    function sliderVals() {
-      //connecting values to html, each tab value is stored in an array
-      // var rangeSliderValueElement = document.getElementById('slider-value');
-
-      userPerHouse2Body = [];
-      var numPerHouse2Body = [];
-      var house2Percentage; // helper var
-
-      // house
-      slider1.noUiSlider.on('update', function (values, handle) {
-        userPerHouse2Body[0] = values[0];
-        numPerHouse2Body[0] = userPerHouse2Body[0];
-        house2Percentage = userPerHouse2Body[0] / userNumHouse2;
-        house2Percentage = roundNum(house2Percentage, 2);
-        userPerHouse2Body[0] = house2Percentage;
-      });
-
-      if (userNumParties >= 2) { // party a and b
-        slider2.noUiSlider.on('update', function (values, handle) {
-          userPerHouse2Body[1] = values[0];
-          numPerHouse2Body[1] = userPerHouse2Body[1];
-          house2Percentage = userPerHouse2Body[1] / userNumHouse2;
-          house2Percentage = roundNum(house2Percentage, 2);
-          userPerHouse2Body[1] = house2Percentage;
-        });
-      } else { // set party b to 0
-        userPerHouse2Body[1] = 0;
-      }
-
-      if (userNumParties == 3) { // party a b c
-        slider3.noUiSlider.on('update', function (values, handle) {
-          userPerHouse2Body[2] = values[0];
-          numPerHouse2Body[2] = userPerHouse2Body[2];
-          house2Percentage = userPerHouse2Body[2] / userNumHouse2;
-          house2Percentage = roundNum(house2Percentage, 2);
-          userPerHouse2Body[2] = house2Percentage;
-        });
-      } else { // set party c to 0
-        userPerHouse2Body[2] = 0;
-      }
-
-    }
-}
-*/
 
 function sMembersThirdChamber() {
 
@@ -2397,18 +2068,14 @@ function sMembersThirdChamber() {
   var slider2;// = document.getElementById('slider-1b');; // party b
   var slider3; // = document.getElementById('slider-1c');; // party c
   var curNumSenate = parseInt(userNumSenate) //parseInt(engine.numHouse); // current number of total members in chamber 1
-  var slider1max; // = parseInt(userNumHouse);
-  var slider2max; // = floor(slider1max / 2);
-  var slider3max; // = slider1max - slider2max;
+  var maxSlider;
 
   this.setup = function () {
 
   }
 
   this.enter = function () {
-    slider1max = parseInt(userNumSenate);
-    slider2max = floor(slider1max / 2);
-    slider3max = slider1max - slider2max;
+    maxSlider = parseInt(userNumSenate);
 
     console.log("Slider Page Chamber 3 Party Members ");
     document.getElementById("top").style.display = "block";
@@ -2475,10 +2142,10 @@ function sMembersThirdChamber() {
     function createSlider() {
 
       noUiSlider.create(slider1, {
-        start: floor(slider1max/2), // fix later where to start
+        start: floor(maxSlider/2), // fix later where to start
         range: {
           'min': [1],
-          'max': [slider1max]
+          'max': [maxSlider]
         },
         cssPrefix: 'noUi-',
         tooltips: true,
@@ -2493,10 +2160,10 @@ function sMembersThirdChamber() {
       });
 
       noUiSlider.create(slider2, {
-        start: floor(slider2max/2), // fix later where to start
+        start: floor(maxSlider/2), // fix later where to start
         range: {
           'min': [1],
-          'max': [slider2max]
+          'max': [maxSlider]
         },
         cssPrefix: 'noUi-',
         tooltips: true,
@@ -2511,10 +2178,10 @@ function sMembersThirdChamber() {
       });
 
       noUiSlider.create(slider3, {
-        start: floor(slider3max/2), // fix later where to start
+        start: floor(maxSlider/2), // fix later where to start
         range: {
           'min': [1],
-          'max': [slider3max]
+          'max': [maxSlider]
         },
         cssPrefix: 'noUi-',
         tooltips: true,
@@ -2579,18 +2246,14 @@ function sMembersVP() {
   var slider2;// = document.getElementById('slider-1b');; // party b
   var slider3; // = document.getElementById('slider-1c');; // party c
   var curNumVP = parseInt(userNumVP) //parseInt(engine.numHouse); // current number of total members in chamber 1
-  var slider1max; // = parseInt(userNumHouse);
-  var slider2max; // = floor(slider1max / 2);
-  var slider3max; // = slider1max - slider2max;
+  var maxSlider;
 
   this.setup = function () {
 
   }
 
   this.enter = function () {
-    slider1max = parseInt(userNumVP);
-    slider2max = floor(slider1max / 2);
-    slider3max = slider1max - slider2max;
+    maxSlider = parseInt(userNumVP);
 
     console.log("Slider Page VP Party Members ");
     document.getElementById("top").style.display = "block";
@@ -2657,10 +2320,10 @@ function sMembersVP() {
     function createSlider() {
 
       noUiSlider.create(slider1, {
-        start: floor(slider1max/2), // fix later where to start
+        start: floor(maxSlider/2), // fix later where to start
         range: {
           'min': [1],
-          'max': [slider1max]
+          'max': [maxSlider]
         },
         cssPrefix: 'noUi-',
         tooltips: true,
@@ -2675,10 +2338,10 @@ function sMembersVP() {
       });
 
       noUiSlider.create(slider2, {
-        start: floor(slider2max/2), // fix later where to start
+        start: floor(maxSlider/2), // fix later where to start
         range: {
           'min': [1],
-          'max': [slider2max]
+          'max': [maxSlider]
         },
         cssPrefix: 'noUi-',
         tooltips: true,
@@ -2693,10 +2356,10 @@ function sMembersVP() {
       });
 
       noUiSlider.create(slider3, {
-        start: floor(slider3max/2), // fix later where to start
+        start: floor(maxSlider/2), // fix later where to start
         range: {
           'min': [1],
-          'max': [slider3max]
+          'max': [maxSlider]
         },
         cssPrefix: 'noUi-',
         tooltips: true,
@@ -2762,18 +2425,14 @@ function sMembersPres() {
   var slider2;// = document.getElementById('slider-1b');; // party b
   var slider3; // = document.getElementById('slider-1c');; // party c
   var curNumPres = parseInt(userNumPres) //parseInt(engine.numHouse); // current number of total members in chamber 1
-  var slider1max; // = parseInt(userNumHouse);
-  var slider2max; // = floor(slider1max / 2);
-  var slider3max; // = slider1max - slider2max;
+  var maxSlider;
 
   this.setup = function () {
-
+    
   }
 
   this.enter = function () {
-    slider1max = parseInt(userNumPres);
-    slider2max = floor(slider1max / 2);
-    slider3max = slider1max - slider2max;
+    maxSlider = parseInt(userNumPres);
 
     console.log("Slider Page Pres Party Members ");
     document.getElementById("top").style.display = "block";
@@ -2840,10 +2499,10 @@ function sMembersPres() {
     function createSlider() {
 
       noUiSlider.create(slider1, {
-        start: floor(slider1max/2), // fix later where to start
+        start: floor(maxSlider/2), // fix later where to start
         range: {
           'min': [1],
-          'max': [slider1max]
+          'max': [maxSlider]
         },
         cssPrefix: 'noUi-',
         tooltips: true,
@@ -2858,10 +2517,10 @@ function sMembersPres() {
       });
 
       noUiSlider.create(slider2, {
-        start: floor(slider2max/2), // fix later where to start
+        start: floor(maxSlider/2), // fix later where to start
         range: {
           'min': [1],
-          'max': [slider2max]
+          'max': [maxSlider]
         },
         cssPrefix: 'noUi-',
         tooltips: true,
@@ -2876,10 +2535,10 @@ function sMembersPres() {
       });
 
       noUiSlider.create(slider3, {
-        start: floor(slider3max/2), // fix later where to start
+        start: floor(maxSlider/2), // fix later where to start
         range: {
           'min': [1],
-          'max': [slider3max]
+          'max': [maxSlider]
         },
         cssPrefix: 'noUi-',
         tooltips: true,
@@ -2938,7 +2597,8 @@ function sMembersPres() {
   }
 }
 
-
+/*  ORIGINAL VERSION WITH MULTI-HANDLE SLIDERS TO CHOOSE NUM PARTY MEMBERS FOR EACH CHAMBER
+// ----------------------------------------------------------------------------------
 //user input page for number of members in each party
 function sMembers() {
 
@@ -3012,51 +2672,51 @@ function sMembers() {
 
     } else if (userNumLegislative == 2) {
       // show second chamber slider
-      // document.getElementById("s1-p3").innerHTML = "<p id='slider-text-1'>FIRST LEGISLATIVE CHAMBER</p><div class='first-slider' id='slider6'></div>";
-      // document.getElementById("s1-p3").style.display = "block";
-      // document.getElementById("s2-p3").innerHTML = "<p id='slider-text-2'>SECOND LEGISLATIVE CHAMBER</p><div id='slider7'></div>";
-      // document.getElementById("s2-p3").style.display = "block";
-      // document.getElementById("s3-p3").innerHTML = "<p id='slider-text-3'>VICE PRESIDENCY</p><div id='slider8'></div>";
-      // document.getElementById("s3-p3").style.display = "block";
-      // document.getElementById("s4-p3").innerHTML = "<p id='slider-text-4'>PRESIDENCY</p><div id='slider9'></div>";
-      // document.getElementById("s4-p3").style.display = "block";
-      // document.getElementById("s5-p3").innerHTML = "<p id='slider-text-5'>THIRD LEGISLATIVE CHAMBER</p><div id='slider9a'></div>";
-      // document.getElementById("s5-p3").style.display = "none";
-      
-      // slider6 = document.getElementById('slider6'); // house
-      // slider6a = document.getElementById('slider9a'); // house2 chamber, set slider but not used
-      // slider7 = document.getElementById('slider7'); // 3rd (senate) chamber, set slider but not used
-      // slider8 = document.getElementById('slider8'); // vp
-      // slider9 = document.getElementById('slider9'); // pres
-
-      // value1 = document.getElementById('value-1');
-      // value1a = document.getElementById('value-5');
-      // value2 = document.getElementById('value-2');
-      // value3 = document.getElementById('value-3');
-      // value4 = document.getElementById('value-4');
-
-      document.getElementById("s1-p3").innerHTML = "<p id='slider-text-1'>FIRST CHAMBER</p><div class='first-slider' id='slider6'></div>";
+      document.getElementById("s1-p3").innerHTML = "<p id='slider-text-1'>FIRST LEGISLATIVE CHAMBER</p><div class='first-slider' id='slider6'></div>";
       document.getElementById("s1-p3").style.display = "block";
-      document.getElementById("s2-p3").innerHTML = "<p id='slider-text-2'>SECOND CHAMBER</p><div id='slider7'></div>";
+      document.getElementById("s2-p3").innerHTML = "<p id='slider-text-2'>SECOND LEGISLATIVE CHAMBER</p><div id='slider7'></div>";
       document.getElementById("s2-p3").style.display = "block";
-      document.getElementById("s3-p3").innerHTML = "<p id='slider-text-3'>THIRD CHAMBER</p><div id='slider8'></div>";
-      document.getElementById("s3-p3").style.display = "none";
-      document.getElementById("s4-p3").innerHTML = "<p id='slider-text-4'>VICE PRESIDENCY</p><div id='slider9'></div>";
+      document.getElementById("s3-p3").innerHTML = "<p id='slider-text-3'>VICE PRESIDENCY</p><div id='slider8'></div>";
+      document.getElementById("s3-p3").style.display = "block";
+      document.getElementById("s4-p3").innerHTML = "<p id='slider-text-4'>PRESIDENCY</p><div id='slider9'></div>";
       document.getElementById("s4-p3").style.display = "block";
-      document.getElementById("s5-p3").innerHTML = "<p id='slider-text-5'>PRESIDENCY</p><div id='slider9a'></div>";
-      document.getElementById("s5-p3").style.display = "block";
+      document.getElementById("s5-p3").innerHTML = "<p id='slider-text-5'>THIRD LEGISLATIVE CHAMBER</p><div id='slider9a'></div>";
+      document.getElementById("s5-p3").style.display = "none";
       
       slider6 = document.getElementById('slider6'); // house
-      slider6a = document.getElementById('slider7'); // house2 chamber, set slider but not used
-      slider7 = document.getElementById('slider8'); // 3rd (senate) chamber, set slider but not used
-      slider8 = document.getElementById('slider9'); // vp
-      slider9 = document.getElementById('slider9a'); // pres
+      slider6a = document.getElementById('slider9a'); // house2 chamber, set slider but not used
+      slider7 = document.getElementById('slider7'); // 3rd (senate) chamber, set slider but not used
+      slider8 = document.getElementById('slider8'); // vp
+      slider9 = document.getElementById('slider9'); // pres
 
       value1 = document.getElementById('value-1');
-      value1a = document.getElementById('value-2');
-      value2 = document.getElementById('value-3');
-      value3 = document.getElementById('value-4');
-      value4 = document.getElementById('value-5');
+      value1a = document.getElementById('value-5');
+      value2 = document.getElementById('value-2');
+      value3 = document.getElementById('value-3');
+      value4 = document.getElementById('value-4');
+
+      // document.getElementById("s1-p3").innerHTML = "<p id='slider-text-1'>FIRST CHAMBER</p><div class='first-slider' id='slider6'></div>";
+      // document.getElementById("s1-p3").style.display = "block";
+      // document.getElementById("s2-p3").innerHTML = "<p id='slider-text-2'>SECOND CHAMBER</p><div id='slider7'></div>";
+      // document.getElementById("s2-p3").style.display = "block";
+      // document.getElementById("s3-p3").innerHTML = "<p id='slider-text-3'>THIRD CHAMBER</p><div id='slider8'></div>";
+      // document.getElementById("s3-p3").style.display = "none";
+      // document.getElementById("s4-p3").innerHTML = "<p id='slider-text-4'>VICE PRESIDENCY</p><div id='slider9'></div>";
+      // document.getElementById("s4-p3").style.display = "block";
+      // document.getElementById("s5-p3").innerHTML = "<p id='slider-text-5'>PRESIDENCY</p><div id='slider9a'></div>";
+      // document.getElementById("s5-p3").style.display = "block";
+      
+      // slider6 = document.getElementById('slider6'); // house
+      // slider6a = document.getElementById('slider7'); // house2 chamber, set slider but not used
+      // slider7 = document.getElementById('slider8'); // 3rd (senate) chamber, set slider but not used
+      // slider8 = document.getElementById('slider9'); // vp
+      // slider9 = document.getElementById('slider9a'); // pres
+
+      // value1 = document.getElementById('value-1');
+      // value1a = document.getElementById('value-2');
+      // value2 = document.getElementById('value-3');
+      // value3 = document.getElementById('value-4');
+      // value4 = document.getElementById('value-5');
 
     } else {
       // = "block" for all 3 body sliders
@@ -3536,6 +3196,8 @@ function sMembers() {
     }
   }
 }
+// ----------------------------------------------------------------------------------
+*/
 
 //user input page for percentage of votes required for bill approval
 function sBodyPass() {

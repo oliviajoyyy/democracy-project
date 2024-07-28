@@ -137,12 +137,23 @@ function setup() {
   noStroke();
   mgr = new SceneManager();
   mgr.addScene(startUp);
+  mgr.addScene(briefDescription);
+  mgr.addScene(hardwareTest);
+  mgr.addScene(aboutProject);
+  mgr.addScene(newSessionScene);
+  mgr.addScene(loadSessionS1);
+  mgr.addScene(loadSessionS2);
   //mgr.addScene(democracyEngineOrigin);
   mgr.addScene(democracyEngineUser);
   mgr.addScene(sBodies);
   mgr.addScene(sLegislative);
   mgr.addScene(sParties);
-  mgr.addScene(sMembers);
+  mgr.addScene(sMembersFirstChamber);
+  mgr.addScene(sMembersSecondChamber);
+  mgr.addScene(sMembersThirdChamber);
+  mgr.addScene(sMembersVP);
+  mgr.addScene(sMembersPres);
+  //mgr.addScene(sMembers);
   mgr.addScene(sBodyPass);
   mgr.addScene(sYesVotes);
   mgr.addScene(sResults);
@@ -846,8 +857,9 @@ function keyPressed() {
 }
 
 function paneToggle() {
-  if (showPanesBool) {
-    // ---------------------------------------------- for drawing to screen immediately
+
+    // OC - put visal in draw() of the scences instead?
+    // ---------------------------------------------- for drawing to screen immediately // OC - no longer needed?
     //background(bColor);
     //document.body.style.backgroundColor = bColor;
     // engine.currentCongLogic(true); // leave comented out
@@ -858,15 +870,9 @@ function paneToggle() {
 
     // ----------------------------------------------- for drawing in real time, reset was when previous scene button clicked
     // visual.displayVoting(engine);
-
     // -----------------------------------------------
 
-    // draw rect where panes should be
-    // push();
-    //translate(-100,0);
-    //rect(0, 0, width, height/2);
-    // pop();
-
+  if (showPanesBool) {
     // if (mgr.isCurrent(SCENE));
     // = "block" whichever html div page corresponds to that scene
     document.getElementById("top").style.display = "block";
@@ -896,15 +902,6 @@ function paneToggle() {
     }
     
   } else {
-    // ---------------------------------------------- for drawing to screen immediately
-    //background(bColor);
-    //document.body.style.backgroundColor = bColor;
-    // engine.currentCongLogic(true); // leave comented out
-    // visual.ix = 0; // leave commented out
-    //visual.completeReset();
-    //visual.displayImmediateBlank(engine);
-    // -----------------------------------------------
-    
     // = "none" for all html div
     // if (mgr.isCurrent(sBodies)) {
       document.getElementById("top").style.display = "none";
@@ -924,14 +921,3 @@ function paneToggle() {
   }
 
 }
-
-// function showPanes() {
-//   fill(bColor);
-//   rect(0, 0, width, height);
-// }
-
-// function hidePanes() {
-//   //visual.displayVoting(engine);
-//   visual.displayImmediate();
-//   // visual.finalTextDisplayUser(engine, helvFont, colorOverlay, resultIX-1);
-// }
