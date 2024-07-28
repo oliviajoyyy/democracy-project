@@ -12,6 +12,7 @@
 var mgr;
 var engine;
 var visual;
+var buttonDiv;
 
 //fortesting
 let senateResult;
@@ -131,6 +132,7 @@ function setup() {
   engine = new DemocracyEngine(govtConfig, historicalActs); // OC create engine object to run voting logic
   visual = new VoteVisual(loadingImage, bColor, pColor, textColor, rectColor);
   setDefaultUserVars(); // set user vars to params from config file
+  buttonDiv = document.getElementById('button-div');
 
   noStroke();
   mgr = new SceneManager();

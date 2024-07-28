@@ -405,6 +405,7 @@ class VoteVisual {
     //print('VISUAL CLASS numBodies = ' + this.numBodies);
 
     // while(this.bodyCount < this.numBodies) {
+    //for(let ix=0; ix < this.numBodies; ix++) {
 
     // Logic for House
     if (this.bodyCount == 0) {
@@ -736,7 +737,7 @@ class VoteVisual {
           this.count1++;
       }
     }
-  //}
+ //}
   }
 
 
