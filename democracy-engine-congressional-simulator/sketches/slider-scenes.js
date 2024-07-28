@@ -1238,7 +1238,7 @@ function sLegislative() {
 
 
     // if sliders changed any values on this page, enable update button
-    if (userNumHouse != engine.numHouse || userNumHouse2 != engine.numHouse2 || userNumVP != engine.numVP || userNumPres != engine.numPres) {
+    if (userNumHouse != engine.numHouse || userNumHouse2 != engine.numHouse2 || userNumSenate != engine.numSenate ||userNumVP != engine.numVP || userNumPres != engine.numPres) {
       document.getElementById("update-btn").disabled = false;
     } else { // otherwise leave disabled
       document.getElementById("update-btn").disabled = true;
