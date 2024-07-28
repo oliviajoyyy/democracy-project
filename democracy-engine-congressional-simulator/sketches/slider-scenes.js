@@ -1857,25 +1857,25 @@ function sMembersFirstChamber() {
           slider3.noUiSlider.set(sliderCval);
         });
 
-        // when user slides the party B slider, update sliders A and B evenly
-        slider2.noUiSlider.on('slide', function(event) {
-          let sliderAval = floor((userNumHouse - numHousePartyB) / 2);
-          let sliderCval = (userNumHouse - numHousePartyB) - sliderAval;
-          slider1.noUiSlider.set(sliderAval);
-          slider3.noUiSlider.set(sliderCval);
-        });
-
-        // // when user slides party B slider, allow party B to go up to party A
-        // // and make party C update to the remainder
+        // // when user slides the party B slider, update sliders A and B evenly
         // slider2.noUiSlider.on('slide', function(event) {
-        //   if (parseInt(slider2.noUiSlider.get()) + numHousePartyA > userNumHouse) {
-        //     slider2.noUiSlider.set(userNumHouse - numHousePartyA);
-        //   }
         //   let sliderAval = floor((userNumHouse - numHousePartyB) / 2);
-        //   let sliderCval = (userNumHouse - numHousePartyB) - numHousePartyA;
-        //   //slider1.noUiSlider.set(sliderAval);
+        //   let sliderCval = (userNumHouse - numHousePartyB) - sliderAval;
+        //   slider1.noUiSlider.set(sliderAval);
         //   slider3.noUiSlider.set(sliderCval);
         // });
+
+        // when user slides party B slider, allow party B to go up to party A
+        // and make party C update to the remainder
+        slider2.noUiSlider.on('slide', function(event) {
+          if (parseInt(slider2.noUiSlider.get()) > userNumHouse - numHousePartyA) {
+            slider2.noUiSlider.set(userNumHouse - numHousePartyA);
+          }
+          let sliderAval = floor((userNumHouse - numHousePartyB) / 2);
+          let sliderCval = (userNumHouse - numHousePartyB) - numHousePartyA;
+          //slider1.noUiSlider.set(sliderAval);
+          slider3.noUiSlider.set(sliderCval);
+        });
 
         // when user slides the party B slider, update sliders A and B evenly
         slider3.noUiSlider.on('slide', function(event) {
