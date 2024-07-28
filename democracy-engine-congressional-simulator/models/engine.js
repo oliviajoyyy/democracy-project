@@ -543,11 +543,11 @@ historicalActs;
     // }
 
     // AB
-    if (this.bodyCount == 1) { // for 2 legislative bodies
-      // simulate vp tiebreaker vote
-      this.yay = 50;
-      this.nay = 50;
-    }
+    // if (this.bodyCount == 1) { // for 2 legislative bodies
+    //   // simulate vp tiebreaker vote
+    //   this.yay = 50;
+    //   this.nay = 50;
+    // }
 
     // OC dont use this
     // OC simulate vp tiebreaker for 2 bodies, with logic for 3

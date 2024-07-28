@@ -1157,7 +1157,7 @@ function sBodies() {
     //removeButtons();
     //engine.setDefaultParams();
     setEngineParams();
-    engine.numLegislativeBodies = userNumLegislative;
+    //engine.numLegislativeBodies = userNumLegislative;
     engine.numSenate = 1; // just to give default value
 
     // reset values for calculations
@@ -3838,10 +3838,13 @@ function sYesVotes() {
 
 //page showing all of user inputs
 function sResults() {
+  let voteBtn, startOverBtn, editBtn, saveBtn, approvalBtn;
+  let visualizeVote;
 
   this.setup = function () {
 
     userOutputText = document.getElementById('slider-disp');
+    visualizeVote = false;
 
   }
 
@@ -3856,7 +3859,8 @@ function sResults() {
     userEditCount++;
     console.log("user edit count: " + userEditCount);
     console.log("user result page");
-    document.getElementById("top").innerHTML = "DEMOCRACY ENGINE SIMULATOR INPUTS";
+    // document.getElementById("top").innerHTML = "DEMOCRACY ENGINE SIMULATOR INPUTS";
+    document.getElementById("top").innerHTML = "";
     document.getElementById("top").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
@@ -3870,7 +3874,7 @@ function sResults() {
     document.getElementById("page10").style.display = "none";
     document.getElementById("page11").style.display = "block";
     // document.getElementById("slider-value").style.display = "none";
-    document.getElementById("vote").style.display = "none";
+    document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "block";
     document.getElementById("sim-info").style.display = "none";
     if (userNumParties == 2) {
@@ -3892,10 +3896,107 @@ function sResults() {
       userPerPresBody[2] = 0.0;
     }
     inputTxt();
+
+    nextPaneBtn.remove();
+    updateBtn.remove();
+    prevPaneBtn.remove();
+
+    voteBtn = createButton('Vote');
+    voteBtn.id('vote-btn');
+    voteBtn.class('buttons');
+    voteBtn.parent(buttonDiv);
+
+    startOverBtn = createButton('Start Over');
+    startOverBtn.id('restart-btn');
+    startOverBtn.class('buttons');
+    startOverBtn.parent(buttonDiv);
+
+    editBtn = createButton('Edit Config');
+    editBtn.id('edit-btn');
+    editBtn.class('buttons');
+    editBtn.parent(buttonDiv);
+
+    saveBtn = createButton('Save Config');
+    saveBtn.id('save-btn');
+    saveBtn.class('buttons');
+    saveBtn.parent(buttonDiv);
+    
+    approvalBtn = createButton('Approve');
+    approvalBtn.id('approve-btn');
+    approvalBtn.class('buttons');
+    approvalBtn.parent(buttonDiv);
+
+    visualizeVote = false;
+
+    // set new parameters to show updated configuration when entering scene
+    setEngineParams();
+    // reset values for calculations
+    engine.completeReset();
+    visual.completeReset();
+    userEdits = false;
+    reconfigBool = true;
+
   }
 
   this.draw = function () {
+    if (visualizeVote == false) {
+      visual.displayImmediateBlank(engine);
+    } else {
+      visual.displayVoting(engine);
+    }
+    paneToggle();
+    
+    voteBtn.mousePressed(clickedVote);
+    startOverBtn.mousePressed(clickedStartOver);
+    editBtn.mousePressed(clickedEdit);
+    saveBtn.mousePressed(clickedSave);
+    approvalBtn.mousePressed(clickedApprove);
+  }
 
+  function clickedVote() {
+    visualizeVote = true;
+    setEngineParams(); // set new parameters
+
+    // reset values for calculations and drawings
+    engine.completeReset();
+    visual.completeReset();
+    userEdits = false;
+    reconfigBool = true;
+    
+    engine.currentCongLogic(true); // get results for this configuration
+
+  }
+
+  function clickedStartOver() {
+    removeBtns();
+    mgr.showScene(briefDescription);
+  }
+
+  function clickedEdit() {
+    removeBtns();
+    // reset values for calculations
+    engine.completeReset();
+    visual.completeReset();
+    userEdits = false;
+    reconfigBool = true;
+    mgr.showScene(sBodies);
+  }
+
+  function clickedSave() {
+    //removeBtns();
+    // go to different scene?
+  }
+
+  function clickedApprove() {
+
+  }
+
+  function removeBtns() {
+    voteBtn.remove();
+    startOverBtn.remove();
+    editBtn.remove();
+    saveBtn.remove();
+    approvalBtn.remove();
   }
 
   function inputTxt() {
@@ -3954,6 +4055,7 @@ function sResults() {
       "<p>Approval By Majority: " + userBodyPass +
       "<br> Approval By Supermajority: " + userSuperThresh + "</div></p>";
 
+      /*
     if (userEditCount >= 2) {
       nextButton.remove();
       recalBtn = createButton('RECALCULATE VOTE');
@@ -3965,6 +4067,7 @@ function sResults() {
       // recalBtn.position(windowWidth - recalBtn.width - buttonRes.width - buttonRC.width - 20, windowHeight - 45);
       recalBtn.mousePressed(inputVar);
     }
+      */
   }
 
 

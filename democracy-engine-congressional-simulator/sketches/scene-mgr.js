@@ -226,18 +226,18 @@ function nextPane() {
     mgr.showScene(sYesVotes);
   } else if (mgr.isCurrent(sYesVotes)) {
     mgr.showScene(sResults);
-  }  else if (mgr.isCurrent(sResults) && userEditCount < 2) {
-    mgr.showScene(sInfo);
-  }  else if (mgr.isCurrent(sInfo) && userEdits == true) {
-    // mgr.showScene(democracyEngineUser);  
-    mgr.showScene(sBodies);
-  } else if (mgr.isCurrent(sDefault)) {
-   //mgr.showScene(sLegislative);
-   mgr.showScene(sBodies);
-  } else if (mgr.isCurrent(sDisplay)) {
-    //mgr.showScene(sLegislative);
-    mgr.showScene(sBodies);
-   }
+  }  //else if (mgr.isCurrent(sResults) && userEditCount < 2) {
+  //   mgr.showScene(sInfo);
+  // }  else if (mgr.isCurrent(sInfo) && userEdits == true) {
+  //   // mgr.showScene(democracyEngineUser);  
+  //   mgr.showScene(sBodies);
+  // } else if (mgr.isCurrent(sDefault)) {
+  //  //mgr.showScene(sLegislative);
+  //  mgr.showScene(sBodies);
+  // } else if (mgr.isCurrent(sDisplay)) {
+  //   //mgr.showScene(sLegislative);
+  //   mgr.showScene(sBodies);
+  //  }
 }
 
 function previousPane() {
@@ -890,6 +890,9 @@ function paneToggle() {
       document.getElementById("page9").style.display = "block";
     } else if (mgr.isCurrent(sYesVotes)) {
       document.getElementById("page10").style.display = "block";
+    } else if (mgr.isCurrent(sResults)) {
+      document.getElementById("page11").style.display = "block";
+      document.getElementById("slider-disp").style.display = "block";
     }
     
   } else {
@@ -915,6 +918,8 @@ function paneToggle() {
       document.getElementById("page8").style.display = "none";
       document.getElementById("page9").style.display = "none";
       document.getElementById("page10").style.display = "none";
+      document.getElementById("page11").style.display = "none";
+      document.getElementById("slider-disp").style.display = "none";
     // }
   }
 
