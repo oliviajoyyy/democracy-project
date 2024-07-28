@@ -3943,6 +3943,10 @@ function sResults() {
       visual.displayImmediateBlank(engine);
     } else {
       visual.displayVoting(engine);
+      // OC when visual display of rectangles is done, show buttons
+      if (visual.userInputState) {
+        finalDisplay();
+      }
     }
     paneToggle();
     
@@ -3951,6 +3955,18 @@ function sResults() {
     editBtn.mousePressed(clickedEdit);
     saveBtn.mousePressed(clickedSave);
     approvalBtn.mousePressed(clickedApprove);
+  }
+
+  function finalDisplay() {
+
+    setTimeout(function () {
+      document.body.style.backgroundColor = colorOverlay;
+      engine.bodyCount = engine.numBodies;
+      visual.finalTextDisplayUser(engine, helvFont, colorOverlay);
+      changeText(engine.decisionTxt);
+    }, 1500); // 1.5 seconds before text overlay shows
+    visual.userInputState = false;
+
   }
 
   function clickedVote() {
