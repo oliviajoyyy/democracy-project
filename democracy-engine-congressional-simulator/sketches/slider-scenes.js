@@ -1022,8 +1022,11 @@ function democracyEngineOrigin() {
 
 }
 
+let updateBtn;
+
 //user input page for number of legislative bodies (1-3)
 function sBodies() {
+  
 
   var slider1 = document.getElementById('slider01');
   // var slider2 = document.getElementById('slider02');
@@ -1098,7 +1101,11 @@ function sBodies() {
     document.getElementById("top").style.display = "block";
     document.getElementById("top").innerHTML = "NUMBER OF LEGISLATIVE BODIES";
 
-
+    let buttonDiv = document.getElementById('button-div');
+    updateBtn = createButton('Update');
+    updateBtn.id('update-btn');
+    updateBtn.class('buttons');
+    updateBtn.parent(buttonDiv);
   }
 
   this.draw = function () {
@@ -1106,14 +1113,41 @@ function sBodies() {
     // document.body.style.backgroundColor = bColor;
     // // engine.currentCongLogic(true);
     // visual.ix = 0;
-    // visual.displayImmediateBlank(engine);
-    
-    // visual.displayImmediate(engine);
 
-    visual.displayVoting(engine); // draws in real time, reset was when previous scene button clicked - not every time this scene is entered
+    visual.displayImmediateBlank(engine);
+    
+    //visual.displayImmediate(engine);
+
+    //visual.displayVoting(engine); // draws in real time, reset was when previous scene button clicked - not every time this scene is entered
 
     paneToggle();
 
+    if (userNumLegislative != engine.numLegislativeBodies) {
+      document.getElementById("update-btn").disabled = false;
+    } else {
+      document.getElementById("update-btn").disabled = true;
+    }
+    updateBtn.mousePressed(clickedUpdate);
+
+  }
+
+  function clickedUpdate() {
+    document.getElementById("update-btn").disabled = true; // diable after clicking it
+    //removeButtons();
+    //engine.setDefaultParams();
+    setEngineParams();
+    engine.numLegislativeBodies = userNumLegislative;
+    engine.numSenate = 1; // just to give default value
+
+    // reset values for calculations
+    engine.completeReset();
+    visual.completeReset();
+    userEdits = false;
+    reconfigBool = true;
+  }
+
+  function removeButtons() {
+    updateBtn.remove();
   }
 
   // function sliders() {
@@ -1238,9 +1272,40 @@ function sLegislative() {
 
   this.draw = function () {
     // draws in real time, reset was when previous scene button clicked - not every time this scene is entered
-    visual.displayVoting(engine);
+    //visual.displayVoting(engine);
+    visual.displayImmediateBlank(engine);
     paneToggle();
 
+
+    // if sliders changed any values on this page, enable update button
+    if (userNumHouse != engine.numHouse || userNumHouse2 != engine.numHouse2 || userNumSenate != engine.numVP || userNumPres != engine.numPres) {
+      document.getElementById("update-btn").disabled = false;
+    } else { // otherwise leave disabled
+      document.getElementById("update-btn").disabled = true;
+    }
+    updateBtn.mousePressed(clickedUpdate);
+
+  }
+
+  function clickedUpdate() {
+    document.getElementById("update-btn").disabled = true; // diable after clicking it
+
+    // set default params
+    //engine.setDefaultParams();
+    setEngineParams();
+    // engine.numLegislativeBodies = userNumLegislative;
+    // engine.numHouse = userNumHouse;
+    // engine.numHouse2 = userNumHouse2;
+    // engine.numSenate = userNumSenate;
+    // engine.numVP = userNumVP;
+    // engine.numPres = userNumPres;
+    //engine.numSenate = 1; // just to give default value
+
+    // reset values for calculations
+    engine.completeReset();
+    visual.completeReset();
+    userEdits = false;
+    reconfigBool = true;
   }
 
   // function destroySliders() {
@@ -3366,7 +3431,8 @@ function sBodyPass() {
     // v.dWidth = width;
     // v.dHeight = height;
     // background("#012244");
-
+    createSlider();
+    sliderVals();
   }
 
   this.enter = function () {
@@ -3384,31 +3450,34 @@ function sBodyPass() {
     document.getElementById("page10").style.display = "none";
     document.getElementById("page11").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
-    document.getElementById("vote").style.display = "none";
+    document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
     // let millisecond;
     //
     // if (millisecond == 1000) {
     //   mgr.showScene(main);
     // }
-    sliders();
+
+    // sliders();
+    sliderVals();
 
   }
 
   this.draw = function () {
-
+    visual.displayImmediateBlank(engine);
+    paneToggle();
   }
 
-  function sliders() {
+  // function sliders() {
 
 
 
-    if (userEdits == true) {
-      sliderVals();
-    } else {
-      createSlider();
-      sliderVals();
-    }
+  //   if (userEdits == true) {
+  //     sliderVals();
+  //   } else {
+  //     createSlider();
+  //     sliderVals();
+  //   }
     // NOui slider slides
     function createSlider() {
       noUiSlider.create(slider10, {
@@ -3472,7 +3541,7 @@ function sBodyPass() {
     }
 
 
-  }
+  //}
 
 }
 
@@ -3483,7 +3552,8 @@ function sYesVotes() {
   var curIndYaythresh = parseInt(engine.indYaythresh * 100);
 
   this.setup = function () {
-
+    createSlider();
+    sliderVals();
   }
 
   this.enter = function () {
@@ -3501,14 +3571,18 @@ function sYesVotes() {
     document.getElementById("page9").style.display = "none";
     document.getElementById("page10").style.display = "block";
     document.getElementById("page11").style.display = "none";
+    document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     checkParties();
-    sliders();
-
+    // sliders();
+    sliderVals();
   }
 
-  this.draw = function () { }
+  this.draw = function () { 
+    visual.displayImmediateBlank(engine);
+    paneToggle();
+  }
 
 
   function checkParties() {
@@ -3529,16 +3603,16 @@ function sYesVotes() {
     }
   }
 
-  function sliders() {
-    // NOui slider slides
+  // function sliders() {
+  //   // NOui slider slides
 
 
-    if (userEdits == true) {
-      sliderVals();
-    } else {
-      createSlider();
-      sliderVals();
-    }
+  //   if (userEdits == true) {
+  //     sliderVals();
+  //   } else {
+  //     createSlider();
+  //     sliderVals();
+  //   }
 
     function createSlider() {
       noUiSlider.create(slider12, {
@@ -3636,7 +3710,7 @@ function sYesVotes() {
 
     }
 
-  }
+  //}
 
 
 }
@@ -3662,6 +3736,7 @@ function sResults() {
     console.log("user edit count: " + userEditCount);
     console.log("user result page");
     document.getElementById("top").innerHTML = "DEMOCRACY ENGINE SIMULATOR INPUTS";
+    document.getElementById("top").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";

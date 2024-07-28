@@ -178,23 +178,7 @@ historicalActs;
     this.perRepHouse = this.govtJSON.chamber1.partyB / this.numHouse;
     this.perIndHouse = this.govtJSON.chamber1.partyC / this.numHouse;
 
-    // with 2 parties, engine logic skips chamber 2 (house2) - so set chamber2 from the config file to senate
-    // if (this.numParties == 2) {
-    //   this.nunHouse2 = this.govtJSON.chamber3.totalMembers;
-    //   //Demographics of House as decimal percentages 1 = 100%
-    //   this.perDemHouse2 = this.govtJSON.chamber3.partyA / this.numHouse2;
-    //   this.perRepHouse2 = this.govtJSON.chamber3.partyB / this.numHouse2;
-    //   this.perIndHouse2 = this.govtJSON.chamber3.partyC / this.numHouse2;
-
-    //   this.numSenate = this.govtJSON.chamber2.totalMembers;
-    //   //Demographics of Senate as decimal percentages 1 = 100%
-    //   this.perDemSenate = this.govtJSON.chamber2.partyA / this.numSenate;
-    //   this.perRepSenate = this.govtJSON.chamber2.partyB / this.numSenate;
-    //   this.perIndSenate = this.govtJSON.chamber2.partyC / this.numSenate;
-
-    // } else { // can set in order
       this.numHouse2 = this.govtJSON.chamber2.totalMembers;
-      console.log("numHouse2 " + this.govtJSON.chamber2.totalMembers);
       //Demographics of House as decimal percentages 1 = 100%
       this.perDemHouse2 = this.govtJSON.chamber2.partyA / this.numHouse2;
       this.perRepHouse2 = this.govtJSON.chamber2.partyB / this.numHouse2;
@@ -205,7 +189,6 @@ historicalActs;
       this.perDemSenate = this.govtJSON.chamber3.partyA / this.numSenate;
       this.perRepSenate = this.govtJSON.chamber3.partyB / this.numSenate;
       this.perIndSenate = this.govtJSON.chamber3.partyC / this.numSenate;
-    //}
 
     this.numVP = this.govtJSON.vicePres.totalMembers;
     //Demographics of Vice President as decimal percentages 1 = 100%
@@ -219,12 +202,12 @@ historicalActs;
     this.perRepPres = this.govtJSON.president.partyB / this.numPres;
     this.perIndPres = this.govtJSON.president.partyC / this.numPres;
 
-    this.perPass = this.govtJSON.percentMajority; // as decimal percentages
-    this.superThresh = this.govtJSON.percentSupermajority;
+    this.perPass = this.govtJSON.percentMajority / 100; // as decimal percentages
+    this.superThresh = this.govtJSON.percentSupermajority / 100;
     
-    this.demYaythresh = this.govtJSON.probabilityYesVote.partyA;
-    this.repYaythresh = this.govtJSON.probabilityYesVote.partyB;
-    this.indYaythresh = this.govtJSON.probabilityYesVote.partyC;
+    this.demYaythresh = this.govtJSON.probabilityYesVote.partyA / 100;
+    this.repYaythresh = this.govtJSON.probabilityYesVote.partyB / 100;
+    this.indYaythresh = this.govtJSON.probabilityYesVote.partyC / 100;
   }
 
   /**

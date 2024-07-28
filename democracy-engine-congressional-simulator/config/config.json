@@ -51,13 +51,13 @@
             "partyC": 0
         },
 
-        "percentMajority": 0.5,
-        "percentSupermajority": 0.67,
+        "percentMajority": 50,
+        "percentSupermajority": 67,
 
         "probabilityYesVote": {
-            "partyA": 0.7,
-            "partyB": 0.3,
-            "partyC": 0.5
+            "partyA": 70,
+            "partyB": 30,
+            "partyC": 50
         }
     },
 

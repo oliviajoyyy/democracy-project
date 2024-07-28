@@ -130,6 +130,7 @@ function setup() {
   //document.header.style.backgroundColor = bColor;
   engine = new DemocracyEngine(govtConfig, historicalActs); // OC create engine object to run voting logic
   visual = new VoteVisual(loadingImage, bColor, pColor, textColor, rectColor);
+  setDefaultUserVars(); // set user vars to params from config file
 
   noStroke();
   mgr = new SceneManager();
@@ -332,6 +333,98 @@ function defResult() {
     mgr.showScene(sDefault);
     buttonDef.elt.textContent = "DISPLAY VOTE";
   }
+}
+
+// set user vars to default config of govt
+function setDefaultUserVars() {
+  userNumLegislative = govtConfig.numLegislativeBodies;
+  userNumParties = govtConfig.numParties;
+
+  userNumHouse = govtConfig.chamber1.totalMembers;
+  userPerHouseBody[0] = govtConfig.chamber1.partyA / userNumHouse;
+  userPerHouseBody[1] = govtConfig.chamber1.partyB / userNumHouse;
+  userPerHouseBody[2] = govtConfig.chamber1.partyC / userNumHouse;
+
+  userNumHouse2 = govtConfig.chamber2.totalMembers;
+  userPerHouse2Body[0] = govtConfig.chamber2.partyA / userNumHouse2;
+  userPerHouse2Body[1] = govtConfig.chamber2.partyB / userNumHouse2;
+  userPerHouse2Body[2] = govtConfig.chamber2.partyC / userNumHouse2;
+
+  userNumSenate = govtConfig.chamber3.totalMembers;
+  userPerSenateBody[0] = govtConfig.chamber3.partyA / userNumSenate;
+  userPerSenateBody[1] = govtConfig.chamber3.partyB / userNumSenate;
+  userPerSenateBody[2] = govtConfig.chamber3.partyC / userNumSenate;
+
+  userNumVP = govtConfig.vicePres.totalMembers;
+  userPerVPBody[0] = govtConfig.vicePres.partyA / userNumVP;
+  userPerVPBody[1] = govtConfig.vicePres.partyB / userNumVP;
+  userPerVPBody[2] = govtConfig.vicePres.partyC / userNumVP;
+
+  userNumPres = govtConfig.president.totalMembers;
+  userPerPresBody[0] = govtConfig.president.partyA / userNumPres;
+  userPerPresBody[1] = govtConfig.president.partyB / userNumPres;
+  userPerPresBody[2] = govtConfig.president.partyC / userNumPres;
+
+  userBodyPass = govtConfig.percentMajority;
+  userSuperThresh = govtConfig.percentSupermajority;
+
+  userDemYaythresh = govtConfig.probabilityYesVote.partyA;
+  userRepYaythresh = govtConfig.probabilityYesVote.partyB;
+  userIndYaythresh = govtConfig.probabilityYesVote.partyC;
+
+}
+
+// set engine params to user vars
+function setEngineParams() {
+  engine.numBodies = 5; // up to 5 voting bodies
+  engine.numLegislativeBodies = parseFloat(userNumLegislative);
+  engine.numParties = userNumParties;
+
+  engine.numHouse = userNumHouse;
+  //Demographics of House as decimal percentages 1 = 100%
+  engine.perDemHouse = userPerHouseBody[0];
+  engine.perRepHouse = userPerHouseBody[1];
+  engine.perIndHouse = userPerHouseBody[2];
+  
+  engine.numHouse2 = userNumHouse2;
+  //Demographics of House 2 as decimal percentages 1 = 100%
+  engine.perDemHouse2 = userPerHouse2Body[0];
+  engine.perRepHouse2 = userPerHouse2Body[1];
+  engine.perIndHouse2 = userPerHouse2Body[2];
+
+  engine.numSenate = userNumSenate;
+  //Demographics of Senate as decimal percentages 1 = 100%
+  engine.perDemSenate = userPerSenateBody[0];
+  engine.perRepSenate = userPerSenateBody[1];
+  engine.perIndSenate = userPerSenateBody[2];
+
+  engine.numVP = userNumVP;
+  //Demographics of Vice President as decimal percentages
+  engine.perDemVP = userPerVPBody[0];
+  engine.perRepVP = userPerVPBody[1];
+  engine.perIndVP = userPerVPBody[2];
+
+  engine.numPres = userNumPres;
+  //Demographics of President as decimal percentages 1 = 100%
+  engine.perDemPres = userPerPresBody[0];
+  engine.perRepPres = userPerPresBody[1];
+  engine.perIndPres = userPerPresBody[2];
+
+  //supermajority Cutoff for override of presidential veto
+  engine.superThresh = parseFloat(userSuperThresh) / 100.0;
+  console.log("superThresh: " + engine.superThresh);
+
+  //supermajority in a body
+  engine.perPass = parseFloat(userBodyPass) / 100.0;
+  console.log("per pass: " + engine.perPass);
+
+  //Historical Likelihood of party affiliation & likelihood of 'yay' vote
+  engine.repYaythresh = parseFloat(userRepYaythresh) / 100.0;
+  console.log("rep yay thresh: " + engine.repYaythresh);
+  engine.demYaythresh = parseFloat(userDemYaythresh) / 100.0;
+  console.log("dem yay thresh: " + engine.demYaythresh);
+  engine.indYaythresh = parseFloat(userIndYaythresh) / 100.0;
+  console.log("ind yay thresh: " + engine.indYaythresh);
 }
 
 //User Input Values for Congressional Reconfiguration
