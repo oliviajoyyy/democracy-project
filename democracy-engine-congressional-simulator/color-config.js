@@ -1,4 +1,5 @@
-fetch('/democracy-engine-congressional-simulator/config/config.json')
+// fetch('/democracy-engine-congressional-simulator/config/config.json') // path works locally
+fetch('config/config.json') // path works on server
     .then(response => response.json())
     .then(data => {
         document.documentElement.style.setProperty('--bkg-color', data.cssParams.background);
