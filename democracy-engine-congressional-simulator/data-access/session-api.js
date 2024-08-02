@@ -15,7 +15,7 @@ async function addSession(session) {
 }
 
 // get all session records from database
-async function getItems() {
+async function getSessions() {
     try {
         const response = await fetch('http://localhost:3000/sessions', {
             method: 'GET',

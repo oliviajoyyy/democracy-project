@@ -4,7 +4,7 @@ const ResultSchema = require('./result-model');
 
 const ConfigSchema = new Schema({
 
-    timestamp: {type: Date, default: Date.now()},
+    timestamp: {type: String, default: Date.now()},
 
     numLegislativeBodies: Number,
     numParties: Number,

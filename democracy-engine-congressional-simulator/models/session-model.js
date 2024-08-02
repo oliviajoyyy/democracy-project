@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 const ConfigSchema = require('./config-model');
 
 const SessionSchema = new Schema({
-    timestamp: {type: Date, default: Date.now()},
+    timestamp: {type: String, default: Date.now()},
 
     uniqueID: String,
 

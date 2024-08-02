@@ -102,6 +102,7 @@ function briefDescription() {
     // gui = createGui();
     // continueBtn = createButton("Continue", width/2, height/2);
     console.log("start up scene");
+    background(bColor);
 
     document.getElementById("page-container").style.display = "block";
     document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1><h2>Description</h2>";
@@ -337,14 +338,16 @@ function newSessionScene() {
     // continueBtn = createButton("Continue", width/2, height/2);
     console.log("start up scene");
 
+    newSession();
+
     document.getElementById("page-container").style.display = "block";
     document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1><h2>New Session</h2>";
     document.getElementById("main-btn-div").style.display = "none";
 
-
     document.getElementById("start-desc").style.display = "block";
-    document.getElementById("start-desc").innerHTML = "<p>[Description here on how to use the interface]";
-    document.getElementById("start-desc").innerHTML += "<br>[Show timestamp-based name as ID for new session]</p>";
+    document.getElementById("start-desc").innerHTML = "<p>[Description here on how to use the interface]<br>";
+    document.getElementById("start-desc").innerHTML += sessionID;
+    document.getElementById("start-desc").innerHTML += "</p>";
 
     document.getElementById("top").style.display = "none";
     document.getElementById("page1").style.display = "none";
@@ -430,8 +433,19 @@ function loadSessionS1() {
 
 
     document.getElementById("start-desc").style.display = "block";
-    document.getElementById("start-desc").innerHTML = "<p>[Description here on how to use the interface]";
-    document.getElementById("start-desc").innerHTML += "<br>[List of previous sessions (fr db), includes timestamp & ID]</p>";
+    document.getElementById("start-desc").innerHTML = "<p>[Description here on how to use the interface]</p><p>";
+    // var allSessions = getAllSessions(); // array of all sessions in db
+    // console.log(allSessions);
+    getSessions().then((result) => {
+      console.log(result);
+      for (let i=0; i<result.length; i++) {
+        document.getElementById("start-desc").innerHTML += result[i].uniqueID;
+        document.getElementById("start-desc").innerHTML += "<br>";
+      }
+      document.getElementById("start-desc").innerHTML += "</p>";
+    });
+
+    //document.getElementById("start-desc").innerHTML += "<br>[List of previous sessions (fr db), includes timestamp & ID]</p>";
 
     document.getElementById("top").style.display = "none";
     document.getElementById("page1").style.display = "none";
@@ -461,6 +475,7 @@ function loadSessionS1() {
     nextBtn.id('next-btn-1');
     nextBtn.class('buttons');
     nextBtn.parent(buttonDiv);
+
   }
 
   this.draw = function () {
@@ -1228,6 +1243,9 @@ function sLegislative() {
     checkNumBodies();
     sliders();
 
+    // prevPaneBtn.mousePressed(previousPane);
+    // nextPaneBtn.mousePressed(nextPane);
+
   }
 
   this.draw = function () {
@@ -1244,6 +1262,8 @@ function sLegislative() {
       document.getElementById("update-btn").disabled = true;
     }
     updateBtn.mousePressed(clickedUpdate);
+    // prevPaneBtn.mousePressed(previousPane);
+    // nextPaneBtn.mousePressed(nextPane);
 
   }
 
@@ -1589,14 +1609,17 @@ function sMembersFirstChamber() {
   var slider1;// = document.getElementById('slider-1a'); // party a
   var slider2;// = document.getElementById('slider-1b');; // party b
   var slider3; // = document.getElementById('slider-1c');; // party c
-  var curNumHouse = parseInt(userNumHouse) //parseInt(engine.numHouse); // current number of total members in chamber 1
+  var curNumHouse = parseInt(userNumHouse); //parseInt(engine.numHouse); // current number of total members in chamber 1
   // var slider1max; // = parseInt(userNumHouse);
   // var slider2max; // = floor(slider1max / 2);
   // var slider3max; // = slider1max - slider2max;
   var maxSlider;
+  var startVals = [];
 
   this.setup = function () {
-
+    startVals[0] = userPerHouseBody[0];
+    startVals[1] = userPerHouseBody[1];
+    startVals[2] = userPerHouseBody[2];
   }
 
   this.enter = function () {
@@ -1606,6 +1629,9 @@ function sMembersFirstChamber() {
     //   maxSlider = parseInt(userNumHouse - 2); // party B and C each must have at least 1 member since 3 parties were chosen
     // } else {
       maxSlider = parseInt(userNumHouse);
+      startVals[0] = userPerHouseBody[0];
+      startVals[1] = userPerHouseBody[1];
+      startVals[2] = userPerHouseBody[2];
     //}
     // slider1max = parseInt(userNumHouse);
     // slider2max = floor(slider1max / 2);
@@ -1628,6 +1654,9 @@ function sMembersFirstChamber() {
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
+
+    let totalTxt = "Total: " + maxSlider;
+    document.getElementById("total").innerHTML = totalTxt;
 
     checkNumBodies();
     sliders();
@@ -1707,7 +1736,7 @@ function sMembersFirstChamber() {
       // if only 1 party, create slider A so that there is no change
       if (userNumParties == 1) {
         noUiSlider.create(slider1, {
-          start: (userPerHouseBody[0] * userNumHouse), // fix later where to start
+          start: (startVals[0] * maxSlider), // fix later where to start
           range: {
             'min': [maxSlider],
             'max': [maxSlider]
@@ -1726,7 +1755,7 @@ function sMembersFirstChamber() {
       } else {
 
       noUiSlider.create(slider1, {
-        start: (userPerHouseBody[0] * userNumHouse), // fix later where to start
+        start: (startVals[0] * maxSlider), // fix later where to start
         range: {
           'min': [0], //[1],
           'max': [maxSlider]
@@ -1745,7 +1774,7 @@ function sMembersFirstChamber() {
     }
 
       noUiSlider.create(slider2, {
-        start: (userPerHouseBody[1] * userNumHouse), // fix later where to start
+        start: (startVals[1] * maxSlider), // fix later where to start
         range: {
           'min': [0], //[1],
           'max': [maxSlider]
@@ -1763,7 +1792,7 @@ function sMembersFirstChamber() {
       });
 
       noUiSlider.create(slider3, {
-        start: (userPerHouseBody[2] * userNumHouse), // fix later where to start
+        start: (startVals[2] * maxSlider), // fix later where to start
         range: {
           'min': [0], //[1],
           'max': [maxSlider]
@@ -1788,13 +1817,13 @@ function sMembersFirstChamber() {
       userPerHouseBody = [];
       var numPerHouseBody = [];
       var housePercentage; // helper var
-      var numHousePartyA;
-      var numHousePartyB;
-      var numHousePartyC;
+      var numPartyA;
+      var numPartyB;
+      var numPartyC;
 
       // house
       slider1.noUiSlider.on('update', function (values, handle) {
-        numHousePartyA = values[0];
+        numPartyA = values[0];
         userPerHouseBody[0] = values[0];
         numPerHouseBody[0] = userPerHouseBody[0];
         housePercentage = userPerHouseBody[0] / userNumHouse;
@@ -1807,7 +1836,7 @@ function sMembersFirstChamber() {
 
       if (userNumParties >= 2) { // party a and b
         slider2.noUiSlider.on('update', function (values, handle) {
-          numHousePartyB = values[0];
+          numPartyB = values[0];
           userPerHouseBody[1] = values[0];
           numPerHouseBody[1] = userPerHouseBody[1];
           housePercentage = userPerHouseBody[1] / userNumHouse;
@@ -1823,7 +1852,7 @@ function sMembersFirstChamber() {
 
       if (userNumParties == 3) { // party a b c
         slider3.noUiSlider.on('update', function (values, handle) {
-          numHousePartyC = values[0];
+          numPartyC = values[0];
           userPerHouseBody[2] = values[0];
           numPerHouseBody[2] = userPerHouseBody[2];
           housePercentage = userPerHouseBody[2] / userNumHouse;
@@ -1838,29 +1867,29 @@ function sMembersFirstChamber() {
       if (userNumParties == 2) {
         // when user slides the party A slider, update slider B
         slider1.noUiSlider.on('slide', function(event) {
-          slider2.noUiSlider.set((userNumHouse - numHousePartyA));
-          console.log("minus value: " + (userNumHouse - numHousePartyA));
+          slider2.noUiSlider.set((userNumHouse - numPartyA));
+          console.log("minus value: " + (userNumHouse - numPartyA));
         });
 
         // when user slides the party B slider, update slider A
         slider2.noUiSlider.on('slide', function(event) {
-          slider1.noUiSlider.set(userNumHouse - numHousePartyB);
+          slider1.noUiSlider.set(userNumHouse - numPartyB);
         });
       } 
       else if (userNumParties == 3) {
         
         // when user slides the party A slider, update sliders B and C evenly
         slider1.noUiSlider.on('slide', function(event) {
-          let sliderBval = floor((userNumHouse - numHousePartyA) / 2);
-          let sliderCval = (userNumHouse - numHousePartyA) - sliderBval;
+          let sliderBval = floor((userNumHouse - numPartyA) / 2);
+          let sliderCval = (userNumHouse - numPartyA) - sliderBval;
           slider2.noUiSlider.set(sliderBval);
           slider3.noUiSlider.set(sliderCval);
         });
 
         // // when user slides the party B slider, update sliders A and B evenly
         // slider2.noUiSlider.on('slide', function(event) {
-        //   let sliderAval = floor((userNumHouse - numHousePartyB) / 2);
-        //   let sliderCval = (userNumHouse - numHousePartyB) - sliderAval;
+        //   let sliderAval = floor((userNumHouse - numPartyB) / 2);
+        //   let sliderCval = (userNumHouse - numPartyB) - sliderAval;
         //   slider1.noUiSlider.set(sliderAval);
         //   slider3.noUiSlider.set(sliderCval);
         // });
@@ -1868,19 +1897,19 @@ function sMembersFirstChamber() {
         // when user slides party B slider, allow party B to go up to party A
         // and make party C update to the remainder
         slider2.noUiSlider.on('slide', function(event) {
-          if (parseInt(slider2.noUiSlider.get()) > userNumHouse - numHousePartyA) {
-            slider2.noUiSlider.set(userNumHouse - numHousePartyA);
+          if (parseInt(slider2.noUiSlider.get()) > userNumHouse - numPartyA) {
+            slider2.noUiSlider.set(userNumHouse - numPartyA);
           }
-          let sliderAval = floor((userNumHouse - numHousePartyB) / 2);
-          let sliderCval = (userNumHouse - numHousePartyB) - numHousePartyA;
+          let sliderAval = floor((userNumHouse - numPartyB) / 2);
+          let sliderCval = (userNumHouse - numPartyB) - numPartyA;
           //slider1.noUiSlider.set(sliderAval);
           slider3.noUiSlider.set(sliderCval);
         });
 
         // when user slides the party B slider, update sliders A and B evenly
         slider3.noUiSlider.on('slide', function(event) {
-          let sliderAval = floor((userNumHouse - numHousePartyC) / 2);
-          let sliderBval = (userNumHouse - numHousePartyC) - sliderAval;
+          let sliderAval = floor((userNumHouse - numPartyC) / 2);
+          let sliderBval = (userNumHouse - numPartyC) - sliderAval;
           slider1.noUiSlider.set(sliderAval);
           slider2.noUiSlider.set(sliderBval);
         });
@@ -1897,18 +1926,24 @@ function sMembersSecondChamber() {
   var slider1;// = document.getElementById('slider-1a'); // party a
   var slider2;// = document.getElementById('slider-1b');; // party b
   var slider3; // = document.getElementById('slider-1c');; // party c
-  var curNumHouse2 = parseInt(userNumHouse2) //parseInt(engine.numHouse); // current number of total members in chamber 1
+  var curNumHouse2 = parseInt(userNumHouse2); //parseInt(engine.numHouse); // current number of total members in chamber 1
   var maxSlider;
+  var startVals = [];
   // var slider1max; // = parseInt(userNumHouse);
   // var slider2max; // = floor(slider1max / 2);
   // var slider3max; // = slider1max - slider2max;
 
   this.setup = function () {
-
+    startVals[0] = userPerHouse2Body[0];
+    startVals[1] = userPerHouse2Body[1];
+    startVals[2] = userPerHouse2Body[2];
   }
 
   this.enter = function () {
     maxSlider = parseInt(userNumHouse2);
+    startVals[0] = userPerHouse2Body[0];
+    startVals[1] = userPerHouse2Body[1];
+    startVals[2] = userPerHouse2Body[2];
     // slider1max = parseInt(userNumHouse2);
     // slider2max = floor(slider1max / 2);
     // slider3max = slider1max - slider2max;
@@ -1931,6 +1966,9 @@ function sMembersSecondChamber() {
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
 
+    let totalTxt = "Total: " + maxSlider;
+    document.getElementById("total2").innerHTML = totalTxt;
+
     checkNumBodies();
     sliders();    
   }
@@ -1939,6 +1977,26 @@ function sMembersSecondChamber() {
     visual.displayVoting(engine);
     paneToggle();
     console.log("Party A: " + userPerHouse2Body[0] + " Party B: " + userPerHouse2Body[1] + " Party C: " + userPerHouse2Body[2]);
+    // if sliders changed any values on this page, enable update button
+    if (userPerHouse2Body[0] != engine.perDemHouse2 || userPerHouse2Body[1] != engine.perRepHouse2 || userPerHouse2Body[2] != engine.perIndHouse2) {
+      document.getElementById("update-btn").disabled = false;
+    } else { // otherwise leave disabled
+      document.getElementById("update-btn").disabled = true;
+    }
+    updateBtn.mousePressed(clickedUpdate);
+
+  }
+
+  function clickedUpdate() {
+    document.getElementById("update-btn").disabled = true; // diable after clicking it
+
+    setEngineParams();
+
+    // reset values for calculations
+    engine.completeReset();
+    visual.completeReset();
+    userEdits = false;
+    reconfigBool = true;
   }
 
   function checkNumBodies() {
@@ -1974,11 +2032,31 @@ function sMembersSecondChamber() {
     sliderVals();
 
     function createSlider() {
+      // if only 1 party, create slider A so that there is no change
+      if (userNumParties == 1) {
+        noUiSlider.create(slider1, {
+          start: (startVals[0] * maxSlider), // fix later where to start
+          range: {
+            'min': [maxSlider],
+            'max': [maxSlider]
+          },
+          cssPrefix: 'noUi-',
+          tooltips: true,
+          pips: {
+            mode: 'range',
+            density: 'range',
+          },
+          step: 0,
+          format: wNumb({
+            decimals: 0
+          })
+        });
+      } else {
 
       noUiSlider.create(slider1, {
-        start: floor(maxSlider/2), // fix later where to start
+        start: (startVals[0] * maxSlider), // fix later where to start
         range: {
-          'min': [1],
+          'min': [0], //[1],
           'max': [maxSlider]
         },
         cssPrefix: 'noUi-',
@@ -1992,11 +2070,12 @@ function sMembersSecondChamber() {
           decimals: 0
         })
       });
+    }
 
       noUiSlider.create(slider2, {
-        start: floor(maxSlider/2), // fix later where to start
+        start: (startVals[1] * maxSlider), // fix later where to start
         range: {
-          'min': [1],
+          'min': [0], //[1],
           'max': [maxSlider]
         },
         cssPrefix: 'noUi-',
@@ -2012,9 +2091,9 @@ function sMembersSecondChamber() {
       });
 
       noUiSlider.create(slider3, {
-        start: floor(maxSlider/2), // fix later where to start
+        start: (startVals[2] * maxSlider), // fix later where to start
         range: {
-          'min': [1],
+          'min': [0], //[1],
           'max': [maxSlider]
         },
         cssPrefix: 'noUi-',
@@ -2037,9 +2116,13 @@ function sMembersSecondChamber() {
       userPerHouse2Body = [];
       var numPerHouse2Body = [];
       var house2Percentage; // helper var
+      var numPartyA;
+      var numPartyB;
+      var numPartyC;
 
       // house
       slider1.noUiSlider.on('update', function (values, handle) {
+        numPartyA = values[0];
         userPerHouse2Body[0] = values[0];
         numPerHouse2Body[0] = userPerHouse2Body[0];
         house2Percentage = userPerHouse2Body[0] / userNumHouse2;
@@ -2049,6 +2132,7 @@ function sMembersSecondChamber() {
 
       if (userNumParties >= 2) { // party a and b
         slider2.noUiSlider.on('update', function (values, handle) {
+          numPartyB = values[0];
           userPerHouse2Body[1] = values[0];
           numPerHouse2Body[1] = userPerHouse2Body[1];
           house2Percentage = userPerHouse2Body[1] / userNumHouse2;
@@ -2061,6 +2145,7 @@ function sMembersSecondChamber() {
 
       if (userNumParties == 3) { // party a b c
         slider3.noUiSlider.on('update', function (values, handle) {
+          numPartyC = values[0];
           userPerHouse2Body[2] = values[0];
           numPerHouse2Body[2] = userPerHouse2Body[2];
           house2Percentage = userPerHouse2Body[2] / userNumHouse2;
@@ -2070,6 +2155,69 @@ function sMembersSecondChamber() {
       } else { // set party c to 0
         userPerHouse2Body[2] = 0;
       }
+
+      if (userNumParties == 2) {
+        // when user slides the party A slider, update slider B
+        slider1.noUiSlider.on('slide', function(event) {
+          slider2.noUiSlider.set((maxSlider - numPartyA));
+          console.log("minus value: " + (maxSlider - numPartyA));
+        });
+
+        // when user slides the party B slider, update slider A
+        slider2.noUiSlider.on('slide', function(event) {
+          slider1.noUiSlider.set(maxSlider - numPartyB);
+        });
+      } 
+      else if (userNumParties == 3) {
+        
+        // when user slides the party A slider, update sliders B and C evenly
+        slider1.noUiSlider.on('slide', function(event) {
+          let sliderBval = floor((maxSlider - numPartyA) / 2);
+          let sliderCval = (maxSlider - numPartyA) - sliderBval;
+          slider2.noUiSlider.set(sliderBval);
+          slider3.noUiSlider.set(sliderCval);
+        });
+
+        // // when user slides the party B slider, update sliders A and B evenly
+        // slider2.noUiSlider.on('slide', function(event) {
+        //   let sliderAval = floor((maxSlider - numPartyB) / 2);
+        //   let sliderCval = (maxSlider - numPartyB) - sliderAval;
+        //   slider1.noUiSlider.set(sliderAval);
+        //   slider3.noUiSlider.set(sliderCval);
+        // });
+
+        // when user slides party B slider, allow party B to go up to party A remainder
+        // and make party C update to the remainder of party A + B
+        slider2.noUiSlider.on('slide', function(event) {
+          if (parseInt(slider2.noUiSlider.get()) > maxSlider - numPartyA) {
+            slider2.noUiSlider.set(maxSlider - numPartyA);
+          }
+          let sliderAval = floor((maxSlider - numPartyB) / 2);
+          let sliderCval = (maxSlider - numPartyB) - numPartyA;
+          //slider1.noUiSlider.set(sliderAval);
+          slider3.noUiSlider.set(sliderCval);
+        });
+
+        // // when user slides the party C slider, update sliders A and B evenly
+        // slider3.noUiSlider.on('slide', function(event) {
+        //   let sliderAval = floor((maxSlider - numPartyC) / 2);
+        //   let sliderBval = (maxSlider - numPartyC) - sliderAval;
+        //   slider1.noUiSlider.set(sliderAval);
+        //   slider2.noUiSlider.set(sliderBval);
+        // });
+
+        // when user slides party C slider, allow party C to go up to party A remainder
+        // and make party B update to the remainder of A + B
+        // i.e. reverses of what happens when slider B is moved
+        slider3.noUiSlider.on('slide', function(event) {
+          let sliderCval = maxSlider - numPartyA;
+          if (parseInt(slider3.noUiSlider.get()) > sliderCval) {
+            slider3.noUiSlider.set(sliderCval);
+          }          
+          slider2.noUiSlider.set((maxSlider - numPartyC) - numPartyA);
+        });
+      }
+
     }
   }
 }
@@ -2079,15 +2227,21 @@ function sMembersThirdChamber() {
   var slider1;// = document.getElementById('slider-1a'); // party a
   var slider2;// = document.getElementById('slider-1b');; // party b
   var slider3; // = document.getElementById('slider-1c');; // party c
-  var curNumSenate = parseInt(userNumSenate) //parseInt(engine.numHouse); // current number of total members in chamber 1
+  var curNumSenate = parseInt(userNumSenate); //parseInt(engine.numHouse); // current number of total members in chamber 1
   var maxSlider;
+  var startVals = [];
 
   this.setup = function () {
-
+    startVals[0] = userPerSenateBody[0];
+    startVals[1] = userPerSenateBody[1];
+    startVals[2] = userPerSenateBody[2];
   }
 
   this.enter = function () {
     maxSlider = parseInt(userNumSenate);
+    startVals[0] = userPerSenateBody[0];
+    startVals[1] = userPerSenateBody[1];
+    startVals[2] = userPerSenateBody[2];
 
     console.log("Slider Page Chamber 3 Party Members ");
     document.getElementById("top").style.display = "block";
@@ -2107,6 +2261,9 @@ function sMembersThirdChamber() {
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
 
+    let totalTxt = "Total: " + maxSlider;
+    document.getElementById("total3").innerHTML = totalTxt;
+
     checkNumBodies();
     sliders();
     //sliderVals();
@@ -2117,6 +2274,26 @@ function sMembersThirdChamber() {
     visual.displayVoting(engine);
     paneToggle();
     console.log("Party A: " + userPerSenateBody[0] + " Party B: " + userPerSenateBody[1] + " Party C: " + userPerSenateBody[2]);
+    // if sliders changed any values on this page, enable update button
+    if (userPerSenateBody[0] != engine.perDemSenate || userPerSenateBody[1] != engine.perRepSenate || userPerSenateBody[2] != engine.perIndSenate) {
+      document.getElementById("update-btn").disabled = false;
+    } else { // otherwise leave disabled
+      document.getElementById("update-btn").disabled = true;
+    }
+    updateBtn.mousePressed(clickedUpdate);
+
+  }
+
+  function clickedUpdate() {
+    document.getElementById("update-btn").disabled = true; // diable after clicking it
+
+    setEngineParams();
+
+    // reset values for calculations
+    engine.completeReset();
+    visual.completeReset();
+    userEdits = false;
+    reconfigBool = true;
   }
 
   function checkNumBodies() {
@@ -2152,11 +2329,31 @@ function sMembersThirdChamber() {
     sliderVals();
 
     function createSlider() {
+      // if only 1 party, create slider A so that there is no change
+      if (userNumParties == 1) {
+        noUiSlider.create(slider1, {
+          start: (startVals[0] * maxSlider), // fix later where to start
+          range: {
+            'min': [maxSlider],
+            'max': [maxSlider]
+          },
+          cssPrefix: 'noUi-',
+          tooltips: true,
+          pips: {
+            mode: 'range',
+            density: 'range',
+          },
+          step: 0,
+          format: wNumb({
+            decimals: 0
+          })
+        });
+      } else {
 
       noUiSlider.create(slider1, {
-        start: floor(maxSlider/2), // fix later where to start
+        start: (startVals[0] * maxSlider), // fix later where to start
         range: {
-          'min': [1],
+          'min': [0], //[1],
           'max': [maxSlider]
         },
         cssPrefix: 'noUi-',
@@ -2170,11 +2367,12 @@ function sMembersThirdChamber() {
           decimals: 0
         })
       });
+    }
 
       noUiSlider.create(slider2, {
-        start: floor(maxSlider/2), // fix later where to start
+        start: (startVals[1] * maxSlider), // fix later where to start
         range: {
-          'min': [1],
+          'min': [0], //[1],
           'max': [maxSlider]
         },
         cssPrefix: 'noUi-',
@@ -2190,9 +2388,9 @@ function sMembersThirdChamber() {
       });
 
       noUiSlider.create(slider3, {
-        start: floor(maxSlider/2), // fix later where to start
+        start: (startVals[2] * maxSlider), // fix later where to start
         range: {
-          'min': [1],
+          'min': [0], //[1],
           'max': [maxSlider]
         },
         cssPrefix: 'noUi-',
@@ -2215,9 +2413,13 @@ function sMembersThirdChamber() {
       userPerSenateBody = [];
       var numPerSenateBody = [];
       var senatePercentage; // helper var
+      var numPartyA;
+      var numPartyB;
+      var numPartyC;
 
       // house
       slider1.noUiSlider.on('update', function (values, handle) {
+        numPartyA = values[0];
         userPerSenateBody[0] = values[0];
         numPerSenateBody[0] = userPerSenateBody[0];
         senatePercentage = userPerSenateBody[0] / userNumSenate;
@@ -2227,6 +2429,7 @@ function sMembersThirdChamber() {
 
       if (userNumParties >= 2) { // party a and b
         slider2.noUiSlider.on('update', function (values, handle) {
+          numPartyB = values[0];
           userPerSenateBody[1] = values[0];
           numPerSenateBody[1] = userPerSenateBody[1];
           senatePercentage = userPerSenateBody[1] / userNumSenate;
@@ -2239,6 +2442,7 @@ function sMembersThirdChamber() {
 
       if (userNumParties == 3) { // party a b c
         slider3.noUiSlider.on('update', function (values, handle) {
+          numPartyC = values[0];
           userPerSenateBody[2] = values[0];
           numPerSenateBody[2] = userPerSenateBody[2];
           senatePercentage = userPerSenateBody[2] / userNumSenate;
@@ -2247,6 +2451,69 @@ function sMembersThirdChamber() {
         });
       } else { // set party c to 0
         userPerSenateBody[2] = 0;
+      }
+
+
+      if (userNumParties == 2) {
+        // when user slides the party A slider, update slider B
+        slider1.noUiSlider.on('slide', function(event) {
+          slider2.noUiSlider.set((maxSlider - numPartyA));
+          console.log("minus value: " + (maxSlider - numPartyA));
+        });
+
+        // when user slides the party B slider, update slider A
+        slider2.noUiSlider.on('slide', function(event) {
+          slider1.noUiSlider.set(maxSlider - numPartyB);
+        });
+      } 
+      else if (userNumParties == 3) {
+        
+        // when user slides the party A slider, update sliders B and C evenly
+        slider1.noUiSlider.on('slide', function(event) {
+          let sliderBval = floor((maxSlider - numPartyA) / 2);
+          let sliderCval = (maxSlider - numPartyA) - sliderBval;
+          slider2.noUiSlider.set(sliderBval);
+          slider3.noUiSlider.set(sliderCval);
+        });
+
+        // // when user slides the party B slider, update sliders A and B evenly
+        // slider2.noUiSlider.on('slide', function(event) {
+        //   let sliderAval = floor((maxSlider - numPartyB) / 2);
+        //   let sliderCval = (maxSlider - numPartyB) - sliderAval;
+        //   slider1.noUiSlider.set(sliderAval);
+        //   slider3.noUiSlider.set(sliderCval);
+        // });
+
+        // when user slides party B slider, allow party B to go up to party A remainder
+        // and make party C update to the remainder of party A + B
+        slider2.noUiSlider.on('slide', function(event) {
+          if (parseInt(slider2.noUiSlider.get()) > maxSlider - numPartyA) {
+            slider2.noUiSlider.set(maxSlider - numPartyA);
+          }
+          let sliderAval = floor((maxSlider - numPartyB) / 2);
+          let sliderCval = (maxSlider - numPartyB) - numPartyA;
+          //slider1.noUiSlider.set(sliderAval);
+          slider3.noUiSlider.set(sliderCval);
+        });
+
+        // // when user slides the party C slider, update sliders A and B evenly
+        // slider3.noUiSlider.on('slide', function(event) {
+        //   let sliderAval = floor((maxSlider - numPartyC) / 2);
+        //   let sliderBval = (maxSlider - numPartyC) - sliderAval;
+        //   slider1.noUiSlider.set(sliderAval);
+        //   slider2.noUiSlider.set(sliderBval);
+        // });
+
+        // when user slides party C slider, allow party C to go up to party A remainder
+        // and make party B update to the remainder of A + B
+        // i.e. reverses of what happens when slider B is moved
+        slider3.noUiSlider.on('slide', function(event) {
+          let sliderCval = maxSlider - numPartyA;
+          if (parseInt(slider3.noUiSlider.get()) > sliderCval) {
+            slider3.noUiSlider.set(sliderCval);
+          }          
+          slider2.noUiSlider.set((maxSlider - numPartyC) - numPartyA);
+        });
       }
     }
   }
@@ -2257,15 +2524,21 @@ function sMembersVP() {
   var slider1;// = document.getElementById('slider-1a'); // party a
   var slider2;// = document.getElementById('slider-1b');; // party b
   var slider3; // = document.getElementById('slider-1c');; // party c
-  var curNumVP = parseInt(userNumVP) //parseInt(engine.numHouse); // current number of total members in chamber 1
+  var curNumVP = parseInt(userNumVP); //parseInt(engine.numHouse); // current number of total members in chamber 1
   var maxSlider;
+  var startVals = [];
 
   this.setup = function () {
-
+    startVals[0] = userPerVPBody[0];
+    startVals[1] = userPerVPBody[1];
+    startVals[2] = userPerVPBody[2];
   }
 
   this.enter = function () {
     maxSlider = parseInt(userNumVP);
+    startVals[0] = userPerVPBody[0];
+    startVals[1] = userPerVPBody[1];
+    startVals[2] = userPerVPBody[2];
 
     console.log("Slider Page VP Party Members ");
     document.getElementById("top").style.display = "block";
@@ -2285,6 +2558,9 @@ function sMembersVP() {
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
 
+    let totalTxt = "Total: " + maxSlider;
+    document.getElementById("total-vp").innerHTML = totalTxt;
+
     checkNumBodies();
     sliders();
     //sliderVals();
@@ -2295,6 +2571,26 @@ function sMembersVP() {
     visual.displayVoting(engine);
     paneToggle();
     console.log("Party A: " + userPerVPBody[0] + " Party B: " + userPerVPBody[1] + " Party C: " + userPerVPBody[2]);
+    // if sliders changed any values on this page, enable update button
+    if (userPerVPBody[0] != engine.perDemVP || userPerVPBody[1] != engine.perRepVP || userPerVPBody[2] != engine.perIndVP) {
+      document.getElementById("update-btn").disabled = false;
+    } else { // otherwise leave disabled
+      document.getElementById("update-btn").disabled = true;
+    }
+    updateBtn.mousePressed(clickedUpdate);
+
+  }
+
+  function clickedUpdate() {
+    document.getElementById("update-btn").disabled = true; // diable after clicking it
+
+    setEngineParams();
+
+    // reset values for calculations
+    engine.completeReset();
+    visual.completeReset();
+    userEdits = false;
+    reconfigBool = true;
   }
 
   function checkNumBodies() {
@@ -2330,11 +2626,31 @@ function sMembersVP() {
     sliderVals();
 
     function createSlider() {
+      // if only 1 party, create slider A so that there is no change
+      if (userNumParties == 1) {
+        noUiSlider.create(slider1, {
+          start: (startVals[0] * maxSlider), // fix later where to start
+          range: {
+            'min': [maxSlider],
+            'max': [maxSlider]
+          },
+          cssPrefix: 'noUi-',
+          tooltips: true,
+          pips: {
+            mode: 'range',
+            density: 'range',
+          },
+          step: 0,
+          format: wNumb({
+            decimals: 0
+          })
+        });
+      } else {
 
       noUiSlider.create(slider1, {
-        start: floor(maxSlider/2), // fix later where to start
+        start: (startVals[0] * maxSlider), // fix later where to start
         range: {
-          'min': [1],
+          'min': [0], //[1],
           'max': [maxSlider]
         },
         cssPrefix: 'noUi-',
@@ -2348,11 +2664,12 @@ function sMembersVP() {
           decimals: 0
         })
       });
+    }
 
       noUiSlider.create(slider2, {
-        start: floor(maxSlider/2), // fix later where to start
+        start: (startVals[1] * maxSlider), // fix later where to start
         range: {
-          'min': [1],
+          'min': [0], //[1],
           'max': [maxSlider]
         },
         cssPrefix: 'noUi-',
@@ -2368,9 +2685,9 @@ function sMembersVP() {
       });
 
       noUiSlider.create(slider3, {
-        start: floor(maxSlider/2), // fix later where to start
+        start: (startVals[2] * maxSlider), // fix later where to start
         range: {
-          'min': [1],
+          'min': [0], //[1],
           'max': [maxSlider]
         },
         cssPrefix: 'noUi-',
@@ -2393,9 +2710,13 @@ function sMembersVP() {
       userPerVPBody = [];
       var numPerVPBody = [];
       var vpPercentage; // helper var
+      var numPartyA;
+      var numPartyB;
+      var numPartyC;
 
       // house
       slider1.noUiSlider.on('update', function (values, handle) {
+        numPartyA = values[0];
         userPerVPBody[0] = values[0];
         numPerVPBody[0] = userPerVPBody[0];
         vpPercentage = userPerVPBody[0] / userNumVP;
@@ -2405,6 +2726,7 @@ function sMembersVP() {
 
       if (userNumParties >= 2) { // party a and b
         slider2.noUiSlider.on('update', function (values, handle) {
+          numPartyB = values[0];
           userPerVPBody[1] = values[0];
           numPerVPBody[1] = userPerVPBody[1];
           vpPercentage = userPerVPBody[1] / userNumVP;
@@ -2417,6 +2739,7 @@ function sMembersVP() {
 
       if (userNumParties == 3) { // party a b c
         slider3.noUiSlider.on('update', function (values, handle) {
+          numPartyC = values[0];
           userPerVPBody[2] = values[0];
           numPerVPBody[2] = userPerVPBody[2];
           vpPercentage = userPerVPBody[2] / userNumVP;
@@ -2425,6 +2748,68 @@ function sMembersVP() {
         });
       } else { // set party c to 0
         userPerVPBody[2] = 0;
+      }
+
+      if (userNumParties == 2) {
+        // when user slides the party A slider, update slider B
+        slider1.noUiSlider.on('slide', function(event) {
+          slider2.noUiSlider.set((maxSlider - numPartyA));
+          console.log("minus value: " + (maxSlider - numPartyA));
+        });
+
+        // when user slides the party B slider, update slider A
+        slider2.noUiSlider.on('slide', function(event) {
+          slider1.noUiSlider.set(maxSlider - numPartyB);
+        });
+      } 
+      else if (userNumParties == 3) {
+        
+        // when user slides the party A slider, update sliders B and C evenly
+        slider1.noUiSlider.on('slide', function(event) {
+          let sliderBval = floor((maxSlider - numPartyA) / 2);
+          let sliderCval = (maxSlider - numPartyA) - sliderBval;
+          slider2.noUiSlider.set(sliderBval);
+          slider3.noUiSlider.set(sliderCval);
+        });
+
+        // // when user slides the party B slider, update sliders A and B evenly
+        // slider2.noUiSlider.on('slide', function(event) {
+        //   let sliderAval = floor((maxSlider - numPartyB) / 2);
+        //   let sliderCval = (maxSlider - numPartyB) - sliderAval;
+        //   slider1.noUiSlider.set(sliderAval);
+        //   slider3.noUiSlider.set(sliderCval);
+        // });
+
+        // when user slides party B slider, allow party B to go up to party A remainder
+        // and make party C update to the remainder of party A + B
+        slider2.noUiSlider.on('slide', function(event) {
+          if (parseInt(slider2.noUiSlider.get()) > maxSlider - numPartyA) {
+            slider2.noUiSlider.set(maxSlider - numPartyA);
+          }
+          let sliderAval = floor((maxSlider - numPartyB) / 2);
+          let sliderCval = (maxSlider - numPartyB) - numPartyA;
+          //slider1.noUiSlider.set(sliderAval);
+          slider3.noUiSlider.set(sliderCval);
+        });
+
+        // // when user slides the party C slider, update sliders A and B evenly
+        // slider3.noUiSlider.on('slide', function(event) {
+        //   let sliderAval = floor((maxSlider - numPartyC) / 2);
+        //   let sliderBval = (maxSlider - numPartyC) - sliderAval;
+        //   slider1.noUiSlider.set(sliderAval);
+        //   slider2.noUiSlider.set(sliderBval);
+        // });
+
+        // when user slides party C slider, allow party C to go up to party A remainder
+        // and make party B update to the remainder of A + B
+        // i.e. reverses of what happens when slider B is moved
+        slider3.noUiSlider.on('slide', function(event) {
+          let sliderCval = maxSlider - numPartyA;
+          if (parseInt(slider3.noUiSlider.get()) > sliderCval) {
+            slider3.noUiSlider.set(sliderCval);
+          }          
+          slider2.noUiSlider.set((maxSlider - numPartyC) - numPartyA);
+        });
       }
     }
   }
@@ -2436,15 +2821,21 @@ function sMembersPres() {
   var slider1;// = document.getElementById('slider-1a'); // party a
   var slider2;// = document.getElementById('slider-1b');; // party b
   var slider3; // = document.getElementById('slider-1c');; // party c
-  var curNumPres = parseInt(userNumPres) //parseInt(engine.numHouse); // current number of total members in chamber 1
+  var curNumPres = parseInt(userNumPres); //parseInt(engine.numHouse); // current number of total members in chamber 1
   var maxSlider;
+  var startVals = [];
 
   this.setup = function () {
-    
+    startVals[0] = userPerPresBody[0];
+    startVals[1] = userPerPresBody[1];
+    startVals[2] = userPerPresBody[2];
   }
 
   this.enter = function () {
     maxSlider = parseInt(userNumPres);
+    startVals[0] = userPerPresBody[0];
+    startVals[1] = userPerPresBody[1];
+    startVals[2] = userPerPresBody[2];
 
     console.log("Slider Page Pres Party Members ");
     document.getElementById("top").style.display = "block";
@@ -2464,6 +2855,9 @@ function sMembersPres() {
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
 
+    let totalTxt = "Total: " + maxSlider;
+    document.getElementById("total-pres").innerHTML = totalTxt;
+
     checkNumBodies();
     sliders();
     //sliderVals();
@@ -2474,6 +2868,26 @@ function sMembersPres() {
     visual.displayVoting(engine);
     paneToggle();
     console.log("Party A: " + userPerPresBody[0] + " Party B: " + userPerPresBody[1] + " Party C: " + userPerPresBody[2]);
+    // if sliders changed any values on this page, enable update button
+    if (userPerPresBody[0] != engine.perDemPres || userPerPresBody[1] != engine.perRepPres || userPerPresBody[2] != engine.perIndPres) {
+      document.getElementById("update-btn").disabled = false;
+    } else { // otherwise leave disabled
+      document.getElementById("update-btn").disabled = true;
+    }
+    updateBtn.mousePressed(clickedUpdate);
+
+  }
+
+  function clickedUpdate() {
+    document.getElementById("update-btn").disabled = true; // diable after clicking it
+
+    setEngineParams();
+
+    // reset values for calculations
+    engine.completeReset();
+    visual.completeReset();
+    userEdits = false;
+    reconfigBool = true;
   }
 
   function checkNumBodies() {
@@ -2509,11 +2923,31 @@ function sMembersPres() {
     sliderVals();
 
     function createSlider() {
+      // if only 1 party, create slider A so that there is no change
+      if (userNumParties == 1) {
+        noUiSlider.create(slider1, {
+          start: (startVals[0] * maxSlider), // fix later where to start
+          range: {
+            'min': [maxSlider],
+            'max': [maxSlider]
+          },
+          cssPrefix: 'noUi-',
+          tooltips: true,
+          pips: {
+            mode: 'range',
+            density: 'range',
+          },
+          step: 0,
+          format: wNumb({
+            decimals: 0
+          })
+        });
+      } else {
 
       noUiSlider.create(slider1, {
-        start: floor(maxSlider/2), // fix later where to start
+        start: (startVals[0] * maxSlider), // fix later where to start
         range: {
-          'min': [1],
+          'min': [0], //[1],
           'max': [maxSlider]
         },
         cssPrefix: 'noUi-',
@@ -2527,11 +2961,12 @@ function sMembersPres() {
           decimals: 0
         })
       });
+    }
 
       noUiSlider.create(slider2, {
-        start: floor(maxSlider/2), // fix later where to start
+        start: (startVals[1] * maxSlider), // fix later where to start
         range: {
-          'min': [1],
+          'min': [0], //[1],
           'max': [maxSlider]
         },
         cssPrefix: 'noUi-',
@@ -2547,9 +2982,9 @@ function sMembersPres() {
       });
 
       noUiSlider.create(slider3, {
-        start: floor(maxSlider/2), // fix later where to start
+        start: (startVals[2] * maxSlider), // fix later where to start
         range: {
-          'min': [1],
+          'min': [0], //[1],
           'max': [maxSlider]
         },
         cssPrefix: 'noUi-',
@@ -2572,9 +3007,13 @@ function sMembersPres() {
       userPerPresBody = [];
       var numPerPresBody = [];
       var presPercentage; // helper var
+      var numPartyA;
+      var numPartyB;
+      var numPartyC;
 
       // house
       slider1.noUiSlider.on('update', function (values, handle) {
+        numPartyA = values[0];
         userPerPresBody[0] = values[0];
         numPerPresBody[0] = userPerPresBody[0];
         presPercentage = userPerPresBody[0] / userNumPres;
@@ -2584,6 +3023,7 @@ function sMembersPres() {
 
       if (userNumParties >= 2) { // party a and b
         slider2.noUiSlider.on('update', function (values, handle) {
+          numPartyB = values[0];
           userPerPresBody[1] = values[0];
           numPerPresBody[1] = userPerPresBody[1];
           presPercentage = userPerPresBody[1] / userNumPres;
@@ -2596,6 +3036,7 @@ function sMembersPres() {
 
       if (userNumParties == 3) { // party a b c
         slider3.noUiSlider.on('update', function (values, handle) {
+          numPartyC = values[0];
           userPerPresBody[2] = values[0];
           numPerPresBody[2] = userPerPresBody[2];
           presPercentage = userPerPresBody[2] / userNumPres;
@@ -2604,6 +3045,68 @@ function sMembersPres() {
         });
       } else { // set party c to 0
         userPerPresBody[2] = 0;
+      }
+
+      if (userNumParties == 2) {
+        // when user slides the party A slider, update slider B
+        slider1.noUiSlider.on('slide', function(event) {
+          slider2.noUiSlider.set((maxSlider - numPartyA));
+          console.log("minus value: " + (maxSlider - numPartyA));
+        });
+
+        // when user slides the party B slider, update slider A
+        slider2.noUiSlider.on('slide', function(event) {
+          slider1.noUiSlider.set(maxSlider - numPartyB);
+        });
+      } 
+      else if (userNumParties == 3) {
+        
+        // when user slides the party A slider, update sliders B and C evenly
+        slider1.noUiSlider.on('slide', function(event) {
+          let sliderBval = floor((maxSlider - numPartyA) / 2);
+          let sliderCval = (maxSlider - numPartyA) - sliderBval;
+          slider2.noUiSlider.set(sliderBval);
+          slider3.noUiSlider.set(sliderCval);
+        });
+
+        // // when user slides the party B slider, update sliders A and B evenly
+        // slider2.noUiSlider.on('slide', function(event) {
+        //   let sliderAval = floor((maxSlider - numPartyB) / 2);
+        //   let sliderCval = (maxSlider - numPartyB) - sliderAval;
+        //   slider1.noUiSlider.set(sliderAval);
+        //   slider3.noUiSlider.set(sliderCval);
+        // });
+
+        // when user slides party B slider, allow party B to go up to party A remainder
+        // and make party C update to the remainder of party A + B
+        slider2.noUiSlider.on('slide', function(event) {
+          if (parseInt(slider2.noUiSlider.get()) > maxSlider - numPartyA) {
+            slider2.noUiSlider.set(maxSlider - numPartyA);
+          }
+          let sliderAval = floor((maxSlider - numPartyB) / 2);
+          let sliderCval = (maxSlider - numPartyB) - numPartyA;
+          //slider1.noUiSlider.set(sliderAval);
+          slider3.noUiSlider.set(sliderCval);
+        });
+
+        // // when user slides the party C slider, update sliders A and B evenly
+        // slider3.noUiSlider.on('slide', function(event) {
+        //   let sliderAval = floor((maxSlider - numPartyC) / 2);
+        //   let sliderBval = (maxSlider - numPartyC) - sliderAval;
+        //   slider1.noUiSlider.set(sliderAval);
+        //   slider2.noUiSlider.set(sliderBval);
+        // });
+
+        // when user slides party C slider, allow party C to go up to party A remainder
+        // and make party B update to the remainder of A + B
+        // i.e. reverses of what happens when slider B is moved
+        slider3.noUiSlider.on('slide', function(event) {
+          let sliderCval = maxSlider - numPartyA;
+          if (parseInt(slider3.noUiSlider.get()) > sliderCval) {
+            slider3.noUiSlider.set(sliderCval);
+          }          
+          slider2.noUiSlider.set((maxSlider - numPartyC) - numPartyA);
+        });
       }
     }
   }
@@ -3523,15 +4026,15 @@ function sResults() {
   }
 
   this.enter = function () {
-    configIX = userEditCount; // OC config array index is 1 less than editCount until it reaches max attempts
-    if (configIX > MAX_CONFIG_ATTEMPTS - 1) {
-      configs.shift(); // remove first entered in array
-      configIX == MAX_CONFIG_ATTEMPTS - 1; // decrement IX to last position in array
-    }
-    results = []; // OC new results array since it is a new config
-    resultIX = 0; // OC reset resultIX bc new configuration
-    userEditCount++;
-    console.log("user edit count: " + userEditCount);
+    // configIX = userEditCount; // OC config array index is 1 less than editCount until it reaches max attempts
+    // if (configIX > MAX_CONFIG_ATTEMPTS - 1) {
+    //   configs.shift(); // remove first entered in array
+    //   configIX == MAX_CONFIG_ATTEMPTS - 1; // decrement IX to last position in array
+    // }
+    // results = []; // OC new results array since it is a new config
+    // resultIX = 0; // OC reset resultIX bc new configuration
+    // userEditCount++;
+    // console.log("user edit count: " + userEditCount);
     console.log("user result page");
     // document.getElementById("top").innerHTML = "DEMOCRACY ENGINE SIMULATOR INPUTS";
     document.getElementById("top").innerHTML = "";
@@ -3551,6 +4054,8 @@ function sResults() {
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "block";
     document.getElementById("sim-info").style.display = "none";
+
+    // OC TODO - move to sParties? or to each scene that sets party members for a chamber
     if (userNumParties == 2) {
       userPerHouseBody[2] = 0.0;
       userPerHouse2Body[2] = 0.0;
@@ -3644,6 +4149,16 @@ function sResults() {
   }
 
   function clickedVote() {
+    //configIX = userEditCount; // OC config array index is 1 less than editCount until it reaches max attempts
+    if (configIX > MAX_CONFIG_ATTEMPTS - 1) {
+      configs.shift(); // remove first entered in array
+      configIX = MAX_CONFIG_ATTEMPTS - 1; // decrement IX to last position in array
+    }
+    results = []; // OC new results array since it is a new config
+    resultIX = 0; // OC reset resultIX bc new configuration
+    userEditCount++;
+    console.log("user edit count: " + userEditCount);
+
     visualizeVote = true;
     setEngineParams(); // set new parameters
 
@@ -3654,6 +4169,7 @@ function sResults() {
     reconfigBool = true;
     
     engine.currentCongLogic(true); // get results for this configuration
+    updateSession(); // save this config and resutls of running this configuration
 
   }
 
@@ -3675,10 +4191,11 @@ function sResults() {
   function clickedSave() {
     //removeBtns();
     // go to different scene?
+    saveSession();
   }
 
   function clickedApprove() {
-
+    ownerEndorse();
   }
 
   function removeBtns() {

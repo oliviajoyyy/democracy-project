@@ -95,6 +95,11 @@ var historicalActs; // array of 10 bills
 var sessionObj; // session obj holds array of json configurations, which holds array of json results
 var configs = []; // array of json govt config attempts (up to 10)
 var results = []; // array of (10) json results (updated for each new config)
+var finalConfig = {};
+var finalConfigObj = {
+  config: finalConfig, // the 10th config of the history
+  ownerEndorsement: 0,
+  publicEndorsement: 0 };
 var sessionID = "ID" + userEditCount;
 
 // to keep track of array indicies
@@ -586,15 +591,27 @@ function changeText(text) {
   document.getElementById("result").innerHTML = text;
 }
 
+const alphabet = "abcdefghijklmnopqrstuvwxyx";
+
+function getSessionID() {
+  var id = "ID:" + getTimestamp() + alphabet.charAt(random(alphabet.length-1)) + alphabet.charAt(random(alphabet.length-1)) + alphabet.charAt(random(alphabet.length-1)); // OC to do: append 3 random letters
+  return id;
+}
+
 // OC call when app first opened and at end of saveSession
 function newSession() {
   // generate new session ID
-  sessionID = "ID" + userEditCount;
+  sessionID = getSessionID();
 
   // new (reset) config array (and result array) = []
   configs = [];
   results = [];
-  //finalConfig;
+  finalConfig = {};
+  finalConfigObj = {
+    config: finalConfig, // the 10th config of the history
+    ownerEndorsement: 0,
+    publicEndorsement: 0
+  };
 
   // reset IX vars = 0
   configIX = 0;
@@ -602,19 +619,17 @@ function newSession() {
 
   // new session global var, will be passed to func that saves to db
   sessionObj = {
+    "timestamp": getTimestamp(),
     "uniqueID": sessionID,
     "configHistory": configs, // array of last 9 configurations
-    "finalConfig": {
-      config: finalConfig, // the 10th config of the history
-      ownerEndorsement: 0,
-      publicEndorsement: 0
-    }
+    "finalConfig": finalConfigObj
   }
 }
 
 function saveSession() {
-  sessionObj.finalConfig = configs[configIX]// set final configuration in the session object
-  addSession(sessionObj); // add session document/record to the database
+  sessionObj.finalConfig.config = configs[configs.length - 1]// set final configuration in the session object
+  //addSession(sessionObj); // add session document/record to the database - uncomment line when using database
+  console.log(sessionObj);
   newSession(); // create new session
 }
 
@@ -626,74 +641,35 @@ function updateSession() {
   addResult(configIX); // add result to this configuration
   //addConfig();
 
-  sessionObj = {
-    "uniqueID": sessionID,
-    "config": configs
-  }
+  sessionObj.configHistory = configs;
+  //sessionObj.finalConfig = finalConfigObj;
+
   // sessionObj = {
   //   "uniqueID": sessionID,
-  //   "config": configs
+  //   "configHistory": configs,
+  //   "finalConfig": finalConfigObj
   // }
+
   console.log(sessionObj);
+  configIX++;
+}
+
+function ownerEndorse() {
+  finalConfigObj.ownerEndorsement = 1;
+}
+
+function getTimestamp() {
+  var curDate = new Date();
+  var curTime = hour() + ":" + minute() + ":" + second();
+  var timestamp = (curDate.getMonth()+1) + "-" + curDate.getDate() + "-" + curDate.getFullYear() + " " + curTime;
+  return timestamp;
 }
 
 function addConfig() {
   // create/add json object at this ix in the config array
 
-  // OC note - engine logic uses house and senate for 2 chambers, not house2, so swap chamber2 and chamber3 values
-  if (engine.numLegislativeBodies == 2) {
     configs[configIX] = {
-            numLegislativeBodies: engine.numLegislativeBodies,
-            numParties: engine.numParties,
-
-            chamber1: {
-                totalMembers: engine.numHouse,
-                partyA: engine.perDemHouse,
-                partyB: engine.perRepHouse,
-                partyC: engine.perIndHouse
-            },
-
-            chamber2: {
-              totalMembers: engine.numSenate,
-                partyA: engine.perDemSenate,
-                partyB: engine.perRepSenate,
-                partyC: engine.perIndSenate
-            },
-
-            chamber3: {
-              totalMembers: engine.numHouse2,
-              partyA: engine.perDemHouse2,
-              partyB: engine.perRepHouse2,
-              partyC: engine.perIndHouse2
-            },
-
-            vicePres: {
-                totalMembers: engine.numVP,
-                partyA: engine.perDemVP,
-                partyB: engine.perRepVP,
-                partyC: engine.perIndVP
-            },
-
-            president: {
-                totalMembers: engine.numPres,
-                partyA: engine.perDemPres,
-                partyB: engine.perRepPres,
-                partyC: engine.perIndPres
-            },
-
-            percentMajority: engine.perPass,
-            percentSupermajority: engine.superThresh,
-
-            probabilityYesVote: {
-                partyA: engine.demYaythresh,
-                partyB: engine.repYaythresh,
-                partyC: engine.indYaythresh
-            },
-
-            simResults: results // OC just set the resutls array, then call addResult afterward
-    } 
-  } else {
-    configs[configIX] = {
+      timestamp: getTimestamp(),
       numLegislativeBodies: engine.numLegislativeBodies,
       numParties: engine.numParties,
 
@@ -743,7 +719,7 @@ function addConfig() {
 
       simResults: results // OC just set the resutls array, then call addResult afterward
 } 
-  }
+  
 
   
   //addResult(configIX);
@@ -757,8 +733,6 @@ function addResult(pConfigIX) {
   var act = historicalActs[resultIX]; // get act titles in order
 
   // for this configuration, add the result to the array
-  // OC note - engine logic uses house and senate for 2 chambers, not house2, so swap chamber2 and chamber3 values
-  if (engine.numLegislativeBodies == 2) {
     results[resultIX] = {
 
       actTitle: act.title,
@@ -795,7 +769,7 @@ function addResult(pConfigIX) {
   
       finalDecision: engine.decisionTxt
     }
-  } else {
+
     results[resultIX] = {
 
       actTitle: act.title,
@@ -832,11 +806,19 @@ function addResult(pConfigIX) {
   
       finalDecision: engine.decisionTxt
     }
-  }
 
   configs[pConfigIX].simResults = results;
   console.log(configs[pConfigIX].simResults);
   
+}
+
+function getAllSessions() {
+  var sessionsArr;
+  getSessions().then((result) => {
+    console.log(result);
+    sessionsArr = result;
+  });
+  return sessionsArr;
 }
 
 function keyPressed() {
