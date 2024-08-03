@@ -16,11 +16,11 @@ function startUp() {
     // continueBtn = createButton("Continue", width/2, height/2);
     console.log("start up scene");
     background(bColor);
+    document.body.style.backgroundColor = bColor;
     // paneArrow = false; // cannot use arrow key to move to next scene
 
     document.getElementById("page-container").style.display = "block";
     document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1>";
-    
     document.getElementById("main-btn-div").style.display = "none";
     document.getElementById("start-desc").style.display = "none";
     document.getElementById("top").style.display = "none";
@@ -35,6 +35,8 @@ function startUp() {
     document.getElementById("page9").style.display = "none";
     document.getElementById("page10").style.display = "none";
     document.getElementById("page11").style.display = "none";
+    document.getElementById("page12").style.display = "none";
+    document.getElementById("page13").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
@@ -103,6 +105,7 @@ function briefDescription() {
     // continueBtn = createButton("Continue", width/2, height/2);
     console.log("start up scene");
     background(bColor);
+    document.body.style.backgroundColor = bColor;
 
     document.getElementById("page-container").style.display = "block";
     document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1><h2>Description</h2>";
@@ -121,6 +124,8 @@ function briefDescription() {
     document.getElementById("page9").style.display = "none";
     document.getElementById("page10").style.display = "none";
     document.getElementById("page11").style.display = "none";
+    document.getElementById("page12").style.display = "none";
+    document.getElementById("page13").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
@@ -215,6 +220,8 @@ function hardwareTest() {
     document.getElementById("page9").style.display = "none";
     document.getElementById("page10").style.display = "none";
     document.getElementById("page11").style.display = "none";
+    document.getElementById("page12").style.display = "none";
+    document.getElementById("page13").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
@@ -292,6 +299,8 @@ function aboutProject() {
     document.getElementById("page9").style.display = "none";
     document.getElementById("page10").style.display = "none";
     document.getElementById("page11").style.display = "none";
+    document.getElementById("page12").style.display = "none";
+    document.getElementById("page13").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
@@ -345,7 +354,7 @@ function newSessionScene() {
     document.getElementById("main-btn-div").style.display = "none";
 
     document.getElementById("start-desc").style.display = "block";
-    document.getElementById("start-desc").innerHTML = "<p>[Description here on how to use the interface]<br>";
+    document.getElementById("start-desc").innerHTML = "<p>[Description here on how to use the interface]<br><br>Your session ID is: ";
     document.getElementById("start-desc").innerHTML += sessionID;
     document.getElementById("start-desc").innerHTML += "</p>";
 
@@ -361,6 +370,8 @@ function newSessionScene() {
     document.getElementById("page9").style.display = "none";
     document.getElementById("page10").style.display = "none";
     document.getElementById("page11").style.display = "none";
+    document.getElementById("page12").style.display = "none";
+    document.getElementById("page13").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
@@ -459,6 +470,8 @@ function loadSessionS1() {
     document.getElementById("page9").style.display = "none";
     document.getElementById("page10").style.display = "none";
     document.getElementById("page11").style.display = "none";
+    document.getElementById("page12").style.display = "none";
+    document.getElementById("page13").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
@@ -538,6 +551,8 @@ function loadSessionS2() {
     document.getElementById("page9").style.display = "none";
     document.getElementById("page10").style.display = "none";
     document.getElementById("page11").style.display = "none";
+    document.getElementById("page12").style.display = "none";
+    document.getElementById("page13").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
@@ -633,6 +648,8 @@ function configVisual() {
     document.getElementById("page9").style.display = "none";
     document.getElementById("page10").style.display = "none";
     document.getElementById("page11").style.display = "none";
+    document.getElementById("page12").style.display = "none";
+    document.getElementById("page13").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
@@ -804,6 +821,8 @@ function democracyEngineUser() {
     document.getElementById("page9").style.display = "none";
     document.getElementById("page10").style.display = "none";
     document.getElementById("page11").style.display = "none";
+    document.getElementById("page12").style.display = "none";
+    document.getElementById("page13").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
@@ -947,6 +966,8 @@ function democracyEngineOrigin() {
     document.getElementById("page9").style.display = "none";
     document.getElementById("page10").style.display = "none";
     document.getElementById("page11").style.display = "none";
+    document.getElementById("page12").style.display = "none";
+    document.getElementById("page13").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
@@ -1066,6 +1087,7 @@ function sBodies() {
 
     console.log("0 Slider Page");
     document.getElementById("page-container").style.display = "none";
+    showPanesBool = true;
     document.getElementById("page1").style.display = "block";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
@@ -1077,6 +1099,8 @@ function sBodies() {
     document.getElementById("page9").style.display = "none";
     document.getElementById("page10").style.display = "none";
     document.getElementById("page11").style.display = "none";
+    document.getElementById("page12").style.display = "none";
+    document.getElementById("page13").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
@@ -1115,7 +1139,7 @@ function sBodies() {
     }
 
     nextPaneBtn.mousePressed(nextPane);
-
+    prevPaneBtn.mousePressed(previousPane);
   }
 
   this.draw = function () {
@@ -1138,7 +1162,7 @@ function sBodies() {
       document.getElementById("update-btn").disabled = true;
     }
 
-    prevPaneBtn.mousePressed(previousPane);
+    
     updateBtn.mousePressed(clickedUpdate);
   }
 
@@ -1225,6 +1249,7 @@ function sLegislative() {
     console.log("1st Slider Page");
     document.getElementById("top").style.display = "block";
     document.getElementById("top").innerHTML = "NUMBER OF VOTING MEMBERS";
+    showPanesBool = true;
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "block";
     document.getElementById("page3").style.display = "none";
@@ -1236,6 +1261,8 @@ function sLegislative() {
     document.getElementById("page9").style.display = "none";
     document.getElementById("page10").style.display = "none";
     document.getElementById("page11").style.display = "none";
+    document.getElementById("page12").style.display = "none";
+    document.getElementById("page13").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
@@ -1515,6 +1542,7 @@ function sParties() {
     console.log("2nd Slider Page");
     document.getElementById("top").style.display = "block";
     document.getElementById("top").innerHTML = "NUMBER OF POLITICAL PARTIES";
+    showPanesBool = true;
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "block";
@@ -1526,6 +1554,8 @@ function sParties() {
     document.getElementById("page9").style.display = "none";
     document.getElementById("page10").style.display = "none";
     document.getElementById("page11").style.display = "none";
+    document.getElementById("page12").style.display = "none";
+    document.getElementById("page13").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
@@ -1640,6 +1670,7 @@ function sMembersFirstChamber() {
     console.log("Slider Page Chamber 1 Party Members ");
     document.getElementById("top").style.display = "block";
     document.getElementById("top").innerHTML = "NUMBER OF VOTING MEMBERS FOR FIRST CHAMBER";
+    showPanesBool = true;
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
@@ -1651,6 +1682,8 @@ function sMembersFirstChamber() {
     document.getElementById("page9").style.display = "none";
     document.getElementById("page10").style.display = "none";
     document.getElementById("page11").style.display = "none";
+    document.getElementById("page12").style.display = "none";
+    document.getElementById("page13").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
@@ -1951,6 +1984,7 @@ function sMembersSecondChamber() {
     console.log("Slider Page Chamber 2 Party Members ");
     document.getElementById("top").style.display = "block";
     document.getElementById("top").innerHTML = "NUMBER OF VOTING MEMBERS FOR SECOND CHAMBER";
+    showPanesBool = true;
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
@@ -1962,6 +1996,8 @@ function sMembersSecondChamber() {
     document.getElementById("page9").style.display = "none";
     document.getElementById("page10").style.display = "none";
     document.getElementById("page11").style.display = "none";
+    document.getElementById("page12").style.display = "none";
+    document.getElementById("page13").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
@@ -2246,6 +2282,7 @@ function sMembersThirdChamber() {
     console.log("Slider Page Chamber 3 Party Members ");
     document.getElementById("top").style.display = "block";
     document.getElementById("top").innerHTML = "NUMBER OF VOTING MEMBERS FOR THIRD CHAMBER";
+    showPanesBool = true;
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
@@ -2257,6 +2294,8 @@ function sMembersThirdChamber() {
     document.getElementById("page9").style.display = "none";
     document.getElementById("page10").style.display = "none";
     document.getElementById("page11").style.display = "none";
+    document.getElementById("page12").style.display = "none";
+    document.getElementById("page13").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
@@ -2543,6 +2582,7 @@ function sMembersVP() {
     console.log("Slider Page VP Party Members ");
     document.getElementById("top").style.display = "block";
     document.getElementById("top").innerHTML = "NUMBER OF VOTING MEMBERS FOR VICE PRESIDENCY";
+    showPanesBool = true;
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
@@ -2554,6 +2594,8 @@ function sMembersVP() {
     document.getElementById("page9").style.display = "none";
     document.getElementById("page10").style.display = "none";
     document.getElementById("page11").style.display = "none";
+    document.getElementById("page12").style.display = "none";
+    document.getElementById("page13").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
@@ -2839,6 +2881,7 @@ function sMembersPres() {
 
     console.log("Slider Page Pres Party Members ");
     document.getElementById("top").style.display = "block";
+    showPanesBool = true;
     document.getElementById("top").innerHTML = "NUMBER OF VOTING MEMBERS FOR PRESIDENCY";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
@@ -2851,6 +2894,8 @@ function sMembersPres() {
     document.getElementById("page9").style.display = "none";
     document.getElementById("page10").style.display = "none";
     document.getElementById("page11").style.display = "none";
+    document.getElementById("page12").style.display = "none";
+    document.getElementById("page13").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
@@ -3145,7 +3190,7 @@ function sMembers() {
     document.getElementById("page8").style.display = "none";
     document.getElementById("page9").style.display = "none";
     document.getElementById("page10").style.display = "none";
-    document.getElementById("page11").style.display = "none";
+    document.getElementById("page13").style.display = "none";
     document.getElementById("slider-value").style.display = "block";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
@@ -3736,6 +3781,7 @@ function sBodyPass() {
     // noCursor();
     console.log("4th Slider Page");
     document.getElementById("top").innerHTML = "PERCENTAGE OF VOTES REQUIRED FOR APPROVAL BY EACH CHAMBER";
+    showPanesBool = true;
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
@@ -3747,6 +3793,8 @@ function sBodyPass() {
     document.getElementById("page9").style.display = "block";
     document.getElementById("page10").style.display = "none";
     document.getElementById("page11").style.display = "none";
+    document.getElementById("page12").style.display = "none";
+    document.getElementById("page13").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
@@ -3858,6 +3906,7 @@ function sYesVotes() {
 
     console.log("5th slider page");
     document.getElementById("top").innerHTML = "PROBABILITY OF AN AFFIRMATIVE VOTE BY A PARTY MEMBER";
+    showPanesBool = true;
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
@@ -3869,12 +3918,41 @@ function sYesVotes() {
     document.getElementById("page9").style.display = "none";
     document.getElementById("page10").style.display = "block";
     document.getElementById("page11").style.display = "none";
+    document.getElementById("page12").style.display = "none";
+    document.getElementById("page13").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     checkParties();
     // sliders();
     sliderVals();
+
+    document.body.style.backgroundColor = bColor;
+
+    if (document.getElementById('vote-btn')) {
+      document.getElementById('vote-btn').remove();
+    } 
+
+    // OC to keep order of buttons
+    if (!document.getElementById('update-btn')) {
+      updateBtn = createButton('Update');
+      updateBtn.id('update-btn');
+      updateBtn.class('buttons');
+      updateBtn.parent(buttonDiv);
+      updateBtn.mousePressed(clickedUpdate);
+    }
+    nextPaneBtn.remove();
+    // if (!document.getElementById('next-pane-btn')) {
+      nextPaneBtn = createButton('Next');
+      nextPaneBtn.id('next-pane-btn');
+      nextPaneBtn.class('buttons');
+      nextPaneBtn.parent(buttonDiv);
+      nextPaneBtn.mousePressed(nextPane);
+    // }
+  }
+
+  function clickedUpdate() {
+    
   }
 
   this.draw = function () { 
@@ -4013,6 +4091,328 @@ function sYesVotes() {
 
 }
 
+  var visualizeVote;
+// page to run bill
+function sVote() {
+  let voteBtn;
+
+
+  this.setup = function () {
+
+    userOutputText = document.getElementById('slider-disp');
+    visualizeVote = false;
+
+  }
+
+  this.enter = function () {
+    // configIX = userEditCount; // OC config array index is 1 less than editCount until it reaches max attempts
+    // if (configIX > MAX_CONFIG_ATTEMPTS - 1) {
+    //   configs.shift(); // remove first entered in array
+    //   configIX == MAX_CONFIG_ATTEMPTS - 1; // decrement IX to last position in array
+    // }
+    // results = []; // OC new results array since it is a new config
+    // resultIX = 0; // OC reset resultIX bc new configuration
+    // userEditCount++;
+    // console.log("user edit count: " + userEditCount);
+    console.log("run bill page");
+    // document.getElementById("top").innerHTML = "DEMOCRACY ENGINE SIMULATOR INPUTS";
+    document.getElementById("top").innerHTML = "";
+    document.getElementById("top").style.display = "none";
+    showPanesBool = true;
+    document.getElementById("page1").style.display = "none";
+    document.getElementById("page2").style.display = "none";
+    document.getElementById("page3").style.display = "none";
+    document.getElementById("page4").style.display = "none";
+    document.getElementById("page5").style.display = "none";
+    document.getElementById("page6").style.display = "none";
+    document.getElementById("page7").style.display = "none";
+    document.getElementById("page8").style.display = "none";
+    document.getElementById("page9").style.display = "none";
+    document.getElementById("page10").style.display = "none";
+    document.getElementById("page11").style.display = "block";
+    document.getElementById("page12").style.display = "none";
+    document.getElementById("page13").style.display = "none";
+    // document.getElementById("slider-value").style.display = "none";
+    document.getElementById("vote").style.display = "block";
+    document.getElementById("slider-disp").style.display = "none";
+    document.getElementById("sim-info").style.display = "none";
+
+    // OC TODO - move to sParties? or to each scene that sets party members for a chamber
+    if (userNumParties == 2) {
+      userPerHouseBody[2] = 0.0;
+      userPerHouse2Body[2] = 0.0;
+      userPerSenateBody[2] = 0.0;
+      userPerVPBody[2] = 0.0;
+      userPerPresBody[2] = 0.0;
+    } else if (userNumParties == 1) {
+      userPerHouseBody[1] = 0.0;
+      userPerHouseBody[2] = 0.0;
+      userPerHouse2Body[1] = 0.0;
+      userPerHouse2Body[2] = 0.0;
+      userPerSenateBody[1] = 0.0;
+      userPerSenateBody[2] = 0.0;
+      userPerVPBody[1] = 0.0;
+      userPerVPBody[2] = 0.0;
+      userPerPresBody[1] = 0.0;
+      userPerPresBody[2] = 0.0;
+    }
+
+    updateBtn.remove();
+    document.getElementById('next-pane-btn').remove();
+    
+    if (!document.getElementById('vote-btn')) {
+      voteBtn = createButton('Run Bill');
+      voteBtn.id('vote-btn');
+      voteBtn.class('buttons');
+      voteBtn.parent(buttonDiv);
+      voteBtn.mousePressed(clickedVote);
+    }
+
+    if (!document.getElementById('next-pane-btn')) {
+      nextPaneBtn = createButton('Next');
+      nextPaneBtn.id('next-pane-btn');
+      nextPaneBtn.class('buttons');
+      nextPaneBtn.parent(buttonDiv);
+      nextPaneBtn.mousePressed(nextPane);
+    }
+
+    // can do if any params at all changed else true
+    visualizeVote = false;
+
+    // set new parameters to show updated configuration when entering scene
+    setEngineParams();
+    // reset values for calculations
+    engine.completeReset();
+    visual.completeReset();
+    userEdits = false;
+    reconfigBool = true;
+
+  }
+
+  this.draw = function () {
+    if (visualizeVote == false) {
+      visual.displayImmediateBlank(engine);
+    } else {
+      visual.displayVoting(engine);
+      // OC when visual display of rectangles is done, show buttons
+      if (visual.userInputState) {
+        finalDisplay();
+      }
+    }
+    paneToggle();
+    
+    
+  }
+
+  function finalDisplay() {
+
+    setTimeout(function () {
+      document.body.style.backgroundColor = colorOverlay;
+      engine.bodyCount = engine.numBodies;
+      visual.finalTextDisplayUser(engine, helvFont, colorOverlay);
+      //changeText(engine.decisionTxt);
+    }, 1500); // 1.5 seconds before text overlay shows
+    visual.userInputState = false;
+
+  }
+
+  function clickedVote() {
+    //voteBtn.remove();
+    showPanesBool = false;
+
+    //configIX = userEditCount; // OC config array index is 1 less than editCount until it reaches max attempts
+    if (configIX > MAX_CONFIG_ATTEMPTS - 1) {
+      configs.shift(); // remove first entered in array
+      configIX = MAX_CONFIG_ATTEMPTS - 1; // decrement IX to last position in array
+    }
+    results = []; // OC new results array since it is a new config
+    resultIX = 0; // OC reset resultIX bc new configuration
+    userEditCount++;
+    console.log("user edit count: " + userEditCount);
+
+    visualizeVote = true;
+    setEngineParams(); // set new parameters
+
+    // reset values for calculations and drawings
+    engine.completeReset();
+    visual.completeReset();
+    userEdits = false;
+    reconfigBool = true;
+    
+    engine.currentCongLogic(true); // get results for this configuration
+    updateSession(); // save this config and resutls of running this configuration
+    resultIX++;
+  }
+
+  // //supermajority Cutoff for override of presidential veto
+  // userSuperThresh;
+  //
+  // userBodyPass;
+
+}
+
+function sBenchmark() {
+  let benchmarkBtn;
+
+
+  this.setup = function () {
+
+    userOutputText = document.getElementById('slider-disp');
+    visualizeVote = false;
+
+  }
+
+  this.enter = function () {
+    // configIX = userEditCount; // OC config array index is 1 less than editCount until it reaches max attempts
+    // if (configIX > MAX_CONFIG_ATTEMPTS - 1) {
+    //   configs.shift(); // remove first entered in array
+    //   configIX == MAX_CONFIG_ATTEMPTS - 1; // decrement IX to last position in array
+    // }
+    // results = []; // OC new results array since it is a new config
+    // resultIX = 0; // OC reset resultIX bc new configuration
+    // userEditCount++;
+    // console.log("user edit count: " + userEditCount);
+    console.log("run bill page");
+    // document.getElementById("top").innerHTML = "DEMOCRACY ENGINE SIMULATOR INPUTS";
+    
+    document.getElementById("page-container").style.display = "block";
+    document.getElementById("start-desc").style.display = "none";
+    document.getElementById("main-header").innerHTML = "<h1>Benchmark Results</h1>";
+    document.getElementById("top").innerHTML = "";
+    document.getElementById("top").style.display = "none";
+    showPanesBool = true;
+    document.getElementById("page1").style.display = "none";
+    document.getElementById("page2").style.display = "none";
+    document.getElementById("page3").style.display = "none";
+    document.getElementById("page4").style.display = "none";
+    document.getElementById("page5").style.display = "none";
+    document.getElementById("page6").style.display = "none";
+    document.getElementById("page7").style.display = "none";
+    document.getElementById("page8").style.display = "none";
+    document.getElementById("page9").style.display = "none";
+    document.getElementById("page10").style.display = "none";
+    document.getElementById("page11").style.display = "none";
+    document.getElementById("page12").style.display = "block";
+    document.getElementById("page13").style.display = "none";
+    // document.getElementById("slider-value").style.display = "none";
+    document.getElementById("vote").style.display = "block";
+    document.getElementById("slider-disp").style.display = "none";
+    document.getElementById("sim-info").style.display = "none";
+
+
+    document.getElementById('vote-btn').remove();
+    document.getElementById('prev-pane-btn').remove();
+    document.getElementById('next-pane-btn').remove();
+
+    benchmarkBtn = createButton('Benchmark');
+    benchmarkBtn.id('benchmark-btn');
+    benchmarkBtn.class('buttons');
+    benchmarkBtn.parent(buttonDiv);
+    benchmarkBtn.mousePressed(clickedBenchmark);
+
+    if (resultIX == 0) { // vote wasn't clicked on prev screen, so do it now
+      setEngineParams(); // set new parameters
+      // reset values for calculations and drawings
+      engine.completeReset();
+      userEdits = false;
+      reconfigBool = true;
+      engine.currentCongLogic(true); // get results for this configuration
+      updateSession(); // save this config and resutls of running this configuration
+      resultIX++;
+    }
+
+    // set new parameters to show updated configuration when entering scene
+    //setEngineParams();
+    // reset values for calculations
+    //engine.completeReset();
+    
+    visual.completeReset();
+    userEdits = false;
+    reconfigBool = true;
+    background(bColor);
+    document.body.style.backgroundColor = bColor;
+
+  }
+
+  this.draw = function () {
+    visual.displayImmediateVotes(engine);
+    // noStroke();
+    // rectMode(CORNER);
+    // let c = color(colorOverlay);
+    // fill(c.setAlpha(200));
+    // rect(0, 0, visual.dWidth, visual.dHeight);
+    //document.body.style.backgroundColor = colorOverlay;
+   //OC when visual display of rectangles is done, show buttons
+      // if (visual.userInputState) {
+      //   finalDisplay();
+      // }
+    //     finalDisplay();
+    //   }vFont, colorOverlay);
+    // if (visualizeVote == false) {
+    //   visual.displayImmediateBlank(engine);
+    // } else {
+    //   visual.displayVoting(engine);
+    //   // OC when visual display of rectangles is done, show buttons
+    //   if (visual.userInputState) {
+    //     finalDisplay();
+    //   }
+    // }
+  }
+
+  function clickedBenchmark() {
+    //background(bColor);
+    showPanesBool = false;
+    document.getElementById("pane-bkg").style.display = "none";
+    document.getElementById("start-desc").innerHTML = "";
+    document.getElementById("start-desc").style.display = "block";
+    benchmarkBtn.remove();
+    var benchResults = "";
+
+    for (let i=resultIX; i < MAX_SIM_RESULTS; i++) {
+      engine.completeReset();
+      engine.currentCongLogic(userEdits);
+      //let engineSim = new DemocracyEngine
+      updateSession();
+      benchResults = (configs[configIX].simResults[resultIX-1].actTitle + " " + configs[configIX].simResults[resultIX-1].finalDecision);//sessionObj.configHistory[configIX].
+      // push();
+      // textAlign(LEFT, TOP);
+      // textStyle(NORMAL)
+      // textSize(22);
+      // translate(0, 0);
+      // noStroke();
+      // fill(textColor);
+      // text(benchResults + '\n', 20, 250+(i*35));
+      // pop();
+      document.getElementById("start-desc").innerHTML += benchResults + "<br><br>";
+      
+      resultIX++;
+    }
+
+    // visual.completeReset();
+    // userEdits = false;
+    // reconfigBool = true;
+    // visual.displayImmediateVotes(engine);
+    //document.body.style.backgroundColor = colorOverlay;
+   //OC when visual display of rectangles is done, show buttons
+      // if (visual.userInputState) {
+        //finalDisplay();
+      //}
+  }
+
+  function finalDisplay() {
+
+    setTimeout(function () {
+      document.body.style.backgroundColor = colorOverlay;
+      engine.bodyCount = engine.numBodies;
+      visual.finalTextDisplayUser(engine, helvFont, colorOverlay);
+      //changeText(engine.decisionTxt);
+    }, 1500); // 1.5 seconds before text overlay shows
+    visual.userInputState = false;
+
+  }
+
+}
+
 //page showing all of user inputs
 function sResults() {
   let voteBtn, startOverBtn, editBtn, saveBtn, approvalBtn;
@@ -4039,6 +4439,7 @@ function sResults() {
     // document.getElementById("top").innerHTML = "DEMOCRACY ENGINE SIMULATOR INPUTS";
     document.getElementById("top").innerHTML = "";
     document.getElementById("top").style.display = "none";
+    document.getElementById("pane-bkg").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
@@ -4049,7 +4450,9 @@ function sResults() {
     document.getElementById("page8").style.display = "none";
     document.getElementById("page9").style.display = "none";
     document.getElementById("page10").style.display = "none";
-    document.getElementById("page11").style.display = "block";
+    document.getElementById("page11").style.display = "none";
+    document.getElementById("page12").style.display = "none";
+    document.getElementById("page13").style.display = "block";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "block";
@@ -4307,7 +4710,7 @@ function sInfo() {
     document.getElementById("page8").style.display = "none";
     document.getElementById("page9").style.display = "none";
     document.getElementById("page10").style.display = "none";
-    document.getElementById("page11").style.display = "none";
+    document.getElementById("page13").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
@@ -4356,7 +4759,7 @@ function sDisplay() {
     document.getElementById("page8").style.display = "none";
     document.getElementById("page9").style.display = "none";
     document.getElementById("page10").style.display = "none";
-    document.getElementById("page11").style.display = "block";
+    document.getElementById("page13").style.display = "block";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "block";
@@ -4454,7 +4857,7 @@ function sDefault() {
     document.getElementById("page8").style.display = "none";
     document.getElementById("page9").style.display = "none";
     document.getElementById("page10").style.display = "none";
-    document.getElementById("page11").style.display = "none";
+    document.getElementById("page13").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "block";

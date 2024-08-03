@@ -154,6 +154,53 @@ button {
   z-index: 102;
 }
 
+#start-desc {
+  border-radius: 3px;
+  display: none;
+  width: 90vw;
+  height: 50vh;
+  margin-left: 5vw;
+  margin-right: auto;
+  padding: 1%;
+  z-index: 99;
+  margin-top: 40vh;
+  position: fixed;
+  top: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#main-header {
+  border-radius: 3px;
+  text-align: center;
+  width: 90%;
+  height: 80%;
+  left: 5%;
+  right: 5%;
+  padding: 1%;
+  z-index: 98;
+  margin-top: 10vh;
+  position: fixed;
+  top: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#benchResults {
+  border-radius: 3px;
+  width: 90vw;
+  height: 50vh;
+  margin-left: 5vw;
+  margin-right: auto;
+  padding: 1%;
+  z-index: 99;
+  margin-top: 40vh;
+  position: fixed;
+  top: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
 #sim-info {
   width: 70vw;
   height: 50vh;

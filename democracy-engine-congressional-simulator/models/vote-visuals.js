@@ -740,6 +740,286 @@ class VoteVisual {
  //}
   }
 
+  displayImmediateVotes(engineObj) {
+    this.engine = engineObj;
+    this.forUser = this.engine.forUser;
+
+    // OC centers vote drawings based on total of voting bodies
+    if (this.engine.numLegislativeBodies == 1) {
+      this.numBodies = 3;
+    } else if (this.engine.numLegislativeBodies == 2){
+      this.numBodies = 4;
+    }  else {
+      this.numBodies = this.engine.numBodies;
+    }
+
+    //print('VISUAL CLASS numBodies = ' + this.numBodies);
+
+    // while(this.bodyCount < this.numBodies) {
+    //for(let ix=0; ix < this.numBodies; ix++) {
+
+    // Logic for House
+    if (this.bodyCount == 0) {
+
+      // Setup variables first time we pass through the first body
+      if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
+        this.test = 0;
+        print('VISUAL CLASS logic for house bodyCount = ' + this.bodyCount);
+        print(this.bodyCount);
+        background(this.bColor);
+
+        // Set number of voting memebers
+        this.numCon = this.engine.numHouse;
+        this.bodyLabel = 'HOUSE OF REPRESENTATIVES';
+
+        //Set Demographics for each body
+        // OC needed in this class to determine box transparency
+        this.numDem = round(this.numCon * this.engine.perDemHouse);
+        this.numRep = round(this.numCon * this.engine.perRepHouse);
+        this.numWild = round(this.numCon * this.engine.perIndHouse);
+
+        // OC offset calculated differently between default and user config
+        if (this.forUser)
+          this.offSet = this.dWidth / (this.numBodies);
+        else
+          this.offSet = this.dWidth / (this.numBodies - 1);
+
+        //Figure out how big to draw the circles and how far to space them out
+        this.skip = floor(.97 * (sqrt((this.offSet) * this.dHeight / this.numCon)));
+        print('Skip = ' + this.skip); //testing
+        this.x = this.skip / 2;
+        this.y = this.skip / 2;
+      }
+    }
+
+    // OC skip bodyCount == 1 (senate) when only 1 legislative body
+    if (this.bodyCount == 1 && this.engine.numLegislativeBodies == 1) {
+      this.bodyCount += 2; // skip house2 and senate
+      //this.endBody = 1;
+    } else if (this.bodyCount == 2 && this.engine.numLegislativeBodies == 2) {
+      this.bodyCount++; // skip house2
+    }
+
+    //Logic for House2
+    if (this.bodyCount == 1) {
+      strokeWeight(10);
+      translate(this.offSet * this.bodyCount, 0);
+
+      if (this.endBody == 1) {
+        this.resetCount();
+        this.endBody = 0;
+      }
+
+      // Setup variables first time we pass through a new body
+      if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
+        // if (this.engine.numLegislativeBodies == 1) {
+        //   this.bodyCount++;
+        // } else {
+        this.test = 0;
+        print('VISUAL CLASS bodyCount = ')
+        print(this.bodyCount);
+
+        ///Set number of voting memebers
+        this.numCon = this.engine.numHouse2;
+        this.bodyLabel = 'SENATE';
+
+        //Set Demographics for each body
+        this.numDem = round(this.numCon * this.engine.perDemHouse2);
+        this.numRep = round(this.numCon * this.engine.perRepHouse2);
+        this.numWild = round(this.numCon * this.engine.perIndHouse2);
+
+
+        //Figure out how big to draw the circles and how far to space them out
+        this.skip = floor(.97 * (sqrt(this.offSet * this.dHeight / this.numCon)));
+        print('Skip = ' + this.skip); //testing
+        this.x = this.skip / 2;
+        this.y = this.skip / 2;
+
+        print('v Count = ' + this.count); //fortesting
+        print('v Count1 = ' + this.count1); //fortesting
+        print('v Count2 = ' + this.count2); //fortesting
+        //}
+      }
+
+    }
+
+    //Logic for Senate
+    if (this.bodyCount == 2) {
+      strokeWeight(10);
+
+      var translateVal = this.bodyCount;
+      // OC move translation to left when only 1 legislaive body
+      if (this.engine.numLegislativeBodies == 1) {
+      //   translateVal = this.bodyCount - 1;
+      // }
+        translateVal = this.bodyCount - 2;
+      } else if (this.engine.numLegislativeBodies == 2) {
+        translateVal = this.bodyCount - 1;
+      }
+      translate(this.offSet * translateVal, 0);
+      //translate(this.offSet * this.bodyCount, 0);
+
+      if (this.endBody == 1) {
+        this.resetCount();
+        this.endBody = 0;
+      }
+
+      // Setup variables first time we pass through a new body
+      if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
+        // if (this.engine.numLegislativeBodies == 1) {
+        //   this.bodyCount++;
+        // } else {
+        this.test = 0;
+        print('VISUAL CLASS bodyCount = ')
+        print(this.bodyCount);
+
+        ///Set number of voting memebers
+        this.numCon = this.engine.numSenate;
+        this.bodyLabel = 'LEGISLATIVE CHAMBER 3';
+
+        //Set Demographics for each body
+        this.numDem = round(this.numCon * this.engine.perDemSenate);
+        this.numRep = round(this.numCon * this.engine.perRepSenate);
+        this.numWild = round(this.numCon * this.engine.perIndSenate);
+
+
+        //Figure out how big to draw the circles and how far to space them out
+        this.skip = floor(.97 * (sqrt(this.offSet * this.dHeight / this.numCon)));
+        console.log("con: " + this.numCon);
+        print('Skip = ' + this.skip); //testing
+        this.x = this.skip / 2;
+        this.y = this.skip / 2;
+
+        print('v Count = ' + this.count); //fortesting
+        print('v Count1 = ' + this.count1); //fortesting
+        print('v Count2 = ' + this.count2); //fortesting
+        //}
+      }
+
+    }
+
+    //AB logic for VP if Senate needs a tiebreaker
+    if (this.bodyCount == 3) {
+      
+      strokeWeight(10);
+
+      var translateVal = this.bodyCount;
+
+      // OC move translation to left when only 1 legislaive body
+      if (this.engine.numLegislativeBodies == 1) {
+      //   translateVal = this.bodyCount - 1;
+      // }
+        translateVal = this.bodyCount - 2;
+      } else if (this.engine.numLegislativeBodies == 2) {
+        translateVal = this.bodyCount - 1;
+      }
+
+      translate(this.offSet * translateVal, 0);
+      //translate(this.offSet * this.bodyCount, 0);
+
+      if (this.endBody == 1) {
+        this.resetCount();
+        this.endBody = 0;
+      }
+      // Setup variables first time we pass through a new body
+      if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
+        this.test = 0;
+        print('VISUAL CLASS bodyCount = ')
+        print(this.bodyCount);
+
+        ///Set number of voting memebers
+        this.numCon = this.engine.numVP;
+        this.bodyLabel = 'VICE PRESIDENT';
+
+        //Set Demographics for each body
+        this.numDem = round(this.numCon * this.engine.perDemVP);
+        this.numRep = round(this.numCon * this.engine.perRepVP);
+        this.numWild = round(this.numCon * this.engine.perIndVP);
+
+        //Figure out how big to draw the circles and how far to space them out
+        if (this.forUser)
+          this.skip = floor(.97 * (sqrt(this.offSet * this.dHeight / this.numCon)));
+        else
+          this.skip = floor(.65 * (sqrt(this.offSet * this.dHeight / this.numCon)));
+        print('Skip = ' + this.skip); //testing
+        this.x = this.skip / 2;
+        this.y = this.skip / 2;
+      }
+    }
+
+    //Logic for President
+    if (this.bodyCount == 4) {
+      strokeWeight(10);
+
+      var translateVal = this.bodyCount;
+
+      // OC move translation to left when only 1 legislaive body
+      if (this.engine.numLegislativeBodies == 1) {
+      //   translateVal = this.bodyCount - 1;
+      // }
+        translateVal = this.bodyCount - 2;
+      } else if (this.engine.numLegislativeBodies == 2) {
+        translateVal = this.bodyCount - 1;
+      }
+
+      //translate(this.offSet * translateVal, 0);
+      //translate(this.offSet * this.bodyCount, 0);
+
+      if (this.forUser)
+        translate(this.offSet * (translateVal), 0);
+      else
+        translate(this.offSet * (translateVal - 1), 0);
+
+      if (this.endBody == 1) {
+        this.resetCount();
+        this.endBody = 0;
+      }
+
+      // Setup variables first time we pass through a new body
+      if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
+        this.test = 0;
+        print('VISUAL CLASS bodyCount = ')
+        print(this.bodyCount);
+
+        // Set number of voting memebers
+        this.numCon = this.engine.numPres;
+        this.bodyLabel = 'PRESIDENT';
+
+        //Set Demographics for each body
+        this.numDem = round(this.numCon * this.engine.perDemPres);
+        this.numRep = round(this.numCon * this.engine.perRepPres);
+        this.numWild = round(this.numCon * this.engine.perIndPres);
+
+
+        //Figure out how big to draw the circles and how far to space them out
+        if (this.forUser)
+          this.skip = floor(.97 * (sqrt(this.offSet * this.dHeight / this.numCon)));
+        else
+          this.skip = floor(.65 * (sqrt(this.offSet * this.dHeight / this.numCon)));
+        print('Skip = ' + this.skip); //testing
+        this.x = this.skip / 2;
+        this.y = this.skip / 2;
+      }
+    }
+
+    for (let jx=0; jx < this.numCon; jx++) {
+      if (this.count < this.numCon - 1 && this.count1 < 1) {
+
+        //for (let i = 0; i < 3; i++) { // OC loading image stays on screen for less time it used to
+          //this.rotLoadImage();
+          this.testSize();
+          this.count++;
+          // print('v Count = ' + this.count); //fortesting
+          // print('v Count1 = ' + this.count1); //fortesting
+        //}
+  
+      } else if (this.count >= this.numCon - 1) {
+          this.bodyVote();
+          this.count1++;
+      }
+    }
+ //}
+  }
 
   /**
    * Rotates loading image on screen
@@ -1018,6 +1298,7 @@ class VoteVisual {
     this.bodyPass = [];
     this.resetCount();
     this.resetDraw();
+    this.userInputState = false;
   }
 
 
@@ -1292,7 +1573,11 @@ class VoteVisual {
         }
       }
     }
-    this.displayContext(engine);
+    push();
+    textAlign(CENTER);
+    text(engine.decisionTxt, width/2, height/2);
+    pop();
+   //this.displayContext(engine);
   }
 
   displayContext(engine) {

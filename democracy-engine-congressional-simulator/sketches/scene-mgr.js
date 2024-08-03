@@ -241,8 +241,10 @@ function nextPane() {
   } else if (mgr.isCurrent(sBodyPass)) {
     mgr.showScene(sYesVotes);
   } else if (mgr.isCurrent(sYesVotes)) {
-    mgr.showScene(sResults);
-  }  //else if (mgr.isCurrent(sResults) && userEditCount < 2) {
+    mgr.showScene(sVote);
+  }  else if (mgr.isCurrent(sVote)) {
+    mgr.showScene(sBenchmark);
+  } //else if (mgr.isCurrent(sResults) && userEditCount < 2) {
   //   mgr.showScene(sInfo);
   // }  else if (mgr.isCurrent(sInfo) && userEdits == true) {
   //   // mgr.showScene(democracyEngineUser);  
@@ -279,6 +281,16 @@ function previousPane() {
     mgr.showScene(sMembersPres);
   } else if (mgr.isCurrent(sYesVotes)) {
     mgr.showScene(sBodyPass);
+  } else if (mgr.isCurrent(sVote)) {
+    if (visualizeVote) {
+      background(bColor);
+      // reset values for calculations and drawings
+      //engine.completeReset();
+      visual.completeReset();
+      userEdits = false;
+      reconfigBool = true;
+    }
+    mgr.showScene(sYesVotes);
   }
 }
 
@@ -591,10 +603,10 @@ function changeText(text) {
   document.getElementById("result").innerHTML = text;
 }
 
-const alphabet = "abcdefghijklmnopqrstuvwxyx";
+const alphabet = "abcdefghijklmnopqrstuvwxyz";
 
 function getSessionID() {
-  var id = "ID:" + getTimestamp() + alphabet.charAt(random(alphabet.length-1)) + alphabet.charAt(random(alphabet.length-1)) + alphabet.charAt(random(alphabet.length-1)); // OC to do: append 3 random letters
+  var id = getTimestamp() + alphabet.charAt(random(alphabet.length-1)) + alphabet.charAt(random(alphabet.length-1)) + alphabet.charAt(random(alphabet.length-1)); // OC to do: append 3 random letters
   return id;
 }
 
@@ -628,7 +640,7 @@ function newSession() {
 
 function saveSession() {
   sessionObj.finalConfig.config = configs[configs.length - 1]// set final configuration in the session object
-  //addSession(sessionObj); // add session document/record to the database - uncomment line when using database
+  addSession(sessionObj); // add session document/record to the database
   console.log(sessionObj);
   newSession(); // create new session
 }
@@ -651,7 +663,7 @@ function updateSession() {
   // }
 
   console.log(sessionObj);
-  configIX++;
+  //configIX++;
 }
 
 function ownerEndorse() {
@@ -660,8 +672,8 @@ function ownerEndorse() {
 
 function getTimestamp() {
   var curDate = new Date();
-  var curTime = hour() + ":" + minute() + ":" + second();
-  var timestamp = (curDate.getMonth()+1) + "-" + curDate.getDate() + "-" + curDate.getFullYear() + " " + curTime;
+  var curTime = hour().toString().padStart(2, '0') + ":" + minute().toString().padStart(2, '0') + ":" + second().toString().padStart(2, '0');
+  var timestamp = (curDate.getMonth()+1).toString().padStart(2, '0') + "-" + curDate.getDate().toString().padStart(2, '0') + "-" + curDate.getFullYear() + " " + curTime;
   return timestamp;
 }
 
@@ -857,6 +869,8 @@ function paneToggle() {
   if (showPanesBool) {
     // if (mgr.isCurrent(SCENE));
     // = "block" whichever html div page corresponds to that scene
+    document.getElementById("pane-bkg").style.display = "block";
+    document.getElementById("button-div").style.display = "block";
     document.getElementById("top").style.display = "block";
     if (mgr.isCurrent(sBodies)) {
       document.getElementById("page1").style.display = "block";
@@ -878,14 +892,22 @@ function paneToggle() {
       document.getElementById("page9").style.display = "block";
     } else if (mgr.isCurrent(sYesVotes)) {
       document.getElementById("page10").style.display = "block";
-    } else if (mgr.isCurrent(sResults)) {
+    } else if (mgr.isCurrent(sVote)) {
       document.getElementById("page11").style.display = "block";
+    } else if (mgr.isCurrent(sBenchmark)) {
+      document.getElementById("pane-bkg").style.display = "none";
+      document.getElementById("page12").style.display = "block";
+    } else if (mgr.isCurrent(sResults)) {
+      document.getElementById("pane-bkg").style.display = "none";
+      document.getElementById("page13").style.display = "block";
       document.getElementById("slider-disp").style.display = "block";
     }
     
   } else {
     // = "none" for all html div
     // if (mgr.isCurrent(sBodies)) {
+      document.getElementById("pane-bkg").style.display = "none";
+      document.getElementById("button-div").style.display = "none";
       document.getElementById("top").style.display = "none";
       document.getElementById("page1").style.display = "none";
       document.getElementById("page2").style.display = "none";
@@ -898,6 +920,8 @@ function paneToggle() {
       document.getElementById("page9").style.display = "none";
       document.getElementById("page10").style.display = "none";
       document.getElementById("page11").style.display = "none";
+      document.getElementById("page12").style.display = "none";
+      document.getElementById("page13").style.display = "none";
       document.getElementById("slider-disp").style.display = "none";
     // }
   }
