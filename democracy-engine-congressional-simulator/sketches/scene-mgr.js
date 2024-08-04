@@ -243,7 +243,7 @@ function nextPane() {
   } else if (mgr.isCurrent(sYesVotes)) {
     mgr.showScene(sVote);
   }  else if (mgr.isCurrent(sVote)) {
-    mgr.showScene(sBenchmark);
+    mgr.showScene(sBenchmarkPane);
   } //else if (mgr.isCurrent(sResults) && userEditCount < 2) {
   //   mgr.showScene(sInfo);
   // }  else if (mgr.isCurrent(sInfo) && userEdits == true) {
@@ -291,6 +291,8 @@ function previousPane() {
       reconfigBool = true;
     }
     mgr.showScene(sYesVotes);
+  } else if (mgr.isCurrent(sBenchmarkPane)) {
+    mgr.showScene(sVote);
   }
 }
 
@@ -650,6 +652,7 @@ function saveSession() {
 function updateSession() {
   //addResult(resultIX);
   addConfig();
+  console.log("config added");
   addResult(configIX); // add result to this configuration
   //addConfig();
 
@@ -742,49 +745,18 @@ function addResult(pConfigIX) {
 
   // let ran = floor(random(10)); // get an integer 0-9
   // var act = historicalActs[ran]; // get random act
-  var act = historicalActs[resultIX]; // get act titles in order
+  var aTitle;
+  if (resultIX == 0) {
+    aTitle = "Test Bill";
+  } else {
+    aTitle = historicalActs[resultIX-1].title; // get act titles in order
+  }
 
   // for this configuration, add the result to the array
-    results[resultIX] = {
-
-      actTitle: act.title,
-
-      chamber1: {
-        yes: engine.votingBodyCounts[0][0],
-        no: engine.votingBodyCounts[0][1],
-        result: engine.voteResults[0]
-      },
-  
-      chamber2: {
-          yes: engine.votingBodyCounts[2][0],
-          no: engine.votingBodyCounts[2][1],
-          result: engine.voteResults[2]
-      },
-  
-      chamber3: {
-          yes: engine.votingBodyCounts[1][0],
-          no: engine.votingBodyCounts[1][1],
-          result: null
-      },
-  
-      vicePres: {
-          yes: engine.votingBodyCounts[3][0],
-          no: engine.votingBodyCounts[3][1],
-          result: engine.voteResults[3]
-      },
-  
-      president: {
-          yes: engine.votingBodyCounts[4][0],
-          no: engine.votingBodyCounts[4][1],
-          result: engine.voteResults[4]
-      },
-  
-      finalDecision: engine.decisionTxt
-    }
 
     results[resultIX] = {
 
-      actTitle: act.title,
+      actTitle: aTitle,
 
       chamber1: {
         yes: engine.votingBodyCounts[0][0],
@@ -894,8 +866,7 @@ function paneToggle() {
       document.getElementById("page10").style.display = "block";
     } else if (mgr.isCurrent(sVote)) {
       document.getElementById("page11").style.display = "block";
-    } else if (mgr.isCurrent(sBenchmark)) {
-      document.getElementById("pane-bkg").style.display = "none";
+    } else if (mgr.isCurrent(sBenchmarkPane)) {
       document.getElementById("page12").style.display = "block";
     } else if (mgr.isCurrent(sResults)) {
       document.getElementById("pane-bkg").style.display = "none";
