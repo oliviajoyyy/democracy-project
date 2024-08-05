@@ -85,6 +85,8 @@ var pColor; // = "#3c1b36";
 var textColor;
 var colorOverlay;
 var rectColor;
+var rectColor2;
+var rectColor3;
 
 // json
 var configJSON;
@@ -128,14 +130,16 @@ function setup() {
   colorConfig = configJSON.cssParams;
   historicalActs = configJSON.historicalActs
   bColor = colorConfig.background;
-  pColor = colorConfig.headerFooterBkg;
+  pColor = colorConfig.button;
   textColor = colorConfig.text;
   colorOverlay = colorConfig.textOverlay;
   rectColor = colorConfig.rectColor;
+  rectColor2 = colorConfig.rectColor2;
+  rectColor3 = colorConfig.rectColor3;
   document.body.style.backgroundColor = bColor;
   //document.header.style.backgroundColor = bColor;
   engine = new DemocracyEngine(govtConfig, historicalActs); // OC create engine object to run voting logic
-  visual = new VoteVisual(loadingImage, bColor, pColor, textColor, rectColor);
+  visual = new VoteVisual(loadingImage, bColor, pColor, textColor, rectColor, rectColor2, rectColor3);
   setDefaultUserVars(); // set user vars to params from config file
   buttonDiv = document.getElementById('button-div');
 

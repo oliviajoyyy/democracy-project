@@ -42,6 +42,7 @@ h2 {
   color: var(--text-color); /* blue; */
   width: 100%;
   font-weight: lighter;
+  margin-top: 0;
 }
 
 input[type=text] {

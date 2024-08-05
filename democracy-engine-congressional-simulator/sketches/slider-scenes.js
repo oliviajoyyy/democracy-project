@@ -354,9 +354,7 @@ function newSessionScene() {
     document.getElementById("main-btn-div").style.display = "none";
 
     document.getElementById("start-desc").style.display = "block";
-    document.getElementById("start-desc").innerHTML = "<h2>New Session</h2><p>[Description here on how to use the interface]<br><br>Your session ID is: ";
-    document.getElementById("start-desc").innerHTML += sessionID;
-    document.getElementById("start-desc").innerHTML += "</p>";
+    document.getElementById("start-desc").innerHTML = "<h2>New Session</h2><p>[Description here on how to use the interface]</p><p>Session ID: " + sessionID + "</p>";
 
     document.getElementById("top").style.display = "none";
     document.getElementById("page1").style.display = "none";
@@ -444,16 +442,15 @@ function loadSessionS1() {
 
 
     document.getElementById("start-desc").style.display = "block";
-    document.getElementById("start-desc").innerHTML = "<h2>Select Session</h2><p>[Description here on how to use the interface]</p><p>";
+    document.getElementById("start-desc").innerHTML = "<h2>Select Session</h2><p>[Description here on how to use the interface]</p>";
     // var allSessions = getAllSessions(); // array of all sessions in db
     // console.log(allSessions);
     getSessions().then((result) => {
       console.log(result);
       for (let i=0; i<result.length; i++) {
-        document.getElementById("start-desc").innerHTML += result[i].uniqueID;
-        document.getElementById("start-desc").innerHTML += "<br>";
+        document.getElementById("start-desc").innerHTML += "<p>ID: " + result[i].uniqueID + "</p>";
       }
-      document.getElementById("start-desc").innerHTML += "</p>";
+      // document.getElementById("start-desc").innerHTML += "</p>";
     });
 
     //document.getElementById("start-desc").innerHTML += "<br>[List of previous sessions (fr db), includes timestamp & ID]</p>";
@@ -536,8 +533,7 @@ function loadSessionS2() {
 
 
     document.getElementById("start-desc").style.display = "block";
-    document.getElementById("start-desc").innerHTML = "<h2>Load Session</h2><p>[Description here on how to use the interface]";
-    document.getElementById("start-desc").innerHTML += "<br>[Show timestamp-based name as ID for new (loaded) session]</p>";
+    document.getElementById("start-desc").innerHTML = "<h2>Load Session</h2><p>[Description here on how to use the interface]</p><p>[Show timestamp-based name as ID for new (loaded) session]</p>";
 
     document.getElementById("top").style.display = "none";
     document.getElementById("page1").style.display = "none";
@@ -1175,7 +1171,7 @@ function sBodies() {
     engine.numSenate = 1; // just to give default value
 
     // reset values for calculations
-    engine.completeReset();
+    //engine.completeReset();
     visual.completeReset();
     userEdits = false;
     reconfigBool = true;
@@ -1301,7 +1297,7 @@ function sLegislative() {
     setEngineParams();
 
     // reset values for calculations
-    engine.completeReset();
+    //engine.completeReset();
     visual.completeReset();
     userEdits = false;
     reconfigBool = true;
@@ -1719,7 +1715,7 @@ function sMembersFirstChamber() {
     setEngineParams();
 
     // reset values for calculations
-    engine.completeReset();
+    //engine.completeReset();
     visual.completeReset();
     userEdits = false;
     reconfigBool = true;
@@ -2024,7 +2020,7 @@ function sMembersSecondChamber() {
   }
 
   this.draw = function () {
-    visual.displayVoting(engine);
+    visual.displayImmediateBlank(engine);
     paneToggle();
     console.log("Party A: " + userPerHouse2Body[0] + " Party B: " + userPerHouse2Body[1] + " Party C: " + userPerHouse2Body[2]);
     // if sliders changed any values on this page, enable update button
@@ -2043,7 +2039,7 @@ function sMembersSecondChamber() {
     setEngineParams();
 
     // reset values for calculations
-    engine.completeReset();
+    //engine.completeReset();
     visual.completeReset();
     userEdits = false;
     reconfigBool = true;
@@ -2324,7 +2320,7 @@ function sMembersThirdChamber() {
   }
 
   this.draw = function () {
-    visual.displayVoting(engine);
+    visual.displayImmediateBlank(engine);
     paneToggle();
     console.log("Party A: " + userPerSenateBody[0] + " Party B: " + userPerSenateBody[1] + " Party C: " + userPerSenateBody[2]);
     // if sliders changed any values on this page, enable update button
@@ -2343,7 +2339,7 @@ function sMembersThirdChamber() {
     setEngineParams();
 
     // reset values for calculations
-    engine.completeReset();
+    //engine.completeReset();
     visual.completeReset();
     userEdits = false;
     reconfigBool = true;
@@ -2624,7 +2620,7 @@ function sMembersVP() {
   }
 
   this.draw = function () {
-    visual.displayVoting(engine);
+    visual.displayImmediateBlank(engine);
     paneToggle();
     console.log("Party A: " + userPerVPBody[0] + " Party B: " + userPerVPBody[1] + " Party C: " + userPerVPBody[2]);
     // if sliders changed any values on this page, enable update button
@@ -2643,7 +2639,7 @@ function sMembersVP() {
     setEngineParams();
 
     // reset values for calculations
-    engine.completeReset();
+    //engine.completeReset();
     visual.completeReset();
     userEdits = false;
     reconfigBool = true;
@@ -2924,7 +2920,7 @@ function sMembersPres() {
   }
 
   this.draw = function () {
-    visual.displayVoting(engine);
+    visual.displayImmediateBlank(engine);
     paneToggle();
     console.log("Party A: " + userPerPresBody[0] + " Party B: " + userPerPresBody[1] + " Party C: " + userPerPresBody[2]);
     // if sliders changed any values on this page, enable update button
@@ -2943,7 +2939,7 @@ function sMembersPres() {
     setEngineParams();
 
     // reset values for calculations
-    engine.completeReset();
+    //engine.completeReset();
     visual.completeReset();
     userEdits = false;
     reconfigBool = true;
@@ -3671,6 +3667,9 @@ function sVote() {
       document.body.style.backgroundColor = colorOverlay;
       engine.bodyCount = engine.numBodies;
       visual.finalTextDisplayUser(engine, helvFont, colorOverlay, resultIX);
+      setTimeout(function () {
+        showPanesBool = true;
+      }, 1500);
       //changeText(engine.decisionTxt);
     }, 1500); // 1.5 seconds before text overlay shows
     visual.userInputState = false;
@@ -4053,8 +4052,6 @@ function sSaveResults() {
     // document.getElementById("top").innerHTML = "DEMOCRACY ENGINE SIMULATOR INPUTS";
     document.getElementById("main-header").innerHTML = "<h1>Save Configuration</h1>";
     document.getElementById("start-desc").innerHTML = "";
-    document.getElementById("top").innerHTML = "";
-    document.getElementById("top").style.display = "none";
     document.getElementById("pane-bkg").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
@@ -4073,18 +4070,18 @@ function sSaveResults() {
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
+    
+    startOverBtn = createButton('Start Over');
+    startOverBtn.id('restart-btn');
+    startOverBtn.class('buttons');
+    startOverBtn.parent(buttonDiv);
+    startOverBtn.mousePressed(clickedStartOver);
 
     saveBtn = createButton('Save Config');
     saveBtn.id('save-btn');
     saveBtn.class('buttons');
     saveBtn.parent(buttonDiv);
     saveBtn.mousePressed(clickedSave);
-
-    startOverBtn = createButton('Start Over');
-    startOverBtn.id('restart-btn');
-    startOverBtn.class('buttons');
-    startOverBtn.parent(buttonDiv);
-    startOverBtn.mousePressed(clickedStartOver);
 
     // OC TODO - move to sParties? or to each scene that sets party members for a chamber
     if (userNumParties == 2) {
@@ -4218,20 +4215,16 @@ function sSaveResults() {
 }
 
 function sComplete() {
-  let saveBtn, startOverBtn;
 
   this.setup = function () {
-    //userOutputText = document.getElementById('slider-disp');
-    userOutputText = document.getElementById('start-desc');
   }
 
   this.enter = function () {
 
-    console.log("user config summary & save page");
+    console.log("save complete page");
     // document.getElementById("top").innerHTML = "DEMOCRACY ENGINE SIMULATOR INPUTS";
-    document.getElementById("main-header").innerHTML = "<h1>Save Configuration</h1>";
-    document.getElementById("start-desc").innerHTML = "";
-    document.getElementById("top").innerHTML = "";
+    document.getElementById("main-header").innerHTML = "<h1>Session Complete</h1>";
+    document.getElementById("start-desc").innerHTML = "<h2>THANK YOU</h2><p>Session ID: " + "xxx" + "<br><br>[additional info]</p";
     document.getElementById("top").style.display = "none";
     document.getElementById("pane-bkg").style.display = "none";
     document.getElementById("page1").style.display = "none";
@@ -4252,145 +4245,15 @@ function sComplete() {
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
 
-    saveBtn = createButton('Save Config');
-    saveBtn.id('save-btn');
-    saveBtn.class('buttons');
-    saveBtn.parent(buttonDiv);
-    saveBtn.mousePressed(clickedSave);
-
-    startOverBtn = createButton('Start Over');
-    startOverBtn.id('restart-btn');
-    startOverBtn.class('buttons');
-    startOverBtn.parent(buttonDiv);
-    startOverBtn.mousePressed(clickedStartOver);
-
-    // OC TODO - move to sParties? or to each scene that sets party members for a chamber
-    if (userNumParties == 2) {
-      userPerHouseBody[2] = 0.0;
-      userPerHouse2Body[2] = 0.0;
-      userPerSenateBody[2] = 0.0;
-      userPerVPBody[2] = 0.0;
-      userPerPresBody[2] = 0.0;
-    } else if (userNumParties == 1) {
-      userPerHouseBody[1] = 0.0;
-      userPerHouseBody[2] = 0.0;
-      userPerHouse2Body[1] = 0.0;
-      userPerHouse2Body[2] = 0.0;
-      userPerSenateBody[1] = 0.0;
-      userPerSenateBody[2] = 0.0;
-      userPerVPBody[1] = 0.0;
-      userPerVPBody[2] = 0.0;
-      userPerPresBody[1] = 0.0;
-      userPerPresBody[2] = 0.0;
-    }
-    inputTxt();
-
-    // visualizeVote = false;
-
-    // // set new parameters to show updated configuration when entering scene
-    // setEngineParams();
-    // // reset values for calculations
-    // engine.completeReset();
-    // visual.completeReset();
-    // userEdits = false;
-    // reconfigBool = true;
-
     background(bColor);
     document.body.style.backgroundColor = bColor;
 
+    setTimeout(function () {
+      mgr.showScene(briefDescription);
+    }, 5000); // 5 seconds, short for testing
   }
 
   this.draw = function () {
-    // if (visualizeVote == false) {
-    //   visual.displayImmediateBlank(engine);
-    // } else {
-    //   visual.displayVoting(engine);
-    //   // OC when visual display of rectangles is done, show buttons
-    //   if (visual.userInputState) {
-    //     finalDisplay();
-    //   }
-    // }
-    // paneToggle();
-    
-  }
-
-  function finalDisplay() {
-
-    setTimeout(function () {
-      document.body.style.backgroundColor = colorOverlay;
-      engine.bodyCount = engine.numBodies;
-      visual.finalTextDisplayUser(engine, helvFont, colorOverlay);
-      changeText(engine.decisionTxt);
-    }, 1500); // 1.5 seconds before text overlay shows
-    visual.userInputState = false;
-
-  }
-
-  function clickedStartOver() {
-    removeBtns();
-    mgr.showScene(briefDescription);
-  }
-
-  function clickedSave() {
-    removeBtns();
-    saveSession();
-    mgr.showScene(sComplete);
-  }
-
-  function removeBtns() {
-    startOverBtn.remove();
-    saveBtn.remove();
-  }
-
-  function inputTxt() {
-
-    userOutputText.innerHTML =
-      "<div><h3>First Legislative Chamber</h3>" +
-      "<p>Voting Members: " + userNumHouse +
-      "<br>Members in Political Party A: " + Math.round(userPerHouseBody[0] * userNumHouse) +
-      "<br>Members in Political Party B: " + Math.round(userPerHouseBody[1] * userNumHouse) +
-      "<br>Members in Political Party C: " + Math.round(userPerHouseBody[2] * userNumHouse) +
-      "</p><h3>Second Legislative Chamber</h3>" +
-      "<p>Voting Members: " + userNumHouse2 +
-      "<br>Members in Political Party A: " + Math.round(userPerHouse2Body[0] * userNumHouse2) +
-      "<br>Members in Political Party B: " + Math.round(userPerHouse2Body[1] * userNumHouse2) +
-      "<br>Members in Political Party C: " + Math.round(userPerHouse2Body[2] * userNumHouse2) +
-      "</p><h3>Third Legislative Chamber</h3>" +
-      "<p>Voting Members: " + userNumSenate +
-      "<br>Members in Political Party A: " + Math.round(userPerSenateBody[0] * userNumSenate) +
-      "<br>Members in Political Party B: " + Math.round(userPerSenateBody[1] * userNumSenate) +
-      "<br>Members in Political Party C: " + Math.round(userPerSenateBody[2] * userNumSenate) +
-      "</p><h3>Vice Presidency</h3>" +
-      "<p>Voting Members: " + userNumVP +
-      "<br>Members in Political Party A: " + Math.round(userPerPresBody[0] * userNumVP) +
-      "<br>Members in Political Party B: " + Math.round(userPerPresBody[1] * userNumVP) +
-      "<br>Members in Political Party C: " + Math.round(userPerPresBody[2] * userNumVP) +
-      "</p><h3>Presidency</h3>" +
-      "<p>Voting Members: " + userNumPres +
-      "<br>Members in Political Party A: " + Math.round(userPerVPBody[0] * userNumPres) +
-      "<br>Members in Political Party B: " + Math.round(userPerVPBody[1] * userNumPres) +
-      "<br>Members in Political Party C: " + Math.round(userPerVPBody[2] * userNumPres) +
-      "</p><h3>Likelihood of Yes Vote: </h3>" +
-      "<p>Political Party A: " + userDemYaythresh +
-      "<br>Political Party B: " + userRepYaythresh +
-      "<br>Political Party C: " + userIndYaythresh +
-      "</p><h3>Percentage of votes required for approval of bill</h3>" +
-      "<p>Approval By Majority: " + userBodyPass +
-      "<br> Approval By Supermajority: " + userSuperThresh + "</div></p>";
-
-      /*
-    if (userEditCount >= 2) {
-      nextButton.remove();
-      recalBtn = createButton('RECALCULATE VOTE');
-      recalBtn.id('recal-btn');
-      recalBtn.class('buttons');
-      // let buttonDiv = document.getElementById('button-div');
-      recalBtn.parent(buttonDiv);
-
-      // recalBtn.position(windowWidth - recalBtn.width - buttonRes.width - buttonRC.width - 20, windowHeight - 45);
-      recalBtn.mousePressed(inputVar);
-    }
-      */
   }
 
 }

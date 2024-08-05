@@ -14,20 +14,20 @@
 
     "defaultConfig": {
         "numLegislativeBodies": 2,
-        "numParties": 2,
+        "numParties": 3,
 
         "chamber1": {
-                "totalMembers": 435,
+                "totalMembers": 432,
                 "partyA": 220,
-                "partyB": 211,
+                "partyB": 212,
                 "partyC": 0
         },
 
         "chamber2": {
                 "totalMembers": 100,
-                "partyA": 48,
-                "partyB": 50,
-                "partyC": 2
+                "partyA": 49,
+                "partyB": 47,
+                "partyC": 4
         },
 
         "chamber3": {
@@ -39,15 +39,15 @@
 
         "vicePres": {
             "totalMembers": 1,
-            "partyA": 1,
-            "partyB": 0,
+            "partyA": 0,
+            "partyB": 1,
             "partyC": 0
         },
 
         "president": {
             "totalMembers": 1,
-            "partyA": 1,
-            "partyB": 0,
+            "partyA": 0,
+            "partyB": 1,
             "partyC": 0
         },
 
@@ -153,7 +153,9 @@
         "link": "#f03e3e",
         "linkHover": "#c47cb7",
         "textOverlay": "#ffffff",
-        "rectColor": "#a31f1f",
+        "rectColor": "#64b804",
+        "rectColor2": "#1e7d21",
+        "rectColor3": "#12cc7f",
         "paneBkg": "#84a39b",
         "sliderStart": "60vh",
         "sliderOffset": "8vh"

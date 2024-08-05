@@ -57,6 +57,8 @@ class VoteVisual {
   pColor; // = "#3c1b36"; // header color
   tColor; // text color
   rColor; // rect and loading image color
+  rColor2;
+  rColor3;
 
   tranVal = 255;
   // let fadeOpac = 255;
@@ -88,14 +90,18 @@ class VoteVisual {
    * @param {color} bK - color for background
    * @param {color} pK - a second color
    * @param {color} tK - text color
-   * @param {color} rK - rectangle color
+   * @param {color} c1 - rectangle color 1
+   * @param {color} c2 - rectangle color 2
+   * @param {color} c3 - rectangle color 3
    */
-  constructor(img, bK, pK, tK, rK) {
+  constructor(img, bK, pK, tK, c1, c2, c3) {
     this.loadingImage = img;
     this.bColor = color(bK);
     this.pColor = color(pK);
     this.tColor = color(tK);
-    this.rColor = color(rK);
+    this.rColor = color(c1);
+    this.rColor2 = color(c2);
+    this.rColor3 = color(c3);
   }
 
   /**
@@ -677,6 +683,7 @@ class VoteVisual {
           var currentTransVal = 0;
           var currentPartyNum = 0;
           var numRepOrWild;
+          var rectColor;
 
           if (this.forUser) // OC forUser: bool - true if engine is running for user config, false if running default config
             numRepOrWild = this.numRep;
@@ -692,23 +699,27 @@ class VoteVisual {
 
           //Democrat is Voting
           if (this.countR < this.numDem) {
-            currentTransVal = this.tranVal - currentPartyNum * valAdjust; // party determines tranparency of rectangle
+            // currentTransVal = this.tranVal - currentPartyNum * valAdjust; // party determines tranparency of rectangle
+            rectColor = this.rColor;
           }
           //Independent is Voting
           else if (this.countR >= this.numDem && this.countR < this.numDem + numRepOrWild) {
-            currentPartyNum = this.partyNum + 1;
-            currentTransVal = this.tranVal - currentPartyNum * valAdjust;
+            // currentPartyNum = this.partyNum + 1;
+            // currentTransVal = this.tranVal - currentPartyNum * valAdjust;
+            rectColor = this.rColor2;
           }
           //Republican is Voting
           else {
-            currentPartyNum = this.partyNum + 2;
-            currentTransVal = this.tranVal - currentPartyNum * valAdjust;
+            // currentPartyNum = this.partyNum + 2;
+            // currentTransVal = this.tranVal - currentPartyNum * valAdjust;
+            rectColor = this.rColor3;
           }
 
           // draw blank boxes with transparency according to parties
           rectMode(CENTER);
-          this.rColor.setAlpha(currentTransVal); // different shade for each voting party
-          stroke(this.rColor);
+          // this.rColor.setAlpha(currentTransVal); // different shade for each voting party
+          // stroke(this.rColor);
+          stroke(rectColor)
           noFill();
           strokeWeight(3);
 
@@ -1029,8 +1040,8 @@ class VoteVisual {
     push();
     rectMode(CORNER);
     noStroke();
-    this.rColor.setAlpha(255);
-    tint(this.rColor);
+    this.pColor.setAlpha(255);
+    tint(this.pColor);
     fill(this.bColor);
 
     translate(this.offSet / 2, this.dHeight / 2);
@@ -1105,6 +1116,7 @@ class VoteVisual {
     var valAdjust = 75;
     var currentTransVal = 0;
     var currentPartyNum = 0;
+    var rectColor;
 
     var numRepOrWild;
     if (this.forUser) // OC forUser: bool - true if engine is running for user config, false if running default config
@@ -1119,7 +1131,6 @@ class VoteVisual {
     }
 
     this.diam = this.skip * .8;
-    this.stopVoteChange();
 
     // OC get the vote for this member (count1) of the body (bodyCount) from engine's calculation
     let vote = this.engine.allVotes[this.bodyCount][this.count1];
@@ -1127,22 +1138,26 @@ class VoteVisual {
 
     //Democrat is Voting
     if (this.countR < this.numDem) {
-      currentTransVal = this.tranVal - currentPartyNum * valAdjust; // party determines tranparency of rectangle
+      // currentTransVal = this.tranVal - currentPartyNum * valAdjust; // party determines tranparency of rectangle
+      rectColor = this.rColor;
     }
     //Independent is Voting
     else if (this.countR >= this.numDem && this.countR < this.numDem + numRepOrWild) {
-      currentPartyNum = this.partyNum + 1;
-      currentTransVal = this.tranVal - currentPartyNum * valAdjust;
+      // currentPartyNum = this.partyNum + 1;
+      // currentTransVal = this.tranVal - currentPartyNum * valAdjust;
+      rectColor = this.rColor2;
     }
     //Republican is Voting
     else {
-      currentPartyNum = this.partyNum + 2;
-      currentTransVal = this.tranVal - currentPartyNum * valAdjust;
+      // currentPartyNum = this.partyNum + 2;
+      // currentTransVal = this.tranVal - currentPartyNum * valAdjust;
+      rectColor = this.rColor3;
     }
     //AB: finding problem with x's
     // print("body #: " + bodyCount + " No Vote Bool: " + noVoteBool);
     //print("body #: " + this.bodyCount + "box #: " + this.count1 + " vote: " + vote);
 
+    this.stopVoteChange(rectColor);
 
     // Square is Drawn for Each Vote
     rectMode(CENTER);
@@ -1152,8 +1167,10 @@ class VoteVisual {
         this.y = this.y + (this.skip * .9);
       // y = y + skip;
       if (this.engine.vpVote == false) {
-        this.rColor.setAlpha(100);
-        stroke(this.rColor); //stroke(255, 100);
+        // this.rColor.setAlpha(100);
+        // stroke(this.rColor); //stroke(255, 100);
+        //rectColor.setAlpha(100);
+        stroke(rectColor);
         noFill();
         strokeWeight(3);
       }
@@ -1170,8 +1187,9 @@ class VoteVisual {
     //creates a different shade for each voting party
     if (this.stopVoteBool == false) {
       noStroke();
-      this.rColor.setAlpha(currentTransVal);
-      fill(this.rColor);
+      // this.rColor.setAlpha(currentTransVal);
+      // fill(this.rColor);
+      fill(rectColor);
       //fill(255, currentTransVal);
     }
 
@@ -1230,15 +1248,17 @@ class VoteVisual {
   /**
    * appearance of squares changes to outlines when no vote is required
    */
-  stopVoteChange() {
+  stopVoteChange(rectColor) {
     if (this.stopVoteBool == true) {
-      this.rColor.setAlpha(100);
-      stroke(this.rColor); //stroke(255, 100);
+      //this.rColor.setAlpha(100);
+      //stroke(this.rColor); //stroke(255, 100);
+      stroke(rectColor);
       noFill();
       strokeWeight(3);
       // stopVoteBool == false;
     } else {
-      fill(this.bColor);
+      // fill(this.bColor);
+      stroke(rectColor);
       noStroke();
 
     }
