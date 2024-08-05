@@ -161,7 +161,11 @@ function setup() {
   //mgr.addScene(sMembers);
   mgr.addScene(sBodyPass);
   mgr.addScene(sYesVotes);
-  mgr.addScene(sResults);
+  mgr.addScene(sVote);
+  mgr.addScene(sBenchmarkPane);
+  mgr.addScene(sBenchmarkResults);
+  mgr.addScene(sSaveResults);
+  // mgr.addScene(sComplete);
   mgr.addScene(sInfo);
   mgr.addScene(sDisplay);
   mgr.addScene(sDefault);

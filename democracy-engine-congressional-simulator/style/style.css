@@ -158,12 +158,12 @@ button {
   border-radius: 3px;
   display: none;
   width: 90vw;
-  height: 50vh;
+  height: 60vh;
   margin-left: 5vw;
   margin-right: auto;
   padding: 1%;
   z-index: 99;
-  margin-top: 40vh;
+  margin-top: 30vh;
   position: fixed;
   top: 0;
   overflow-y: auto;

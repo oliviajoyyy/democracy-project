@@ -108,10 +108,10 @@ function briefDescription() {
     document.body.style.backgroundColor = bColor;
 
     document.getElementById("page-container").style.display = "block";
-    document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1><h2>Description</h2>";
+    document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1>";
     document.getElementById("main-btn-div").style.display = "none";
     document.getElementById("start-desc").style.display = "block";
-    document.getElementById("start-desc").innerHTML = "<p>The legislative apparatus of the current US government is represented in default mode, which will initially run through one legislative cycle. The user may configure alternative values in subsequent cycles in order to evaluate the effects of systemic changes to the mechanism of governance.</p>";
+    document.getElementById("start-desc").innerHTML = "<h2>Description</h2><p>The legislative apparatus of the current US government is represented in default mode, which will initially run through one legislative cycle. The user may configure alternative values in subsequent cycles in order to evaluate the effects of systemic changes to the mechanism of governance.</p>";
     document.getElementById("top").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
@@ -283,10 +283,10 @@ function aboutProject() {
     console.log("start up scene");
 
     document.getElementById("page-container").style.display = "block";
-    document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1><h2>More Information</h2>";
+    document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1>";
     document.getElementById("main-btn-div").style.display = "none";
     document.getElementById("start-desc").style.display = "block";
-    document.getElementById("start-desc").innerHTML = "<p>[Detailed project description & link to external page]</p>";
+    document.getElementById("start-desc").innerHTML = "<h2>More Information</h2><p>[Detailed project description & link to external page]</p>";
     document.getElementById("top").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
@@ -350,11 +350,11 @@ function newSessionScene() {
     newSession();
 
     document.getElementById("page-container").style.display = "block";
-    document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1><h2>New Session</h2>";
+    document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1>";
     document.getElementById("main-btn-div").style.display = "none";
 
     document.getElementById("start-desc").style.display = "block";
-    document.getElementById("start-desc").innerHTML = "<p>[Description here on how to use the interface]<br><br>Your session ID is: ";
+    document.getElementById("start-desc").innerHTML = "<h2>New Session</h2><p>[Description here on how to use the interface]<br><br>Your session ID is: ";
     document.getElementById("start-desc").innerHTML += sessionID;
     document.getElementById("start-desc").innerHTML += "</p>";
 
@@ -439,12 +439,12 @@ function loadSessionS1() {
     console.log("start up scene");
 
     document.getElementById("page-container").style.display = "block";
-    document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1><h2>Select Session</h2>";
+    document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1>";
     document.getElementById("main-btn-div").style.display = "none";
 
 
     document.getElementById("start-desc").style.display = "block";
-    document.getElementById("start-desc").innerHTML = "<p>[Description here on how to use the interface]</p><p>";
+    document.getElementById("start-desc").innerHTML = "<h2>Select Session</h2><p>[Description here on how to use the interface]</p><p>";
     // var allSessions = getAllSessions(); // array of all sessions in db
     // console.log(allSessions);
     getSessions().then((result) => {
@@ -531,12 +531,12 @@ function loadSessionS2() {
     console.log("start up scene");
 
     document.getElementById("page-container").style.display = "block";
-    document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1><h2>Load Session</h2>";
+    document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1>";
     document.getElementById("main-btn-div").style.display = "none";
 
 
     document.getElementById("start-desc").style.display = "block";
-    document.getElementById("start-desc").innerHTML = "<p>[Description here on how to use the interface]";
+    document.getElementById("start-desc").innerHTML = "<h2>Load Session</h2><p>[Description here on how to use the interface]";
     document.getElementById("start-desc").innerHTML += "<br>[Show timestamp-based name as ID for new (loaded) session]</p>";
 
     document.getElementById("top").style.display = "none";
@@ -3676,8 +3676,9 @@ function sVote() {
     visual.userInputState = false;
 
   }
-
+  
   function clickedVote() {
+    console.log("configIX beginning clicked vote: " + configIX);
     //voteBtn.remove();
     document.getElementById("vote-btn").disabled = true; // disable vote button after clicked
     showPanesBool = false; // make pane disappear so user can see voting in full view
@@ -3709,6 +3710,7 @@ function sVote() {
     updateSession(); // save this config and resutls of running this configuration
     resultIX++; // saves this result
     configIX++;
+    console.log("configIX after clicked vote: " + configIX);
   }
 
   function checkParamChange() {
@@ -3784,6 +3786,10 @@ function sBenchmarkPane() {
       resultIX++;
     }
 
+    if (configIX > 0) {
+      configIX--; // decrement because last click for vote prepared for another config
+    }
+
     // set new parameters to show updated configuration when entering scene
     //setEngineParams();
     // reset values for calculations
@@ -3812,9 +3818,10 @@ function sBenchmarkPane() {
     benchmarkBtn.remove();
     var benchResults = "";
 
+    console.log("configIX before benchmarking: " + configIX);
     for (let i=resultIX; i < MAX_SIM_RESULTS+1; i++) { // + 1 because the first was the test result
       engine.completeReset();
-      engine.currentCongLogic(userEdits);
+      engine.currentCongLogic(true);
       //let engineSim = new DemocracyEngine
       updateSession();
       benchResults = (configs[configIX].simResults[resultIX-1].actTitle + " " + configs[configIX].simResults[resultIX-1].finalDecision);//sessionObj.configHistory[configIX].
@@ -3831,6 +3838,7 @@ function sBenchmarkPane() {
       
       resultIX++;
     }
+    console.log("configIX after benchmarking: " + configIX);
 
     mgr.showScene(sBenchmarkResults);
   }
@@ -3891,7 +3899,7 @@ function sBenchmarkResults() {
     startOverBtn.parent(buttonDiv);
     startOverBtn.mousePressed(clickedStartOver);
 
-    saveBtn = createButton('Save Config');
+    saveBtn = createButton('Go to Save');
     saveBtn.id('save-btn');
     saveBtn.class('buttons');
     saveBtn.parent(buttonDiv);
@@ -3961,9 +3969,9 @@ function sBenchmarkResults() {
   }
 
   function clickedSave() {
-    //removeBtns();
-    // go to different scene?
-    saveSession();
+    removeBtns();
+    mgr.showScene(sSaveResults)
+    //saveSession();
   }
 
   function clickedApprove() {
@@ -4031,29 +4039,20 @@ function sBenchmarkResults() {
 }
 
 //page showing all of user inputs
-function sResults() {
-  let voteBtn, startOverBtn, editBtn, saveBtn, approvalBtn;
-  let visualizeVote;
+function sSaveResults() {
+  let saveBtn, startOverBtn;
 
   this.setup = function () {
-
-    userOutputText = document.getElementById('slider-disp');
-    visualizeVote = false;
-
+    //userOutputText = document.getElementById('slider-disp');
+    userOutputText = document.getElementById('start-desc');
   }
 
   this.enter = function () {
-    // configIX = userEditCount; // OC config array index is 1 less than editCount until it reaches max attempts
-    // if (configIX > MAX_CONFIG_ATTEMPTS - 1) {
-    //   configs.shift(); // remove first entered in array
-    //   configIX == MAX_CONFIG_ATTEMPTS - 1; // decrement IX to last position in array
-    // }
-    // results = []; // OC new results array since it is a new config
-    // resultIX = 0; // OC reset resultIX bc new configuration
-    // userEditCount++;
-    // console.log("user edit count: " + userEditCount);
-    console.log("user result page");
+
+    console.log("user config summary & save page");
     // document.getElementById("top").innerHTML = "DEMOCRACY ENGINE SIMULATOR INPUTS";
+    document.getElementById("main-header").innerHTML = "<h1>Save Configuration</h1>";
+    document.getElementById("start-desc").innerHTML = "";
     document.getElementById("top").innerHTML = "";
     document.getElementById("top").style.display = "none";
     document.getElementById("pane-bkg").style.display = "none";
@@ -4071,9 +4070,21 @@ function sResults() {
     document.getElementById("page12").style.display = "none";
     document.getElementById("page13").style.display = "block";
     // document.getElementById("slider-value").style.display = "none";
-    document.getElementById("vote").style.display = "block";
-    document.getElementById("slider-disp").style.display = "block";
+    document.getElementById("vote").style.display = "none";
+    document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
+
+    saveBtn = createButton('Save Config');
+    saveBtn.id('save-btn');
+    saveBtn.class('buttons');
+    saveBtn.parent(buttonDiv);
+    saveBtn.mousePressed(clickedSave);
+
+    startOverBtn = createButton('Start Over');
+    startOverBtn.id('restart-btn');
+    startOverBtn.class('buttons');
+    startOverBtn.parent(buttonDiv);
+    startOverBtn.mousePressed(clickedStartOver);
 
     // OC TODO - move to sParties? or to each scene that sets party members for a chamber
     if (userNumParties == 2) {
@@ -4096,64 +4107,33 @@ function sResults() {
     }
     inputTxt();
 
-    nextPaneBtn.remove();
-    updateBtn.remove();
-    prevPaneBtn.remove();
+    // visualizeVote = false;
 
-    voteBtn = createButton('Vote');
-    voteBtn.id('vote-btn');
-    voteBtn.class('buttons');
-    voteBtn.parent(buttonDiv);
+    // // set new parameters to show updated configuration when entering scene
+    // setEngineParams();
+    // // reset values for calculations
+    // engine.completeReset();
+    // visual.completeReset();
+    // userEdits = false;
+    // reconfigBool = true;
 
-    startOverBtn = createButton('Start Over');
-    startOverBtn.id('restart-btn');
-    startOverBtn.class('buttons');
-    startOverBtn.parent(buttonDiv);
-
-    editBtn = createButton('Edit Config');
-    editBtn.id('edit-btn');
-    editBtn.class('buttons');
-    editBtn.parent(buttonDiv);
-
-    saveBtn = createButton('Save Config');
-    saveBtn.id('save-btn');
-    saveBtn.class('buttons');
-    saveBtn.parent(buttonDiv);
-    
-    approvalBtn = createButton('Approve');
-    approvalBtn.id('approve-btn');
-    approvalBtn.class('buttons');
-    approvalBtn.parent(buttonDiv);
-
-    visualizeVote = false;
-
-    // set new parameters to show updated configuration when entering scene
-    setEngineParams();
-    // reset values for calculations
-    engine.completeReset();
-    visual.completeReset();
-    userEdits = false;
-    reconfigBool = true;
+    background(bColor);
+    document.body.style.backgroundColor = bColor;
 
   }
 
   this.draw = function () {
-    if (visualizeVote == false) {
-      visual.displayImmediateBlank(engine);
-    } else {
-      visual.displayVoting(engine);
-      // OC when visual display of rectangles is done, show buttons
-      if (visual.userInputState) {
-        finalDisplay();
-      }
-    }
-    paneToggle();
+    // if (visualizeVote == false) {
+    //   visual.displayImmediateBlank(engine);
+    // } else {
+    //   visual.displayVoting(engine);
+    //   // OC when visual display of rectangles is done, show buttons
+    //   if (visual.userInputState) {
+    //     finalDisplay();
+    //   }
+    // }
+    // paneToggle();
     
-    voteBtn.mousePressed(clickedVote);
-    startOverBtn.mousePressed(clickedStartOver);
-    editBtn.mousePressed(clickedEdit);
-    saveBtn.mousePressed(clickedSave);
-    approvalBtn.mousePressed(clickedApprove);
   }
 
   function finalDisplay() {
@@ -4168,89 +4148,30 @@ function sResults() {
 
   }
 
-  function clickedVote() {
-    //configIX = userEditCount; // OC config array index is 1 less than editCount until it reaches max attempts
-    if (configIX > MAX_CONFIG_ATTEMPTS - 1) {
-      configs.shift(); // remove first entered in array
-      configIX = MAX_CONFIG_ATTEMPTS - 1; // decrement IX to last position in array
-    }
-    results = []; // OC new results array since it is a new config
-    resultIX = 0; // OC reset resultIX bc new configuration
-    userEditCount++;
-    console.log("user edit count: " + userEditCount);
-
-    visualizeVote = true;
-    setEngineParams(); // set new parameters
-
-    // reset values for calculations and drawings
-    engine.completeReset();
-    visual.completeReset();
-    userEdits = false;
-    reconfigBool = true;
-    
-    engine.currentCongLogic(true); // get results for this configuration
-    updateSession(); // save this config and resutls of running this configuration
-
-  }
-
   function clickedStartOver() {
     removeBtns();
     mgr.showScene(briefDescription);
   }
 
-  function clickedEdit() {
-    removeBtns();
-    // reset values for calculations
-    engine.completeReset();
-    visual.completeReset();
-    userEdits = false;
-    reconfigBool = true;
-    mgr.showScene(sBodies);
-  }
-
   function clickedSave() {
-    //removeBtns();
-    // go to different scene?
+    removeBtns();
     saveSession();
-  }
-
-  function clickedApprove() {
-    ownerEndorse();
+    mgr.showScene(sComplete);
   }
 
   function removeBtns() {
-    voteBtn.remove();
     startOverBtn.remove();
-    editBtn.remove();
     saveBtn.remove();
-    approvalBtn.remove();
   }
 
   function inputTxt() {
 
-    // OC if 2 bodies, "Second Legislative Chamber" is for the senate
-    //    if 3 bodies, "Third Legislative Chamber" is for the senate
     userOutputText.innerHTML =
       "<div><h3>First Legislative Chamber</h3>" +
       "<p>Voting Members: " + userNumHouse +
       "<br>Members in Political Party A: " + Math.round(userPerHouseBody[0] * userNumHouse) +
       "<br>Members in Political Party B: " + Math.round(userPerHouseBody[1] * userNumHouse) +
-      "<br>Members in Political Party C: " + Math.round(userPerHouseBody[2] * userNumHouse); // +
-
-      // if (userNumLegislative == 2) {
-      // userOutputText.innerHTML +=
-      // "</p><h3>Second Legislative Chamber</h3>" +
-      // "<p>Voting Members: " + userNumSenate +
-      // "<br>Members in Political Party A: " + Math.round(userPerSenateBody[0] * userNumSenate) +
-      // "<br>Members in Political Party B: " + Math.round(userPerSenateBody[1] * userNumSenate) +
-      // "<br>Members in Political Party C: " + Math.round(userPerSenateBody[2] * userNumSenate) +
-      // "</p><h3>Third Legislative Chamber</h3>" +
-      // "<p>Voting Members: " + userNumHouse2 +
-      // "<br>Members in Political Party A: " + Math.round(userPerHouse2Body[0] * userNumHouse2) +
-      // "<br>Members in Political Party B: " + Math.round(userPerHouse2Body[1] * userNumHouse2) +
-      // "<br>Members in Political Party C: " + Math.round(userPerHouse2Body[2] * userNumHouse2); // +
-      // } else {
-      userOutputText.innerHTML +=
+      "<br>Members in Political Party C: " + Math.round(userPerHouseBody[2] * userNumHouse) +
       "</p><h3>Second Legislative Chamber</h3>" +
       "<p>Voting Members: " + userNumHouse2 +
       "<br>Members in Political Party A: " + Math.round(userPerHouse2Body[0] * userNumHouse2) +
@@ -4260,10 +4181,7 @@ function sResults() {
       "<p>Voting Members: " + userNumSenate +
       "<br>Members in Political Party A: " + Math.round(userPerSenateBody[0] * userNumSenate) +
       "<br>Members in Political Party B: " + Math.round(userPerSenateBody[1] * userNumSenate) +
-      "<br>Members in Political Party C: " + Math.round(userPerSenateBody[2] * userNumSenate);
-      //}
-
-      userOutputText.innerHTML +=
+      "<br>Members in Political Party C: " + Math.round(userPerSenateBody[2] * userNumSenate) +
       "</p><h3>Vice Presidency</h3>" +
       "<p>Voting Members: " + userNumVP +
       "<br>Members in Political Party A: " + Math.round(userPerPresBody[0] * userNumVP) +
@@ -4296,14 +4214,6 @@ function sResults() {
     }
       */
   }
-
-
-
-
-  // //supermajority Cutoff for override of presidential veto
-  // userSuperThresh;
-  //
-  // userBodyPass;
 
 }
 

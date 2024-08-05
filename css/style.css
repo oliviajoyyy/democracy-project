@@ -366,7 +366,7 @@ div.body-header {
 
 #page-container {
   position: relative;
-  min-height: 100vh;
+  min-height: 99vh;
   padding-top: 10%;
 }
 
