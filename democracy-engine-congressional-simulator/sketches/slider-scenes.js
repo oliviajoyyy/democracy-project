@@ -3824,7 +3824,7 @@ function sBenchmarkPane() {
       engine.currentCongLogic(true);
       //let engineSim = new DemocracyEngine
       updateSession();
-      benchResults = (configs[configIX].simResults[resultIX-1].actTitle + " " + configs[configIX].simResults[resultIX-1].finalDecision);//sessionObj.configHistory[configIX].
+      benchResults = (configs[configIX].simResults[resultIX].actTitle + " " + configs[configIX].simResults[resultIX].finalDecision);//sessionObj.configHistory[configIX].
       // push();
       // textAlign(LEFT, TOP);
       // textStyle(NORMAL)
@@ -4040,6 +4040,184 @@ function sBenchmarkResults() {
 
 //page showing all of user inputs
 function sSaveResults() {
+  let saveBtn, startOverBtn;
+
+  this.setup = function () {
+    //userOutputText = document.getElementById('slider-disp');
+    userOutputText = document.getElementById('start-desc');
+  }
+
+  this.enter = function () {
+
+    console.log("user config summary & save page");
+    // document.getElementById("top").innerHTML = "DEMOCRACY ENGINE SIMULATOR INPUTS";
+    document.getElementById("main-header").innerHTML = "<h1>Save Configuration</h1>";
+    document.getElementById("start-desc").innerHTML = "";
+    document.getElementById("top").innerHTML = "";
+    document.getElementById("top").style.display = "none";
+    document.getElementById("pane-bkg").style.display = "none";
+    document.getElementById("page1").style.display = "none";
+    document.getElementById("page2").style.display = "none";
+    document.getElementById("page3").style.display = "none";
+    document.getElementById("page4").style.display = "none";
+    document.getElementById("page5").style.display = "none";
+    document.getElementById("page6").style.display = "none";
+    document.getElementById("page7").style.display = "none";
+    document.getElementById("page8").style.display = "none";
+    document.getElementById("page9").style.display = "none";
+    document.getElementById("page10").style.display = "none";
+    document.getElementById("page11").style.display = "none";
+    document.getElementById("page12").style.display = "none";
+    document.getElementById("page13").style.display = "block";
+    // document.getElementById("slider-value").style.display = "none";
+    document.getElementById("vote").style.display = "none";
+    document.getElementById("slider-disp").style.display = "none";
+    document.getElementById("sim-info").style.display = "none";
+
+    saveBtn = createButton('Save Config');
+    saveBtn.id('save-btn');
+    saveBtn.class('buttons');
+    saveBtn.parent(buttonDiv);
+    saveBtn.mousePressed(clickedSave);
+
+    startOverBtn = createButton('Start Over');
+    startOverBtn.id('restart-btn');
+    startOverBtn.class('buttons');
+    startOverBtn.parent(buttonDiv);
+    startOverBtn.mousePressed(clickedStartOver);
+
+    // OC TODO - move to sParties? or to each scene that sets party members for a chamber
+    if (userNumParties == 2) {
+      userPerHouseBody[2] = 0.0;
+      userPerHouse2Body[2] = 0.0;
+      userPerSenateBody[2] = 0.0;
+      userPerVPBody[2] = 0.0;
+      userPerPresBody[2] = 0.0;
+    } else if (userNumParties == 1) {
+      userPerHouseBody[1] = 0.0;
+      userPerHouseBody[2] = 0.0;
+      userPerHouse2Body[1] = 0.0;
+      userPerHouse2Body[2] = 0.0;
+      userPerSenateBody[1] = 0.0;
+      userPerSenateBody[2] = 0.0;
+      userPerVPBody[1] = 0.0;
+      userPerVPBody[2] = 0.0;
+      userPerPresBody[1] = 0.0;
+      userPerPresBody[2] = 0.0;
+    }
+    inputTxt();
+
+    // visualizeVote = false;
+
+    // // set new parameters to show updated configuration when entering scene
+    // setEngineParams();
+    // // reset values for calculations
+    // engine.completeReset();
+    // visual.completeReset();
+    // userEdits = false;
+    // reconfigBool = true;
+
+    background(bColor);
+    document.body.style.backgroundColor = bColor;
+
+  }
+
+  this.draw = function () {
+    // if (visualizeVote == false) {
+    //   visual.displayImmediateBlank(engine);
+    // } else {
+    //   visual.displayVoting(engine);
+    //   // OC when visual display of rectangles is done, show buttons
+    //   if (visual.userInputState) {
+    //     finalDisplay();
+    //   }
+    // }
+    // paneToggle();
+    
+  }
+
+  function finalDisplay() {
+
+    setTimeout(function () {
+      document.body.style.backgroundColor = colorOverlay;
+      engine.bodyCount = engine.numBodies;
+      visual.finalTextDisplayUser(engine, helvFont, colorOverlay);
+      changeText(engine.decisionTxt);
+    }, 1500); // 1.5 seconds before text overlay shows
+    visual.userInputState = false;
+
+  }
+
+  function clickedStartOver() {
+    removeBtns();
+    mgr.showScene(briefDescription);
+  }
+
+  function clickedSave() {
+    removeBtns();
+    saveSession();
+    mgr.showScene(sComplete);
+  }
+
+  function removeBtns() {
+    startOverBtn.remove();
+    saveBtn.remove();
+  }
+
+  function inputTxt() {
+
+    userOutputText.innerHTML =
+      "<div><h3>First Legislative Chamber</h3>" +
+      "<p>Voting Members: " + userNumHouse +
+      "<br>Members in Political Party A: " + Math.round(userPerHouseBody[0] * userNumHouse) +
+      "<br>Members in Political Party B: " + Math.round(userPerHouseBody[1] * userNumHouse) +
+      "<br>Members in Political Party C: " + Math.round(userPerHouseBody[2] * userNumHouse) +
+      "</p><h3>Second Legislative Chamber</h3>" +
+      "<p>Voting Members: " + userNumHouse2 +
+      "<br>Members in Political Party A: " + Math.round(userPerHouse2Body[0] * userNumHouse2) +
+      "<br>Members in Political Party B: " + Math.round(userPerHouse2Body[1] * userNumHouse2) +
+      "<br>Members in Political Party C: " + Math.round(userPerHouse2Body[2] * userNumHouse2) +
+      "</p><h3>Third Legislative Chamber</h3>" +
+      "<p>Voting Members: " + userNumSenate +
+      "<br>Members in Political Party A: " + Math.round(userPerSenateBody[0] * userNumSenate) +
+      "<br>Members in Political Party B: " + Math.round(userPerSenateBody[1] * userNumSenate) +
+      "<br>Members in Political Party C: " + Math.round(userPerSenateBody[2] * userNumSenate) +
+      "</p><h3>Vice Presidency</h3>" +
+      "<p>Voting Members: " + userNumVP +
+      "<br>Members in Political Party A: " + Math.round(userPerPresBody[0] * userNumVP) +
+      "<br>Members in Political Party B: " + Math.round(userPerPresBody[1] * userNumVP) +
+      "<br>Members in Political Party C: " + Math.round(userPerPresBody[2] * userNumVP) +
+      "</p><h3>Presidency</h3>" +
+      "<p>Voting Members: " + userNumPres +
+      "<br>Members in Political Party A: " + Math.round(userPerVPBody[0] * userNumPres) +
+      "<br>Members in Political Party B: " + Math.round(userPerVPBody[1] * userNumPres) +
+      "<br>Members in Political Party C: " + Math.round(userPerVPBody[2] * userNumPres) +
+      "</p><h3>Likelihood of Yes Vote: </h3>" +
+      "<p>Political Party A: " + userDemYaythresh +
+      "<br>Political Party B: " + userRepYaythresh +
+      "<br>Political Party C: " + userIndYaythresh +
+      "</p><h3>Percentage of votes required for approval of bill</h3>" +
+      "<p>Approval By Majority: " + userBodyPass +
+      "<br> Approval By Supermajority: " + userSuperThresh + "</div></p>";
+
+      /*
+    if (userEditCount >= 2) {
+      nextButton.remove();
+      recalBtn = createButton('RECALCULATE VOTE');
+      recalBtn.id('recal-btn');
+      recalBtn.class('buttons');
+      // let buttonDiv = document.getElementById('button-div');
+      recalBtn.parent(buttonDiv);
+
+      // recalBtn.position(windowWidth - recalBtn.width - buttonRes.width - buttonRC.width - 20, windowHeight - 45);
+      recalBtn.mousePressed(inputVar);
+    }
+      */
+  }
+
+}
+
+function sComplete() {
   let saveBtn, startOverBtn;
 
   this.setup = function () {

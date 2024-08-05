@@ -7,6 +7,8 @@
   --scroll-bar: #012255;
   --scroll-bar-hover: #012266;
   --pane-bkg: #d9cb50;
+  --slider-start: 60vh;
+  --slider-offset: 8vh;
 }
 
 /* width */
@@ -68,7 +70,7 @@
 
 .first-slider {
   z-index: 100;
-  margin-top: calc(30vh + 25vh);
+  margin-top: calc(var(--slider-start));
   position: fixed;
   top: 0;
   margin-left: 15%;
@@ -88,7 +90,7 @@
 #slider2, #slider7, #slider11, #slider13, #slider-1b, #slider-2b, #slider-3b, #slider-vp-b, #slider-pres-b
 {
   z-index: 100;
-  margin-top: calc(38vh + 25vh); /* 40vh */
+  margin-top: calc(var(--slider-start) + (var(--slider-offset) * 1)); /* 40vh */
   position: fixed;
   top: 0;
   width: 30%;
@@ -98,7 +100,7 @@
 #slider3, #slider8, #slider14, #slider-1c, #slider-2c, #slider-3c, #slider-vp-c, #slider-pres-c
 {
   z-index: 100;
-  margin-top: calc(46vh + 25vh); /* 50vh; */
+  margin-top: calc(var(--slider-start) + (var(--slider-offset) * 2)); /* 50vh; */
   position: fixed;
   top: 0;
   margin-left: 15%;
@@ -107,7 +109,7 @@
 
 #slider4, #slider9 {
   z-index: 100;
-  margin-top: calc(54vh + 25vh); /* 60vh; */
+  margin-top: calc(var(--slider-start) + (var(--slider-offset) * 3)); /* 60vh; */
   position: fixed;
   top: 0;
   width: 30%;
@@ -116,7 +118,7 @@
 
 #slider4a, #slider9a {
   z-index: 100;
-  margin-top: calc(62vh + 25vh); /* 70vh; */
+  margin-top: calc(var(--slider-start) + (var(--slider-offset) * 4)); /* 70vh; */
   position: fixed;
   top: 0;
   width: 30%;
@@ -128,7 +130,7 @@
 #slider-text-1 {
   display: block;
   z-index: 100;
-  margin-top: calc(29vh + 25vh);
+  margin-top: calc(var(--slider-start) - 1vh);
   position: fixed;
   top: 0;
   right: 70%;
@@ -138,7 +140,7 @@
 #slider-text-2 {
   display: block;
   z-index: 100;
-  margin-top: calc(37vh + 25vh); /* 39vh; */
+  margin-top: calc((var(--slider-start) - 1vh) + (var(--slider-offset) * 1)); /* 39vh; */
   position: fixed;
   top: 0;
   right: 70%;
@@ -148,7 +150,7 @@
 #slider-text-3 {
   display: block;
   z-index: 100;
-  margin-top: calc(45vh + 25vh); /* 49vh; */
+  margin-top: calc((var(--slider-start) - 1vh) + (var(--slider-offset) * 2)); /* 49vh; */
   position: fixed;
   top: 0;
   right: 70%;
@@ -158,7 +160,7 @@
 #slider-text-4 {
   display: block;
   z-index: 100;
-  margin-top: calc(53vh + 25vh); /* 59vh; */
+  margin-top: calc((var(--slider-start) - 1vh) + (var(--slider-offset) * 3)); /* 59vh; */
   position: fixed;
   top: 0;
   right: 70%;
@@ -168,7 +170,7 @@
 #slider-text-5 {
   display: block;
   z-index: 100;
-  margin-top: calc(61vh + 25vh); /* 69vh; */
+  margin-top: calc((var(--slider-start) - 1vh) + (var(--slider-offset) * 4)); /* 69vh; */
   position: fixed;
   top: 0;
   right: 70%;
@@ -185,7 +187,7 @@
     height: 65%;
     background-color: var(--pane-bkg);
     position: fixed;
-    top: 30%;
+    top: 35%;
     left: 20%;
     margin-top: 90px;
     z-index: 99;
@@ -355,7 +357,7 @@
   margin-top: 29vh;
   display: block;
   position: fixed;
-  top: 15%; /* 15% */
+  top: 20%; /* 15% */
   width: 60%;
   height: 100px;
   text-align: center;
@@ -367,7 +369,7 @@
 #button-div {
   position: fixed;
   width: 90%;
-  bottom: 80px;
+  bottom: 20px;
   left: 5%;
   right: 5%;
   text-align: center;

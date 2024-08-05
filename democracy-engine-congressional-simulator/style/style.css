@@ -163,7 +163,7 @@ button {
   margin-right: auto;
   padding: 1%;
   z-index: 99;
-  margin-top: 30vh;
+  margin-top: 25vh;
   position: fixed;
   top: 0;
   overflow-y: auto;
@@ -203,7 +203,7 @@ button {
   right: 5%;
   padding: 1%;
   z-index: 98;
-  margin-top: 10vh;
+  margin-top: 5vh;
   position: fixed;
   top: 0;
   overflow-y: auto;

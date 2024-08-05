@@ -154,7 +154,9 @@
         "linkHover": "#c47cb7",
         "textOverlay": "#ffffff",
         "rectColor": "#a31f1f",
-        "paneBkg": "#84a39b"
+        "paneBkg": "#84a39b",
+        "sliderStart": "60vh",
+        "sliderOffset": "8vh"
     }
     
 }

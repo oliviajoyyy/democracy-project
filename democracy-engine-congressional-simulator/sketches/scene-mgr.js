@@ -165,10 +165,10 @@ function setup() {
   mgr.addScene(sBenchmarkPane);
   mgr.addScene(sBenchmarkResults);
   mgr.addScene(sSaveResults);
-  // mgr.addScene(sComplete);
-  mgr.addScene(sInfo);
-  mgr.addScene(sDisplay);
-  mgr.addScene(sDefault);
+  mgr.addScene(sComplete);
+  // mgr.addScene(sInfo);
+  // mgr.addScene(sDisplay);
+  // mgr.addScene(sDefault);
   mgr.showNextScene();
 
   
