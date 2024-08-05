@@ -230,6 +230,7 @@ historicalActs;
         print(this.bodyCount);
         this.allVotes[this.ix] = []; // OC initialize empty array for votes in this body
         this.voteResults[this.ix] = "";
+        this.decisionTxt = "";
 
         //maps stress index onto percentage effecting yay/nay vote.
         this.stressMap = map(this.stress, this.stressLow, this.stressHigh, 0, 2);

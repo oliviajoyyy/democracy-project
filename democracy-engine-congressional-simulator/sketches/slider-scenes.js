@@ -1167,7 +1167,7 @@ function sBodies() {
     document.getElementById("update-btn").disabled = true; // diable after clicking it
     //removeButtons();
     //engine.setDefaultParams();
-    setEngineParams();
+    setEngineParams(engine);
     engine.numSenate = 1; // just to give default value
 
     // reset values for calculations
@@ -1294,7 +1294,7 @@ function sLegislative() {
   function clickedUpdate() {
     document.getElementById("update-btn").disabled = true; // diable after clicking it
 
-    setEngineParams();
+    setEngineParams(engine);
 
     // reset values for calculations
     //engine.completeReset();
@@ -1712,7 +1712,7 @@ function sMembersFirstChamber() {
   function clickedUpdate() {
     document.getElementById("update-btn").disabled = true; // diable after clicking it
 
-    setEngineParams();
+    setEngineParams(engine);
 
     // reset values for calculations
     //engine.completeReset();
@@ -2036,7 +2036,7 @@ function sMembersSecondChamber() {
   function clickedUpdate() {
     document.getElementById("update-btn").disabled = true; // diable after clicking it
 
-    setEngineParams();
+    setEngineParams(engine);
 
     // reset values for calculations
     //engine.completeReset();
@@ -2336,7 +2336,7 @@ function sMembersThirdChamber() {
   function clickedUpdate() {
     document.getElementById("update-btn").disabled = true; // diable after clicking it
 
-    setEngineParams();
+    setEngineParams(engine);
 
     // reset values for calculations
     //engine.completeReset();
@@ -2636,7 +2636,7 @@ function sMembersVP() {
   function clickedUpdate() {
     document.getElementById("update-btn").disabled = true; // diable after clicking it
 
-    setEngineParams();
+    setEngineParams(engine);
 
     // reset values for calculations
     //engine.completeReset();
@@ -2936,7 +2936,7 @@ function sMembersPres() {
   function clickedUpdate() {
     document.getElementById("update-btn").disabled = true; // diable after clicking it
 
-    setEngineParams();
+    setEngineParams(engine);
 
     // reset values for calculations
     //engine.completeReset();
@@ -3623,7 +3623,7 @@ function sVote() {
     //}
 
     // set new parameters to show updated configuration when entering scene
-    setEngineParams();
+    setEngineParams(engine);
     // reset values for calculations
     //engine.completeReset();
     visual.completeReset();
@@ -3694,7 +3694,7 @@ function sVote() {
 
     visualizeVote = true;
     visualizeImmediate = false;
-    setEngineParams(); // set new parameters
+    setEngineParams(engine); // set new parameters
     paramChangedBool = false;
     console.log("oc paramChangedBool in clickedVote(): " + paramChangedBool);
     
@@ -3775,7 +3775,7 @@ function sBenchmarkPane() {
     benchmarkBtn.mousePressed(clickedBenchmark);
 
     if (resultIX == 0) { // vote wasn't clicked on prev screen, so do it now to save first test result
-      setEngineParams(); // set new parameters
+      setEngineParams(engine); // set new parameters
       // reset values for calculations and drawings
       engine.completeReset();
       userEdits = false;
@@ -3790,7 +3790,7 @@ function sBenchmarkPane() {
     }
 
     // set new parameters to show updated configuration when entering scene
-    //setEngineParams();
+    //setEngineParams(engine);
     // reset values for calculations
     //engine.completeReset();
     
@@ -3911,7 +3911,7 @@ function sBenchmarkResults() {
     approvalBtn.mousePressed(clickedApprove);
 
     // if (resultIX == 0) { // vote wasn't clicked on prev screen, so do it now to save first test result
-    //   setEngineParams(); // set new parameters
+    //   setEngineParams(engine); // set new parameters
     //   // reset values for calculations and drawings
     //   engine.completeReset();
     //   userEdits = false;
@@ -3922,7 +3922,7 @@ function sBenchmarkResults() {
     // }
 
     // set new parameters to show updated configuration when entering scene
-    //setEngineParams();
+    //setEngineParams(engine);
     // reset values for calculations
     //engine.completeReset();
     
@@ -3936,7 +3936,22 @@ function sBenchmarkResults() {
 
   this.draw = function () {
     visual.displayImmediateVotes(engine);
-    
+    if (visual.userInputState) {
+        document.body.style.backgroundColor = colorOverlay;
+        push();
+        translate(-(3 * (width/visual.numBodies)), 0);
+        var resBColor = color(colorOverlay); // color(0, 0, 0); // result overlay
+        noStroke();
+        rectMode(CORNER);
+        resBColor.setAlpha(200);
+        fill(resBColor);
+        rect(0, 0, width, height);
+        pop();
+        // engine.bodyCount = engine.numBodies;
+        // visual.finalTextDisplayUser(engine, helvFont, colorOverlay, resultIX);
+        //changeText(engine.decisionTxt);
+      visual.userInputState = false;
+    }
     // noStroke();
     // rectMode(CORNER);
     // let c = color(colorOverlay);
@@ -4107,7 +4122,7 @@ function sSaveResults() {
     // visualizeVote = false;
 
     // // set new parameters to show updated configuration when entering scene
-    // setEngineParams();
+    // setEngineParams(engine);
     // // reset values for calculations
     // engine.completeReset();
     // visual.completeReset();

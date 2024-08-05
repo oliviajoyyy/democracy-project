@@ -415,7 +415,7 @@ function setDefaultUserVars() {
 }
 
 // set engine params to user vars
-function setEngineParams() {
+function setEngineParams(engine) {
   engine.numBodies = 5; // up to 5 voting bodies
   engine.numLegislativeBodies = parseFloat(userNumLegislative);
   engine.numParties = userNumParties;
@@ -677,8 +677,13 @@ function updateSession() {
   //configIX++;
 }
 
+// toggle for owner endorsement/approval
 function ownerEndorse() {
-  finalConfigObj.ownerEndorsement = 1;
+  if (finalConfigObj.ownerEndorsement == 0) {
+    finalConfigObj.ownerEndorsement = 1;
+  } else {
+    finalConfigObj.ownerEndorsement = 0;
+  }
 }
 
 function getTimestamp() {
