@@ -1184,7 +1184,7 @@ function sBodies() {
     function createSlider() {
 
       noUiSlider.create(slider1, {
-        start: [2],
+        start: userNumLegislative,
         range: {
           'min': [1],
           'max': [3]
@@ -1227,12 +1227,12 @@ function sLegislative() {
   var slider4;// = document.getElementById('s4-p2'); // vp
   var slider5;// = document.getElementById('s5-p2'); // pres
    
-  var curNumHouse = parseInt(engine.numHouse);
-  var curNumHouse2 = parseInt(engine.numHouse2);
-  var curNumSen = parseInt(engine.numSenate);
-  var curNumVP = parseInt(engine.numVP);
-  var curNumPres = parseInt(engine.numPres);
-  userNumLegislative = parseFloat(userNumLegislative);
+  var curNumHouse;// = parseInt(engine.numHouse);
+  var curNumHouse2;// = parseInt(engine.numHouse2);
+  var curNumSen;// = parseInt(engine.numSenate);
+  var curNumVP;// = parseInt(engine.numVP);
+  var curNumPres;// = parseInt(engine.numPres);
+  //userNumLegislative = parseFloat(userNumLegislative);
 
 
   this.setup = function () {
@@ -1242,6 +1242,32 @@ function sLegislative() {
   }
 
   this.enter = function () {
+    userNumLegislative = parseFloat(userNumLegislative);
+
+    if (userNumLegislative == 1) {
+      userNumHouse2 = 0; // 0 in chamber 2 & all its parties
+      userPerHouse2Body[0] = 0.0;
+      userPerHouse2Body[1] = 0.0;
+      userPerHouse2Body[2] = 0.0;
+
+      userNumSenate = 0; // 0 in chamber 3 & all its parties
+      userPerSenateBody[0] = 0.0;
+      userPerSenateBody[1] = 0.0;
+      userPerSenateBody[2] = 0.0;
+
+    } else if (userNumLegislative == 2) {
+      userNumSenate = 0; // 0 in chamber 3 & all its parties
+      userPerSenateBody[0] = 0.0;
+      userPerSenateBody[1] = 0.0;
+      userPerSenateBody[2] = 0.0;
+    }
+
+    curNumHouse = parseInt(userNumHouse);
+    curNumHouse2 = parseInt(userNumHouse2);
+    curNumSen = parseInt(userNumSenate);
+    curNumVP = parseInt(userNumVP);
+    curNumPres = parseInt(userNumPres);
+    
 
     console.log("1st Slider Page");
     document.getElementById("top").style.display = "block";
@@ -1572,7 +1598,7 @@ function sParties() {
 
 
       noUiSlider.create(slider5, {
-        start: [2],
+        start: userNumParties,
         range: {
           'min': [1],
           'max': [3]
@@ -1650,6 +1676,28 @@ function sMembersFirstChamber() {
   }
 
   this.enter = function () {
+    // OC TODO - move to sParties? or to each scene that sets party members for a chamber
+    // set 0 vals for parties not in this config
+    if (userNumParties == 2) {
+      userPerHouseBody[2] = 0.0;
+      userPerHouse2Body[2] = 0.0;
+      userPerSenateBody[2] = 0.0;
+      userPerVPBody[2] = 0.0;
+      userPerPresBody[2] = 0.0;
+
+    } else if (userNumParties == 1) {
+      userPerHouseBody[1] = 0.0;
+      userPerHouseBody[2] = 0.0;
+      userPerHouse2Body[1] = 0.0;
+      userPerHouse2Body[2] = 0.0;
+      userPerSenateBody[1] = 0.0;
+      userPerSenateBody[2] = 0.0;
+      userPerVPBody[1] = 0.0;
+      userPerVPBody[2] = 0.0;
+      userPerPresBody[1] = 0.0;
+      userPerPresBody[2] = 0.0;
+    }
+
     // if (userNumParties == 2) {
     //   maxSlider = parseInt(userNumHouse) - 1; // OC total minus 1 bc w/ 2 bodies chosen, at least 1 member must always be in the other body
     // } else if (userNumParties == 3) {
@@ -3170,8 +3218,10 @@ function sMembersPres() {
 //user input page for percentage of votes required for bill approval
 function sBodyPass() {
 
-  var currSuperThresh = parseFloat(engine.superThresh * 100);
-  var currPerPass = parseFloat(engine.perPass * 100);
+  // var currSuperThresh = parseFloat(engine.superThresh * 100);
+  // var currPerPass = parseFloat(engine.perPass * 100);
+  var currPerPass = parseFloat(userBodyPass);
+  var currSuperThresh = parseFloat(userSuperThresh);
 
   this.setup = function () {
     textSize(15);
@@ -3181,11 +3231,15 @@ function sBodyPass() {
     // v.dWidth = width;
     // v.dHeight = height;
     // background("#012244");
+    // currPerPass = parseFloat(userBodyPass);
+    // currSuperThresh = parseFloat(userSuperThresh);
     createSlider();
     sliderVals();
   }
 
   this.enter = function () {
+    // currPerPass = parseFloat(userBodyPass);
+    // currSuperThresh = parseFloat(userSuperThresh);
     // noCursor();
     console.log("4th Slider Page");
     document.getElementById("top").innerHTML = "PERCENTAGE OF VOTES REQUIRED FOR APPROVAL BY EACH CHAMBER";
@@ -3301,9 +3355,9 @@ function sBodyPass() {
 
 //user input page for probabily of a yes vote
 function sYesVotes() {
-  var curDemYaythresh = parseInt(engine.demYaythresh * 100);
-  var curRepYaythresh = parseInt(engine.repYaythresh * 100);
-  var curIndYaythresh = parseInt(engine.indYaythresh * 100);
+  var curDemYaythresh = parseFloat(userDemYaythresh);// PARTY A = parseInt(engine.demYaythresh * 100);
+  var curRepYaythresh = parseFloat(userRepYaythresh);// = parseInt(engine.repYaythresh * 100);
+  var curIndYaythresh = parseFloat(userIndYaythresh);// = parseInt(engine.indYaythresh * 100);
 
   this.setup = function () {
     createSlider();
@@ -3582,10 +3636,11 @@ function sVote() {
       voteBtn.class('buttons');
       voteBtn.parent(buttonDiv);
       voteBtn.mousePressed(clickedVote);
-      if (visualizeVote) {
-        document.getElementById('vote-btn').disabled = true; // disable it if prev clicked
-      }
+      // if (visualizeVote) {
+      //   document.getElementById('vote-btn').disabled = true; // disable it if prev clicked
+      // }
     }
+    
 
     if (!document.getElementById('next-pane-btn')) {
       nextPaneBtn = createButton('Next');
@@ -3603,6 +3658,9 @@ function sVote() {
 
     // } else {
     checkParamChange();
+    if (visualizeVote) {
+      document.getElementById('vote-btn').disabled = true; // disable it if prev clicked
+    }
     console.log("oc paramChangedBool: " + paramChangedBool);
     console.log("oc button disabled: " + document.getElementById("vote-btn").disabled );
     console.log("oc visualize vote: " + visualizeVote);
@@ -3712,19 +3770,25 @@ function sVote() {
     console.log("configIX after clicked vote: " + configIX);
   }
 
+  // check if there are any param changes since the last time vote btn was clicked
   function checkParamChange() {
-    if (userNumLegislative != engine.numLegislativeBodies ||
-      userNumHouse != engine.numHouse || userNumHouse2 != engine.numHouse2 || userNumSenate != engine.numSenate || userNumVP != engine.numVP || userNumPres != engine.numPres ||
+    let ix = configIX - 1; // -1 because if user clicked vote btn, config IX increments to prepare for next one
+    
+    if (ix < 0) {return;}
+    
+    if (userNumLegislative != configs[ix].numLegislativeBodies ||
+      userNumHouse != configs[ix].chamber1.totalMembers || userNumHouse2 != configs[ix].chamber2.totalMembers || userNumSenate != configs[ix].chamber3.totalMembers || userNumVP != configs[ix].vicePres.totalMembers || userNumPres != configs[ix].president.totalMembers||
       // sParties
-      userPerHouseBody[0] != engine.perDemHouse || userPerHouseBody[1] != engine.perRepHouse || userPerHouseBody[2] != engine.perIndHouse ||
-      userPerHouse2Body[0] != engine.perDemHouse2 || userPerHouse2Body[1] != engine.perRepHouse2 || userPerHouse2Body[2] != engine.perIndHouse2 ||
-      userPerSenateBody[0] != engine.perDemSenate || userPerSenateBody[1] != engine.perRepSenate || userPerSenateBody[2] != engine.perIndSenate ||
-      userPerVPBody[0] != engine.perDemVP || userPerVPBody[1] != engine.perRepVP || userPerVPBody[2] != engine.perIndVP ||
-      userPerPresBody[0] != engine.perDemPres || userPerPresBody[1] != engine.perRepPres || userPerPresBody[2] != engine.perIndPres // ||
+      userPerHouseBody[0] != configs[ix].chamber1.partyA || userPerHouseBody[1] != configs[ix].chamber1.partyB || userPerHouseBody[2] != configs[ix].chamber1.partyC ||
+      userPerHouse2Body[0] != configs[ix].chamber2.partyA || userPerHouse2Body[1] != configs[ix].chamber2.partyB || userPerHouse2Body[2] != configs[ix].chamber2.partyC||
+      userPerSenateBody[0] != configs[ix].chamber3.partyA || userPerSenateBody[1] != configs[ix].chamber3.partyB || userPerSenateBody[2] != configs[ix].chamber3.partyC ||
+      userPerVPBody[0] != configs[ix].vicePres.partyA || userPerVPBody[1] != configs[ix].vicePres.partyB || userPerVPBody[2] != configs[ix].vicePres.partyC ||
+      userPerPresBody[0] != configs[ix].president.partyA || userPerPresBody[1] != configs[ix].president.partyB|| userPerPresBody[2] != configs[ix].president.partyC // ||
       // sBodyPass
       // sYesVotes
-    ) { paramChangedBool = true;
-    } else { paramChangedBool = false; }
+    ) { 
+      paramChangedBool = true;
+    } else { paramChangedBool = false; visualizeVote = true;} // no params changed so visualize vote
     return paramChangedBool;
   }
 
@@ -4098,25 +4162,6 @@ function sSaveResults() {
     saveBtn.parent(buttonDiv);
     saveBtn.mousePressed(clickedSave);
 
-    // OC TODO - move to sParties? or to each scene that sets party members for a chamber
-    if (userNumParties == 2) {
-      userPerHouseBody[2] = 0.0;
-      userPerHouse2Body[2] = 0.0;
-      userPerSenateBody[2] = 0.0;
-      userPerVPBody[2] = 0.0;
-      userPerPresBody[2] = 0.0;
-    } else if (userNumParties == 1) {
-      userPerHouseBody[1] = 0.0;
-      userPerHouseBody[2] = 0.0;
-      userPerHouse2Body[1] = 0.0;
-      userPerHouse2Body[2] = 0.0;
-      userPerSenateBody[1] = 0.0;
-      userPerSenateBody[2] = 0.0;
-      userPerVPBody[1] = 0.0;
-      userPerVPBody[2] = 0.0;
-      userPerPresBody[1] = 0.0;
-      userPerPresBody[2] = 0.0;
-    }
     inputTxt();
 
     // visualizeVote = false;
