@@ -391,9 +391,15 @@ function setDefaultUserVars() {
   userPerHouse2Body[2] = govtConfig.chamber2.partyC / userNumHouse2;
 
   userNumSenate = govtConfig.chamber3.totalMembers;
-  userPerSenateBody[0] = govtConfig.chamber3.partyA / userNumSenate;
-  userPerSenateBody[1] = govtConfig.chamber3.partyB / userNumSenate;
-  userPerSenateBody[2] = govtConfig.chamber3.partyC / userNumSenate;
+  if (userNumSenate == 0) {
+    userPerSenateBody[0] = 0;
+    userPerSenateBody[1] = 0;
+    userPerSenateBody[2] = 0;
+  } else {
+    userPerSenateBody[0] = govtConfig.chamber3.partyA / userNumSenate;
+    userPerSenateBody[1] = govtConfig.chamber3.partyB / userNumSenate;
+    userPerSenateBody[2] = govtConfig.chamber3.partyC / userNumSenate;
+  }
 
   userNumVP = govtConfig.vicePres.totalMembers;
   userPerVPBody[0] = govtConfig.vicePres.partyA / userNumVP;

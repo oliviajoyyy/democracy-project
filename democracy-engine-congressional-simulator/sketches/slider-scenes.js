@@ -1630,6 +1630,7 @@ function sParties() {
       slider5.noUiSlider.on('update', function (values, handle) {
         userNumParties = values[0];
         // rangeSliderValueElement.innerHTML = userNumParties;
+        // set 0 vals for parties not in this config
         if (userNumParties <= 1) {
           userPerHouseBody = [];
           userPerHouse2Body = [];
@@ -1641,6 +1642,16 @@ function sParties() {
           userPerSenateBody[0] = 1.0;
           userPerPresBody[0] = 1.0;
           userPerVPBody[0] = 1.0;
+          userPerHouseBody[1] = 0.0;
+          userPerHouse2Body[1] = 0.0;
+          userPerSenateBody[1] = 0.0;
+          userPerVPBody[1] = 0.0;
+          userPerPresBody[1] = 0.0;
+          userPerHouseBody[2] = 0.0;
+          userPerHouse2Body[2] = 0.0;
+          userPerSenateBody[2] = 0.0;
+          userPerVPBody[2] = 0.0;
+          userPerPresBody[2] = 0.0;
           userNumParties = parseInt(userNumParties);
           onePartyBool = true;
 
@@ -1651,6 +1662,12 @@ function sParties() {
           userNumSenate = parseInt(userNumSenate);
           userNumParties = parseInt(userNumParties);
 
+        } else if (userNumParties == 2) {
+          userPerHouseBody[2] = 0.0;
+          userPerHouse2Body[2] = 0.0;
+          userPerSenateBody[2] = 0.0;
+          userPerVPBody[2] = 0.0;
+          userPerPresBody[2] = 0.0;
         }
 
       });
@@ -1677,26 +1694,6 @@ function sMembersFirstChamber() {
 
   this.enter = function () {
     // OC TODO - move to sParties? or to each scene that sets party members for a chamber
-    // set 0 vals for parties not in this config
-    if (userNumParties == 2) {
-      userPerHouseBody[2] = 0.0;
-      userPerHouse2Body[2] = 0.0;
-      userPerSenateBody[2] = 0.0;
-      userPerVPBody[2] = 0.0;
-      userPerPresBody[2] = 0.0;
-
-    } else if (userNumParties == 1) {
-      userPerHouseBody[1] = 0.0;
-      userPerHouseBody[2] = 0.0;
-      userPerHouse2Body[1] = 0.0;
-      userPerHouse2Body[2] = 0.0;
-      userPerSenateBody[1] = 0.0;
-      userPerSenateBody[2] = 0.0;
-      userPerVPBody[1] = 0.0;
-      userPerVPBody[2] = 0.0;
-      userPerPresBody[1] = 0.0;
-      userPerPresBody[2] = 0.0;
-    }
 
     // if (userNumParties == 2) {
     //   maxSlider = parseInt(userNumHouse) - 1; // OC total minus 1 bc w/ 2 bodies chosen, at least 1 member must always be in the other body
@@ -1707,6 +1704,16 @@ function sMembersFirstChamber() {
       startVals[0] = userPerHouseBody[0];
       startVals[1] = userPerHouseBody[1];
       startVals[2] = userPerHouseBody[2];
+      if (userNumParties == 2 && (startVals[0] + startVals[1]) < 1) {
+        startVals[0] = ceil(maxSlider/2) / maxSlider;
+        startVals[1] = 1.0 - startVals[0];
+        startVals[2] = 0;
+      } else if (userNumParties == 3 && startVals[0] + startVals[1] + startVals[2] < 1) {
+        startVals[0] = ceil(maxSlider/3) / maxSlider; // split evenly
+        startVals[1] = floor(maxSlider/3) / maxSlider;
+        startVals[2] = 1.0 - (startVals[0] + startVals[1]);
+      }
+      
     //}
     // slider1max = parseInt(userNumHouse);
     // slider2max = floor(slider1max / 2);
@@ -1958,7 +1965,7 @@ function sMembersFirstChamber() {
         
         // when user slides the party A slider, update sliders B and C evenly
         slider1.noUiSlider.on('slide', function(event) {
-          let sliderBval = floor((userNumHouse - numPartyA) / 2);
+          let sliderBval = ceil((userNumHouse - numPartyA) / 2);
           let sliderCval = (userNumHouse - numPartyA) - sliderBval;
           slider2.noUiSlider.set(sliderBval);
           slider3.noUiSlider.set(sliderCval);
@@ -1978,7 +1985,7 @@ function sMembersFirstChamber() {
           if (parseInt(slider2.noUiSlider.get()) > userNumHouse - numPartyA) {
             slider2.noUiSlider.set(userNumHouse - numPartyA);
           }
-          let sliderAval = floor((userNumHouse - numPartyB) / 2);
+          let sliderAval = ceil((userNumHouse - numPartyB) / 2);
           let sliderCval = (userNumHouse - numPartyB) - numPartyA;
           //slider1.noUiSlider.set(sliderAval);
           slider3.noUiSlider.set(sliderCval);
@@ -2034,7 +2041,17 @@ function sMembersSecondChamber() {
     maxSlider = parseInt(userNumHouse2);
     startVals[0] = userPerHouse2Body[0];
     startVals[1] = userPerHouse2Body[1];
-    startVals[2] = userPerHouse2Body[2];
+    startVals[2] = userPerHouse2Body[2];  
+    if (userNumParties == 2 && (startVals[0] + startVals[1]) < 1) {
+      startVals[0] = ceil(maxSlider/2) / maxSlider;
+      startVals[1] = 1.0 - startVals[0];
+      startVals[2] = 0;
+    } else if (userNumParties == 3 && startVals[0] + startVals[1] + startVals[2] < 1) {
+      startVals[0] = ceil(maxSlider/3) / maxSlider; // split evenly
+      startVals[1] = floor(maxSlider/3) / maxSlider;
+      startVals[2] = 1.0 - (startVals[0] + startVals[1]);
+    }
+    
     // slider1max = parseInt(userNumHouse2);
     // slider2max = floor(slider1max / 2);
     // slider3max = slider1max - slider2max;
@@ -2266,7 +2283,7 @@ function sMembersSecondChamber() {
         
         // when user slides the party A slider, update sliders B and C evenly
         slider1.noUiSlider.on('slide', function(event) {
-          let sliderBval = floor((maxSlider - numPartyA) / 2);
+          let sliderBval = ceil((maxSlider - numPartyA) / 2);
           let sliderCval = (maxSlider - numPartyA) - sliderBval;
           slider2.noUiSlider.set(sliderBval);
           slider3.noUiSlider.set(sliderCval);
@@ -2286,7 +2303,7 @@ function sMembersSecondChamber() {
           if (parseInt(slider2.noUiSlider.get()) > maxSlider - numPartyA) {
             slider2.noUiSlider.set(maxSlider - numPartyA);
           }
-          let sliderAval = floor((maxSlider - numPartyB) / 2);
+          let sliderAval = ceil((maxSlider - numPartyB) / 2);
           let sliderCval = (maxSlider - numPartyB) - numPartyA;
           //slider1.noUiSlider.set(sliderAval);
           slider3.noUiSlider.set(sliderCval);
@@ -2333,9 +2350,24 @@ function sMembersThirdChamber() {
 
   this.enter = function () {
     maxSlider = parseInt(userNumSenate);
+    // set up since default doesn't have a 3rd body
+    // if (startVals[0] + startVals[1] + startVals[2] < maxSlider) {
+    //   startVals[0] = ceil(maxSlider/3) / maxSlider; // split evenly
+    //   startVals[1] = 1 - startVals[0];
+    //   startVals[2] = 1 - (startVals[0] + startVals[1]);
+    // }
     startVals[0] = userPerSenateBody[0];
     startVals[1] = userPerSenateBody[1];
     startVals[2] = userPerSenateBody[2];
+    if (userNumParties == 2 && (startVals[0] + startVals[1]) < 1) {
+      startVals[0] = ceil(maxSlider/2) / maxSlider;
+      startVals[1] = 1.0 - startVals[0];
+      startVals[2] = 0;
+    } else if (userNumParties == 3 && startVals[0] + startVals[1] + startVals[2] < 1) {
+      startVals[0] = ceil(maxSlider/3) / maxSlider; // split evenly
+      startVals[1] = floor(maxSlider/3) / maxSlider;
+      startVals[2] = 1.0 - (startVals[0] + startVals[1]);
+    }
 
     console.log("Slider Page Chamber 3 Party Members ");
     document.getElementById("top").style.display = "block";
@@ -2567,7 +2599,7 @@ function sMembersThirdChamber() {
         
         // when user slides the party A slider, update sliders B and C evenly
         slider1.noUiSlider.on('slide', function(event) {
-          let sliderBval = floor((maxSlider - numPartyA) / 2);
+          let sliderBval = ceil((maxSlider - numPartyA) / 2);
           let sliderCval = (maxSlider - numPartyA) - sliderBval;
           slider2.noUiSlider.set(sliderBval);
           slider3.noUiSlider.set(sliderCval);
@@ -2587,7 +2619,7 @@ function sMembersThirdChamber() {
           if (parseInt(slider2.noUiSlider.get()) > maxSlider - numPartyA) {
             slider2.noUiSlider.set(maxSlider - numPartyA);
           }
-          let sliderAval = floor((maxSlider - numPartyB) / 2);
+          let sliderAval = ceil((maxSlider - numPartyB) / 2);
           let sliderCval = (maxSlider - numPartyB) - numPartyA;
           //slider1.noUiSlider.set(sliderAval);
           slider3.noUiSlider.set(sliderCval);
@@ -2636,6 +2668,15 @@ function sMembersVP() {
     startVals[0] = userPerVPBody[0];
     startVals[1] = userPerVPBody[1];
     startVals[2] = userPerVPBody[2];
+    if (userNumParties == 2 && (startVals[0] + startVals[1]) < 1) {
+      startVals[0] = ceil(maxSlider/2) / maxSlider;
+      startVals[1] = 1.0 - startVals[0];
+      startVals[2] = 0;
+    } else if (userNumParties == 3 && startVals[0] + startVals[1] + startVals[2] < 1) {
+      startVals[0] = ceil(maxSlider/3) / maxSlider; // split evenly
+      startVals[1] = floor(maxSlider/3) / maxSlider;
+      startVals[2] = 1.0 - (startVals[0] + startVals[1]);
+    }
 
     console.log("Slider Page VP Party Members ");
     document.getElementById("top").style.display = "block";
@@ -2866,7 +2907,7 @@ function sMembersVP() {
         
         // when user slides the party A slider, update sliders B and C evenly
         slider1.noUiSlider.on('slide', function(event) {
-          let sliderBval = floor((maxSlider - numPartyA) / 2);
+          let sliderBval = ceil((maxSlider - numPartyA) / 2);
           let sliderCval = (maxSlider - numPartyA) - sliderBval;
           slider2.noUiSlider.set(sliderBval);
           slider3.noUiSlider.set(sliderCval);
@@ -2886,7 +2927,7 @@ function sMembersVP() {
           if (parseInt(slider2.noUiSlider.get()) > maxSlider - numPartyA) {
             slider2.noUiSlider.set(maxSlider - numPartyA);
           }
-          let sliderAval = floor((maxSlider - numPartyB) / 2);
+          let sliderAval = ceil((maxSlider - numPartyB) / 2);
           let sliderCval = (maxSlider - numPartyB) - numPartyA;
           //slider1.noUiSlider.set(sliderAval);
           slider3.noUiSlider.set(sliderCval);
@@ -2936,6 +2977,15 @@ function sMembersPres() {
     startVals[0] = userPerPresBody[0];
     startVals[1] = userPerPresBody[1];
     startVals[2] = userPerPresBody[2];
+    if (userNumParties == 2 && (startVals[0] + startVals[1]) < 1) {
+      startVals[0] = ceil(maxSlider/2) / maxSlider;
+      startVals[1] = 1.0 - startVals[0];
+      startVals[2] = 0;
+    } else if (userNumParties == 3 && startVals[0] + startVals[1] + startVals[2] < 1) {
+      startVals[0] = ceil(maxSlider/3) / maxSlider; // split evenly
+      startVals[1] = floor(maxSlider/3) / maxSlider;
+      startVals[2] = 1.0 - (startVals[0] + startVals[1]);
+    }
 
     console.log("Slider Page Pres Party Members ");
     document.getElementById("top").style.display = "block";
@@ -3166,7 +3216,7 @@ function sMembersPres() {
         
         // when user slides the party A slider, update sliders B and C evenly
         slider1.noUiSlider.on('slide', function(event) {
-          let sliderBval = floor((maxSlider - numPartyA) / 2);
+          let sliderBval = ceil((maxSlider - numPartyA) / 2);
           let sliderCval = (maxSlider - numPartyA) - sliderBval;
           slider2.noUiSlider.set(sliderBval);
           slider3.noUiSlider.set(sliderCval);
@@ -3186,7 +3236,7 @@ function sMembersPres() {
           if (parseInt(slider2.noUiSlider.get()) > maxSlider - numPartyA) {
             slider2.noUiSlider.set(maxSlider - numPartyA);
           }
-          let sliderAval = floor((maxSlider - numPartyB) / 2);
+          let sliderAval = ceil((maxSlider - numPartyB) / 2);
           let sliderCval = (maxSlider - numPartyB) - numPartyA;
           //slider1.noUiSlider.set(sliderAval);
           slider3.noUiSlider.set(sliderCval);
