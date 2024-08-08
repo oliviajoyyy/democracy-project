@@ -1137,6 +1137,7 @@ function sBodies() {
 
     nextPaneBtn.mousePressed(nextPane);
     prevPaneBtn.mousePressed(previousPane);
+    document.getElementById('prev-pane-btn').style.visibility = 'hidden';
   }
 
   this.draw = function () {
@@ -1292,6 +1293,7 @@ function sLegislative() {
 
     checkNumBodies();
     sliders();
+    document.getElementById('prev-pane-btn').style.visibility = 'visible';
 
     // prevPaneBtn.mousePressed(previousPane);
     // nextPaneBtn.mousePressed(nextPane);
@@ -4166,6 +4168,8 @@ function sBenchmarkResults() {
 
 }
 
+var prevSessionID;
+
 //page showing all of user inputs
 function sSaveResults() {
   let saveBtn, startOverBtn;
@@ -4176,10 +4180,11 @@ function sSaveResults() {
   }
 
   this.enter = function () {
+    prevSessionID = sessionID;
 
     console.log("user config summary & save page");
     // document.getElementById("top").innerHTML = "DEMOCRACY ENGINE SIMULATOR INPUTS";
-    document.getElementById("main-header").innerHTML = "<h1>Save Configuration</h1>";
+    document.getElementById("main-header").innerHTML = "<h1>Save Configuration</h1><h2>Session ID: " + sessionID + "</h2>";
     document.getElementById("start-desc").innerHTML = "";
     document.getElementById("pane-bkg").style.display = "none";
     document.getElementById("page1").style.display = "none";
@@ -4334,7 +4339,7 @@ function sComplete() {
     console.log("save complete page");
     // document.getElementById("top").innerHTML = "DEMOCRACY ENGINE SIMULATOR INPUTS";
     document.getElementById("main-header").innerHTML = "<h1>Session Complete</h1>";
-    document.getElementById("start-desc").innerHTML = "<h2>THANK YOU</h2><p>Session ID: " + "xxx" + "<br><br>[additional info]</p";
+    document.getElementById("start-desc").innerHTML = "<h2>THANK YOU</h2><h2>Session ID: " + prevSessionID + "</h2><p>[additional info]</p";
     document.getElementById("top").style.display = "none";
     document.getElementById("pane-bkg").style.display = "none";
     document.getElementById("page1").style.display = "none";

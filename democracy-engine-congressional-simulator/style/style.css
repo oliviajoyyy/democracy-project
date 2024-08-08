@@ -158,10 +158,12 @@ button {
 #start-desc {
   border-radius: 3px;
   display: none;
-  width: 90vw;
+  width: 90%;
   height: 60vh;
-  margin-left: 5vw;
-  margin-right: auto;
+  left: 5%;
+  right: 5%;
+  /* margin-left: 5vw;
+  margin-right: auto; */
   padding: 1%;
   z-index: 99;
   margin-top: 25vh;
