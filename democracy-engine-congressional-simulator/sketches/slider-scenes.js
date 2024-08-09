@@ -1165,7 +1165,7 @@ function sBodies() {
   }
 
   function clickedUpdate() {
-    document.getElementById("update-btn").disabled = true; // diable after clicking it
+    document.getElementById("update-btn").disabled = true; // disable after clicking it
     //removeButtons();
     //engine.setDefaultParams();
     setEngineParams(engine);
@@ -1325,7 +1325,7 @@ function sLegislative() {
   }
 
   function clickedUpdate() {
-    document.getElementById("update-btn").disabled = true; // diable after clicking it
+    document.getElementById("update-btn").disabled = true; // disable after clicking it
 
     setEngineParams(engine);
 
@@ -1599,6 +1599,66 @@ function sParties() {
     //visual.displayVoting(engine);
     visual.displayImmediateBlank(engine);
     paneToggle();
+
+    if (userNumParties != engine.numParties) {
+      document.getElementById("update-btn").disabled = false;
+    } else { // otherwise leave disabled
+      document.getElementById("update-btn").disabled = true;
+    }
+    updateBtn.mousePressed(clickedUpdate);
+  }
+
+  function clickedUpdate() {
+    document.getElementById("update-btn").disabled = true; // disable after clicking it
+    // set default vars so update visualization reflects change
+    if (userNumParties == 2) {
+      userPerVPBody[0] = 0.5;
+      userPerVPBody[1] = 0.5;
+      userPerVPBody[2] = 0.0;
+      userPerPresBody[0] = 0.5;
+      userPerPresBody[1] = 0.5;
+      userPerPresBody[2] = 0.0;
+      userPerHouseBody[0] = 0.5;
+      userPerHouseBody[1] = 0.5;
+      userPerHouseBody[2] = 0.0;
+      if (userNumLegislative >= 2) {
+        userPerHouse2Body[0] = 0.5;
+        userPerHouse2Body[1] = 0.5;
+        userPerHouse2Body[2] = 0.0;
+        if (userNumLegislative == 3) {
+          userPerSenateBody[0] = 0.5;
+          userPerSenateBody[1] = 0.5;
+          userPerSenateBody[2] = 0.0;
+        }
+      }
+    } else if (userNumParties == 3) {
+      userPerVPBody[0] = 0.34;
+      userPerVPBody[1] = 0.33;
+      userPerVPBody[2] = 0.33;
+      userPerPresBody[0] = 0.34;
+      userPerPresBody[1] = 0.33;
+      userPerPresBody[2] = 0.33;
+      userPerHouseBody[0] = 0.34;
+      userPerHouseBody[1] = 0.33;
+      userPerHouseBody[2] = 0.33;
+      if (userNumLegislative >= 2) {
+        userPerHouse2Body[0] = 0.34;
+        userPerHouse2Body[1] = 0.33;
+        userPerHouse2Body[2] = 0.33;
+        if (userNumLegislative == 3) {
+          userPerSenateBody[0] = 0.34;
+          userPerSenateBody[1] = 0.33;
+          userPerSenateBody[2] = 0.33;
+        }
+      }
+    }
+    setEngineParams(engine);
+
+    // reset values for calculations
+    //engine.completeReset();
+    visual.completeReset();
+    userEdits = false;
+    reconfigBool = true;
   }
 
     function createSlider() {
@@ -1707,6 +1767,8 @@ function sMembersFirstChamber() {
     // } else if (userNumParties == 3) {
     //   maxSlider = parseInt(userNumHouse - 2); // party B and C each must have at least 1 member since 3 parties were chosen
     // } else {
+
+    // makes slider start vals always reflect total members
       maxSlider = parseInt(userNumHouse);
       startVals[0] = userPerHouseBody[0];
       startVals[1] = userPerHouseBody[1];
@@ -1772,7 +1834,7 @@ function sMembersFirstChamber() {
   }
 
   function clickedUpdate() {
-    document.getElementById("update-btn").disabled = true; // diable after clicking it
+    document.getElementById("update-btn").disabled = true; // disable after clicking it
 
     setEngineParams(engine);
 
@@ -2106,7 +2168,7 @@ function sMembersSecondChamber() {
   }
 
   function clickedUpdate() {
-    document.getElementById("update-btn").disabled = true; // diable after clicking it
+    document.getElementById("update-btn").disabled = true; // disable after clicking it
 
     setEngineParams(engine);
 
@@ -2421,7 +2483,7 @@ function sMembersThirdChamber() {
   }
 
   function clickedUpdate() {
-    document.getElementById("update-btn").disabled = true; // diable after clicking it
+    document.getElementById("update-btn").disabled = true; // disable after clicking it
 
     setEngineParams(engine);
 
@@ -2730,7 +2792,7 @@ function sMembersVP() {
   }
 
   function clickedUpdate() {
-    document.getElementById("update-btn").disabled = true; // diable after clicking it
+    document.getElementById("update-btn").disabled = true; // disable after clicking it
 
     setEngineParams(engine);
 
@@ -3039,7 +3101,7 @@ function sMembersPres() {
   }
 
   function clickedUpdate() {
-    document.getElementById("update-btn").disabled = true; // diable after clicking it
+    document.getElementById("update-btn").disabled = true; // disable after clicking it
 
     setEngineParams(engine);
 
@@ -3337,6 +3399,26 @@ function sBodyPass() {
   this.draw = function () {
     visual.displayImmediateBlank(engine);
     paneToggle();
+
+    // if sliders changed any values on this page, enable update button
+    if ((parseFloat(userSuperThresh) / 100.0) != engine.perPass || (parseFloat(userSuperThresh) / 100.0) != engine.superThresh) {
+      document.getElementById("update-btn").disabled = false;
+    } else { // otherwise leave disabled
+      document.getElementById("update-btn").disabled = true;
+    }
+    updateBtn.mousePressed(clickedUpdate);
+
+  }
+
+  function clickedUpdate() {
+    document.getElementById("update-btn").disabled = true; // disable after clicking it
+    setEngineParams(engine);
+
+    // reset values for calculations
+    //engine.completeReset();
+    visual.completeReset();
+    userEdits = false;
+    reconfigBool = true;
   }
 
   // function sliders() {
@@ -3483,6 +3565,24 @@ function sYesVotes() {
   this.draw = function () { 
     visual.displayImmediateBlank(engine);
     paneToggle();
+    if ((parseFloat(userDemYaythresh)/100.0) != engine.demYaythresh || (parseFloat(userRepYaythresh)/100.0) != engine.repYaythresh || (parseFloat(userIndYaythresh)/100.0) != engine.indYaythresh) {
+      document.getElementById("update-btn").disabled = false;
+    } else { // otherwise leave disabled
+      document.getElementById("update-btn").disabled = true;
+    }
+    updateBtn.mousePressed(clickedUpdate);
+
+  }
+
+  function clickedUpdate() {
+    document.getElementById("update-btn").disabled = true; // disable after clicking it
+    setEngineParams(engine);
+
+    // reset values for calculations
+    //engine.completeReset();
+    visual.completeReset();
+    userEdits = false;
+    reconfigBool = true;
   }
 
 
@@ -3841,14 +3941,14 @@ function sVote() {
     
     if (userNumLegislative != configs[ix].numLegislativeBodies ||
       userNumHouse != configs[ix].chamber1.totalMembers || userNumHouse2 != configs[ix].chamber2.totalMembers || userNumSenate != configs[ix].chamber3.totalMembers || userNumVP != configs[ix].vicePres.totalMembers || userNumPres != configs[ix].president.totalMembers||
-      // sParties
+      userNumParties != configs[ix].numParties ||
       userPerHouseBody[0] != configs[ix].chamber1.partyA || userPerHouseBody[1] != configs[ix].chamber1.partyB || userPerHouseBody[2] != configs[ix].chamber1.partyC ||
       userPerHouse2Body[0] != configs[ix].chamber2.partyA || userPerHouse2Body[1] != configs[ix].chamber2.partyB || userPerHouse2Body[2] != configs[ix].chamber2.partyC||
       userPerSenateBody[0] != configs[ix].chamber3.partyA || userPerSenateBody[1] != configs[ix].chamber3.partyB || userPerSenateBody[2] != configs[ix].chamber3.partyC ||
       userPerVPBody[0] != configs[ix].vicePres.partyA || userPerVPBody[1] != configs[ix].vicePres.partyB || userPerVPBody[2] != configs[ix].vicePres.partyC ||
-      userPerPresBody[0] != configs[ix].president.partyA || userPerPresBody[1] != configs[ix].president.partyB|| userPerPresBody[2] != configs[ix].president.partyC // ||
-      // sBodyPass
-      // sYesVotes
+      userPerPresBody[0] != configs[ix].president.partyA || userPerPresBody[1] != configs[ix].president.partyB|| userPerPresBody[2] != configs[ix].president.partyC ||
+      (parseFloat(userBodyPass) / 100.0) != configs[ix].percentMajority || (parseFloat(userSuperThresh) / 100.0) != configs[ix].percentSupermajority ||
+      (parseFloat(userDemYaythresh)/100.0) != configs[ix].probabilityYesVote.partyA || (parseFloat(userRepYaythresh)/100.0) != configs[ix].probabilityYesVote.partyB || (parseFloat(userIndYaythresh)/100.0) != configs[ix].probabilityYesVote.partyC
     ) { 
       paramChangedBool = true;
     } else { paramChangedBool = false; visualizeVote = true;} // no params changed so visualize vote
