@@ -672,17 +672,6 @@ historicalActs;
       this.voteResults[1] = null;
 
     } else if (this.numLegislativeBodies == 2) { // use original house [0] and senate [2]
-      // // make house2 automatically pass
-      // this.bodyPass[1] = true;
-      // this.superThreshIndex[1] = true;
-      // this.stopVoteArr[1] = false;
-      // if (this.bodyCount == 1)
-      //   this.yay = this.numHouse2;
-      // this.votingBodyCounts[1] = [];
-      // this.votingBodyCounts[1][0] = null;
-      // this.votingBodyCounts[1][1] = null;
-      // this.voteResults[1] = null;
-
       // make senate [2] automatically pass house1 [0], house2[1], senate[2]
       this.bodyPass[2] = true;
       this.superThreshIndex[2] = true;
@@ -723,13 +712,15 @@ historicalActs;
         this.bodyPass[this.bodyCount] = true;
         this.superThreshIndex[this.bodyCount] = true;
         //AB logic if senate initiates tie breaker
-      } else if (this.yay == this.numCon * this.perPass && (this.numLegislativeBodies == 3) && this.bodyLabel == "LEGISLATIVE CHAMBER 3") {
+      } else if (this.yay == this.numCon * this.perPass && (this.numLegislativeBodies == 3) && this.bodyCount == 2) {
         this.bodyPass[this.bodyCount] = true;
         this.vpVote = true;
-      } else if (this.yay == this.numCon * this.perPass && (this.numLegislativeBodies == 2) && this.bodyLabel == "SENATE") {
+        console.log("lg 1");
+      } else if (this.yay == this.numCon * this.perPass && (this.numLegislativeBodies == 2) && this.bodyCount == 1) {
           this.bodyPass[this.bodyCount] = true;
           this.vpVote = true;
-      } else if (this.yay == this.numCon * this.perPass && (this.numLegislativeBodies == 1) && this.bodyLabel == "HOUSE OF REPRESENTATIVES") {
+          console.log("lg 2");
+      } else if (this.yay == this.numCon * this.perPass && (this.numLegislativeBodies == 1) && this.bodyCount == 0) {
           // OC tie breaker for 1 legislative body
           this.bodyPass[this.bodyCount] = true;
           this.vpVote = true;
@@ -919,10 +910,10 @@ historicalActs;
                 if (this.bodyPass[i] == true && this.superThreshIndex[i] == true) {
                   this.voteResults[i] = "BILL IS APPROVED WITH SUPERMAJORITY";
                 } else if (currentBodyLabel == 'LEGISLATIVE CHAMBER 3'
-                  && this.bodyPass[0] == true && this.bodyPass[1] == true && this.vpVote == true) {
+                              && this.bodyPass[0] == true && this.bodyPass[1] == true && this.bodyPass[2] == true && this.vpVote == true) {
                   this.voteResults[i] = "TIE-BREAKER VOTE INITIATED";
                 } else if ((currentBodyLabel == 'SENATE' || currentBodyLabel == 'LEGISLATIVE CHAMBER 2') 
-                              && this.bodyPass[0] == true && this.vpVote == true) {
+                              && this.bodyPass[0] == true && this.bodyPass[1] == true && this.bodyPass[2] == true && this.vpVote == true) {
                   this.voteResults[i] = "TIE-BREAKER VOTE INITIATED";
                 } else if (this.numLegislativeBodies == 1 && currentBodyLabel == 'LEGISLATIVE CHAMBER 1'
                               && this.bodyPass[0] == true && this.bodyPass[1] == true && this.bodyPass[2] == true && this.vpVote == true) {
