@@ -153,7 +153,7 @@ function setup() {
   mgr.addScene(loadSessionS1);
   mgr.addScene(loadSessionS2);
   //mgr.addScene(democracyEngineOrigin);
-  mgr.addScene(democracyEngineUser);
+  //mgr.addScene(democracyEngineUser);
   mgr.addScene(sBodies);
   mgr.addScene(sLegislative);
   mgr.addScene(sParties);

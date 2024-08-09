@@ -399,9 +399,43 @@ class VoteVisual {
 
   }
 
-  displayImmediateBlank(engineObj) {
+  displayImmediateBlank(engineObj, paneNumber) {
     this.engine = engineObj;
     this.forUser = this.engine.forUser;
+    var drawWidth = this.dWidth;
+    //if (paneNumber == 9) {
+      drawWidth = this.dWidth - 300;
+    //}
+
+    push();
+    let gWidth = 250;
+    let gHeight = 300;
+    let gOffset = 50;
+    rectMode(CORNER);
+    translate(drawWidth+25, gOffset);
+    noFill();
+    stroke(0);
+    strokeWeight(1);
+    rect(0, 0, gWidth, gHeight);
+    textSize(22);
+    textAlign(LEFT);
+    textStyle(NORMAL);
+    text("Majority & Supermajority % Approval", 5, 20, gWidth-5);
+    if (paneNumber >= 9) {
+      text(parseInt(engine.perPass * 100) + "%", 40, gHeight-30);
+      text(parseInt(engine.superThresh * 100) + "%", gWidth-85, gHeight-30);
+    }
+
+    translate(0, gHeight+gOffset);
+    rect(0, 0, gWidth, gHeight);
+    text("Probability Affirmative Vote", 5, 20, gWidth-5);
+    if (paneNumber >= 10) {
+      text(parseInt(engine.demYaythresh * 100) + "%", 20, gHeight-30);
+      text(parseInt(engine.repYaythresh * 100) + "%", gWidth/2 - 25, gHeight-30);
+      text(parseInt(engine.indYaythresh * 100) + "%", gWidth-70, gHeight-30);
+    }
+
+    pop();
 
     // OC centers vote drawings based on total of voting bodies
     if (this.engine.numLegislativeBodies == 1) {
@@ -439,9 +473,9 @@ class VoteVisual {
 
         // OC offset calculated differently between default and user config
         if (this.forUser)
-          this.offSet = this.dWidth / (this.numBodies);
+          this.offSet = drawWidth / (this.numBodies);
         else
-          this.offSet = this.dWidth / (this.numBodies - 1);
+          this.offSet = drawWidth / (this.numBodies - 1);
 
         //Figure out how big to draw the circles and how far to space them out
         this.skip = floor(.97 * (sqrt((this.offSet) * this.dHeight / this.numCon)));

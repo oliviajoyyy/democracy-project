@@ -596,7 +596,7 @@ function loadSessionS2() {
   }
 }
 
-
+/*
 //democracy simulater, connected to user values
 function configVisual() {
   console.log("democracy userEdits: " + userEdits);
@@ -1055,6 +1055,8 @@ function democracyEngineOrigin() {
 
 }
 
+*/
+
 let updateBtn, nextPaneBtn, prevPaneBtn;
 let paramChangedBool = false;
 
@@ -1067,7 +1069,7 @@ function sBodies() {
     noStroke();
     if (reconfigBool == true) {
       // windowResized();
-      visual.dWidth = windowWidth * .8;
+      visual.dWidth = windowWidth * .9;
       visual.dHeight = windowHeight * .8;
       canvas = createCanvas(visual.dWidth, visual.dHeight);
       let canvasDiv = document.getElementById('vote');
@@ -3397,7 +3399,7 @@ function sBodyPass() {
   }
 
   this.draw = function () {
-    visual.displayImmediateBlank(engine);
+    visual.displayImmediateBlank(engine, 9);
     paneToggle();
     console.log("user body pass: " + userBodyPass);
 
@@ -3564,7 +3566,7 @@ function sYesVotes() {
   }
 
   this.draw = function () { 
-    visual.displayImmediateBlank(engine);
+    visual.displayImmediateBlank(engine, 10);
     paneToggle();
     if ((parseFloat(userDemYaythresh)/100.0) != engine.demYaythresh || (parseFloat(userRepYaythresh)/100.0) != engine.repYaythresh || (parseFloat(userIndYaythresh)/100.0) != engine.indYaythresh) {
       document.getElementById("update-btn").disabled = false;
@@ -3744,7 +3746,7 @@ function sVote() {
     // console.log("user edit count: " + userEditCount);
     console.log("run bill page");
     // document.getElementById("top").innerHTML = "DEMOCRACY ENGINE SIMULATOR INPUTS";
-    document.getElementById("top").innerHTML = "TEST VOTING";
+    document.getElementById("top").innerHTML = "TEST VOTING<br><br>Click 'Run Test Vote' to see the results of running your configuration";
     showPanesBool = true;
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
@@ -3841,6 +3843,7 @@ function sVote() {
       // visualize vote immediately when no param changed & vote button already clicked (disabled == true) when scene is entered
       visualizeVote = true;
       visualizeImmediate = true;
+      document.getElementById("top").innerHTML = "TEST VOTING<br><br>Change configuration parameters to run another test vote";
     }
     //}
 
@@ -3857,14 +3860,16 @@ function sVote() {
   this.draw = function () {
     //visualizeImmediate = true;
     if (visualizeVote == false) {
-      visual.displayImmediateBlank(engine);
+      visual.displayImmediateBlank(engine, 11);
     } else if (visualizeVote == true && visualizeImmediate == true) {
-      visual.displayImmediateVotes(engine);
+      visual.displayImmediateVotes(engine); // OC can move to enter if get loop working for drawing all at once?
       if (visual.userInputState) {
         setTimeout(function () {
+          if (mgr.isCurrent(sVote)) {
           document.body.style.backgroundColor = colorOverlay;
           engine.bodyCount = engine.numBodies;
           visual.finalTextDisplayUser(engine, helvFont, colorOverlay, resultIX);
+          }
           //changeText(engine.decisionTxt);
         }, 1000); // 1 second before text overlay shows
         visual.userInputState = false;
@@ -3875,8 +3880,6 @@ function sVote() {
       if (visual.userInputState) {
         finalDisplay();
       }
-
-      
     }
     paneToggle();
     
@@ -3884,8 +3887,8 @@ function sVote() {
   }
 
   function finalDisplay() {
-
     setTimeout(function () {
+      if (mgr.isCurrent(sVote)) {
       document.body.style.backgroundColor = colorOverlay;
       engine.bodyCount = engine.numBodies;
       visual.finalTextDisplayUser(engine, helvFont, colorOverlay, resultIX);
@@ -3893,6 +3896,7 @@ function sVote() {
         showPanesBool = true;
       }, 1500);
       //changeText(engine.decisionTxt);
+    }
     }, 1500); // 1.5 seconds before text overlay shows
     visual.userInputState = false;
 
@@ -3993,6 +3997,19 @@ function sBenchmarkPane() {
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
 
+    // if any parameters changed, don't visualize the vote yet (display blank) & enable button
+    if (paramChangedBool) {
+      visualizeVote = false;
+      //document.getElementById("vote-btn").disabled = false;
+    } else if (paramChangedBool == false && document.getElementById("vote-btn").disabled == false) {
+      // otherwise if no params changed but vote button not yet clicked (enabled -> disabled == false), don't visualize (display blank)
+      visualizeVote = false; 
+    } else if (paramChangedBool == false && document.getElementById("vote-btn").disabled == true){
+      // visualize vote immediately when no param changed & vote button already clicked (disabled == true) when scene is entered
+      visualizeVote = true;
+      visualizeImmediate = true;
+      //document.getElementById("top").innerHTML = "TEST VOTING<br><br>Change configuration parameters to run another test vote";
+    }
     document.getElementById('vote-btn').remove();
     document.getElementById('next-pane-btn').remove();
 
@@ -4031,8 +4048,14 @@ function sBenchmarkPane() {
   }
 
   this.draw = function () {
+    if (visualizeVote == false) {
+      visual.displayImmediateBlank(engine, 11);
+    } else if (visualizeVote == true && visualizeImmediate == true) {
+      visual.displayImmediateVotes(engine); // OC can move to enter if get loop working for drawing all at once?
+    }
     paneToggle();
   }
+
 
   function clickedBenchmark() {
     document.getElementById('prev-pane-btn').remove();
@@ -4061,7 +4084,7 @@ function sBenchmarkPane() {
       // fill(textColor);
       // text(benchResults + '\n', 20, 250+(i*35));
       // pop();
-      document.getElementById("start-desc").innerHTML += benchResults + "<br><br>";
+      document.getElementById("start-desc").innerHTML += "<p><b>" + benchResults + "</b></p>";
       
       resultIX++;
     }
@@ -4159,11 +4182,11 @@ function sBenchmarkResults() {
     reconfigBool = true;
     background(bColor);
     document.body.style.backgroundColor = bColor;
-
+    visual.displayImmediateVotes(engine); // OC TODO - put here when figure out drawing votes all at once (1 frame)
   }
 
   this.draw = function () {
-    visual.displayImmediateVotes(engine);
+    visual.displayImmediateVotes(engine); // draws votes for last calculation
     if (visual.userInputState) {
         document.body.style.backgroundColor = colorOverlay;
         push();
@@ -4218,6 +4241,11 @@ function sBenchmarkResults() {
 
   function clickedApprove() {
     ownerEndorse();
+    if (finalConfigObj.ownerEndorsement == 1) {
+      document.getElementById("main-header").innerHTML = "<h1>Benchmark Results</h1><h2>Approved!</h2>";
+    } else {
+      document.getElementById("main-header").innerHTML = "<h1>Benchmark Results</h1>";
+    }
   }
 
   function removeBtns() {
