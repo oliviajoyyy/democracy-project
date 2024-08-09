@@ -3399,6 +3399,7 @@ function sBodyPass() {
   this.draw = function () {
     visual.displayImmediateBlank(engine);
     paneToggle();
+    console.log("user body pass: " + userBodyPass);
 
     // if sliders changed any values on this page, enable update button
     if ((parseFloat(userSuperThresh) / 100.0) != engine.perPass || (parseFloat(userSuperThresh) / 100.0) != engine.superThresh) {
@@ -3481,7 +3482,7 @@ function sBodyPass() {
       userSuperThresh = "";
 
       slider10.noUiSlider.on('update', function (values, handle) {
-        userBodyPass = values[0]
+        userBodyPass = values[0];
         // rangeSliderValueElement.innerHTML = userBodyPass + " " + userSuperThresh;
 
       });

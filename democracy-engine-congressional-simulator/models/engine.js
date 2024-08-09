@@ -707,28 +707,32 @@ historicalActs;
     // console.log("body pass yay: " + yay + "body superthresh cutoff: " + numCon * superThresh);
     // console.log(numCon + " " + superThresh);
 
-      if (this.yay >= this.numCon * this.superThresh) {
-
+      if (this.yay >= this.numCon * this.superThresh) { // pass if num yay > supermajority thresh
         this.bodyPass[this.bodyCount] = true;
         this.superThreshIndex[this.bodyCount] = true;
-        //AB logic if senate initiates tie breaker
-      } else if (this.yay == this.numCon * this.perPass && (this.numLegislativeBodies == 3) && this.bodyCount == 2) {
+        if (this.bodyCount != 3) { // OC - ensures that vp doesn't vote in case vpVote was previously true on last config
+          this.vpVote = false;
+        }
+      } else if (this.yay > this.numCon * this.perPass) { // pass if num yay > body pass thresh
+        this.bodyPass[this.bodyCount] = true;
+        this.superThreshIndex[this.bodyCount] = false;
+        if (this.bodyCount != 3) { // OC - ensures that vp doesn't vote in case vpVote was previously true on last config
+          this.vpVote = false;
+        }
+      } else if (this.yay == this.numCon/2 && (this.numLegislativeBodies == 3) && this.bodyCount == 2) { //AB logic if senate initiates tie breaker
         this.bodyPass[this.bodyCount] = true;
         this.vpVote = true;
         console.log("lg 1");
-      } else if (this.yay == this.numCon * this.perPass && (this.numLegislativeBodies == 2) && this.bodyCount == 1) {
+      } else if (this.yay == this.numCon/2 && (this.numLegislativeBodies == 2) && this.bodyCount == 1) {
           this.bodyPass[this.bodyCount] = true;
           this.vpVote = true;
           console.log("lg 2");
-      } else if (this.yay == this.numCon * this.perPass && (this.numLegislativeBodies == 1) && this.bodyCount == 0) {
+      } else if (this.yay == this.numCon/2 && (this.numLegislativeBodies == 1) && this.bodyCount == 0) {
           // OC tie breaker for 1 legislative body
           this.bodyPass[this.bodyCount] = true;
           this.vpVote = true;
           this.stopVoteArr[this.bodyCount] = false;
-      } else if (this.yay > this.numCon * this.perPass) {
-        this.bodyPass[this.bodyCount] = true;
-        this.superThreshIndex[this.bodyCount] = false;
-      } else {
+      }  else { // otherwise body did not pass the bill
         this.bodyPass[this.bodyCount] = false;
         this.superThreshIndex[this.bodyCount] = false;
       }
