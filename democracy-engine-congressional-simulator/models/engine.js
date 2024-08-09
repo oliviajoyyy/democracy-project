@@ -396,7 +396,12 @@ historicalActs;
         this.voteResults[this.ix] = "";
 
         // Set number of voting memebers
-        this.numCon = this.numPres;
+       // this.numCon = this.numPres;
+        if (this.numPres != 0) {
+          this.numCon = this.numPres;
+        } else { // set numCon = 1 to allow continuation of calculations (later auto passes pres vote)
+          this.numCon = 1;
+        }
         this.bodyLabel = 'PRESIDENT';
 
         //Set Demographics for each body
@@ -690,6 +695,18 @@ historicalActs;
       this.voteResults[2] = null;
     }
 
+    // if (this.numPres == 0) {
+    //   this.bodyPass[4] = true;
+    //   //this.superThreshIndex[4] = true;
+    //   this.stopVoteArr[4] = false;
+    //   if (this.bodyCount == 4)
+    //     this.yay = this.numPres;
+    //   this.votingBodyCounts[4] = [];
+    //   this.votingBodyCounts[4][0] = null;
+    //   this.votingBodyCounts[4][1] = null;
+    //   this.voteResults[4] = null;
+    // }
+
     console.log("body pass: " + this.bodyPass);
 
     if (this.forUser) { // engine running for user configuration
@@ -745,6 +762,19 @@ historicalActs;
       }
 
     }
+    
+    // automatically make pres pass bill
+    if (this.numPres == 0) {
+      this.bodyPass[4] = true;
+      //this.superThreshIndex[4] = true;
+      this.stopVoteArr[4] = false;
+      if (this.bodyCount == 4)
+        this.yay = this.numPres;
+      this.votingBodyCounts[4] = [];
+      this.votingBodyCounts[4][0] = null;
+      this.votingBodyCounts[4][1] = null;
+      this.voteResults[4] = null;
+    }
 
     //Adds one to the count of how many bodies have voted and enters into user input state (buttons) if the vote is done.
     if (this.bodyCount < this.numBodies) {
@@ -797,15 +827,24 @@ historicalActs;
               //currentBodyLabel = 'HOUSE 2';
               currentBodyLabel = 'SENATE';
             }
+            if (this.numLegislativeBodies == 1) { // only 1 legislative chamber
+              continue; // OC skip results if only 1 legislative body
+            }
           } else if (i == 2) {
 
               currentBodyLabel = 'LEGISLATIVE CHAMBER 3';
+              if (this.numLegislativeBodies <= 2) {
+                continue;
+              }
 
           } else if (i == 3) {
             currentBodyLabel = 'VICE PRESIDENCY';
           } else if (i == 4) {
             // print("I AM IN PRESIDENT b4 LOGIC");
             currentBodyLabel = 'PRESIDENCY';
+            if (this.numPres == 0) {
+              continue;
+            }
           }
 
           //yay and nay votes for each voting body

@@ -1169,7 +1169,12 @@ function sBodies() {
     //removeButtons();
     //engine.setDefaultParams();
     setEngineParams(engine);
-    engine.numSenate = 1; // just to give default value
+    if (engine.numSenate == 0) {
+      engine.numSenate = 1; // just to give default value
+    }
+    if (engine.numPres == 0) {
+      engine.numPres = 1;
+    }
 
     // reset values for calculations
     //engine.completeReset();
@@ -1460,7 +1465,7 @@ function sLegislative() {
       noUiSlider.create(slider5, {
         start: curNumPres,
         range: {
-          'min': [1],
+          'min': [0], // allow for 0 presidents
           'max': [500]
         },
         cssPrefix: 'noUi-',
@@ -2958,7 +2963,7 @@ function sMembersVP() {
   }
 }
 
-
+// OC note - either skip pane when 0 pres members, or leave pane to have sliders all 0
 function sMembersPres() {
 
   var slider1;// = document.getElementById('slider-1a'); // party a
@@ -3166,6 +3171,7 @@ function sMembersPres() {
       var numPartyB;
       var numPartyC;
 
+      if (userNumPres > 0) {
       // house
       slider1.noUiSlider.on('update', function (values, handle) {
         numPartyA = values[0];
@@ -3263,6 +3269,11 @@ function sMembersPres() {
           slider2.noUiSlider.set((maxSlider - numPartyC) - numPartyA);
         });
       }
+    } else { // if no presidency, set members for each party to 0
+      userPerPresBody[0] = 0;
+      userPerPresBody[1] = 0;
+      userPerPresBody[2] = 0;
+    }
     }
   }
 }

@@ -166,9 +166,9 @@ class VoteVisual {
       this.bodyCount += 2; // skip house2 and senate
       //this.endBody = 1;
     } else if (this.bodyCount == 2 && this.engine.numLegislativeBodies == 2) {
-      this.bodyCount++; // skip house2
+      this.bodyCount++; // skip chamber3
     }
-
+    
     //Logic for House2
     if (this.bodyCount == 1) {
       strokeWeight(10);
@@ -351,7 +351,11 @@ class VoteVisual {
         print(this.bodyCount);
 
         // Set number of voting memebers
-        this.numCon = this.engine.numPres;
+        if (this.engine.numPres != 0) {
+          this.numCon = this.engine.numPres;
+        } else { // set 1 for continuation of drawing when no presidency
+          this.numCon = 1;
+        }
         this.bodyLabel = 'PRESIDENT';
 
         //Set Demographics for each body
@@ -637,7 +641,11 @@ class VoteVisual {
         print(this.bodyCount);
 
         // Set number of voting memebers
-        this.numCon = this.engine.numPres;
+        if (this.engine.numPres != 0) {
+          this.numCon = this.engine.numPres;
+        } else {
+          this.numCon = 1; // set 1 for continuation of drawing
+        }
         this.bodyLabel = 'PRESIDENT';
 
         //Set Demographics for each body
@@ -727,7 +735,14 @@ class VoteVisual {
           if (this.bodyCount  == 2) {
             console.log("drawing box # " + jx + " for chamber 3");
           }
-          rect(this.x, this.y, this.diam, this.diam, this.diam / 8);
+
+          if (this.engine.numPres == 0 && this.bodyCount == 4) {
+            stroke(this.bColor); // hide rect
+            noFill();
+            rect(this.x, this.y, this.diam, this.diam, this.diam / 8);
+          } else {
+            rect(this.x, this.y, this.diam, this.diam, this.diam / 8);
+          }
 
           if ((this.y += this.skip) >= this.dHeight - (this.skip / 2)) {
             this.y = this.skip / 2;
@@ -993,7 +1008,11 @@ class VoteVisual {
         print(this.bodyCount);
 
         // Set number of voting memebers
-        this.numCon = this.engine.numPres;
+        if (this.engine.numPres != 0) {
+          this.numCon = this.engine.numPres;
+        } else { // when no pres, set numCon to 1 to allow continuation of drawing
+          this.numCon = 1; 
+        }
         this.bodyLabel = 'PRESIDENT';
 
         //Set Demographics for each body
@@ -1193,10 +1212,17 @@ class VoteVisual {
       //fill(255, currentTransVal);
     }
 
-    rect(this.x, this.y, this.diam, this.diam, this.diam / 8);
+    if (this.engine.numPres == 0 && this.bodyCount == 4) {
+      // hide rect when no pres
+      stroke(this.bColor);
+      noFill();
+      rect(this.x, this.y, this.diam, this.diam, this.diam / 8);
+    } else {
+      rect(this.x, this.y, this.diam, this.diam, this.diam / 8);
+    }
 
     //creates the x on squares that are "no votes"
-    if (vote == "nay" && this.stopVoteBool == false) {
+    if (vote == "nay" && this.stopVoteBool == false && !(this.bodyCount == 4 && this.engine.numPres == 0)) {
       fill(this.bColor);
       textSize(this.diam + 3);
       textAlign(CENTER, CENTER);
@@ -1535,6 +1561,11 @@ class VoteVisual {
       } else if (i == 4) {
         // print("I AM IN PRESIDENT b4 LOGIC");
         currentBodyLabel = 'PRESIDENCY';
+        if (this.engine.numPres == 0) {
+          textSize(22);
+          text("NO PRESIDENCY", (ip) * dispW + padX, padY, dispW, dispH); // display this body label
+          continue;
+        }
       }
 
       // show text on screen
@@ -1595,6 +1626,7 @@ class VoteVisual {
     }
     push();
     textAlign(CENTER);
+    textSize(22);
     text(engine.decisionTxt, width/2, height/2);
     pop();
    //this.displayContext(engine);
