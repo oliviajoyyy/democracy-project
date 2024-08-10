@@ -248,3 +248,9 @@ p {
   font-variant: normal;
   font-weight: lighter;
 }
+
+/* input[type="radio"] { */
+  /* width: 300px; */
+  /*justify-content: space-between; /* Aligns content in a row */
+  /* font-family: monospace; */
+/* }  */

@@ -420,6 +420,9 @@ function newSessionScene() {
 
 function loadSessionS1() {
   let backBtn, nextBtn;
+  let selection;
+  let numResults = 10;
+  let showCount = 1;
   
   this.setup = function () {
     textFont(helvFont);
@@ -435,25 +438,51 @@ function loadSessionS1() {
     // gui = createGui();
     // continueBtn = createButton("Continue", width/2, height/2);
     console.log("start up scene");
-
+    
     document.getElementById("page-container").style.display = "block";
     document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1>";
     document.getElementById("main-btn-div").style.display = "none";
-
-
     document.getElementById("start-desc").style.display = "block";
-    document.getElementById("start-desc").innerHTML = "<h2>Select Session</h2><p>[Description here on how to use the interface]</p>";
+    document.getElementById("start-desc").innerHTML = "<h2>Select Session</h2>"
+      + "<p>[Description here on how to use the interface]</p>"
+      + "<p>&nbsp;&nbsp;&nbsp;&nbsp; Session ID "
+      + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Voting Members "
+      + "&nbsp;&nbsp;&nbsp;&nbsp; Parties</p>";
     // var allSessions = getAllSessions(); // array of all sessions in db
     // console.log(allSessions);
+    //showCount++; // increment showCount through some trigger - btn press, key press, etc
+    selection = createRadio("sessions"); // attatch to HTML
+    //selection.position(width/5, height/2);
+    selection.size(420);
     getSessions().then((result) => {
       console.log(result);
-      for (let i=0; i<result.length; i++) {
-        document.getElementById("start-desc").innerHTML += "<p>ID: " + result[i].uniqueID + "</p>";
+      // show sessions in order from last 10 
+      // -- OC written like this so that startIX can move backward to show next prev 10 when triggered (btn press?)
+      let startIX = result.length-(numResults*showCount);
+      if (startIX < 0) {
+        startIX = 0;
       }
+      for (let i=startIX; (i<result.length); i++) {
+        if (i<startIX+numResults) {
+        console.log("i: " + i);
+        let sObj = result[i].finalConfig.config;
+        console.log(sObj);
+        let totalVoting = sObj.chamber1.totalMembers + sObj.chamber2.totalMembers + sObj.chamber3.totalMembers + sObj.vicePres.totalMembers + sObj.president.totalMembers;
+        selection.option(result[i].uniqueID + getSpaces(15) + totalVoting + getSpaces(20) + sObj.numParties, sObj); //+ " " + totalVoting + " " + result[i].numParties);
+        //document.getElementById("start-desc").innerHTML += "<br>";
+        }
+      }
+      // for (let i=0; i<result.length; i++) {
+      //   document.getElementById("start-desc").innerHTML += "<p>ID: " + result[i].uniqueID + "</p>";
+      // }
       // document.getElementById("start-desc").innerHTML += "</p>";
     });
-
-    //document.getElementById("start-desc").innerHTML += "<br>[List of previous sessions (fr db), includes timestamp & ID]</p>";
+    
+    selection.parent("start-desc");
+    // let options = selectAll('input[type="radio"]');
+    // for (let i = 0; i < options.length; i++) {
+    //   options[i].style('display', 'block'); // Set display to block to ensure each option is on its own line
+    // }
 
     document.getElementById("top").style.display = "none";
     document.getElementById("page1").style.display = "none";
@@ -470,7 +499,7 @@ function loadSessionS1() {
     document.getElementById("page12").style.display = "none";
     document.getElementById("page13").style.display = "none";
     // document.getElementById("slider-value").style.display = "none";
-    document.getElementById("vote").style.display = "none";
+    document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
 
@@ -489,8 +518,18 @@ function loadSessionS1() {
   }
 
   this.draw = function () {
+    let selectedSession = selection.value();
+    console.log(selectedSession);
     backBtn.mousePressed(clickedBack);
     nextBtn.mousePressed(clickedNext);
+  }
+
+  function getSpaces(x) {
+    let s = "";
+    for (i=0; i<x; i++) {
+      s += "\u00A0";
+    }
+    return s;
   }
 
   function clickedBack() {
@@ -504,6 +543,7 @@ function loadSessionS1() {
   }
 
   function removeBtns() {
+    selection.remove();
     backBtn.remove();
     nextBtn.remove();
   }
@@ -1171,7 +1211,10 @@ function sBodies() {
     //removeButtons();
     //engine.setDefaultParams();
     setEngineParams(engine);
-    if (engine.numSenate == 0) {
+    if (engine.numHouse2 == 0) {
+      engine.numHouse2 = 1;
+    }
+    if (engine.numSenate == 0) { // chamber 3
       engine.numSenate = 1; // just to give default value
     }
     if (engine.numPres == 0) {

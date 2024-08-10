@@ -35,7 +35,8 @@ const ResultSchema = new Schema({
         result: String
     },
 
-    finalDecision: String // decisionTxt
+    finalDecision: String, // decisionTxt
+    billPass: Boolean
 });
 
 module.exports = ResultSchema;

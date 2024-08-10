@@ -150,6 +150,7 @@ voteResults = ["","","","",""];
 // OC stores decisions for each body (bill approved/not): [chamber1, chamber2, vp, pres]
 
 decisionTxt = ""; // OC final decision string
+billPass;
 
 // OC for loop variables, to use across different functions
 ix;
@@ -940,19 +941,21 @@ historicalActs;
           //regular pass
           if (this.bodyPass[0] === true && this.bodyPass[1] === true && this.bodyPass[2] === true && this.vpVote == true && this.bodyPass[3] == false) {
             decisionText = "DECISION: BILL DOES NOT BECOME LAW DUE TO TIE-BREAKER VOTE BY VICE PRESIDENT";
+            this.billPass = false;
           } else if (this.bodyPass[0] === true && this.bodyPass[1] === true && this.bodyPass[2] === true && this.bodyPass[4] === true) {
             decisionText = "DECISION: BILL BECOMES LAW";
-
+            this.billPass = true;
           } else if (this.bodyPass[0] === true && this.bodyPass[1] === true && this.bodyPass[2] === true && this.bodyPass[4] === false) {
             if (this.superThreshIndex[0] === true && this.superThreshIndex[1] === true && this.superThreshIndex[2] === true) {
               decisionText = "DECISION: BILL BECOMES LAW BY SUPERMAJORITY";
-
+              this.billPass = true;
             } else {
               decisionText = "DECISION: BILL DOES NOT BECOME LAW DUE TO PRESIDENTIAL VETO";
-
+              this.billPass = false;
             }
           } else if (this.bodyPass[0] == false || this.bodyPass[1] == false || this.bodyPass[2] == false) {
             decisionText = "DECISION: BILL DOES NOT BECOME LAW";
+            this.billPass = false;
           }
           this.decisionTxt = decisionText;
         };

@@ -107,7 +107,7 @@ var sessionID = "ID" + userEditCount;
 // to keep track of array indicies
 var configIX = 0;
 var resultIX = 0;
-var MAX_CONFIG_ATTEMPTS = 3; // 10th config is final config
+var MAX_CONFIG_ATTEMPTS = 10; // 10th config is final config
 var MAX_SIM_RESULTS = 10;
 
 var showPanesBool = true;
@@ -619,10 +619,13 @@ function changeText(text) {
   document.getElementById("result").innerHTML = text;
 }
 
-const alphabet = "abcdefghijklmnopqrstuvwxyz";
+const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 function getSessionID() {
-  var id = getTimestamp() + alphabet.charAt(random(alphabet.length-1)) + alphabet.charAt(random(alphabet.length-1)) + alphabet.charAt(random(alphabet.length-1)); // OC to do: append 3 random letters
+  var curDate = new Date();
+  var curTime = hour().toString().padStart(2, '0') + "_" + minute().toString().padStart(2, '0') + "_" + second().toString().padStart(2, '0');
+  var timestamp = (curDate.getMonth()+1).toString().padStart(2, '0') + "_" + curDate.getDate().toString().padStart(2, '0') + "_" + curDate.getFullYear() + "_" + curTime;
+  var id = timestamp + "_" + alphabet.charAt(random(alphabet.length-1)) + alphabet.charAt(random(alphabet.length-1)) + alphabet.charAt(random(alphabet.length-1));
   return id;
 }
 
@@ -807,7 +810,8 @@ function addResult(pConfigIX) {
           result: engine.voteResults[4]
       },
   
-      finalDecision: engine.decisionTxt
+      finalDecision: engine.decisionTxt,
+      billPass: engine.billPass
     }
 
   configs[pConfigIX].simResults = results;

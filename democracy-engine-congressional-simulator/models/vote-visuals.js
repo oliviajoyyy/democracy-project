@@ -409,8 +409,8 @@ class VoteVisual {
 
     push();
     let gWidth = 250;
-    let gHeight = 300;
-    let gOffset = 50;
+    let gHeight = 250;
+    let gOffset = 25;
     rectMode(CORNER);
     translate(drawWidth+25, gOffset);
     noFill();
@@ -420,6 +420,8 @@ class VoteVisual {
     textSize(22);
     textAlign(LEFT);
     textStyle(NORMAL);
+    fill(0);
+    noStroke(0);
     text("Majority & Supermajority % Approval", 5, 20, gWidth-5);
     if (paneNumber >= 9) {
       text(parseInt(engine.perPass * 100) + "%", 40, gHeight-30);
@@ -427,7 +429,11 @@ class VoteVisual {
     }
 
     translate(0, gHeight+gOffset);
+    noFill();
+    stroke(0);
     rect(0, 0, gWidth, gHeight);
+    fill(0);
+    noStroke(0);
     text("Probability Affirmative Vote", 5, 20, gWidth-5);
     if (paneNumber >= 10) {
       text(parseInt(engine.demYaythresh * 100) + "%", 20, gHeight-30);
