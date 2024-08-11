@@ -348,6 +348,7 @@ function newSessionScene() {
     console.log("start up scene");
 
     newSession();
+    paramChangedBool = true;
 
     document.getElementById("page-container").style.display = "block";
     document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1>";
@@ -579,6 +580,7 @@ function loadSessionS2() {
     console.log("loadedstart up scene");
 
     newSession();
+    paramChangedBool = true;
 
     document.getElementById("page-container").style.display = "block";
     document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1>";
