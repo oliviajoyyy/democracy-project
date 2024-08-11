@@ -93,6 +93,7 @@ var configJSON;
 var govtConfig;
 var colorConfig;
 var historicalActs; // array of 10 bills
+var loadedConfig;
 
 var sessionObj; // session obj holds array of json configurations, which holds array of json results
 var configs = []; // array of json govt config attempts (up to 10)
@@ -174,7 +175,7 @@ function setup() {
   // mgr.addScene(sDisplay);
   // mgr.addScene(sDefault);
   mgr.showNextScene();
-
+  //mgr.showScene(loadSessionS1);
   
   console.log("end of scene-mgr.js setup");
 }
@@ -375,7 +376,7 @@ function defResult() {
   }
 }
 
-// set user vars to default config of govt
+// set user vars to default config of govt json
 function setDefaultUserVars() {
   userNumLegislative = govtConfig.numLegislativeBodies;
   userNumParties = govtConfig.numParties;
@@ -418,6 +419,44 @@ function setDefaultUserVars() {
   userRepYaythresh = govtConfig.probabilityYesVote.partyB;
   userIndYaythresh = govtConfig.probabilityYesVote.partyC;
 
+}
+
+// set user vars to loaded config
+function setLoadedUserVars(lConfig) {
+  userNumLegislative = lConfig.numLegislativeBodies;
+  userNumParties = lConfig.numParties;
+
+  userNumHouse = lConfig.chamber1.totalMembers;
+  userPerHouseBody[0] = lConfig.chamber1.partyA;
+  userPerHouseBody[1] = lConfig.chamber1.partyB;
+  userPerHouseBody[2] = lConfig.chamber1.partyC;
+
+  userNumHouse2 = lConfig.chamber2.totalMembers;
+  userPerHouse2Body[0] = lConfig.chamber2.partyA;
+  userPerHouse2Body[1] = lConfig.chamber2.partyB;
+  userPerHouse2Body[2] = lConfig.chamber2.partyC;
+
+  userNumSenate = lConfig.chamber3.totalMembers;
+  userPerSenateBody[0] = lConfig.chamber3.partyA;
+  userPerSenateBody[1] = lConfig.chamber3.partyB;
+  userPerSenateBody[2] = lConfig.chamber3.partyC;
+
+  userNumVP = lConfig.vicePres.totalMembers;
+  userPerVPBody[0] = lConfig.vicePres.partyA;
+  userPerVPBody[1] = lConfig.vicePres.partyB;
+  userPerVPBody[2] = lConfig.vicePres.partyC;
+
+  userNumPres = lConfig.president.totalMembers;
+  userPerPresBody[0] = lConfig.president.partyA;
+  userPerPresBody[1] = lConfig.president.partyB;
+  userPerPresBody[2] = lConfig.president.partyCs;
+
+  userBodyPass = lConfig.percentMajority * 100;
+  userSuperThresh = lConfig.percentSupermajority * 100;
+
+  userDemYaythresh = lConfig.probabilityYesVote.partyA * 100;
+  userRepYaythresh = lConfig.probabilityYesVote.partyB * 100;
+  userIndYaythresh = lConfig.probabilityYesVote.partyC * 100;
 }
 
 // set engine params to user vars

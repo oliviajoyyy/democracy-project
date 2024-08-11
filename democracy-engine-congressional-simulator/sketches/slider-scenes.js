@@ -400,7 +400,7 @@ function newSessionScene() {
 
   function clickedNext() {
     removeBtns();
-    engine.setDefaultParams();
+    engine.setDefaultParams(); // set engine params to json govt config vals
       // reset values for calculations
     engine.completeReset();
     visual.completeReset();
@@ -421,13 +421,16 @@ function newSessionScene() {
 function loadSessionS1() {
   let backBtn, nextBtn;
   let selection;
+  let sessions;
   let numResults = 10;
   let showCount = 1;
+  let dWidth;
+  let dHeight;
   
   this.setup = function () {
     textFont(helvFont);
-    let dWidth = windowWidth * .8;
-    let dHeight = windowHeight * .8;
+    dWidth = windowWidth * .8;
+    dHeight = windowHeight * .8;
     let canvas = createCanvas(dWidth, dHeight);
     let canvasDiv = document.getElementById('vote');
     canvas.parent(canvasDiv);
@@ -446,15 +449,17 @@ function loadSessionS1() {
     document.getElementById("start-desc").innerHTML = "<h2>Select Session</h2>"
       + "<p>[Description here on how to use the interface]</p>"
       + "<p>&nbsp;&nbsp;&nbsp;&nbsp; Session ID "
-      + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Voting Members "
+      + getSpaces(25) + "Voting Members "
       + "&nbsp;&nbsp;&nbsp;&nbsp; Parties</p>";
-    // var allSessions = getAllSessions(); // array of all sessions in db
-    // console.log(allSessions);
+
+    
     //showCount++; // increment showCount through some trigger - btn press, key press, etc
     selection = createRadio("sessions"); // attatch to HTML
-    //selection.position(width/5, height/2);
-    selection.size(420);
+    selection.size(230);
+
+    //let s ; //= "<div id='info-list'>";
     getSessions().then((result) => {
+      sessions = result;
       console.log(result);
       // show sessions in order from last 10 
       // -- OC written like this so that startIX can move backward to show next prev 10 when triggered (btn press?)
@@ -462,27 +467,26 @@ function loadSessionS1() {
       if (startIX < 0) {
         startIX = 0;
       }
+      let newDiv = document.createElement('div');
+      newDiv.id = 'info-list';
+      let s = "";
       for (let i=startIX; (i<result.length); i++) {
-        if (i<startIX+numResults) {
+        if (i<=startIX+numResults) {
+          //document.getElementById("start-desc").innerHTML += "<tr><td>";
         console.log("i: " + i);
         let sObj = result[i].finalConfig.config;
         console.log(sObj);
         let totalVoting = sObj.chamber1.totalMembers + sObj.chamber2.totalMembers + sObj.chamber3.totalMembers + sObj.vicePres.totalMembers + sObj.president.totalMembers;
-        selection.option(result[i].uniqueID + getSpaces(15) + totalVoting + getSpaces(20) + sObj.numParties, sObj); //+ " " + totalVoting + " " + result[i].numParties);
-        //document.getElementById("start-desc").innerHTML += "<br>";
+        selection.option(result[i].uniqueID, i.toString()); //+ " " + totalVoting + " " + result[i].numParties);
+        s = s + getSpaces(7) + totalVoting + getSpaces(25) + sObj.numParties + "<br>";
         }
       }
-      // for (let i=0; i<result.length; i++) {
-      //   document.getElementById("start-desc").innerHTML += "<p>ID: " + result[i].uniqueID + "</p>";
-      // }
-      // document.getElementById("start-desc").innerHTML += "</p>";
+      newDiv.innerHTML = s;
+      document.getElementById('start-desc').appendChild(newDiv);
     });
-    
-    selection.parent("start-desc");
-    // let options = selectAll('input[type="radio"]');
-    // for (let i = 0; i < options.length; i++) {
-    //   options[i].style('display', 'block'); // Set display to block to ensure each option is on its own line
-    // }
+    document.getElementById("start-desc").innerHTML += "<div id='session-list'></div>";
+    selection.parent("session-list"); // put options in div with border
+    selection.selected('1');
 
     document.getElementById("top").style.display = "none";
     document.getElementById("page1").style.display = "none";
@@ -518,8 +522,14 @@ function loadSessionS1() {
   }
 
   this.draw = function () {
-    let selectedSession = selection.value();
-    console.log(selectedSession);
+    if (sessions && selection.value()) { // set c to global var loadedSession
+      var i = selection.value();
+      console.log("sel val: " + selection.value());
+      loadedConfig = sessions[i].finalConfig.config;
+      console.log(loadedConfig);
+      console.log("i: " + i + "; num Parties: " + loadedConfig.numParties);      
+    }
+
     backBtn.mousePressed(clickedBack);
     nextBtn.mousePressed(clickedNext);
   }
@@ -539,6 +549,7 @@ function loadSessionS1() {
 
   function clickedNext() {
     removeBtns();
+    setLoadedUserVars(loadedConfig);
     mgr.showScene(loadSessionS2);
   }
 
@@ -565,7 +576,9 @@ function loadSessionS2() {
   this.enter = function () {
     // gui = createGui();
     // continueBtn = createButton("Continue", width/2, height/2);
-    console.log("start up scene");
+    console.log("loadedstart up scene");
+
+    newSession();
 
     document.getElementById("page-container").style.display = "block";
     document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1>";
@@ -573,7 +586,7 @@ function loadSessionS2() {
 
 
     document.getElementById("start-desc").style.display = "block";
-    document.getElementById("start-desc").innerHTML = "<h2>Load Session</h2><p>[Description here on how to use the interface]</p><p>[Show timestamp-based name as ID for new (loaded) session]</p>";
+    document.getElementById("start-desc").innerHTML = "<h2>Load Session</h2><p>[Description here on how to use the interface]</p><p>Session ID: " + sessionID + "</p>";
 
     document.getElementById("top").style.display = "none";
     document.getElementById("page1").style.display = "none";
@@ -619,7 +632,8 @@ function loadSessionS2() {
 
   function clickedNext() {
     removeBtns();
-    engine.setDefaultParams();
+    // engine.setDefaultParams();
+    setEngineParams(engine); // set engine params to user vars, which were loaded
     // reset values for calculations
     engine.completeReset();
     visual.completeReset();
