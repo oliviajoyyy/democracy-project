@@ -54,11 +54,13 @@ class VoteVisual {
 
   // colors - OC now passed as constructor params
   bColor; // = "#012244"; // background color
-  pColor; // = "#3c1b36"; // header color
+  pColor; // loading image color
   tColor; // text color
-  rColor; // rect and loading image color
-  rColor2;
-  rColor3;
+  rColor; // party A rect color
+  rColor2; // party B rect color
+  rColor3; // party C rect color
+  mColor; // majority bar graph color
+  smColor; // super majority bar graph color
 
   tranVal = 255;
   // let fadeOpac = 255;
@@ -94,7 +96,7 @@ class VoteVisual {
    * @param {color} c2 - rectangle color 2
    * @param {color} c3 - rectangle color 3
    */
-  constructor(img, bK, pK, tK, c1, c2, c3) {
+  constructor(img, bK, pK, tK, c1, c2, c3, mK, smK) {
     this.loadingImage = img;
     this.bColor = color(bK);
     this.pColor = color(pK);
@@ -102,6 +104,8 @@ class VoteVisual {
     this.rColor = color(c1);
     this.rColor2 = color(c2);
     this.rColor3 = color(c3);
+    this.mColor = color(mK);
+    this.smColor = color(smK);
   }
 
   /**
@@ -399,49 +403,117 @@ class VoteVisual {
 
   }
 
+  percentageGraphs(drawWidth, paneNumber) {
+    push();
+    let gWidth = this.dWidth - drawWidth - 5; // graph width, make max space of remaining edge
+    let gHeight = 300; // graph height
+    let gOffsetY = 100; // y offset for graph
+    let gBarH = 20; // graph Bar height
+    rectMode(CORNER);
+    translate(drawWidth, gOffsetY);
+    noFill();
+    stroke(0);
+    strokeWeight(1);
+    rect(0, 0, gWidth, gHeight, 15); // graph box outline
+
+    textSize(22);
+    textAlign(LEFT);
+    textStyle(NORMAL);
+    fill(this.tColor);
+    noStroke(0);
+    text("Approval Percentage to Vote", 10, 30, gWidth);
+
+    textSize(18);
+    text("Majority", 10, 70, gWidth);
+    text("SuperMajority", 10, 100, gWidth);
+
+    if (paneNumber >= 9) {
+    let bStart = 130; // x coord of bar
+    let bMax = gWidth-bStart-50; // bar at 100%, leave space for number
+    let mBar = map(parseInt(this.engine.perPass * 100), 0, 100, 0, bMax); // majority bar graph
+    textSize(16);
+    text(parseInt(this.engine.perPass * 100) + "%", bStart+mBar+5, 70);
+    fill(this.mColor);
+    rect(bStart, 55, mBar, gBarH);
+
+    let smBar = map(parseInt(this.engine.superThresh * 100), 0, 100, 0, bMax); // majority bar graph
+    fill(this.tColor);
+    textSize(16);
+    text(parseInt(this.engine.superThresh * 100) + "%", bStart+smBar+5, 100);
+    fill(this.smColor);
+    rect(bStart, 85, smBar, gBarH);
+    //console.log("smBar: " + smBar + " range: " + bStart + " to " + bMax);
+    }
+
+    translate(0, gOffsetY + 40);
+    textSize(22);
+    textAlign(LEFT);
+    textStyle(NORMAL);
+    fill(this.tColor);
+    noStroke(0);
+    text("Probability of Affirmative Vote", 10, 30, gWidth);
+    textSize(18);
+    text("Party A", 10, 70, gWidth);
+    if (this.engine.numParties >= 2) {
+      text("Party B", 10, 100, gWidth);
+      if (this.engine.numParties == 3) {
+        text("Party C", 10, 130, gWidth);
+      }
+    }
+    
+    if (paneNumber >= 10) {
+    let bStart = 85; // x coord of bar
+    let bMax = gWidth-bStart-50; // bar at 100%, leave space for number
+    let partyABar = map(parseInt(this.engine.demYaythresh * 100), 0, 100, 0, bMax); // majority bar graph
+    fill(this.tColor);
+    textSize(16);
+    text(parseInt(this.engine.demYaythresh * 100) + "%", bStart+partyABar+5, 70);
+    fill(this.rColor);
+    rect(bStart, 55, partyABar, gBarH);
+
+    if (this.engine.numParties >=2) {
+      let partyBBar = map(parseInt(this.engine.repYaythresh * 100), 0, 100, 0, bMax); // majority bar graph
+      fill(this.tColor);
+      text(parseInt(this.engine.repYaythresh * 100) + "%", bStart+partyBBar+5, 100);
+      fill(this.rColor2);
+      rect(bStart, 85, partyBBar, gBarH);
+
+      if (this.engine.numParties == 3) {
+        let partyCBar = map(parseInt(this.engine.indYaythresh * 100), 0, 100, 0, bMax); // majority bar graph
+        fill(this.tColor);
+        text(parseInt(this.engine.indYaythresh * 100) + "%", bStart+partyCBar+5, 130);
+        fill(this.rColor3);
+        rect(bStart, 115, partyCBar, gBarH);
+      }
+    }
+    }
+    
+
+    // translate(0, gHeight+gOffset);
+    // noFill();
+    // stroke(0);
+    // rect(0, 0, gWidth, gHeight);
+    // fill(0);
+    // noStroke(0);
+    // text("Probability Affirmative Vote", 5, 20, gWidth-5);
+    // if (paneNumber >= 10) {
+    //   text(parseInt(engine.demYaythresh * 100) + "%", 20, gHeight-30);
+    //   text(parseInt(engine.repYaythresh * 100) + "%", gWidth/2 - 25, gHeight-30);
+    //   text(parseInt(engine.indYaythresh * 100) + "%", gWidth-70, gHeight-30);
+    // }
+
+    pop();
+  }
+
   displayImmediateBlank(engineObj, paneNumber) {
     this.engine = engineObj;
     this.forUser = this.engine.forUser;
     var drawWidth = this.dWidth;
     //if (paneNumber == 9) {
-      drawWidth = this.dWidth - 300;
+      drawWidth = this.dWidth - 350; // drawWidth is up to edge where pres box is drawn
     //}
 
-    push();
-    let gWidth = 250;
-    let gHeight = 250;
-    let gOffset = 25;
-    rectMode(CORNER);
-    translate(drawWidth+25, gOffset);
-    noFill();
-    stroke(0);
-    strokeWeight(1);
-    rect(0, 0, gWidth, gHeight);
-    textSize(22);
-    textAlign(LEFT);
-    textStyle(NORMAL);
-    fill(0);
-    noStroke(0);
-    text("Majority & Supermajority % Approval", 5, 20, gWidth-5);
-    if (paneNumber >= 9) {
-      text(parseInt(engine.perPass * 100) + "%", 40, gHeight-30);
-      text(parseInt(engine.superThresh * 100) + "%", gWidth-85, gHeight-30);
-    }
-
-    translate(0, gHeight+gOffset);
-    noFill();
-    stroke(0);
-    rect(0, 0, gWidth, gHeight);
-    fill(0);
-    noStroke(0);
-    text("Probability Affirmative Vote", 5, 20, gWidth-5);
-    if (paneNumber >= 10) {
-      text(parseInt(engine.demYaythresh * 100) + "%", 20, gHeight-30);
-      text(parseInt(engine.repYaythresh * 100) + "%", gWidth/2 - 25, gHeight-30);
-      text(parseInt(engine.indYaythresh * 100) + "%", gWidth-70, gHeight-30);
-    }
-
-    pop();
+    this.percentageGraphs(drawWidth, paneNumber);
 
     // OC centers vote drawings based on total of voting bodies
     if (this.engine.numLegislativeBodies == 1) {

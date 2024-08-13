@@ -156,7 +156,10 @@
         "rectColor": "#64b804",
         "rectColor2": "#1e7d21",
         "rectColor3": "#12cc7f",
-        "paneBkg": "#84a39b",
+        "majorityBar": "#7a59bd",
+        "supermajorityBar": "#511bbf",
+        "paneBkg": "#e3e3e3",
+        "paneBorder": "#757575",
         "sliderStart": "60vh",
         "sliderOffset": "8vh"
     }

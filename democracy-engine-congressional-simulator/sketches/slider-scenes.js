@@ -420,11 +420,11 @@ function newSessionScene() {
 }
 
 function loadSessionS1() {
-  let backBtn, nextBtn;
+  let backBtn, nextBtn, showMoreBtn;
   let selection;
   let sessions;
-  let numResults = 10;
-  let showCount = 1;
+  let numResults = 10; // number of results shown on screen
+  let showCount;
   let dWidth;
   let dHeight;
   
@@ -442,52 +442,14 @@ function loadSessionS1() {
     // gui = createGui();
     // continueBtn = createButton("Continue", width/2, height/2);
     console.log("start up scene");
-    
+    showCount = 1;
+
     document.getElementById("page-container").style.display = "block";
     document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1>";
     document.getElementById("main-btn-div").style.display = "none";
     document.getElementById("start-desc").style.display = "block";
-    document.getElementById("start-desc").innerHTML = "<h2>Select Session</h2>"
-      + "<p>[Description here on how to use the interface]</p>"
-      + "<p>&nbsp;&nbsp;&nbsp;&nbsp; Session ID "
-      + getSpaces(25) + "Voting Members "
-      + "&nbsp;&nbsp;&nbsp;&nbsp; Parties</p>";
-
     
-    //showCount++; // increment showCount through some trigger - btn press, key press, etc
-    selection = createRadio("sessions"); // attatch to HTML
-    selection.size(230);
-
-    //let s ; //= "<div id='info-list'>";
-    getSessions().then((result) => {
-      sessions = result;
-      console.log(result);
-      // show sessions in order from last 10 
-      // -- OC written like this so that startIX can move backward to show next prev 10 when triggered (btn press?)
-      let startIX = result.length-(numResults*showCount);
-      if (startIX < 0) {
-        startIX = 0;
-      }
-      let newDiv = document.createElement('div');
-      newDiv.id = 'info-list';
-      let s = "";
-      for (let i=startIX; (i<result.length); i++) {
-        if (i<=startIX+numResults) {
-          //document.getElementById("start-desc").innerHTML += "<tr><td>";
-        console.log("i: " + i);
-        let sObj = result[i].finalConfig.config;
-        console.log(sObj);
-        let totalVoting = sObj.chamber1.totalMembers + sObj.chamber2.totalMembers + sObj.chamber3.totalMembers + sObj.vicePres.totalMembers + sObj.president.totalMembers;
-        selection.option(result[i].uniqueID, i.toString()); //+ " " + totalVoting + " " + result[i].numParties);
-        s = s + getSpaces(7) + totalVoting + getSpaces(25) + sObj.numParties + "<br>";
-        }
-      }
-      newDiv.innerHTML = s;
-      document.getElementById('start-desc').appendChild(newDiv);
-    });
-    document.getElementById("start-desc").innerHTML += "<div id='session-list'></div>";
-    selection.parent("session-list"); // put options in div with border
-    selection.selected('1');
+    showSessionsList(); // get sessions fr db and display onscreen
 
     document.getElementById("top").style.display = "none";
     document.getElementById("page1").style.display = "none";
@@ -515,24 +477,29 @@ function loadSessionS1() {
     backBtn.class('buttons');
     backBtn.parent(buttonDiv);
 
+    showMoreBtn = createButton('Show More');
+    showMoreBtn.id('show-btn');
+    showMoreBtn.class('buttons');
+    showMoreBtn.parent(buttonDiv);
+
     nextBtn = createButton('Next');
     nextBtn.id('next-btn-1');
     nextBtn.class('buttons');
     nextBtn.parent(buttonDiv);
+
+    backBtn.mousePressed(clickedBack);
+    nextBtn.mousePressed(clickedNext);
+    showMoreBtn.mousePressed(clickedShowMore);
 
   }
 
   this.draw = function () {
     if (sessions && selection.value()) { // set c to global var loadedSession
       var i = selection.value();
-      console.log("sel val: " + selection.value());
+      //console.log("sel val: " + selection.value());
       loadedConfig = sessions[i].finalConfig.config;
-      console.log(loadedConfig);
-      console.log("i: " + i + "; num Parties: " + loadedConfig.numParties);      
+      //console.log(loadedConfig);
     }
-
-    backBtn.mousePressed(clickedBack);
-    nextBtn.mousePressed(clickedNext);
   }
 
   function getSpaces(x) {
@@ -541,6 +508,55 @@ function loadSessionS1() {
       s += "\u00A0";
     }
     return s;
+  }
+
+  function showSessionsList() {
+    document.getElementById("page-container").style.display = "block";
+    document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1>";
+    document.getElementById("main-btn-div").style.display = "none";
+    document.getElementById("start-desc").style.display = "block";
+    document.getElementById("start-desc").innerHTML = "<h2>Select Session</h2>"
+      + "<p>[Description here on how to use the interface]</p>"
+      + "<p>&nbsp;&nbsp;&nbsp;&nbsp; Session ID "
+      + getSpaces(25) + "Voting Members "
+      + "&nbsp;&nbsp;&nbsp;&nbsp; Parties</p>";
+
+    selection = createRadio("sessions"); // attatch to HTML
+    selection.size(230);
+
+    getSessions().then((result) => {
+      sessions = result;
+      console.log(result);
+      // show sessions in order from last 10 
+      // -- OC written like this so that startIX can move backward to show next prev 10 when triggered (btn press?)
+      let startIX = result.length-(numResults*showCount);
+      if (startIX < 0 && showCount == 1) {
+        startIX = 0;
+      } else if (startIX < 0) {
+        showCount = 1;
+        startIX = result.length-(numResults);
+      }
+      let newDiv = document.createElement('div');
+      newDiv.id = 'info-list';
+      let s = "";
+      for (let i=startIX; (i<result.length); i++) {
+        if (i<startIX+numResults) {
+        console.log("i: " + i);
+        let sObj = result[i].finalConfig.config;
+        console.log(sObj);
+        let totalVoting = sObj.chamber1.totalMembers + sObj.chamber2.totalMembers + sObj.chamber3.totalMembers + sObj.vicePres.totalMembers + sObj.president.totalMembers;
+        selection.option(result[i].uniqueID, i.toString()); //+ " " + totalVoting + " " + result[i].numParties);
+        s = s + getSpaces(7) + totalVoting + getSpaces(28-totalVoting.toString().length) + sObj.numParties + "<br>";
+        }
+      }
+      selection.selected(startIX.toString());
+      console.log("selected val: " + selection.value());
+      newDiv.innerHTML = s;
+      document.getElementById('start-desc').appendChild(newDiv);
+    });
+    document.getElementById("start-desc").innerHTML += "<div id='session-list'></div>";
+    selection.parent("session-list"); // put options in div with border
+    
   }
 
   function clickedBack() {
@@ -554,8 +570,15 @@ function loadSessionS1() {
     mgr.showScene(loadSessionS2);
   }
 
+  function clickedShowMore() {
+    selection.remove();
+    showCount++;
+    showSessionsList();
+  }
+
   function removeBtns() {
     selection.remove();
+    showMoreBtn.remove();
     backBtn.remove();
     nextBtn.remove();
   }

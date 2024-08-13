@@ -87,6 +87,8 @@ var colorOverlay;
 var rectColor;
 var rectColor2;
 var rectColor3;
+var majorityBar;
+var superBar;
 
 // json
 var configJSON;
@@ -137,10 +139,12 @@ function setup() {
   rectColor = colorConfig.rectColor;
   rectColor2 = colorConfig.rectColor2;
   rectColor3 = colorConfig.rectColor3;
+  majorityBar = colorConfig.majorityBar;
+  superBar = colorConfig.supermajorityBar;
   document.body.style.backgroundColor = bColor;
   //document.header.style.backgroundColor = bColor;
   engine = new DemocracyEngine(govtConfig, historicalActs); // OC create engine object to run voting logic
-  visual = new VoteVisual(loadingImage, bColor, pColor, textColor, rectColor, rectColor2, rectColor3);
+  visual = new VoteVisual(loadingImage, bColor, pColor, textColor, rectColor, rectColor2, rectColor3, majorityBar, superBar);
   setDefaultUserVars(); // set user vars to params from config file
   buttonDiv = document.getElementById('button-div');
 
@@ -175,7 +179,6 @@ function setup() {
   // mgr.addScene(sDisplay);
   // mgr.addScene(sDefault);
   mgr.showNextScene();
-  //mgr.showScene(loadSessionS1);
   
   console.log("end of scene-mgr.js setup");
 }

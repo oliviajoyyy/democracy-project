@@ -6,7 +6,8 @@
   --button: #012266;
   --scroll-bar: #012255;
   --scroll-bar-hover: #012266;
-  --pane-bkg: #d9cb50;
+  --pane-bkg: #e3e3e3;
+  --pane-border: ##757575;
   --slider-start: 60vh;
   --slider-offset: 8vh;
 }
@@ -182,15 +183,17 @@
 }
 
 .pane-bkg {
-  display: none;
+    display: none;
     width: 60%;
-    height: 65%;
+    height: 55vh;
     background-color: var(--pane-bkg);
     position: fixed;
     top: 35%;
     left: 20%;
     margin-top: 90px;
     z-index: 99;
+    border-radius: 30px;
+    border: 3mm solid var(--pane-border);
 }
 
 .total {

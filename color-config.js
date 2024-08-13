@@ -12,6 +12,7 @@ fetch('democracy-engine-congressional-simulator/config/config.json') // path wor
         document.documentElement.style.setProperty('--scroll-bar', data.cssParams.headerFooterBkg);
         document.documentElement.style.setProperty('--scroll-bar-hover', hexToRgba(data.cssParams.headerFooterBkg, 0.6));
         document.documentElement.style.setProperty('--pane-bkg', data.cssParams.paneBkg);
+        document.documentElement.style.setProperty('--pane-border', data.cssParams.paneBorder);
         document.documentElement.style.setProperty('--slider-start', data.cssParams.sliderStart);
         document.documentElement.style.setProperty('--slider-offset', data.cssParams.sliderOffset);
 
