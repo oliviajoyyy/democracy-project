@@ -404,18 +404,21 @@ class VoteVisual {
 
   }
 
-  percentageGraphs(drawWidth) {
+  percentageGraphs(leftX, rightX, gOffsetY) {
     push();
-    let gWidth = this.dWidth - drawWidth - 5; // graph width, make max space of remaining edge
+    let gWidth = rightX - leftX - 5; // graph width, make max space of remaining edge
     let gHeight = 300; // graph height
-    let gOffsetY = this.dHeight/4; // y offset for graph
+    //let gOffsetY = this.dHeight/4; // y offset for graph
+    if (gOffsetY + gHeight > this.dHeight) {
+      gOffsetY = this.dHeight-gHeight- 5;
+    }
     let offY = 30;
     let gBarH = 15; // graph Bar height
     let titleSz = 18;
     let lableSz = 13;
     let numSz = 12;
     rectMode(CORNER);
-    translate(drawWidth, gOffsetY);
+    translate(leftX, gOffsetY);
     noFill();
     stroke(0);
     strokeWeight(1);
@@ -511,7 +514,7 @@ class VoteVisual {
     //if (paneNumber == 9) {
     if (!minimalConfig) {
       drawWidth = this.dWidth - (this.dWidth/5.5); // drawWidth is up to edge where pres box is drawn
-      this.percentageGraphs(drawWidth);
+      this.percentageGraphs(drawWidth, this.dWidth, this.dHeight/4);
     }
 
     // OC centers vote drawings based on total of voting bodies
@@ -1771,28 +1774,29 @@ class VoteVisual {
       }
     }
     push();
-    textAlign(CENTER);
-    textSize(22);
-    text(engine.decisionTxt, width/2, height/2);
-    textAlign(LEFT);
-    textStyle(NORMAL);
-    let xP = width - width/3;
-    let yP = height - height/3;
-    text("Approval Percentage to Vote", xP, yP);
-    textSize(18);
-    text("Majority: " + parseInt(this.engine.perPass * 100) + "%", xP, yP+30);
-    text("SuperMajority: " + parseInt(this.engine.superThresh * 100) + "%", xP, yP+50);
+    textAlign(LEFT, TOP);
+    textSize(26);
+    text(engine.decisionTxt, padX, height/2 - padY, this.dWidth);
+    this.percentageGraphs((3/4) * width, width, (3/5)*height);
+    // textAlign(LEFT);
+    // textStyle(NORMAL);
+    // let xP = width - width/3;
+    // let yP = height - height/3;
+    // text("Approval Percentage to Vote", xP, yP);
+    // textSize(18);
+    // text("Majority: " + parseInt(this.engine.perPass * 100) + "%", xP, yP+30);
+    // text("SuperMajority: " + parseInt(this.engine.superThresh * 100) + "%", xP, yP+50);
 
-    textSize(22);
-    text("Probability of Affirmative Vote", xP, yP+100);
-    textSize(18);
-    text("Party A", xP, yP+80);
-    if (this.engine.numParties >= 2) {
-      text("Party B", xP, yP+110);
-      if (this.engine.numParties == 3) {
-        text("Party C", xP, yP+130);
-      }
-    }
+    // textSize(22);
+    // text("Probability of Affirmative Vote", xP, yP+100);
+    // textSize(18);
+    // text("Party A", xP, yP+80);
+    // if (this.engine.numParties >= 2) {
+    //   text("Party B", xP, yP+110);
+    //   if (this.engine.numParties == 3) {
+    //     text("Party C", xP, yP+130);
+    //   }
+    // }
     pop();
    //this.displayContext(engine);
   }

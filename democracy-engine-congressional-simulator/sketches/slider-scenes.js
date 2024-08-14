@@ -355,7 +355,7 @@ function newSessionScene() {
     document.getElementById("main-btn-div").style.display = "none";
 
     document.getElementById("start-desc").style.display = "block";
-    document.getElementById("start-desc").innerHTML = "<h2>New Session</h2><p>[Description here on how to use the interface]</p><p>Session ID: " + sessionID + "</p>";
+    document.getElementById("start-desc").innerHTML = "<h2>New Session</h2><h2>ID: " + sessionID + "</h2><p>[Description here on how to use the interface]</p>";
 
     document.getElementById("top").style.display = "none";
     document.getElementById("page1").style.display = "none";
@@ -423,7 +423,7 @@ function loadSessionS1() {
   let backBtn, nextBtn, showMoreBtn;
   let selection;
   let sessions;
-  let numResults = 3; // number of results shown on screen
+  let numResults = 10; // number of results shown on screen
   let showCount;
   let dWidth;
   let dHeight;
@@ -442,6 +442,8 @@ function loadSessionS1() {
     // gui = createGui();
     // continueBtn = createButton("Continue", width/2, height/2);
     console.log("start up scene");
+    newSession();
+    paramChangedBool = true;
     showCount = 1;
 
     document.getElementById("page-container").style.display = "block";
@@ -516,10 +518,12 @@ function loadSessionS1() {
     document.getElementById("main-btn-div").style.display = "none";
     document.getElementById("start-desc").style.display = "block";
     document.getElementById("start-desc").innerHTML = "<h2>Select Session</h2>"
+      + "<h2>Your ID: " + sessionID + "</h2>"
       + "<p>[Description here on how to use the interface]</p>"
-      + "<p>&nbsp;&nbsp;&nbsp;&nbsp; Session ID "
-      + getSpaces(25) + "Voting Members "
-      + "&nbsp;&nbsp;&nbsp;&nbsp; Parties</p>";
+      + "<p>&nbsp;&nbsp;&nbsp;&nbsp; SESSION ID "
+      + getSpaces(21) + " CHAMBERS "
+      + getSpaces(8) + " PARTIES "
+      + getSpaces(10) + " TOTAL VOTING MEMBERS </p>";
 
     selection = createRadio("sessions"); // attatch to HTML
     selection.size(230);
@@ -537,8 +541,14 @@ function loadSessionS1() {
         startIX = result.length-(numResults);
       }
       let newDiv = document.createElement('div');
-      newDiv.id = 'info-list';
+      let newDiv2 = document.createElement('div');
+      let newDiv3 = document.createElement('div');
+      newDiv.id = 'info-list-1';
+      newDiv2.id = 'info-list-2';
+      newDiv3.id = 'info-list-3';
       let s = "";
+      let s2 = "";
+      let s3 = "";
       for (let i=startIX; (i<result.length); i++) {
         if (i<startIX+numResults) {
         console.log("i: " + i);
@@ -546,16 +556,24 @@ function loadSessionS1() {
         console.log(sObj);
         let totalVoting = sObj.chamber1.totalMembers + sObj.chamber2.totalMembers + sObj.chamber3.totalMembers + sObj.vicePres.totalMembers + sObj.president.totalMembers;
         selection.option(result[i].uniqueID, i.toString()); //+ " " + totalVoting + " " + result[i].numParties);
-        s = s + getSpaces(7) + totalVoting + getSpaces(28-totalVoting.toString().length) + sObj.numParties + "<br>";
+        //s = s + getSpaces(7) + totalVoting + getSpaces(28-totalVoting.toString().length) + sObj.numParties + "<br>";
+        s = s + sObj.numLegislativeBodies + "<br>";
+        s2 = s2 + sObj.numParties + "<br>";
+        s3 = s3 + totalVoting + "<br>";
         }
       }
       selection.selected(startIX.toString());
       console.log("selected val: " + selection.value());
       newDiv.innerHTML = s;
+      newDiv2.innerHTML = s2;
+      newDiv3.innerHTML = s3;
       document.getElementById('start-desc').appendChild(newDiv);
+      document.getElementById('start-desc').appendChild(newDiv2);
+      document.getElementById('start-desc').appendChild(newDiv3);
     });
     document.getElementById("start-desc").innerHTML += "<div id='session-list'></div>";
     selection.parent("session-list"); // put options in div with border
+    selection.class('radio-sel');
     
   }
 
@@ -567,7 +585,17 @@ function loadSessionS1() {
   function clickedNext() {
     removeBtns();
     setLoadedUserVars(loadedConfig);
-    mgr.showScene(loadSessionS2);
+    // mgr.showScene(loadSessionS2);
+    // engine.setDefaultParams();
+    setEngineParams(engine); // set engine params to user vars, which were loaded
+    // reset values for calculations
+    engine.completeReset();
+    visual.completeReset();
+    userEdits = false;
+    reconfigBool = true;
+
+    engine.currentCongLogic(true); // uncomment if drawing to screen real time
+    mgr.showScene(sBodies);
   }
 
   function clickedShowMore() {
@@ -1164,6 +1192,8 @@ function sBodies() {
   }
 
   this.enter = function () {
+    visual.dWidth = windowWidth * .95;
+      visual.dHeight = (windowHeight * .9)-labelSpace;
 
     console.log("0 Slider Page");
     document.getElementById("page-container").style.display = "none";
@@ -3453,6 +3483,8 @@ function sBodyPass() {
     // currPerPass = parseFloat(userBodyPass);
     // currSuperThresh = parseFloat(userSuperThresh);
     // noCursor();
+    currPerPass = parseFloat(userBodyPass);
+    currSuperThresh = parseFloat(userSuperThresh);
     console.log("4th Slider Page");
     document.getElementById("top").innerHTML = "PERCENT OF VOTES REQUIRED FOR APPROVAL PER CHAMBER";
     showPanesBool = true;
@@ -3646,10 +3678,6 @@ function sYesVotes() {
       nextPaneBtn.parent(buttonDiv);
       nextPaneBtn.mousePressed(nextPane);
     // }
-  }
-
-  function clickedUpdate() {
-    
   }
 
   this.draw = function () { 
@@ -4121,26 +4149,26 @@ function sBenchmarkPane() {
     document.getElementById('vote-btn').remove();
     document.getElementById('next-pane-btn').remove();
 
-    benchmarkBtn = createButton('Benchmark');
+    benchmarkBtn = createButton('Run Benchmark Tests');
     benchmarkBtn.id('benchmark-btn');
     benchmarkBtn.class('buttons');
     benchmarkBtn.parent(buttonDiv);
     benchmarkBtn.mousePressed(clickedBenchmark);
 
-    if (resultIX == 0) { // vote wasn't clicked on prev screen, so do it now to save first test result
-      setEngineParams(engine); // set new parameters
-      // reset values for calculations and drawings
-      engine.completeReset();
-      userEdits = false;
-      reconfigBool = true;
-      engine.currentCongLogic(true); // get results for this configuration
-      updateSession(); // save this config and resutls of running this configuration
-      resultIX++;
-    }
+    // if (resultIX == 0) { // vote wasn't clicked on prev screen, so do it now to save first test result
+    //   setEngineParams(engine); // set new parameters
+    //   // reset values for calculations and drawings
+    //   engine.completeReset();
+    //   userEdits = false;
+    //   reconfigBool = true;
+    //   engine.currentCongLogic(true); // get results for this configuration
+    //   updateSession(); // save this config and resutls of running this configuration
+    //   resultIX++;
+    // }
 
-    if (configIX > 0) {
-      configIX--; // decrement because last click for vote prepared for another config
-    }
+    // if (configIX > 0) {
+    //   configIX--; // decrement because last click for vote prepared for another config
+    // }
 
     // set new parameters to show updated configuration when entering scene
     //setEngineParams(engine);
@@ -4168,6 +4196,20 @@ function sBenchmarkPane() {
 
 
   function clickedBenchmark() {
+    if (resultIX == 0) { // vote wasn't clicked on prev screen, so do it now to save first test result
+      setEngineParams(engine); // set new parameters
+      // reset values for calculations and drawings
+      engine.completeReset();
+      userEdits = false;
+      reconfigBool = true;
+      engine.currentCongLogic(true); // get results for this configuration
+      updateSession(); // save this config and resutls of running this configuration
+      resultIX++;
+    }
+    if (configIX > 0 && visualizeVote == true) {
+      configIX--; // decrement because last click for vote prepared for another config
+    }
+
     document.getElementById('prev-pane-btn').remove();
     benchmarkBtn.remove();
 
@@ -4206,7 +4248,7 @@ function sBenchmarkPane() {
 }
 
 function sBenchmarkResults() {
-  let startOverBtn, saveBtn, approvalBtn;
+  let startOverBtn, summaryBtn;
 
   this.setup = function () {
 
@@ -4261,17 +4303,11 @@ function sBenchmarkResults() {
     startOverBtn.parent(buttonDiv);
     startOverBtn.mousePressed(clickedStartOver);
 
-    saveBtn = createButton('Go to Save');
-    saveBtn.id('save-btn');
-    saveBtn.class('buttons');
-    saveBtn.parent(buttonDiv);
-    saveBtn.mousePressed(clickedSave);
-
-    approvalBtn = createButton('Approve');
-    approvalBtn.id('approve-btn');
-    approvalBtn.class('buttons');
-    approvalBtn.parent(buttonDiv);
-    approvalBtn.mousePressed(clickedApprove);
+    summaryBtn = createButton('See Summary');
+    summaryBtn.id('summary-btn');
+    summaryBtn.class('buttons');
+    summaryBtn.parent(buttonDiv);
+    summaryBtn.mousePressed(clickedSummary);
 
     // if (resultIX == 0) { // vote wasn't clicked on prev screen, so do it now to save first test result
     //   setEngineParams(engine); // set new parameters
@@ -4345,25 +4381,15 @@ function sBenchmarkResults() {
     mgr.showScene(briefDescription);
   }
 
-  function clickedSave() {
+  function clickedSummary() {
     removeBtns();
     mgr.showScene(sSaveResults)
     //saveSession();
   }
 
-  function clickedApprove() {
-    ownerEndorse();
-    if (finalConfigObj.ownerEndorsement == 1) {
-      document.getElementById("main-header").innerHTML = "<h1>Benchmark Results</h1><h2>Approved!</h2>";
-    } else {
-      document.getElementById("main-header").innerHTML = "<h1>Benchmark Results</h1>";
-    }
-  }
-
   function removeBtns() {
     startOverBtn.remove();
-    saveBtn.remove();
-    approvalBtn.remove();
+    summaryBtn.remove();
   }
 
   function clickedBenchmark() {
@@ -4424,7 +4450,7 @@ var prevSessionID;
 
 //page showing all of user inputs
 function sSaveResults() {
-  let saveBtn, startOverBtn;
+  let saveBtn, startOverBtn, approvalBtn;
 
   this.setup = function () {
     //userOutputText = document.getElementById('slider-disp');
@@ -4436,7 +4462,7 @@ function sSaveResults() {
 
     console.log("user config summary & save page");
     // document.getElementById("top").innerHTML = "DEMOCRACY ENGINE SIMULATOR INPUTS";
-    document.getElementById("main-header").innerHTML = "<h1>Save Configuration</h1><h2>Session ID: " + sessionID + "</h2>";
+    document.getElementById("main-header").innerHTML = "<h1>Summary & Save</h1><h2>Session ID: " + sessionID + "</h2>";
     document.getElementById("start-desc").innerHTML = "";
     document.getElementById("pane-bkg").style.display = "none";
     document.getElementById("page1").style.display = "none";
@@ -4462,6 +4488,12 @@ function sSaveResults() {
     startOverBtn.class('buttons');
     startOverBtn.parent(buttonDiv);
     startOverBtn.mousePressed(clickedStartOver);
+
+    approvalBtn = createButton('Approve');
+    approvalBtn.id('approve-btn');
+    approvalBtn.class('buttons');
+    approvalBtn.parent(buttonDiv);
+    approvalBtn.mousePressed(clickedApprove);
 
     saveBtn = createButton('Save Config');
     saveBtn.id('save-btn');
@@ -4517,6 +4549,15 @@ function sSaveResults() {
     mgr.showScene(briefDescription);
   }
 
+  function clickedApprove() {
+    ownerEndorse();
+    if (finalConfigObj.ownerEndorsement == 1) {
+      document.getElementById("main-header").innerHTML = "<h1>Summary & Save</h1><h2>Session ID: " + sessionID + "</h2><h2>Approved!</h2>";
+    } else {
+      document.getElementById("main-header").innerHTML = "<h1>Summary & Save</h1><h2>Session ID: " + sessionID + "</h2>";
+    }
+  }
+
   function clickedSave() {
     removeBtns();
     saveSession();
@@ -4525,6 +4566,7 @@ function sSaveResults() {
 
   function removeBtns() {
     startOverBtn.remove();
+    approvalBtn.remove();
     saveBtn.remove();
   }
 
@@ -4582,6 +4624,7 @@ function sSaveResults() {
 }
 
 function sComplete() {
+  let startOverBtn;
 
   this.setup = function () {
   }
@@ -4591,7 +4634,7 @@ function sComplete() {
     console.log("save complete page");
     // document.getElementById("top").innerHTML = "DEMOCRACY ENGINE SIMULATOR INPUTS";
     document.getElementById("main-header").innerHTML = "<h1>Session Complete</h1>";
-    document.getElementById("start-desc").innerHTML = "<h2>THANK YOU</h2><h2>Session ID: " + prevSessionID + "</h2><p>[additional info]</p";
+    document.getElementById("start-desc").innerHTML = "<h2>THANK YOU</h2><h2>Session ID: " + prevSessionID + "</h2><p>Please record your session ID so that you might be able to retrieve it later.</p";
     document.getElementById("top").style.display = "none";
     document.getElementById("pane-bkg").style.display = "none";
     document.getElementById("page1").style.display = "none";
@@ -4615,12 +4658,25 @@ function sComplete() {
     background(bColor);
     document.body.style.backgroundColor = bColor;
 
+    startOverBtn = createButton('Start Over');
+    startOverBtn.id('restart-btn');
+    startOverBtn.class('buttons');
+    startOverBtn.parent(buttonDiv);
+    startOverBtn.mousePressed(clickedStartOver)
+
     setTimeout(function () {
-      mgr.showScene(briefDescription);
-    }, 5000); // 5 seconds, short for testing
+      if (mgr.isCurrent(sComplete)) {
+        clickedStartOver();
+      }
+    }, 30000); // 30 seconds timeout to start over
   }
 
   this.draw = function () {
+  }
+
+  function clickedStartOver() {
+    startOverBtn.remove();
+    mgr.showScene(briefDescription);
   }
 
 }

@@ -251,25 +251,59 @@ p {
 }
 
 #session-list {
-  width: 20.67%;
+  width: 65%;
   border: 0.5mm solid var(--text-color);
   border-radius: 10px;
   padding: 5px;
   float:left;
-  height: 250px;
+  height: 310px;
   
 }
 
-#info-list {
-  width: 20.67%;
+#info-list-1, #info-list-2 {
+  width: 125px;
   position: relative;
-  left: 30px;
-  border: 0.5mm solid var(--text-color);
-  border-radius: 10px;
+  left: -490px;
+  /* border-right: 0.5mm solid var(--text-color); */
+  border-left: 0.5mm solid var(--text-color);
+  padding: 5px;
+  float: left;
+  height: 310px;
+  text-align: center;
+  line-height: 30px;
+}
+
+#info-list-3 {
+  width: 150px;
+  position: relative;
+  left: -490px;
+  /* border-right: 0.5mm solid var(--text-color); */
+  border-left: 0.5mm solid var(--text-color);
+  padding: 5px;
+  float: left;
+  height: 310px;
+  padding-left: 85px;
+  text-align: center;
+  line-height: 30px;
+}
+
+.radio-sel {
+  line-height: 30px;
+}
+
+
+/* #info-list-2 {
+  width: 125px;
+  position: relative;
+  left: -250px; */
+  /* border-right: 0.5mm solid var(--text-color); */
+  /*
+  border-left: 0.5mm solid var(--text-color);
   padding: 5px;
   float: left;
   height: 250px;
-}
+  text-align: center;
+} */
 /* .four.columns { width: 20.6666666667%; } */
 /* input[type="radio"] { */
   /* width: 300px; */
