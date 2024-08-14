@@ -111,7 +111,7 @@ function briefDescription() {
     document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1>";
     document.getElementById("main-btn-div").style.display = "none";
     document.getElementById("start-desc").style.display = "block";
-    document.getElementById("start-desc").innerHTML = "<h2>Description</h2><p>The legislative apparatus of the current US government is represented in default mode, which will initially run through one legislative cycle. The user may configure alternative values in subsequent cycles in order to evaluate the effects of systemic changes to the mechanism of governance.</p>";
+    document.getElementById("start-desc").innerHTML = "<h2>[Description]</h2><p>[short description here]</p>";
     document.getElementById("top").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
@@ -286,7 +286,7 @@ function aboutProject() {
     document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1>";
     document.getElementById("main-btn-div").style.display = "none";
     document.getElementById("start-desc").style.display = "block";
-    document.getElementById("start-desc").innerHTML = "<h2>More Information</h2><p>[Detailed project description & link to external page]</p>";
+    document.getElementById("start-desc").innerHTML = "<h2>More Information</h2><p>[Detailed project description]</p>";
     document.getElementById("top").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
@@ -423,7 +423,7 @@ function loadSessionS1() {
   let backBtn, nextBtn, showMoreBtn;
   let selection;
   let sessions;
-  let numResults = 10; // number of results shown on screen
+  let numResults = 3; // number of results shown on screen
   let showCount;
   let dWidth;
   let dHeight;
@@ -1138,19 +1138,21 @@ function democracyEngineOrigin() {
 
 let updateBtn, nextPaneBtn, prevPaneBtn;
 let paramChangedBool = false;
+var labelSpace = 30;
 
 //user input page for number of legislative bodies (1-3)
 function sBodies() {
-  var slider1 = document.getElementById('slider01');
+  var slider1 = document.getElementById('slider01');  
 
   this.setup = function () {
     textSize(15);
     noStroke();
     if (reconfigBool == true) {
       // windowResized();
-      visual.dWidth = windowWidth * .9;
-      visual.dHeight = windowHeight * .8;
-      canvas = createCanvas(visual.dWidth, visual.dHeight);
+      visual.dWidth = windowWidth * .95;
+      visual.dHeight = (windowHeight * .9)-labelSpace;
+      visual.labelSpace = labelSpace;
+      canvas = createCanvas(visual.dWidth, windowHeight * .9);
       let canvasDiv = document.getElementById('vote');
       canvas.parent(canvasDiv);
       reconfigBool = false;
@@ -1193,7 +1195,7 @@ function sBodies() {
 
     sliderVals();
     document.getElementById("top").style.display = "block";
-    document.getElementById("top").innerHTML = "NUMBER OF LEGISLATIVE BODIES";
+    document.getElementById("top").innerHTML = "NUMBER OF CHAMBERS";
 
     if (!document.getElementById('prev-pane-btn')) {
       prevPaneBtn = createButton('Back');
@@ -1227,7 +1229,7 @@ function sBodies() {
     // // engine.currentCongLogic(true);
     // visual.ix = 0;
 
-    visual.displayImmediateBlank(engine);
+    visual.displayImmediateBlank(engine, false);
     
     //visual.displayImmediate(engine);
 
@@ -1251,10 +1253,11 @@ function sBodies() {
     //engine.setDefaultParams();
     setEngineParams(engine);
     if (engine.numHouse2 == 0) {
-      engine.numHouse2 = 1;
+      engine.numHouse2 = 100;
     }
     if (engine.numSenate == 0) { // chamber 3
-      engine.numSenate = 1; // just to give default value
+      engine.numSenate = 100; // just to give default value
+      userNumSenate = 100;
     }
     if (engine.numPres == 0) {
       engine.numPres = 1;
@@ -1392,7 +1395,7 @@ function sLegislative() {
   this.draw = function () {
     // draws in real time, reset was when previous scene button clicked - not every time this scene is entered
     //visual.displayVoting(engine);
-    visual.displayImmediateBlank(engine);
+    visual.displayImmediateBlank(engine, false);
     paneToggle();
 
 
@@ -1681,7 +1684,7 @@ function sParties() {
   }
   this.draw = function () {
     //visual.displayVoting(engine);
-    visual.displayImmediateBlank(engine);
+    visual.displayImmediateBlank(engine, false);
     paneToggle();
 
     if (userNumParties != engine.numParties) {
@@ -1903,7 +1906,7 @@ function sMembersFirstChamber() {
   this.draw = function () {
     //visual.displayVoting(engine);
 
-    visual.displayImmediateBlank(engine);
+    visual.displayImmediateBlank(engine, false);
     paneToggle();
     console.log("Party A: " + userPerHouseBody[0] + " Party B: " + userPerHouseBody[1] + " Party C: " + userPerHouseBody[2]);
 
@@ -2238,7 +2241,7 @@ function sMembersSecondChamber() {
   }
 
   this.draw = function () {
-    visual.displayImmediateBlank(engine);
+    visual.displayImmediateBlank(engine, false);
     paneToggle();
     console.log("Party A: " + userPerHouse2Body[0] + " Party B: " + userPerHouse2Body[1] + " Party C: " + userPerHouse2Body[2]);
     // if sliders changed any values on this page, enable update button
@@ -2553,7 +2556,7 @@ function sMembersThirdChamber() {
   }
 
   this.draw = function () {
-    visual.displayImmediateBlank(engine);
+    visual.displayImmediateBlank(engine, false);
     paneToggle();
     console.log("Party A: " + userPerSenateBody[0] + " Party B: " + userPerSenateBody[1] + " Party C: " + userPerSenateBody[2]);
     // if sliders changed any values on this page, enable update button
@@ -2862,7 +2865,7 @@ function sMembersVP() {
   }
 
   this.draw = function () {
-    visual.displayImmediateBlank(engine);
+    visual.displayImmediateBlank(engine, false);
     paneToggle();
     console.log("Party A: " + userPerVPBody[0] + " Party B: " + userPerVPBody[1] + " Party C: " + userPerVPBody[2]);
     // if sliders changed any values on this page, enable update button
@@ -3171,7 +3174,7 @@ function sMembersPres() {
   }
 
   this.draw = function () {
-    visual.displayImmediateBlank(engine);
+    visual.displayImmediateBlank(engine, false);
     paneToggle();
     console.log("Party A: " + userPerPresBody[0] + " Party B: " + userPerPresBody[1] + " Party C: " + userPerPresBody[2]);
     // if sliders changed any values on this page, enable update button
@@ -3451,7 +3454,7 @@ function sBodyPass() {
     // currSuperThresh = parseFloat(userSuperThresh);
     // noCursor();
     console.log("4th Slider Page");
-    document.getElementById("top").innerHTML = "PERCENTAGE OF VOTES REQUIRED FOR APPROVAL BY EACH CHAMBER";
+    document.getElementById("top").innerHTML = "PERCENT OF VOTES REQUIRED FOR APPROVAL PER CHAMBER";
     showPanesBool = true;
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
@@ -3481,7 +3484,7 @@ function sBodyPass() {
   }
 
   this.draw = function () {
-    visual.displayImmediateBlank(engine, 9);
+    visual.displayImmediateBlank(engine, false);
     paneToggle();
     console.log("user body pass: " + userBodyPass);
 
@@ -3595,6 +3598,8 @@ function sYesVotes() {
   }
 
   this.enter = function () {
+    visual.dWidth = windowWidth * .95;
+    visual.dHeight = (windowHeight * .9)-labelSpace;
 
     console.log("5th slider page");
     document.getElementById("top").innerHTML = "PROBABILITY OF AN AFFIRMATIVE VOTE BY A PARTY MEMBER";
@@ -3648,7 +3653,7 @@ function sYesVotes() {
   }
 
   this.draw = function () { 
-    visual.displayImmediateBlank(engine, 10);
+    visual.displayImmediateBlank(engine, false);
     paneToggle();
     if ((parseFloat(userDemYaythresh)/100.0) != engine.demYaythresh || (parseFloat(userRepYaythresh)/100.0) != engine.repYaythresh || (parseFloat(userIndYaythresh)/100.0) != engine.indYaythresh) {
       document.getElementById("update-btn").disabled = false;
@@ -3916,13 +3921,22 @@ function sVote() {
     
     // if any parameters changed, don't visualize the vote yet (display blank) & enable button
     if (paramChangedBool) {
+      visual.dWidth = windowWidth * .95;
+      visual.dHeight = (windowHeight * .9)-labelSpace;
       visualizeVote = false;
       document.getElementById("vote-btn").disabled = false;
     } else if (paramChangedBool == false && document.getElementById("vote-btn").disabled == false) {
       // otherwise if no params changed but vote button not yet clicked (enabled -> disabled == false), don't visualize (display blank)
+      visual.dWidth = windowWidth * .95;
+      visual.dHeight = (windowHeight * .9)-labelSpace;
       visualizeVote = false; 
     } else if (paramChangedBool == false && document.getElementById("vote-btn").disabled == true){
       // visualize vote immediately when no param changed & vote button already clicked (disabled == true) when scene is entered
+      visual.dWidth = windowWidth * .95;
+      visual.dHeight = windowHeight * .9;
+      // canvas = createCanvas(visual.dWidth, visual.dHeight);
+      // let canvasDiv = document.getElementById('vote');
+      // canvas.parent(canvasDiv);
       visualizeVote = true;
       visualizeImmediate = true;
       document.getElementById("top").innerHTML = "TEST VOTING<br><br>Change configuration parameters to run another test vote";
@@ -3942,7 +3956,7 @@ function sVote() {
   this.draw = function () {
     //visualizeImmediate = true;
     if (visualizeVote == false) {
-      visual.displayImmediateBlank(engine, 11);
+      visual.displayImmediateBlank(engine, false);
     } else if (visualizeVote == true && visualizeImmediate == true) {
       visual.displayImmediateVotes(engine); // OC can move to enter if get loop working for drawing all at once?
       if (visual.userInputState) {
@@ -3985,7 +3999,16 @@ function sVote() {
   }
   
   function clickedVote() {
-    console.log("configIX beginning clicked vote: " + configIX);
+    //if (reconfigBool == true) {
+      // windowResized();
+      visual.dWidth = windowWidth * .95;
+      visual.dHeight = windowHeight * .9;
+      // canvas = createCanvas(visual.dWidth, visual.dHeight);
+      // let canvasDiv = document.getElementById('vote');
+      // canvas.parent(canvasDiv);
+      //reconfigBool = false;
+    //}
+    //console.log("configIX beginning clicked vote: " + configIX);
     //voteBtn.remove();
     document.getElementById("vote-btn").disabled = true; // disable vote button after clicked
     showPanesBool = false; // make pane disappear so user can see voting in full view
@@ -4017,7 +4040,7 @@ function sVote() {
     updateSession(); // save this config and resutls of running this configuration
     resultIX++; // saves this result
     configIX++;
-    console.log("configIX after clicked vote: " + configIX);
+    //console.log("configIX after clicked vote: " + configIX);
   }
 
   // check if there are any param changes since the last time vote btn was clicked
@@ -4057,6 +4080,8 @@ function sBenchmarkPane() {
   }
 
   this.enter = function () {
+    visual.dWidth = windowWidth * .95;
+    visual.dHeight = (windowHeight * .9)-labelSpace;
     console.log("run bill page");
     document.getElementById("top").innerHTML = "RUN BENCHMARKING RESULTS";
     document.getElementById("top").style.display = "block";
@@ -4080,18 +4105,19 @@ function sBenchmarkPane() {
     document.getElementById("sim-info").style.display = "none";
 
     // if any parameters changed, don't visualize the vote yet (display blank) & enable button
-    if (paramChangedBool) {
-      visualizeVote = false;
-      //document.getElementById("vote-btn").disabled = false;
-    } else if (paramChangedBool == false && document.getElementById("vote-btn").disabled == false) {
-      // otherwise if no params changed but vote button not yet clicked (enabled -> disabled == false), don't visualize (display blank)
-      visualizeVote = false; 
-    } else if (paramChangedBool == false && document.getElementById("vote-btn").disabled == true){
-      // visualize vote immediately when no param changed & vote button already clicked (disabled == true) when scene is entered
-      visualizeVote = true;
-      visualizeImmediate = true;
-      //document.getElementById("top").innerHTML = "TEST VOTING<br><br>Change configuration parameters to run another test vote";
-    }
+    // if (paramChangedBool) {
+    //   visualizeVote = false;
+    //   //document.getElementById("vote-btn").disabled = false;
+    // } else if (paramChangedBool == false && document.getElementById("vote-btn").disabled == false) {
+    //   // otherwise if no params changed but vote button not yet clicked (enabled -> disabled == false), don't visualize (display blank)
+    //   visualizeVote = false; 
+    // } else if (paramChangedBool == false && document.getElementById("vote-btn").disabled == true){
+    //   // visualize vote immediately when no param changed & vote button already clicked (disabled == true) when scene is entered
+    //   visualizeVote = true;
+    //   visualizeImmediate = true;
+    //   //document.getElementById("top").innerHTML = "TEST VOTING<br><br>Change configuration parameters to run another test vote";
+    // }
+
     document.getElementById('vote-btn').remove();
     document.getElementById('next-pane-btn').remove();
 
@@ -4130,11 +4156,13 @@ function sBenchmarkPane() {
   }
 
   this.draw = function () {
-    if (visualizeVote == false) {
-      visual.displayImmediateBlank(engine, 11);
-    } else if (visualizeVote == true && visualizeImmediate == true) {
-      visual.displayImmediateVotes(engine); // OC can move to enter if get loop working for drawing all at once?
-    }
+    // if (visualizeVote == false) {
+    //   visual.displayImmediateBlank(engine, 11);
+    // } else if (visualizeVote == true && visualizeImmediate == true) {
+    //   visual.displayImmediateVotes(engine); // OC can move to enter if get loop working for drawing all at once?
+    // }
+    //let minimalConfig = true;
+    visual.displayImmediateBlank(engine, false);
     paneToggle();
   }
 
@@ -4156,7 +4184,7 @@ function sBenchmarkPane() {
       engine.currentCongLogic(true);
       //let engineSim = new DemocracyEngine
       updateSession();
-      benchResults = (configs[configIX].simResults[resultIX].actTitle + " " + configs[configIX].simResults[resultIX].finalDecision);//sessionObj.configHistory[configIX].
+      benchResults = (configs[configIX].simResults[resultIX].actTitle + " --- " + configs[configIX].simResults[resultIX].finalDecision.substring(10));//sessionObj.configHistory[configIX].
       // push();
       // textAlign(LEFT, TOP);
       // textStyle(NORMAL)
@@ -4188,6 +4216,8 @@ function sBenchmarkResults() {
   }
 
   this.enter = function () {
+    visual.dWidth = windowWidth * .95;
+    visual.dHeight = windowHeight * .9;
     // configIX = userEditCount; // OC config array index is 1 less than editCount until it reaches max attempts
     // if (configIX > MAX_CONFIG_ATTEMPTS - 1) {
     //   configs.shift(); // remove first entered in array
@@ -4264,11 +4294,11 @@ function sBenchmarkResults() {
     reconfigBool = true;
     background(bColor);
     document.body.style.backgroundColor = bColor;
-    visual.displayImmediateVotes(engine); // OC TODO - put here when figure out drawing votes all at once (1 frame)
+    //visual.displayImmediateVotes(engine); // OC TODO - put here when figure out drawing votes all at once (1 frame)
   }
 
   this.draw = function () {
-    visual.displayImmediateVotes(engine); // draws votes for last calculation
+    visual.displayImmediateBlank(engine, true); // draws votes for last calculation
     if (visual.userInputState) {
         document.body.style.backgroundColor = colorOverlay;
         push();

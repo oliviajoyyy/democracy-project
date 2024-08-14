@@ -63,6 +63,7 @@ class VoteVisual {
   smColor; // super majority bar graph color
 
   tranVal = 255;
+  labelSpace; // set in slide-scenes.js sBodies()
   // let fadeOpac = 255;
   partyNum = 0;
   moveArrow = 0;
@@ -248,7 +249,7 @@ class VoteVisual {
 
         ///Set number of voting memebers
         this.numCon = this.engine.numSenate;
-        this.bodyLabel = 'LEGISLATIVE CHAMBER 3';
+        this.bodyLabel = 'CHAMBER 3';
 
         //Set Demographics for each body
         this.numDem = round(this.numCon * this.engine.perDemSenate);
@@ -403,12 +404,16 @@ class VoteVisual {
 
   }
 
-  percentageGraphs(drawWidth, paneNumber) {
+  percentageGraphs(drawWidth) {
     push();
     let gWidth = this.dWidth - drawWidth - 5; // graph width, make max space of remaining edge
     let gHeight = 300; // graph height
-    let gOffsetY = 100; // y offset for graph
-    let gBarH = 20; // graph Bar height
+    let gOffsetY = this.dHeight/4; // y offset for graph
+    let offY = 30;
+    let gBarH = 15; // graph Bar height
+    let titleSz = 18;
+    let lableSz = 13;
+    let numSz = 12;
     rectMode(CORNER);
     translate(drawWidth, gOffsetY);
     noFill();
@@ -416,104 +421,98 @@ class VoteVisual {
     strokeWeight(1);
     rect(0, 0, gWidth, gHeight, 15); // graph box outline
 
-    textSize(22);
-    textAlign(LEFT);
+    textSize(titleSz);
+    textAlign(LEFT, TOP);
     textStyle(NORMAL);
     fill(this.tColor);
     noStroke(0);
-    text("Approval Percentage to Vote", 10, 30, gWidth);
+    text("PERCENT OF VOTES FOR APPROVAL", 10, 10, gWidth);
 
-    textSize(18);
-    text("Majority", 10, 70, gWidth);
-    text("SuperMajority", 10, 100, gWidth);
+    textSize(lableSz);
+    text("MAJORITY", 10, 65, gWidth);
+    text("SUPER MAJORITY", 10, 95, gWidth);
 
-    if (paneNumber >= 9) {
+    //if (paneNumber >= 9) {
     let bStart = 130; // x coord of bar
     let bMax = gWidth-bStart-50; // bar at 100%, leave space for number
     let mBar = map(parseInt(this.engine.perPass * 100), 0, 100, 0, bMax); // majority bar graph
-    textSize(16);
-    text(parseInt(this.engine.perPass * 100) + "%", bStart+mBar+5, 70);
+    textSize(numSz);
+    text(parseInt(this.engine.perPass * 100) + "%", bStart+mBar+5, 67);
     fill(this.mColor);
-    rect(bStart, 55, mBar, gBarH);
+    rect(bStart, 65, mBar, gBarH);
 
     let smBar = map(parseInt(this.engine.superThresh * 100), 0, 100, 0, bMax); // majority bar graph
     fill(this.tColor);
-    textSize(16);
-    text(parseInt(this.engine.superThresh * 100) + "%", bStart+smBar+5, 100);
+    textSize(numSz);
+    text(parseInt(this.engine.superThresh * 100) + "%", bStart+smBar+5, 97);
     fill(this.smColor);
-    rect(bStart, 85, smBar, gBarH);
+    rect(bStart, 95, smBar, gBarH);
     //console.log("smBar: " + smBar + " range: " + bStart + " to " + bMax);
-    }
+    //}
 
-    translate(0, gOffsetY + 40);
-    textSize(22);
-    textAlign(LEFT);
+    translate(0, 140);
+    textSize(titleSz);
+    textAlign(LEFT, TOP);
     textStyle(NORMAL);
     fill(this.tColor);
     noStroke(0);
-    text("Probability of Affirmative Vote", 10, 30, gWidth);
-    textSize(18);
-    text("Party A", 10, 70, gWidth);
-    if (this.engine.numParties >= 2) {
-      text("Party B", 10, 100, gWidth);
-      if (this.engine.numParties == 3) {
-        text("Party C", 10, 130, gWidth);
-      }
-    }
+    text("PROBABILITY OF AFFIRMATIVE VOTE", 10, 10, gWidth);
+    // textSize(18);
+    // text("Party A", 10, 70, gWidth);
+    // if (this.engine.numParties >= 2) {
+    //   text("Party B", 10, 100, gWidth);
+    //   if (this.engine.numParties == 3) {
+    //     text("Party C", 10, 130, gWidth);
+    //   }
+    // }
     
-    if (paneNumber >= 10) {
-    let bStart = 85; // x coord of bar
-    let bMax = gWidth-bStart-50; // bar at 100%, leave space for number
+    //if (paneNumber >= 10) {
+    bStart = 85; // x coord of bar
+    bMax = gWidth-bStart-50; // bar at 100%, leave space for number
     let partyABar = map(parseInt(this.engine.demYaythresh * 100), 0, 100, 0, bMax); // majority bar graph
     fill(this.tColor);
-    textSize(16);
-    text(parseInt(this.engine.demYaythresh * 100) + "%", bStart+partyABar+5, 70);
+    textSize(lableSz);
+    text("PARTY A", 10, 65, gWidth);
+    textSize(numSz);
+    text(parseInt(this.engine.demYaythresh * 100) + "%", bStart+partyABar+5, 67);
     fill(this.rColor);
-    rect(bStart, 55, partyABar, gBarH);
+    rect(bStart, 65, partyABar, gBarH);
 
     if (this.engine.numParties >=2) {
       let partyBBar = map(parseInt(this.engine.repYaythresh * 100), 0, 100, 0, bMax); // majority bar graph
       fill(this.tColor);
-      text(parseInt(this.engine.repYaythresh * 100) + "%", bStart+partyBBar+5, 100);
+      textSize(lableSz);
+      text("PARTY B", 10, 95, gWidth);
+      textSize(numSz);
+      text(parseInt(this.engine.repYaythresh * 100) + "%", bStart+partyBBar+5, 97);
       fill(this.rColor2);
-      rect(bStart, 85, partyBBar, gBarH);
+      rect(bStart, 95, partyBBar, gBarH);
 
       if (this.engine.numParties == 3) {
         let partyCBar = map(parseInt(this.engine.indYaythresh * 100), 0, 100, 0, bMax); // majority bar graph
         fill(this.tColor);
-        text(parseInt(this.engine.indYaythresh * 100) + "%", bStart+partyCBar+5, 130);
+        textSize(lableSz);
+        text("PARTY C", 10, 125, gWidth);
+        textSize(numSz);
+        text(parseInt(this.engine.indYaythresh * 100) + "%", bStart+partyCBar+5, 127);
         fill(this.rColor3);
-        rect(bStart, 115, partyCBar, gBarH);
+        rect(bStart, 125, partyCBar, gBarH);
       }
     }
-    }
-    
-
-    // translate(0, gHeight+gOffset);
-    // noFill();
-    // stroke(0);
-    // rect(0, 0, gWidth, gHeight);
-    // fill(0);
-    // noStroke(0);
-    // text("Probability Affirmative Vote", 5, 20, gWidth-5);
-    // if (paneNumber >= 10) {
-    //   text(parseInt(engine.demYaythresh * 100) + "%", 20, gHeight-30);
-    //   text(parseInt(engine.repYaythresh * 100) + "%", gWidth/2 - 25, gHeight-30);
-    //   text(parseInt(engine.indYaythresh * 100) + "%", gWidth-70, gHeight-30);
-    // }
+    //}
 
     pop();
   }
 
-  displayImmediateBlank(engineObj, paneNumber) {
+  displayImmediateBlank(engineObj, minimalConfig) {
     this.engine = engineObj;
     this.forUser = this.engine.forUser;
     var drawWidth = this.dWidth;
     //if (paneNumber == 9) {
-      drawWidth = this.dWidth - 350; // drawWidth is up to edge where pres box is drawn
-    //}
-
-    this.percentageGraphs(drawWidth, paneNumber);
+    if (!minimalConfig) {
+      drawWidth = this.dWidth - (this.dWidth/5.5); // drawWidth is up to edge where pres box is drawn
+      this.percentageGraphs(drawWidth);
+    }
 
     // OC centers vote drawings based on total of voting bodies
     if (this.engine.numLegislativeBodies == 1) {
@@ -560,6 +559,10 @@ class VoteVisual {
         print('Skip = ' + this.skip); //testing
         this.x = this.skip / 2;
         this.y = this.skip / 2;
+
+        if (!minimalConfig) {
+          this.configLabel("CHAMBER 1");
+        }
       }
     }
 
@@ -610,6 +613,9 @@ class VoteVisual {
         print('v Count1 = ' + this.count1); //fortesting
         print('v Count2 = ' + this.count2); //fortesting
         //}
+        if (!minimalConfig) {
+          this.configLabel("CHAMBER 2");
+        }
       }
 
     }
@@ -646,7 +652,7 @@ class VoteVisual {
 
         ///Set number of voting memebers
         this.numCon = this.engine.numSenate;
-        this.bodyLabel = 'LEGISLATIVE CHAMBER 3';
+        this.bodyLabel = 'CHAMBER 3';
 
         //Set Demographics for each body
         this.numDem = round(this.numCon * this.engine.perDemSenate);
@@ -665,6 +671,9 @@ class VoteVisual {
         print('v Count1 = ' + this.count1); //fortesting
         print('v Count2 = ' + this.count2); //fortesting
         //}
+        if (!minimalConfig) {
+        this.configLabel("CHAMBER 3");
+        }
       }
 
     }
@@ -715,6 +724,10 @@ class VoteVisual {
         print('Skip = ' + this.skip); //testing
         this.x = this.skip / 2;
         this.y = this.skip / 2;
+
+        if (!minimalConfig) {
+        this.configLabel("VICE PRESIDENT");
+        }
       }
     }
 
@@ -774,6 +787,10 @@ class VoteVisual {
         print('Skip = ' + this.skip); //testing
         this.x = this.skip / 2;
         this.y = this.skip / 2;
+
+        if (!minimalConfig) {
+        this.configLabel("PRESIDENT");
+        }
       }
     }
 
@@ -848,12 +865,16 @@ class VoteVisual {
             console.log("drawing box # " + jx + " for chamber 3");
           }
 
-          if (this.engine.numPres == 0 && this.bodyCount == 4) {
+          if (this.engine.numPres == 0 && this.bodyCount == 4) { // if no pres, hide rectangle
             stroke(this.bColor); // hide rect
             noFill();
             rect(this.x, this.y, this.diam, this.diam, this.diam / 8);
           } else {
-            rect(this.x, this.y, this.diam, this.diam, this.diam / 8);
+            if (!minimalConfig) {
+            rect(this.x, this.y+this.labelSpace, this.diam, this.diam, this.diam / 8);
+            } else {
+              rect(this.x, this.y, this.diam, this.diam, this.diam / 8);
+            }
           }
 
           if ((this.y += this.skip) >= this.dHeight - (this.skip / 2)) {
@@ -867,6 +888,9 @@ class VoteVisual {
           if (this.count1 == this.numCon - 1 && this.bodyCount < this.engine.numBodies) {
               this.bodyCount++;
               this.endBody = 1;
+              if( this.bodyCount >= this.engine.numBodies) {
+                this.userInputState = true;
+              }
           }
           
         }
@@ -876,6 +900,16 @@ class VoteVisual {
       }
     }
  //}
+  }
+
+  configLabel(labelText) {
+    push();
+    textSize(22);
+    noStroke();
+    fill(this.tColor);
+    textAlign(LEFT, TOP);
+    text(labelText, 50, 0);
+    pop();
   }
 
   displayImmediateVotes(engineObj) {
@@ -1013,7 +1047,7 @@ class VoteVisual {
 
         ///Set number of voting memebers
         this.numCon = this.engine.numSenate;
-        this.bodyLabel = 'LEGISLATIVE CHAMBER 3';
+        this.bodyLabel = 'CHAMBER 3';
 
         //Set Demographics for each body
         this.numDem = round(this.numCon * this.engine.perDemSenate);
@@ -1520,7 +1554,7 @@ class VoteVisual {
         }
 
       } else if (i == 2) {
-        currentBodyLabel = 'LEGISLATIVE CHAMBER 3';
+        currentBodyLabel = 'CHAMBER 3';
         ip = i - 0.65;
         // if (engine.numLegislativeBodies == 1) { // only 1 legislative chamber
         //   continue; // OC skip results if only 1 legislative body
@@ -1644,9 +1678,9 @@ class VoteVisual {
         ip = i;
 
       if (i == 0) {
-        currentBodyLabel = 'LEGISLATIVE CHAMBER 1';
+        currentBodyLabel = 'CHAMBER 1';
       } else if (i == 1) {
-        currentBodyLabel = 'LEGISLATIVE CHAMBER 2';
+        currentBodyLabel = 'CHAMBER 2';
         // if (engine.numLegislativeBodies <= 2) {
         //   continue; // OC skip if either 1 legislative body or only 2 
         //   // OC for 2, it uses legislative chamber 3 as the senate rather than this one
@@ -1657,9 +1691,9 @@ class VoteVisual {
         
       } else if (i == 2) {
         // if (engine.numLegislativeBodies == 2) {
-        //   currentBodyLabel = 'LEGISLATIVE CHAMBER 2';
+        //   currentBodyLabel = 'CHAMBER 2';
         // } else {
-          currentBodyLabel = 'LEGISLATIVE CHAMBER 3';
+          currentBodyLabel = 'CHAMBER 3';
         //}
         // if (engine.numLegislativeBodies == 1) { // only 1 legislative chamber
         //   continue; // OC skip results if only 1 legislative body
@@ -1717,7 +1751,7 @@ class VoteVisual {
           }
         } else {
           textSize(22);
-          if (currentBodyLabel == 'LEGISLATIVE CHAMBER 1' || currentBodyLabel == 'LEGISLATIVE CHAMBER 2' ) {
+          if (currentBodyLabel == 'CHAMBER 1' || currentBodyLabel == 'CHAMBER 2' ) {
             ip = i;
           }
           text(currentBodyLabel, (ip) * dispW + padX, padY, dispW - padX, dispH);
@@ -1740,6 +1774,25 @@ class VoteVisual {
     textAlign(CENTER);
     textSize(22);
     text(engine.decisionTxt, width/2, height/2);
+    textAlign(LEFT);
+    textStyle(NORMAL);
+    let xP = width - width/3;
+    let yP = height - height/3;
+    text("Approval Percentage to Vote", xP, yP);
+    textSize(18);
+    text("Majority: " + parseInt(this.engine.perPass * 100) + "%", xP, yP+30);
+    text("SuperMajority: " + parseInt(this.engine.superThresh * 100) + "%", xP, yP+50);
+
+    textSize(22);
+    text("Probability of Affirmative Vote", xP, yP+100);
+    textSize(18);
+    text("Party A", xP, yP+80);
+    if (this.engine.numParties >= 2) {
+      text("Party B", xP, yP+110);
+      if (this.engine.numParties == 3) {
+        text("Party C", xP, yP+130);
+      }
+    }
     pop();
    //this.displayContext(engine);
   }

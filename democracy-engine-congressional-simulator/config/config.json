@@ -2,7 +2,7 @@
 
     "softwareVersion": "v2",
 
-    "mode": "web",
+    "mode": "kiosk",
 
     "credentials": {
         "db": {
@@ -14,7 +14,7 @@
 
     "defaultConfig": {
         "numLegislativeBodies": 2,
-        "numParties": 3,
+        "numParties": 2,
 
         "chamber1": {
                 "totalMembers": 432,
@@ -26,8 +26,8 @@
         "chamber2": {
                 "totalMembers": 100,
                 "partyA": 49,
-                "partyB": 47,
-                "partyC": 4
+                "partyB": 51,
+                "partyC": 0
         },
 
         "chamber3": {

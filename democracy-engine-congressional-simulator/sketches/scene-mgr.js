@@ -179,6 +179,7 @@ function setup() {
   // mgr.addScene(sDisplay);
   // mgr.addScene(sDefault);
   mgr.showNextScene();
+  //mgr.showScene(sBodies);
   
   console.log("end of scene-mgr.js setup");
 }

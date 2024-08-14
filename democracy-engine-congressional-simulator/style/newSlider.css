@@ -51,6 +51,7 @@
   height: 20px !important;
   margin-top: 2px;
   border-radius: 20px;
+  font-weight: bold;
 }
 
 .noUi-tooltip {
@@ -67,6 +68,7 @@
 
 .noUi-value {
   color: var(--text-color); /* color of min and max vals of slider */
+  font-weight: bold;
 }
 
 .first-slider {
@@ -134,8 +136,9 @@
   margin-top: calc(var(--slider-start) - 1vh);
   position: fixed;
   top: 0;
-  right: 70%;
-  font-size: .8em;
+  right: 69%; /* right: 70% */
+  font-size: .9em;
+  font-weight: bold;
 }
 
 #slider-text-2 {
@@ -144,8 +147,9 @@
   margin-top: calc((var(--slider-start) - 1vh) + (var(--slider-offset) * 1)); /* 39vh; */
   position: fixed;
   top: 0;
-  right: 70%;
-  font-size: .8em;
+  right: 69%; /* right: 70% */
+  font-size: .9em;
+  font-weight: bold;
 }
 
 #slider-text-3 {
@@ -154,8 +158,9 @@
   margin-top: calc((var(--slider-start) - 1vh) + (var(--slider-offset) * 2)); /* 49vh; */
   position: fixed;
   top: 0;
-  right: 70%;
-  font-size: .8em;
+  right: 69%; /* right: 70% */
+  font-size: .9em;
+  font-weight: bold;
 }
 
 #slider-text-4 {
@@ -164,8 +169,9 @@
   margin-top: calc((var(--slider-start) - 1vh) + (var(--slider-offset) * 3)); /* 59vh; */
   position: fixed;
   top: 0;
-  right: 70%;
-  font-size: .8em;
+  right: 69%; /* right: 70% */
+  font-size: .9em;
+  font-weight: bold;
 }
 
 #slider-text-5 {
@@ -174,8 +180,9 @@
   margin-top: calc((var(--slider-start) - 1vh) + (var(--slider-offset) * 4)); /* 69vh; */
   position: fixed;
   top: 0;
-  right: 70%;
-  font-size: .8em;
+  right: 69%; /* right: 70% */
+  font-size: .9em;
+  font-weight: bold;
 }
 
 #page1, #page2, #page3, #page4, #page5, #page6, #page7, #page8 #page9, #page10, #page11, #page12, #pane-bkg {
@@ -201,6 +208,8 @@
   width: 60%;
   text-align: center;
   position: fixed;
+  font-size: 1.2em;
+  font-weight: 400;
 }
 
 #slider-value {
@@ -213,6 +222,7 @@
   /* background-color: #b0c6de; */
   border-radius: 3px;
 }
+
 
 #value-1, #value-2, #value-3, #value-4, #value-5 {
   display: none;
