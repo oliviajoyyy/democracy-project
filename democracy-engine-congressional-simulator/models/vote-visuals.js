@@ -7,6 +7,7 @@
 class VoteVisual {
 
   loadingImage;
+  checkImage;
 
   //which body is voting
   bodyCount = 0;
@@ -90,15 +91,19 @@ class VoteVisual {
   /**
    * Sets loading image and background color properties
    * @param {image} img - loading image bitmap
+   * @param {image} img2 - check mark image
    * @param {color} bK - color for background
    * @param {color} pK - a second color
    * @param {color} tK - text color
    * @param {color} c1 - rectangle color 1
    * @param {color} c2 - rectangle color 2
    * @param {color} c3 - rectangle color 3
+   * @param {color} mK - majority bar graph color
+   * @param {color} smK - supermajority bar graph color
    */
-  constructor(img, bK, pK, tK, c1, c2, c3, mK, smK) {
+  constructor(img, img2, bK, pK, tK, c1, c2, c3, mK, smK) {
     this.loadingImage = img;
+    this.checkImage = img2;
     this.bColor = color(bK);
     this.pColor = color(pK);
     this.tColor = color(tK);
@@ -1777,6 +1782,14 @@ class VoteVisual {
     textAlign(LEFT, TOP);
     textSize(34);
     text(engine.decisionTxt, padX, height/2 - padY, this.dWidth);
+    stroke(this.tColor);
+    strokeWeight(2);
+    fill(this.bColor);
+    rect(padX, height/2 + (padY*2), 150, 130, 10);
+    if (engine.billPass == true) { // check mark if bill passed, empty box if not passed
+      tint(this.tColor);
+      image(this.checkImage, padX+5, height/2 + (padY*2) + 5, 140, 120);
+    }
     this.percentageGraphs((3/4) * width, width, (3/5)*height);
     pop();
    //this.displayContext(engine);

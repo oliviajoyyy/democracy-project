@@ -30,6 +30,7 @@ let userOutputText;
 var helvFont;
 var loadingImage;
 var enterImage;
+var checkImage;
 
 let nextButton;
 var buttonRC, buttonRes, dispBtn, recalBtn, buttonDef, emailBtn;
@@ -120,6 +121,7 @@ function preload() {
   helvFont = loadFont('../democracy-engine-congressional-simulator/assets/font/HelveticaNeue-Regular.otf');
   loadingImage = loadImage('../democracy-engine-congressional-simulator/assets/gears-icon.png');
   enterImage = loadImage('../democracy-engine-congressional-simulator/assets/asraProgress.png');
+  checkImage = loadImage('../democracy-engine-congressional-simulator/assets/check-mark.png')
   configJSON = loadJSON('../democracy-engine-congressional-simulator/config/config.json');
   
   console.log(configJSON);
@@ -144,7 +146,7 @@ function setup() {
   document.body.style.backgroundColor = bColor;
   //document.header.style.backgroundColor = bColor;
   engine = new DemocracyEngine(govtConfig, historicalActs); // OC create engine object to run voting logic
-  visual = new VoteVisual(loadingImage, bColor, pColor, textColor, rectColor, rectColor2, rectColor3, majorityBar, superBar);
+  visual = new VoteVisual(loadingImage, checkImage, bColor, pColor, textColor, rectColor, rectColor2, rectColor3, majorityBar, superBar);
   setDefaultUserVars(); // set user vars to params from config file
   buttonDiv = document.getElementById('button-div');
 
