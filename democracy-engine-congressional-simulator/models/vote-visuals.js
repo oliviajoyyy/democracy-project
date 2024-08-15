@@ -1775,28 +1775,9 @@ class VoteVisual {
     }
     push();
     textAlign(LEFT, TOP);
-    textSize(26);
+    textSize(34);
     text(engine.decisionTxt, padX, height/2 - padY, this.dWidth);
     this.percentageGraphs((3/4) * width, width, (3/5)*height);
-    // textAlign(LEFT);
-    // textStyle(NORMAL);
-    // let xP = width - width/3;
-    // let yP = height - height/3;
-    // text("Approval Percentage to Vote", xP, yP);
-    // textSize(18);
-    // text("Majority: " + parseInt(this.engine.perPass * 100) + "%", xP, yP+30);
-    // text("SuperMajority: " + parseInt(this.engine.superThresh * 100) + "%", xP, yP+50);
-
-    // textSize(22);
-    // text("Probability of Affirmative Vote", xP, yP+100);
-    // textSize(18);
-    // text("Party A", xP, yP+80);
-    // if (this.engine.numParties >= 2) {
-    //   text("Party B", xP, yP+110);
-    //   if (this.engine.numParties == 3) {
-    //     text("Party C", xP, yP+130);
-    //   }
-    // }
     pop();
    //this.displayContext(engine);
   }
