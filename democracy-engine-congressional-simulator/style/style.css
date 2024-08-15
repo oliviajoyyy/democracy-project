@@ -304,6 +304,7 @@ p {
   float: left;
   height: 310px;
   text-align: center;
+  font-size: .9em;
 }
 
 #act-list {

@@ -522,9 +522,9 @@ function loadSessionS1() {
       + "<h2>Your ID: " + sessionID + "</h2>"
       + configJSON.text.selectSessionDesc
       + "<br><p>&nbsp;&nbsp;&nbsp;&nbsp; SESSION ID "
-      + getSpaces(21) + " CHAMBERS "
-      + getSpaces(8) + " PARTIES "
-      + getSpaces(10) + " TOTAL VOTING MEMBERS </p>";
+      + getSpaces(12) + " CHAMBERS "
+      + getSpaces(3) + " PARTIES "
+      + getSpaces(4) + " TOTAL VOTING MEMBERS </p>";
 
     selection = createRadio("sessions"); // attatch to HTML
     selection.size(230);
@@ -1209,11 +1209,14 @@ function sBodies() {
   }
 
   this.enter = function () {
+    if (reconfigBool == true) {
     visual.dWidth = windowWidth * .95;
       visual.dHeight = (windowHeight * .9)-labelSpace;
       canvas = createCanvas(visual.dWidth, windowHeight * .9);
       let canvasDiv = document.getElementById('vote');
       canvas.parent(canvasDiv);
+      reconfigBool = false;
+    }
 
     console.log("0 Slider Page");
     document.getElementById("page-container").style.display = "none";
@@ -1246,7 +1249,7 @@ function sBodies() {
     sliderVals();
 
     document.getElementById("top").style.display = "block";
-    document.getElementById("top").innerHTML = "<h2>NUMBER OF CHAMBERS</h2>";
+    document.getElementById("top").innerHTML = "<h2>NUMBER OF CHAMBERS</h2>" + configJSON.text.p01desc;
 
     if (!document.getElementById('prev-pane-btn')) {
       prevPaneBtn = createButton('Back');
@@ -1335,7 +1338,7 @@ function sBodies() {
     //engine.completeReset();
     visual.completeReset();
     userEdits = false;
-    reconfigBool = true;
+    //reconfigBool = true;
   }
 
   function removeButtons() {
@@ -1488,7 +1491,7 @@ function sLegislative() {
     //engine.completeReset();
     visual.completeReset();
     userEdits = false;
-    reconfigBool = true;
+    //reconfigBool = true;
   }
 
   // OC display sliders based on number of legislative bodies chosen on previous page
@@ -1823,7 +1826,7 @@ function sParties() {
     //engine.completeReset();
     visual.completeReset();
     userEdits = false;
-    reconfigBool = true;
+    //reconfigBool = true;
   }
 
     function createSlider() {
@@ -2007,7 +2010,7 @@ function sMembersFirstChamber() {
     //engine.completeReset();
     visual.completeReset();
     userEdits = false;
-    reconfigBool = true;
+    //reconfigBool = true;
   }
 
   function checkNumBodies() {
@@ -2341,7 +2344,7 @@ function sMembersSecondChamber() {
     //engine.completeReset();
     visual.completeReset();
     userEdits = false;
-    reconfigBool = true;
+    //reconfigBool = true;
   }
 
   function checkNumBodies() {
@@ -2656,7 +2659,7 @@ function sMembersThirdChamber() {
     //engine.completeReset();
     visual.completeReset();
     userEdits = false;
-    reconfigBool = true;
+    //reconfigBool = true;
   }
 
   function checkNumBodies() {
@@ -2965,7 +2968,7 @@ function sMembersVP() {
     //engine.completeReset();
     visual.completeReset();
     userEdits = false;
-    reconfigBool = true;
+    //reconfigBool = true;
   }
 
   function checkNumBodies() {
@@ -3274,7 +3277,7 @@ function sMembersPres() {
     //engine.completeReset();
     visual.completeReset();
     userEdits = false;
-    reconfigBool = true;
+    //reconfigBool = true;
   }
 
   function checkNumBodies() {
@@ -3591,7 +3594,7 @@ function sBodyPass() {
     //engine.completeReset();
     visual.completeReset();
     userEdits = false;
-    reconfigBool = true;
+    //reconfigBool = true;
   }
 
   // function sliders() {
@@ -3686,8 +3689,14 @@ function sYesVotes() {
   }
 
   this.enter = function () {
-    visual.dWidth = windowWidth * .95;
-    visual.dHeight = (windowHeight * .9)-labelSpace;
+    if (reconfigBool == true) {
+      visual.dWidth = windowWidth * .95;
+        visual.dHeight = (windowHeight * .9)-labelSpace;
+        // canvas = createCanvas(visual.dWidth, windowHeight * .9);
+        // let canvasDiv = document.getElementById('vote');
+        // canvas.parent(canvasDiv);
+        reconfigBool = false;
+      }
     curDemYaythresh = parseFloat(userDemYaythresh);
     curRepYaythresh = parseFloat(userRepYaythresh);
     curIndYaythresh = parseFloat(userIndYaythresh);
@@ -3762,7 +3771,7 @@ function sYesVotes() {
     //engine.completeReset();
     visual.completeReset();
     userEdits = false;
-    reconfigBool = true;
+    //reconfigBool = true;
   }
 
 
@@ -4404,13 +4413,14 @@ function sBenchmarkResults() {
     if (visual.userInputState) {
         document.body.style.backgroundColor = colorOverlay;
         push();
-        translate(-(3 * (width/visual.numBodies)), 0);
+        //translate(-(3 * (width/visual.numBodies)), 0);
+        translate(0, 0);
         var resBColor = color(colorOverlay); // color(0, 0, 0); // result overlay
         noStroke();
         rectMode(CORNER);
         resBColor.setAlpha(200);
         fill(resBColor);
-        rect(0, 0, width, height);
+        rect(-width, 0, width*2, height);
         pop();
         // engine.bodyCount = engine.numBodies;
         // visual.finalTextDisplayUser(engine, helvFont, colorOverlay, resultIX);
@@ -4494,7 +4504,7 @@ function sSaveResults() {
     approvalBtn = createButton('Approve');
     approvalBtn.id('approve-btn');
     approvalBtn.class('buttons');
-    approvalBtn.parent(buttonDiv);
+    //approvalBtn.parent(div3);
     approvalBtn.mousePressed(clickedApprove);
 
     saveBtn = createButton('Save Config');
@@ -4531,15 +4541,9 @@ function sSaveResults() {
 
   function clickedApprove() {
     ownerEndorse();
-    if (finalConfigObj.ownerEndorsement == 1) {
-      //document.getElementById("main-header").innerHTML = "<h1>Summary & Save</h1><h2>Session ID: " + sessionID + "</h2><h2>Approved!</h2>";
-      div3.innerHTML = "<h3 style='display: inline-block; vertical-align: top;'>User Approval of Configuration: </h3><h3 style='font-size: 32px; display: inline-block; margin: 0; line-height: 1;'>&#x2611;</h3>";
-    } else {
-      //document.getElementById("main-header").innerHTML = "<h1>Summary & Save</h1><h2>Session ID: " + sessionID + "</h2>";
-      div3.innerHTML = "<h3 style='display: inline-block; vertical-align: top;'>User Approval of Configuration: </h3><h3 style='font-size: 32px; display: inline-block; margin: 0; line-height: 1;'>&#x2610;</h3>";
-    }
+    div3.innerHTML = "";
     let s = "<h3>Benchmark Results</h3><p>";
-      for(let i=0; i<MAX_SIM_RESULTS; i++) {
+      for(let i=1; i<=MAX_SIM_RESULTS; i++) {
         s += configs[configIX].simResults[i].actTitle + " ";
         if (configs[configIX].simResults[i].billPass == true) {
           s += "&#x2611;<br>"; // checkmark
@@ -4548,7 +4552,15 @@ function sSaveResults() {
         }
       }
       s += "</p>";
+      if (finalConfigObj.ownerEndorsement == 1) {
+        //document.getElementById("main-header").innerHTML = "<h1>Summary & Save</h1><h2>Session ID: " + sessionID + "</h2><h2>Approved!</h2>";
+        s += "<h3 style='font-size: 14px; display: inline-block; vertical-align: top;'>User Approval of Configuration </h3><h3 style='font-size: 32px; display: inline-block; margin: 0; line-height: 1;'>&#x2611;</h3>";
+      } else {
+        //document.getElementById("main-header").innerHTML = "<h1>Summary & Save</h1><h2>Session ID: " + sessionID + "</h2>";
+        s += "<h3 style='font-size: 14px; display: inline-block; vertical-align: top;'>User Approval of Configuration </h3><h3 style='font-size: 32px; display: inline-block; margin: 0; line-height: 1;'>&#x2610;</h3>";
+      }
       div3.innerHTML += s;
+      approvalBtn.parent(div3);
   }
 
   function clickedSave() {
@@ -4601,11 +4613,9 @@ function sSaveResults() {
       "</p><h3>Percentage of votes required for approval of bill</h3>" +
       "<p>Approval By Majority: " + userBodyPass +
       "<br> Approval By Supermajority: " + userSuperThresh + "</p>";
-
-      s3 = "<h3 style='display: inline-block; vertical-align: top;'>User Approval of Configuration: </h3><h3 style='font-size: 32px; display: inline-block; margin: 0; line-height: 1;'>&#x2610;</h3>";
       
-      s3 = s3 + "<h3>Benchmark Results</h3><p>" ;
-      for(let i=0; i<MAX_SIM_RESULTS; i++) {
+      s3 = "<h3>Benchmark Results</h3><p>" ;
+      for(let i=1; i<=MAX_SIM_RESULTS; i++) {
         s3 = s3 + configs[configIX].simResults[i].actTitle + " ";
         if (configs[configIX].simResults[i].billPass == true) {
           s3 = s3 + "&#x2611;<br>"; // checkmark
@@ -4614,13 +4624,16 @@ function sSaveResults() {
         }
       }
       s3 = s3 + "</p>";
+      s3 = s3 + "<h3 style='font-size: 14px; display: inline-block; vertical-align: top;'>User Approval of Configuration </h3><h3 style='font-size: 32px; display: inline-block; margin: 0; line-height: 1;'>&#x2610;</h3>";
 
       div1.innerHTML = s1;
       div2.innerHTML = s2;
       div3.innerHTML = s3;
+      
       document.getElementById('start-desc').appendChild(div1);
       document.getElementById('start-desc').appendChild(div2);
       document.getElementById('start-desc').appendChild(div3);
+      approvalBtn.parent(div3);
       /*
     if (userEditCount >= 2) {
       nextButton.remove();

@@ -358,7 +358,7 @@
 #slider-disp p, #start-desc p {
   color: var(--text-color); /* #ddd; */
   padding-left: 50px;
-  /* font-size: .85em; */
+  font-size: 1.4em;
 }
 
 #top {
@@ -387,7 +387,7 @@
 }
 
 #top p {
-  margin-top: 0;
+  margin-top: 12px;
 }
 
 #button-div {

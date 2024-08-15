@@ -864,9 +864,9 @@ class VoteVisual {
           strokeWeight(3);
 
           //console.log("here to draw rect");
-          if (this.bodyCount  == 2) {
-            console.log("drawing box # " + jx + " for chamber 3");
-          }
+          // if (this.bodyCount  == 2) {
+          //   console.log("drawing box # " + jx + " for chamber 3");
+          // }
 
           if (this.engine.numPres == 0 && this.bodyCount == 4) { // if no pres, hide rectangle
             stroke(this.bColor); // hide rect
