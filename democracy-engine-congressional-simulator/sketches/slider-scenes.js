@@ -1211,6 +1211,9 @@ function sBodies() {
   this.enter = function () {
     visual.dWidth = windowWidth * .95;
       visual.dHeight = (windowHeight * .9)-labelSpace;
+      canvas = createCanvas(visual.dWidth, windowHeight * .9);
+      let canvasDiv = document.getElementById('vote');
+      canvas.parent(canvasDiv);
 
     console.log("0 Slider Page");
     document.getElementById("page-container").style.display = "none";
@@ -1766,12 +1769,16 @@ function sParties() {
     document.getElementById("update-btn").disabled = true; // disable after clicking it
     // set default vars so update visualization reflects change
     if (userNumParties == 2) {
+      if (userNumVP >= 2) {
       userPerVPBody[0] = 0.5;
       userPerVPBody[1] = 0.5;
       userPerVPBody[2] = 0.0;
+      }
+      if (userNumPres >= 2) {
       userPerPresBody[0] = 0.5;
       userPerPresBody[1] = 0.5;
       userPerPresBody[2] = 0.0;
+      }
       userPerHouseBody[0] = 0.5;
       userPerHouseBody[1] = 0.5;
       userPerHouseBody[2] = 0.0;
@@ -1786,12 +1793,16 @@ function sParties() {
         }
       }
     } else if (userNumParties == 3) {
+      if (userNumVP >= 3) {
       userPerVPBody[0] = 0.34;
       userPerVPBody[1] = 0.33;
       userPerVPBody[2] = 0.33;
+      }
+      if (userNumPres >= 3) {
       userPerPresBody[0] = 0.34;
       userPerPresBody[1] = 0.33;
       userPerPresBody[2] = 0.33;
+      }
       userPerHouseBody[0] = 0.34;
       userPerHouseBody[1] = 0.33;
       userPerHouseBody[2] = 0.33;

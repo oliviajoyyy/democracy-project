@@ -258,7 +258,7 @@ p {
   padding: 5px;
   float:left;
   height: 310px;
-  
+  color: var(--text-color);
 }
 
 #info-list-1, #info-list-2 {
@@ -272,6 +272,7 @@ p {
   height: 310px;
   text-align: center;
   line-height: 30px;
+  color: var(--text-color);
 }
 
 #info-list-3 {
@@ -286,6 +287,7 @@ p {
   padding-left: 85px;
   text-align: center;
   line-height: 30px;
+  color: var(--text-color);
 }
 
 .radio-sel {
@@ -317,6 +319,7 @@ p {
   text-align: left;
   font-weight: bold;
   line-height: 40px;
+  color: var(--text-color);
 }
 
 table {

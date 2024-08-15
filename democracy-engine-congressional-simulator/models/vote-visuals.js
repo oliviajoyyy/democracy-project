@@ -383,7 +383,7 @@ class VoteVisual {
     // Need to make sure we are not over our number of congressional body numCon and readjusts skip if too big
     if (this.count < this.numCon - 1 && this.count1 < 1) {
 
-      for (let i = 0; i < 3; i++) { // OC loading image stays on screen for less time it used to
+      for (let i = 0; i < 6; i++) { // OC loading image stays on screen for less time it used to
         this.rotLoadImage();
         this.testSize();
         this.count++;
@@ -420,7 +420,7 @@ class VoteVisual {
     rectMode(CORNER);
     translate(leftX, gOffsetY);
     noFill();
-    stroke(0);
+    stroke(this.tColor);
     strokeWeight(1);
     rect(0, 0, gWidth, gHeight, 15); // graph box outline
 
@@ -428,7 +428,7 @@ class VoteVisual {
     textAlign(LEFT, TOP);
     textStyle(NORMAL);
     fill(this.tColor);
-    noStroke(0);
+    noStroke(this.tColor);
     text("PERCENT OF VOTES FOR APPROVAL", 10, 10, gWidth);
 
     textSize(lableSz);
@@ -458,7 +458,7 @@ class VoteVisual {
     textAlign(LEFT, TOP);
     textStyle(NORMAL);
     fill(this.tColor);
-    noStroke(0);
+    noStroke();
     text("PROBABILITY OF AFFIRMATIVE VOTE", 10, 10, gWidth);
     // textSize(18);
     // text("Party A", 10, 70, gWidth);
@@ -1209,7 +1209,7 @@ class VoteVisual {
     rectMode(CORNER);
     noStroke();
     this.pColor.setAlpha(255);
-    tint(this.pColor);
+    tint(this.tColor);
     fill(this.bColor);
 
     translate(this.offSet / 2, this.dHeight / 2);
