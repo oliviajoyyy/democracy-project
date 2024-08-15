@@ -5,6 +5,7 @@
   --text-color: white;
   --button: #012266;
   --link-hover: #c47cb7;
+  --overlay: #ffffff;
 }
 
 body {
@@ -160,14 +161,14 @@ button {
   border-radius: 3px;
   display: none;
   width: 90%;
-  height: 60vh;
+  height: 80vh;
   left: 5%;
   right: 5%;
   /* margin-left: 5vw;
   margin-right: auto; */
   padding: 1%;
   z-index: 99;
-  margin-top: 20vh;
+  margin-top: 15vh;
   position: fixed;
   top: 0;
   overflow-y: auto;
@@ -291,11 +292,26 @@ p {
   line-height: 30px;
 }
 
+#s-col-1, #s-col-2, #s-col-3 {
+  width: 30%;
+  position: relative;
+  /* left: -490px; */
+  /* border-right: 0.5mm solid var(--text-color); */
+  /* border-left: 0.5mm solid var(--text-color); */
+  padding: 5px;
+  float: left;
+  height: 310px;
+  text-align: center;
+}
+
 #act-list {
-  width: 70%;
+  width: 80%;
+  left: 8%;
+  right: 12%;
   position: relative;
   /* border-right: 0.5mm solid var(--text-color); */
   padding: 5px;
+  margin-top: 50px;
   float: left;
   height: 310px;
   text-align: left;
@@ -306,20 +322,23 @@ p {
 table {
   width: 100%;
   border-collapse: collapse;
-  left: 5%;
-  right: 5%;
+  border: 2px solid var(--text-color);
+  background-color: var(--overlay);
+  
 }
 
 th, td {
   border: 1px solid var(--text-color);
   padding: 2px;
   padding-left: 15px;
+  padding-right: 15px;
   text-align: left;
   /* width: 400px; */
 }
 
 th {
   font-size: 20px;
+  border-bottom: 2px solid var(--text-color);
 }
 
 /* #info-list-2 {

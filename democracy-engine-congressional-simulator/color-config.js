@@ -15,6 +15,7 @@ fetch('config/config.json') // path works on server
         document.documentElement.style.setProperty('--pane-border', data.cssParams.paneBorder);
         document.documentElement.style.setProperty('--slider-start', data.cssParams.sliderStart);
         document.documentElement.style.setProperty('--slider-offset', data.cssParams.sliderOffset);
+        document.documentElement.style.setProperty('--overlay', data.cssParams.textOverlay);
 
         document.documentElement.style.setProperty('--bkg-img-1', data.mediaAssetPaths.bkgImg1);
         document.documentElement.style.setProperty('--bkg-img-2', data.mediaAssetPaths.bkgImg2);

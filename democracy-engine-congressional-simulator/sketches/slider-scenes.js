@@ -56,11 +56,11 @@ function startUp() {
     testBtn.class('buttons');
     testBtn.parent(buttonDiv);
 
-    setTimeout(function () {
-        if (mgr.isCurrent(startUp)) { // OC prevents prgm from moving to test screen if already moved on from the first screen
-          clickedTest();
-        }
-        }, 10000); // goes to test scene after 10 seconds
+    // setTimeout(function () {
+    //     if (mgr.isCurrent(startUp)) { // OC prevents prgm from moving to test screen if already moved on from the first screen
+    //       clickedTest();
+    //     }
+    //     }, 10000); // goes to test scene after 10 seconds
   }
 
   this.draw = function () {
@@ -111,7 +111,7 @@ function briefDescription() {
     document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1>";
     document.getElementById("main-btn-div").style.display = "none";
     document.getElementById("start-desc").style.display = "block";
-    document.getElementById("start-desc").innerHTML = "<h2>[Description]</h2><p>[short description here]</p>";
+    document.getElementById("start-desc").innerHTML = configJSON.text.shortDescription;
     document.getElementById("top").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
@@ -286,7 +286,7 @@ function aboutProject() {
     document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1>";
     document.getElementById("main-btn-div").style.display = "none";
     document.getElementById("start-desc").style.display = "block";
-    document.getElementById("start-desc").innerHTML = "<h2>More Information</h2><p>[Detailed project description]</p>";
+    document.getElementById("start-desc").innerHTML = configJSON.text.detailedDescription;
     document.getElementById("top").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
@@ -355,7 +355,7 @@ function newSessionScene() {
     document.getElementById("main-btn-div").style.display = "none";
 
     document.getElementById("start-desc").style.display = "block";
-    document.getElementById("start-desc").innerHTML = "<h2>New Session</h2><h2>ID: " + sessionID + "</h2><p>[Description here on how to use the interface]</p>";
+    document.getElementById("start-desc").innerHTML = "<h2>New Session</h2><h2>ID: " + sessionID + "</h2>" + configJSON.text.newSessionDesc;
 
     document.getElementById("top").style.display = "none";
     document.getElementById("page1").style.display = "none";
@@ -520,8 +520,8 @@ function loadSessionS1() {
     document.getElementById("start-desc").style.display = "block";
     document.getElementById("start-desc").innerHTML = "<h2>Select Session</h2>"
       + "<h2>Your ID: " + sessionID + "</h2>"
-      + "<p>[Description here on how to use the interface]</p>"
-      + "<p>&nbsp;&nbsp;&nbsp;&nbsp; SESSION ID "
+      + configJSON.text.selectSessionDesc
+      + "<br><p>&nbsp;&nbsp;&nbsp;&nbsp; SESSION ID "
       + getSpaces(21) + " CHAMBERS "
       + getSpaces(8) + " PARTIES "
       + getSpaces(10) + " TOTAL VOTING MEMBERS </p>";
@@ -1243,7 +1243,7 @@ function sBodies() {
     sliderVals();
 
     document.getElementById("top").style.display = "block";
-    document.getElementById("top").innerHTML = "NUMBER OF CHAMBERS";
+    document.getElementById("top").innerHTML = "<h2>NUMBER OF CHAMBERS</h2>";
 
     if (!document.getElementById('prev-pane-btn')) {
       prevPaneBtn = createButton('Back');
@@ -1429,7 +1429,7 @@ function sLegislative() {
 
     console.log("1st Slider Page");
     document.getElementById("top").style.display = "block";
-    document.getElementById("top").innerHTML = "NUMBER OF VOTING MEMBERS";
+    document.getElementById("top").innerHTML = "<h2>NUMBER OF VOTING MEMBERS</h2>" + configJSON.text.p02desc;
     showPanesBool = true;
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "block";
@@ -1723,7 +1723,7 @@ function sParties() {
   this.enter = function () {
     console.log("2nd Slider Page");
     document.getElementById("top").style.display = "block";
-    document.getElementById("top").innerHTML = "NUMBER OF POLITICAL PARTIES";
+    document.getElementById("top").innerHTML = "<h2>NUMBER OF POLITICAL PARTIES</h2>" + configJSON.text.p03desc;
     showPanesBool = true;
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
@@ -1944,7 +1944,7 @@ function sMembersFirstChamber() {
 
     console.log("Slider Page Chamber 1 Party Members ");
     document.getElementById("top").style.display = "block";
-    document.getElementById("top").innerHTML = "NUMBER OF VOTING MEMBERS FOR FIRST CHAMBER";
+    document.getElementById("top").innerHTML = "<h2>NUMBER OF VOTING MEMBERS FOR FIRST CHAMBER</h2>" + configJSON.text.p04desc;
     showPanesBool = true;
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
@@ -2281,7 +2281,7 @@ function sMembersSecondChamber() {
 
     console.log("Slider Page Chamber 2 Party Members ");
     document.getElementById("top").style.display = "block";
-    document.getElementById("top").innerHTML = "NUMBER OF VOTING MEMBERS FOR SECOND CHAMBER";
+    document.getElementById("top").innerHTML = "<h2>NUMBER OF VOTING MEMBERS FOR SECOND CHAMBER</h2>" + configJSON.text.p05desc;
     showPanesBool = true;
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
@@ -2594,7 +2594,7 @@ function sMembersThirdChamber() {
 
     console.log("Slider Page Chamber 3 Party Members ");
     document.getElementById("top").style.display = "block";
-    document.getElementById("top").innerHTML = "NUMBER OF VOTING MEMBERS FOR THIRD CHAMBER";
+    document.getElementById("top").innerHTML = "<h2>NUMBER OF VOTING MEMBERS FOR THIRD CHAMBER</h2>" + configJSON.text.p06desc;
     showPanesBool = true;
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
@@ -2903,7 +2903,7 @@ function sMembersVP() {
 
     console.log("Slider Page VP Party Members ");
     document.getElementById("top").style.display = "block";
-    document.getElementById("top").innerHTML = "NUMBER OF VOTING MEMBERS FOR VICE PRESIDENCY";
+    document.getElementById("top").innerHTML = "<h2>NUMBER OF VOTING MEMBERS FOR VICE PRESIDENCY</h2>" + configJSON.text.p07desc;
     showPanesBool = true;
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
@@ -3213,7 +3213,7 @@ function sMembersPres() {
     console.log("Slider Page Pres Party Members ");
     document.getElementById("top").style.display = "block";
     showPanesBool = true;
-    document.getElementById("top").innerHTML = "NUMBER OF VOTING MEMBERS FOR PRESIDENCY";
+    document.getElementById("top").innerHTML = "<h2>NUMBER OF VOTING MEMBERS FOR PRESIDENCY</h2>" + configJSON.text.p08desc;
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
@@ -3525,7 +3525,7 @@ function sBodyPass() {
     currPerPass = parseFloat(userBodyPass);
     currSuperThresh = parseFloat(userSuperThresh);
     console.log("4th Slider Page");
-    document.getElementById("top").innerHTML = "PERCENT OF VOTES REQUIRED FOR APPROVAL PER CHAMBER";
+    document.getElementById("top").innerHTML = "<h2>PERCENT OF VOTES REQUIRED FOR APPROVAL PER CHAMBER<h2>" + configJSON.text.p09desc;
     showPanesBool = true;
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
@@ -3682,7 +3682,7 @@ function sYesVotes() {
     curIndYaythresh = parseFloat(userIndYaythresh);
 
     console.log("5th slider page");
-    document.getElementById("top").innerHTML = "PROBABILITY OF AN AFFIRMATIVE VOTE BY A PARTY MEMBER";
+    document.getElementById("top").innerHTML = "<h2>PROBABILITY OF AN AFFIRMATIVE VOTE BY A PARTY MEMBER</h2>" + configJSON.text.p10desc;
     showPanesBool = true;
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
@@ -3912,7 +3912,7 @@ function sVote() {
     // console.log("user edit count: " + userEditCount);
     console.log("run bill page");
     // document.getElementById("top").innerHTML = "DEMOCRACY ENGINE SIMULATOR INPUTS";
-    document.getElementById("top").innerHTML = "TEST VOTING<br><br>Click 'Run Test Vote' to see the results of running your configuration";
+    document.getElementById("top").innerHTML = "<h2>TEST VOTING</h2>" + configJSON.text.p11desc1;
     showPanesBool = true;
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
@@ -4018,7 +4018,7 @@ function sVote() {
       // canvas.parent(canvasDiv);
       visualizeVote = true;
       visualizeImmediate = true;
-      document.getElementById("top").innerHTML = "TEST VOTING<br><br>Change configuration parameters to run another test vote";
+      document.getElementById("top").innerHTML = "<h2>TEST VOTING</h2>" + configJSON.text.p11desc2;
     }
     //}
 
@@ -4162,7 +4162,7 @@ function sBenchmarkPane() {
     visual.dWidth = windowWidth * .95;
     visual.dHeight = (windowHeight * .9)-labelSpace;
     console.log("run bill page");
-    document.getElementById("top").innerHTML = "RUN BENCHMARKING RESULTS";
+    document.getElementById("top").innerHTML = "<h2>RUN BENCHMARKING RESULTS</h2>" + configJSON.text.p12desc;
     document.getElementById("top").style.display = "block";
     showPanesBool = true;
     document.getElementById("page1").style.display = "none";
@@ -4275,11 +4275,7 @@ function sBenchmarkPane() {
     let newDiv2 = document.createElement('div');
     let newDiv3 = document.createElement('div');
     newDiv.id = 'act-list';
-    newDiv2.id = 'info-list-2';
-    newDiv3.id = 'info-list-3';
     let s = "<table><thead><tr><th>ACT TITLE</th><th>BILL PASSED?</th></thead><tbody>";
-    let s2 = "";
-    let s3 = "";
     console.log("configIX before benchmarking: " + configIX);
     for (let i=resultIX; i < MAX_SIM_RESULTS+1; i++) { // + 1 because the first was the test result
       engine.completeReset();
@@ -4287,18 +4283,12 @@ function sBenchmarkPane() {
       //let engineSim = new DemocracyEngine
       updateSession();
       //benchResults = (configs[configIX].simResults[resultIX].actTitle + " --- " + configs[configIX].simResults[resultIX].finalDecision.substring(10));//sessionObj.configHistory[configIX].
-      s = s + "<tr><td>" + configs[configIX].simResults[resultIX].actTitle + "</td><td>YES</td></tr>";
-
-      // push();
-      // textAlign(LEFT, TOP);
-      // textStyle(NORMAL)
-      // textSize(22);
-      // translate(0, 0);
-      // noStroke();
-      // fill(textColor);
-      // text(benchResults + '\n', 20, 250+(i*35));
-      // pop();
-      //document.getElementById("start-desc").innerHTML += "<p><b>" + benchResults + "</b></p>";
+      s = s + "<tr><td>" + configs[configIX].simResults[resultIX].actTitle + "</td>";
+      if (configs[configIX].simResults[resultIX].billPass == true) {
+        s = s + "<td>YES</td></tr>";
+      } else {
+        s = s + "<td>NO</td></tr>";
+      }
       
       resultIX++;
     }
@@ -4340,7 +4330,7 @@ function sBenchmarkResults() {
     document.getElementById("page-container").style.display = "block";
     document.getElementById("pane-bkg").style.display = "none";
     document.getElementById("start-desc").style.display = "block";
-    document.getElementById("main-header").innerHTML = "<h1>Benchmark Results</h1>";
+    document.getElementById("main-header").innerHTML = "<h1>Benchmark Results</h1>" + configJSON.text.benchResultsDesc;
     document.getElementById("top").innerHTML = "";
     document.getElementById("top").style.display = "none";
     showPanesBool = true;
@@ -4416,29 +4406,6 @@ function sBenchmarkResults() {
         //changeText(engine.decisionTxt);
       visual.userInputState = false;
     }
-    // noStroke();
-    // rectMode(CORNER);
-    // let c = color(colorOverlay);
-    // c.setAlpha(200)
-    // fill(c);
-    // rect(0, 0, visual.dWidth, visual.dHeight);
-    // document.body.style.backgroundColor = colorOverlay;
-    
-   //OC when visual display of rectangles is done, show buttons
-      // if (visual.userInputState) {
-      //   finalDisplay();
-      // }
-    //     finalDisplay();
-    //   }vFont, colorOverlay);
-    // if (visualizeVote == false) {
-    //   visual.displayImmediateBlank(engine);
-    // } else {
-    //   visual.displayVoting(engine);
-    //   // OC when visual display of rectangles is done, show buttons
-    //   if (visual.userInputState) {
-    //     finalDisplay();
-    //   }
-    // }
   }
 
   function clickedStartOver() {
@@ -4457,58 +4424,6 @@ function sBenchmarkResults() {
     summaryBtn.remove();
   }
 
-  function clickedBenchmark() {
-    //background(bColor);
-    showPanesBool = false;
-    // document.getElementById("pane-bkg").style.display = "none";
-    document.getElementById("start-desc").innerHTML = "";
-    document.getElementById("start-desc").style.display = "none";
-    benchmarkBtn.remove();
-    var benchResults = "";
-
-    for (let i=resultIX; i < MAX_SIM_RESULTS+1; i++) { // + 1 because the first was the test result
-      engine.completeReset();
-      engine.currentCongLogic(userEdits);
-      //let engineSim = new DemocracyEngine
-      updateSession();
-      benchResults = (configs[configIX].simResults[resultIX-1].actTitle + " " + configs[configIX].simResults[resultIX-1].finalDecision);//sessionObj.configHistory[configIX].
-      // push();
-      // textAlign(LEFT, TOP);
-      // textStyle(NORMAL)
-      // textSize(22);
-      // translate(0, 0);
-      // noStroke();
-      // fill(textColor);
-      // text(benchResults + '\n', 20, 250+(i*35));
-      // pop();
-      document.getElementById("start-desc").innerHTML += benchResults + "<br><br>";
-      
-      resultIX++;
-    }
-
-    // visual.completeReset();
-    // userEdits = false;
-    // reconfigBool = true;
-    // visual.displayImmediateVotes(engine);
-    //document.body.style.backgroundColor = colorOverlay;
-   //OC when visual display of rectangles is done, show buttons
-      // if (visual.userInputState) {
-        //finalDisplay();
-      //}
-  }
-
-  function finalDisplay() {
-
-    setTimeout(function () {
-      document.body.style.backgroundColor = colorOverlay;
-      engine.bodyCount = engine.numBodies;
-      visual.finalTextDisplayUser(engine, helvFont, colorOverlay);
-      //changeText(engine.decisionTxt);
-    }, 1500); // 1.5 seconds before text overlay shows
-    visual.userInputState = false;
-
-  }
-
 }
 
 var prevSessionID;
@@ -4516,19 +4431,30 @@ var prevSessionID;
 //page showing all of user inputs
 function sSaveResults() {
   let saveBtn, startOverBtn, approvalBtn;
+  let div1, div2, div3;
+  let s1, s2, s3;
 
   this.setup = function () {
     //userOutputText = document.getElementById('slider-disp');
-    userOutputText = document.getElementById('start-desc');
+    //userOutputText = document.getElementById('start-desc');
   }
 
   this.enter = function () {
     prevSessionID = sessionID;
+    s1 = "";
+    s2 = "";
+    s3 = "";
+    div1 = document.createElement('div');
+    div2 = document.createElement('div');
+    div3 = document.createElement('div');
+    div1.id = 's-col-1';
+    div2.id = 's-col-2';
+    div3.id = 's-col-3';
 
     console.log("user config summary & save page");
     // document.getElementById("top").innerHTML = "DEMOCRACY ENGINE SIMULATOR INPUTS";
-    document.getElementById("main-header").innerHTML = "<h1>Summary & Save</h1><h2>Session ID: " + sessionID + "</h2>";
-    document.getElementById("start-desc").innerHTML = "";
+    document.getElementById("main-header").innerHTML = "<h1>Summary & Save</h1>";
+    document.getElementById("start-desc").innerHTML = "<h2>Session ID: " + sessionID + "</h2>";
     document.getElementById("pane-bkg").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
@@ -4584,29 +4510,7 @@ function sSaveResults() {
   }
 
   this.draw = function () {
-    // if (visualizeVote == false) {
-    //   visual.displayImmediateBlank(engine);
-    // } else {
-    //   visual.displayVoting(engine);
-    //   // OC when visual display of rectangles is done, show buttons
-    //   if (visual.userInputState) {
-    //     finalDisplay();
-    //   }
-    // }
-    // paneToggle();
     
-  }
-
-  function finalDisplay() {
-
-    setTimeout(function () {
-      document.body.style.backgroundColor = colorOverlay;
-      engine.bodyCount = engine.numBodies;
-      visual.finalTextDisplayUser(engine, helvFont, colorOverlay);
-      changeText(engine.decisionTxt);
-    }, 1500); // 1.5 seconds before text overlay shows
-    visual.userInputState = false;
-
   }
 
   function clickedStartOver() {
@@ -4617,10 +4521,23 @@ function sSaveResults() {
   function clickedApprove() {
     ownerEndorse();
     if (finalConfigObj.ownerEndorsement == 1) {
-      document.getElementById("main-header").innerHTML = "<h1>Summary & Save</h1><h2>Session ID: " + sessionID + "</h2><h2>Approved!</h2>";
+      //document.getElementById("main-header").innerHTML = "<h1>Summary & Save</h1><h2>Session ID: " + sessionID + "</h2><h2>Approved!</h2>";
+      div3.innerHTML = "<h3 style='display: inline-block; vertical-align: top;'>User Approval of Configuration: </h3><h3 style='font-size: 32px; display: inline-block; margin: 0; line-height: 1;'>&#x2611;</h3>";
     } else {
-      document.getElementById("main-header").innerHTML = "<h1>Summary & Save</h1><h2>Session ID: " + sessionID + "</h2>";
+      //document.getElementById("main-header").innerHTML = "<h1>Summary & Save</h1><h2>Session ID: " + sessionID + "</h2>";
+      div3.innerHTML = "<h3 style='display: inline-block; vertical-align: top;'>User Approval of Configuration: </h3><h3 style='font-size: 32px; display: inline-block; margin: 0; line-height: 1;'>&#x2610;</h3>";
     }
+    let s = "<h3>Benchmark Results</h3><p>";
+      for(let i=0; i<MAX_SIM_RESULTS; i++) {
+        s += configs[configIX].simResults[i].actTitle + " ";
+        if (configs[configIX].simResults[i].billPass == true) {
+          s += "&#x2611;<br>"; // checkmark
+        } else {
+          s += "&#x2610;<br>"; // empty checkmark
+        }
+      }
+      s += "</p>";
+      div3.innerHTML += s;
   }
 
   function clickedSave() {
@@ -4637,8 +4554,9 @@ function sSaveResults() {
 
   function inputTxt() {
 
-    userOutputText.innerHTML =
-      "<div><h3>First Legislative Chamber</h3>" +
+    //userOutputText.innerHTML =
+    s1 = 
+      "<h3>First Legislative Chamber</h3>" +
       "<p>Voting Members: " + userNumHouse +
       "<br>Members in Political Party A: " + Math.round(userPerHouseBody[0] * userNumHouse) +
       "<br>Members in Political Party B: " + Math.round(userPerHouseBody[1] * userNumHouse) +
@@ -4652,8 +4570,10 @@ function sSaveResults() {
       "<p>Voting Members: " + userNumSenate +
       "<br>Members in Political Party A: " + Math.round(userPerSenateBody[0] * userNumSenate) +
       "<br>Members in Political Party B: " + Math.round(userPerSenateBody[1] * userNumSenate) +
-      "<br>Members in Political Party C: " + Math.round(userPerSenateBody[2] * userNumSenate) +
-      "</p><h3>Vice Presidency</h3>" +
+      "<br>Members in Political Party C: " + Math.round(userPerSenateBody[2] * userNumSenate) + "</p>";
+
+      s2 =
+      "<h3>Vice Presidency</h3>" +
       "<p>Voting Members: " + userNumVP +
       "<br>Members in Political Party A: " + Math.round(userPerPresBody[0] * userNumVP) +
       "<br>Members in Political Party B: " + Math.round(userPerPresBody[1] * userNumVP) +
@@ -4669,8 +4589,27 @@ function sSaveResults() {
       "<br>Political Party C: " + userIndYaythresh +
       "</p><h3>Percentage of votes required for approval of bill</h3>" +
       "<p>Approval By Majority: " + userBodyPass +
-      "<br> Approval By Supermajority: " + userSuperThresh + "</div></p>";
+      "<br> Approval By Supermajority: " + userSuperThresh + "</p>";
 
+      s3 = "<h3 style='display: inline-block; vertical-align: top;'>User Approval of Configuration: </h3><h3 style='font-size: 32px; display: inline-block; margin: 0; line-height: 1;'>&#x2610;</h3>";
+      
+      s3 = s3 + "<h3>Benchmark Results</h3><p>" ;
+      for(let i=0; i<MAX_SIM_RESULTS; i++) {
+        s3 = s3 + configs[configIX].simResults[i].actTitle + " ";
+        if (configs[configIX].simResults[i].billPass == true) {
+          s3 = s3 + "&#x2611;<br>"; // checkmark
+        } else {
+          s3 = s3 + "&#x2610;<br>"; // empty checkmark
+        }
+      }
+      s3 = s3 + "</p>";
+
+      div1.innerHTML = s1;
+      div2.innerHTML = s2;
+      div3.innerHTML = s3;
+      document.getElementById('start-desc').appendChild(div1);
+      document.getElementById('start-desc').appendChild(div2);
+      document.getElementById('start-desc').appendChild(div3);
       /*
     if (userEditCount >= 2) {
       nextButton.remove();
@@ -4746,6 +4685,7 @@ function sComplete() {
 
 }
 
+/*
 //explanation text before user goes back into simulator
 function sInfo() {
 
@@ -4963,3 +4903,4 @@ function sDefault() {
 
 
 }
+  */
