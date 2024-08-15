@@ -92,10 +92,10 @@
         },
 
         {
-            "title": "Economic Recovery Tax Act",
-            "date": "08-13-1981",
-            "supportedParty": "Republican",
-            "description": "ERTA, the keystone of President Ronald Reagan's economic program, cut individual taxes by 25 percent, indexed tax rates to end “bracket creep” and made other technical changes that have had an enormous influence on the economy in the past quarter-century. In a larger sense, ERTA ushered in an era in which big government, and sometimes any government, ceased to be seen as an unalloyed good. The act “changed the direction of the federal government — the biggest shift since the New Deal — and laid the foundation for Republican success,” Uslaner said."
+            "title": "Clean Air Act",
+            "date": "12-31-1970",
+            "supportedParty": "Democratic",
+            "description": "Other landmarks of environmental legislation could easily have filled this spot — such as the National Environmental Policy Act, passed the previous year — but this measure attracted the most support among our panelists. It played a key role in the federal government’s pre-emption of state regulatory authority over the environment, and, coming shortly after the first Earth Day, it was designed to be a clear signal that environmental regulation and economic growth were not incompatible. Despite some ups and downs, that view still holds considerable sway."
         },
 
         {
@@ -103,6 +103,13 @@
             "date": "09-02-1958",
             "supportedParty": "Democratic",
             "description": "Passed in response to the Soviet launch of the satellite Sputnik, NDEA provided $575 million for education and low-interest loans for students. Its stated focus on boosting achievement in science and mathematics helped enhance the nation’s intellectual capital, laying the groundwork for decades of American innovation in science and technology and, in turn, providing a basis for economic growth, military superiority and world leadership. The act is relatively forgotten today; only two of our panelists cited it."
+        },
+
+        {
+            "title": "Personal Responsibility and Work Opportunity Reconciliation Act",
+            "date": "08-22-1996",
+            "supportedParty": "Republican",
+            "description": "This major overhaul of welfare, requiring work rather than government assistance, directly affected many Americans. But it was also passed by a Republican Congress and signed by a Democratic president, Bill Clinton, thus signaling the bipartisan abandonment — albeit a long time coming — of the ideas that undergirded President Lyndon Johnson’s Great Society."
         },
 
         {
@@ -127,11 +134,12 @@
         },
 
         {
-            "title": "Personal Responsibility and Work Opportunity Reconciliation Act",
-            "date": "08-22-1996",
+            "title": "Economic Recovery Tax Act",
+            "date": "08-13-1981",
             "supportedParty": "Republican",
-            "description": "This major overhaul of welfare, requiring work rather than government assistance, directly affected many Americans. But it was also passed by a Republican Congress and signed by a Democratic president, Bill Clinton, thus signaling the bipartisan abandonment — albeit a long time coming — of the ideas that undergirded President Lyndon Johnson’s Great Society."
+            "description": "ERTA, the keystone of President Ronald Reagan's economic program, cut individual taxes by 25 percent, indexed tax rates to end “bracket creep” and made other technical changes that have had an enormous influence on the economy in the past quarter-century. In a larger sense, ERTA ushered in an era in which big government, and sometimes any government, ceased to be seen as an unalloyed good. The act “changed the direction of the federal government — the biggest shift since the New Deal — and laid the foundation for Republican success,” Uslaner said."
         }
+        
     ],
 
     "mediaAssetPaths": {

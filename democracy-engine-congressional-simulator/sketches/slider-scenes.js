@@ -444,7 +444,7 @@ function loadSessionS1() {
     console.log("start up scene");
     newSession();
     paramChangedBool = true;
-    showCount = 1;
+    showCount = 0;
 
     document.getElementById("page-container").style.display = "block";
     document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1>";
@@ -479,7 +479,7 @@ function loadSessionS1() {
     backBtn.class('buttons');
     backBtn.parent(buttonDiv);
 
-    showMoreBtn = createButton('Show More');
+    showMoreBtn = createButton('Show More Sessions');
     showMoreBtn.id('show-btn');
     showMoreBtn.class('buttons');
     showMoreBtn.parent(buttonDiv);
@@ -512,6 +512,7 @@ function loadSessionS1() {
     return s;
   }
 
+  var rest = false;
   function showSessionsList() {
     document.getElementById("page-container").style.display = "block";
     document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1>";
@@ -533,13 +534,29 @@ function loadSessionS1() {
       console.log(result);
       // show sessions in order from last 10 
       // -- OC written like this so that startIX can move backward to show next prev 10 when triggered (btn press?)
-      let startIX = result.length-(numResults*showCount);
-      if (startIX < 0 && showCount == 1) {
-        startIX = 0;
-      } else if (startIX < 0) {
+      //if ()
+      if (rest) {
         showCount = 1;
-        startIX = result.length-(numResults);
+      } else {
+        showCount++;
       }
+      let startIX = result.length-(numResults*showCount);
+      let endIX = startIX+numResults;
+      console.log("loads startIX: " + startIX);
+      if (result.length < numResults) { // number of records less than amt to show, so start at ix 0
+        startIX = 0;
+        endIX = result.length;
+      } else if (startIX < 0) { // reached beginning, so show from beginning
+        //showCount = 1;
+        startIX = 0;
+        endIX = startIX+numResults;
+        rest = true;
+        //startIX = result.length-(numResults);
+      } else {
+        rest = false;
+      }
+      console.log("loads startIX: " + startIX);
+      console.log("loads showCount: " + showCount);
       let newDiv = document.createElement('div');
       let newDiv2 = document.createElement('div');
       let newDiv3 = document.createElement('div');
@@ -549,8 +566,8 @@ function loadSessionS1() {
       let s = "";
       let s2 = "";
       let s3 = "";
-      for (let i=startIX; (i<result.length); i++) {
-        if (i<startIX+numResults) {
+      for (let i=startIX; (i<endIX); i++) {
+        //if (i<startIX+numResults) {
         console.log("i: " + i);
         let sObj = result[i].finalConfig.config;
         console.log(sObj);
@@ -560,7 +577,7 @@ function loadSessionS1() {
         s = s + sObj.numLegislativeBodies + "<br>";
         s2 = s2 + sObj.numParties + "<br>";
         s3 = s3 + totalVoting + "<br>";
-        }
+        //}
       }
       selection.selected(startIX.toString());
       console.log("selected val: " + selection.value());
@@ -600,7 +617,7 @@ function loadSessionS1() {
 
   function clickedShowMore() {
     selection.remove();
-    showCount++;
+    //showCount++;
     showSessionsList();
   }
 
@@ -693,7 +710,7 @@ function loadSessionS2() {
     userEdits = false;
     reconfigBool = true;
 
-    engine.currentCongLogic(true); // uncomment if drawing to screen real time
+    //engine.currentCongLogic(true); // uncomment if drawing to screen real time
     mgr.showScene(sBodies);
   }
 
@@ -1222,8 +1239,9 @@ function sBodies() {
     // visual.displayImmediateBlank(engine);
 
     changeText(" ");
-
+    slider1.noUiSlider.set(userNumLegislative);
     sliderVals();
+
     document.getElementById("top").style.display = "block";
     document.getElementById("top").innerHTML = "NUMBER OF CHAMBERS";
 
@@ -1281,17 +1299,34 @@ function sBodies() {
     document.getElementById("update-btn").disabled = true; // disable after clicking it
     //removeButtons();
     //engine.setDefaultParams();
+
+    if (userNumHouse2 == 0) {
+      userNumHouse2 = 100;
+      userPerHouse2Body = [1, 0, 0];
+    }
+    if (userNumSenate == 0) { // chamber 3
+      userNumSenate = 100; // just to give default value
+      userPerSenateBody = [1, 0, 0];
+    }
+    if (userNumPres == 0) {
+      userNumPres = 1;
+      userPerPresBody = [1, 0, 0];
+    }
+    
     setEngineParams(engine);
-    if (engine.numHouse2 == 0) {
-      engine.numHouse2 = 100;
-    }
-    if (engine.numSenate == 0) { // chamber 3
-      engine.numSenate = 100; // just to give default value
-      userNumSenate = 100;
-    }
-    if (engine.numPres == 0) {
-      engine.numPres = 1;
-    }
+    // if (engine.numHouse2 == 0) {
+    //   engine.numHouse2 = 100;
+    // }
+    // if (engine.numSenate == 0) { // chamber 3
+    //   engine.numSenate = 100; // just to give default value
+    //   //engine.perRepSenate
+    //   userNumSenate = 100;
+    //   userPerSenateBody = [1, 0, 0];
+    //   engine.perDemSenate = 1;
+    // }
+    // if (engine.numPres == 0) {
+    //   engine.numPres = 1;
+    // }
 
     // reset values for calculations
     //engine.completeReset();
@@ -1706,12 +1741,14 @@ function sParties() {
     // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
+
+    slider5.noUiSlider.set(userNumParties);
     sliderVals();
-
+    
     // OC disable update button on this pane for now - not sure what to update visually
-    document.getElementById("update-btn").disabled = true;
-
+    //document.getElementById("update-btn").disabled = true;
   }
+
   this.draw = function () {
     //visual.displayVoting(engine);
     visual.displayImmediateBlank(engine, false);
@@ -3464,6 +3501,8 @@ function sBodyPass() {
   // var currPerPass = parseFloat(engine.perPass * 100);
   var currPerPass = parseFloat(userBodyPass);
   var currSuperThresh = parseFloat(userSuperThresh);
+  var slider10 = document.getElementById('slider10');
+  var slider11 = document.getElementById('slider11');
 
   this.setup = function () {
     textSize(15);
@@ -3511,14 +3550,17 @@ function sBodyPass() {
     // }
 
     // sliders();
+    slider10.noUiSlider.set(currPerPass);
+    slider11.noUiSlider.set(currSuperThresh);
     sliderVals();
-
+    
   }
 
   this.draw = function () {
     visual.displayImmediateBlank(engine, false);
     paneToggle();
     console.log("user body pass: " + userBodyPass);
+    console.log("user super pass: " + userSuperThresh);
 
     // if sliders changed any values on this page, enable update button
     if ((parseFloat(userSuperThresh) / 100.0) != engine.perPass || (parseFloat(userSuperThresh) / 100.0) != engine.superThresh) {
@@ -3623,6 +3665,9 @@ function sYesVotes() {
   var curDemYaythresh = parseFloat(userDemYaythresh);// PARTY A = parseInt(engine.demYaythresh * 100);
   var curRepYaythresh = parseFloat(userRepYaythresh);// = parseInt(engine.repYaythresh * 100);
   var curIndYaythresh = parseFloat(userIndYaythresh);// = parseInt(engine.indYaythresh * 100);
+  var slider12 = document.getElementById('slider12');
+  var slider13 = document.getElementById('slider13');
+  var slider14 = document.getElementById('slider14');
 
   this.setup = function () {
     createSlider();
@@ -3632,6 +3677,9 @@ function sYesVotes() {
   this.enter = function () {
     visual.dWidth = windowWidth * .95;
     visual.dHeight = (windowHeight * .9)-labelSpace;
+    curDemYaythresh = parseFloat(userDemYaythresh);
+    curRepYaythresh = parseFloat(userRepYaythresh);
+    curIndYaythresh = parseFloat(userIndYaythresh);
 
     console.log("5th slider page");
     document.getElementById("top").innerHTML = "PROBABILITY OF AN AFFIRMATIVE VOTE BY A PARTY MEMBER";
@@ -3654,6 +3702,9 @@ function sYesVotes() {
     // document.getElementById("slider-value").style.display = "none";
     checkParties();
     // sliders();
+    slider12.noUiSlider.set(curDemYaythresh);
+    slider13.noUiSlider.set(userRepYaythresh);
+    slider14.noUiSlider.set(userIndYaythresh);
     sliderVals();
 
     document.body.style.backgroundColor = bColor;
@@ -4220,13 +4271,24 @@ function sBenchmarkPane() {
     benchmarkBtn.remove();
     var benchResults = "";
 
+    let newDiv = document.createElement('div');
+    let newDiv2 = document.createElement('div');
+    let newDiv3 = document.createElement('div');
+    newDiv.id = 'act-list';
+    newDiv2.id = 'info-list-2';
+    newDiv3.id = 'info-list-3';
+    let s = "<table><thead><tr><th>ACT TITLE</th><th>BILL PASSED?</th></thead><tbody>";
+    let s2 = "";
+    let s3 = "";
     console.log("configIX before benchmarking: " + configIX);
     for (let i=resultIX; i < MAX_SIM_RESULTS+1; i++) { // + 1 because the first was the test result
       engine.completeReset();
       engine.currentCongLogic(true);
       //let engineSim = new DemocracyEngine
       updateSession();
-      benchResults = (configs[configIX].simResults[resultIX].actTitle + " --- " + configs[configIX].simResults[resultIX].finalDecision.substring(10));//sessionObj.configHistory[configIX].
+      //benchResults = (configs[configIX].simResults[resultIX].actTitle + " --- " + configs[configIX].simResults[resultIX].finalDecision.substring(10));//sessionObj.configHistory[configIX].
+      s = s + "<tr><td>" + configs[configIX].simResults[resultIX].actTitle + "</td><td>YES</td></tr>";
+
       // push();
       // textAlign(LEFT, TOP);
       // textStyle(NORMAL)
@@ -4236,10 +4298,13 @@ function sBenchmarkPane() {
       // fill(textColor);
       // text(benchResults + '\n', 20, 250+(i*35));
       // pop();
-      document.getElementById("start-desc").innerHTML += "<p><b>" + benchResults + "</b></p>";
+      //document.getElementById("start-desc").innerHTML += "<p><b>" + benchResults + "</b></p>";
       
       resultIX++;
     }
+    s = s + "</tbody></table>";
+    newDiv.innerHTML = s;
+    document.getElementById('start-desc').appendChild(newDiv);
     console.log("configIX after benchmarking: " + configIX);
 
     mgr.showScene(sBenchmarkResults);

@@ -291,6 +291,36 @@ p {
   line-height: 30px;
 }
 
+#act-list {
+  width: 70%;
+  position: relative;
+  /* border-right: 0.5mm solid var(--text-color); */
+  padding: 5px;
+  float: left;
+  height: 310px;
+  text-align: left;
+  font-weight: bold;
+  line-height: 40px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  left: 5%;
+  right: 5%;
+}
+
+th, td {
+  border: 1px solid var(--text-color);
+  padding: 2px;
+  padding-left: 15px;
+  text-align: left;
+  /* width: 400px; */
+}
+
+th {
+  font-size: 20px;
+}
 
 /* #info-list-2 {
   width: 125px;
