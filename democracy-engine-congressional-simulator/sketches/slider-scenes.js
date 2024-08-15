@@ -1903,6 +1903,8 @@ function sParties() {
           userPerSenateBody[2] = 0.0;
           userPerVPBody[2] = 0.0;
           userPerPresBody[2] = 0.0;
+        } else if (userNumParties == 3) {
+          userIndYaythresh = 50;
         }
 
       });
