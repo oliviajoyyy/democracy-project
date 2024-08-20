@@ -21,7 +21,7 @@ function startUp() {
 
     document.getElementById("page-container").style.display = "block";
     document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1>";
-    document.getElementById("main-btn-div").style.display = "none";
+    document.getElementById("main-btn-div").style.display = "block";
     document.getElementById("start-desc").style.display = "none";
     document.getElementById("top").style.display = "none";
     document.getElementById("page1").style.display = "none";
@@ -42,7 +42,7 @@ function startUp() {
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
 
-    // let buttonDiv = document.getElementById('button-div');
+    let buttonDiv = document.getElementById('main-btn-div');
 
     continueBtn = createButton('Continue');
     continueBtn.id('continue-btn');
@@ -109,7 +109,8 @@ function briefDescription() {
 
     document.getElementById("page-container").style.display = "block";
     document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1>";
-    document.getElementById("main-btn-div").style.display = "none";
+    document.getElementById("main-btn-div").style.display = "block";
+    document.getElementById("screen").style.display = "none";
     document.getElementById("start-desc").style.display = "block";
     document.getElementById("start-desc").innerHTML = configJSON.text.shortDescription;
     document.getElementById("top").style.display = "none";
@@ -131,7 +132,7 @@ function briefDescription() {
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
 
-    // let buttonDiv = document.getElementById('button-div');
+    let buttonDiv = document.getElementById('main-btn-div');
 
     newSessionBtn = createButton('New Session');
     newSessionBtn.id('new-session-btn');
@@ -206,7 +207,7 @@ function hardwareTest() {
     document.getElementById("page-container").style.display = "block";
     document.getElementById("main-header").innerHTML = "<h1>Hardware & DB Test </h1>";
 
-    document.getElementById("main-btn-div").style.display = "none";
+    document.getElementById("main-btn-div").style.display = "block";
     document.getElementById("start-desc").style.display = "none";
     document.getElementById("top").style.display = "none";
     document.getElementById("page1").style.display = "none";
@@ -227,7 +228,7 @@ function hardwareTest() {
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
 
-    // let buttonDiv = document.getElementById('button-div');
+    let buttonDiv = document.getElementById('main-btn-div');
 
     backBtn = createButton('Back to Start Up');
     backBtn.id('back-btn');
@@ -284,7 +285,7 @@ function aboutProject() {
 
     document.getElementById("page-container").style.display = "block";
     document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1>";
-    document.getElementById("main-btn-div").style.display = "none";
+    document.getElementById("main-btn-div").style.display = "block";
     document.getElementById("start-desc").style.display = "block";
     document.getElementById("start-desc").innerHTML = configJSON.text.detailedDescription;
     document.getElementById("top").style.display = "none";
@@ -306,7 +307,7 @@ function aboutProject() {
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
 
-    // let buttonDiv = document.getElementById('button-div');
+    let buttonDiv = document.getElementById('main-btn-div');
 
     backBtn = createButton('Back to Start Up');
     backBtn.id('back-btn');
@@ -352,7 +353,7 @@ function newSessionScene() {
 
     document.getElementById("page-container").style.display = "block";
     document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1>";
-    document.getElementById("main-btn-div").style.display = "none";
+    document.getElementById("main-btn-div").style.display = "block";
 
     document.getElementById("start-desc").style.display = "block";
     document.getElementById("start-desc").innerHTML = "<h2>New Session</h2><h2>ID: " + sessionID + "</h2>" + configJSON.text.newSessionDesc;
@@ -376,7 +377,7 @@ function newSessionScene() {
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
 
-    // let buttonDiv = document.getElementById('button-div');
+    let buttonDiv = document.getElementById('main-btn-div');
 
     backBtn = createButton('Start Over');
     backBtn.id('back-btn');
@@ -448,7 +449,7 @@ function loadSessionS1() {
 
     document.getElementById("page-container").style.display = "block";
     document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1>";
-    document.getElementById("main-btn-div").style.display = "none";
+    document.getElementById("main-btn-div").style.display = "block";
     document.getElementById("start-desc").style.display = "block";
     
     showSessionsList(); // get sessions fr db and display onscreen
@@ -472,7 +473,7 @@ function loadSessionS1() {
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
 
-    // let buttonDiv = document.getElementById('button-div');
+    let buttonDiv = document.getElementById('main-btn-div');
 
     backBtn = createButton('Start Over');
     backBtn.id('back-btn');
@@ -1957,6 +1958,7 @@ function sMembersFirstChamber() {
     // slider1max = parseInt(userNumHouse);
     // slider2max = floor(slider1max / 2);
     // slider3max = slider1max - slider2max;
+    document.getElementById("screen").style.display = "none"; // OC TODO - remove this if want screen function for all panes
 
     console.log("Slider Page Chamber 1 Party Members ");
     document.getElementById("top").style.display = "block";
@@ -4040,7 +4042,7 @@ function sVote() {
       // canvas.parent(canvasDiv);
       visualizeVote = true;
       visualizeImmediate = true;
-      document.getElementById("top").innerHTML = "<h2>TEST VOTING</h2>" + configJSON.text.p11desc2;
+      document.getElementById("top").innerHTML = "<h2>TEST VOTINGs</h2>" + configJSON.text.p11desc2;
     }
     //}
 
@@ -4090,6 +4092,7 @@ function sVote() {
       engine.bodyCount = engine.numBodies;
       visual.finalTextDisplayUser(engine, helvFont, colorOverlay, resultIX);
       setTimeout(function () {
+        document.getElementById("top").innerHTML = "<h2>TEST VOTING</h2>" + configJSON.text.p11desc2;
         showPanesBool = true;
       }, 1500);
       //changeText(engine.decisionTxt);
@@ -4374,6 +4377,8 @@ function sBenchmarkResults() {
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
 
+    let buttonDiv = document.getElementById('main-btn-div');
+
     startOverBtn = createButton('Start Over');
     startOverBtn.id('restart-btn');
     startOverBtn.class('buttons');
@@ -4414,19 +4419,20 @@ function sBenchmarkResults() {
     visual.displayImmediateBlank(engine, true); // draws votes for last calculation
     if (visual.userInputState) {
         document.body.style.backgroundColor = colorOverlay;
-        push();
-        //translate(-(3 * (width/visual.numBodies)), 0);
-        translate(0, 0);
-        var resBColor = color(colorOverlay); // color(0, 0, 0); // result overlay
-        noStroke();
-        rectMode(CORNER);
-        resBColor.setAlpha(200);
-        fill(resBColor);
-        rect(-width, 0, width*2, height);
-        pop();
-        // engine.bodyCount = engine.numBodies;
-        // visual.finalTextDisplayUser(engine, helvFont, colorOverlay, resultIX);
-        //changeText(engine.decisionTxt);
+        document.getElementById("screen").style.display = "block";
+        // push();
+        // //translate(-(3 * (width/visual.numBodies)), 0);
+        // translate(0, 0);
+        // var resBColor = color(colorOverlay); // color(0, 0, 0); // result overlay
+        // noStroke();
+        // rectMode(CORNER);
+        // resBColor.setAlpha(200);
+        // fill(resBColor);
+        // rect(-width, 0, width*2, height);
+        // pop();
+        // // engine.bodyCount = engine.numBodies;
+        // // visual.finalTextDisplayUser(engine, helvFont, colorOverlay, resultIX);
+        // //changeText(engine.decisionTxt);
       visual.userInputState = false;
     }
   }
@@ -4454,8 +4460,8 @@ var prevSessionID;
 //page showing all of user inputs
 function sSaveResults() {
   let saveBtn, startOverBtn, approvalBtn;
-  let div1, div2, div3;
-  let s1, s2, s3;
+  let div1, div2, div3, divApproval;
+  let s1, s2, s3, sApproval;
 
   this.setup = function () {
     //userOutputText = document.getElementById('slider-disp');
@@ -4467,18 +4473,22 @@ function sSaveResults() {
     s1 = "";
     s2 = "";
     s3 = "";
+    sApproval = "";
     div1 = document.createElement('div');
     div2 = document.createElement('div');
     div3 = document.createElement('div');
+    divApproval = document.createElement('div');
     div1.id = 's-col-1';
     div2.id = 's-col-2';
     div3.id = 's-col-3';
+    divApproval.id = 'approval-div';
 
     console.log("user config summary & save page");
     // document.getElementById("top").innerHTML = "DEMOCRACY ENGINE SIMULATOR INPUTS";
     document.getElementById("main-header").innerHTML = "<h1>Summary & Save</h1>";
     document.getElementById("start-desc").innerHTML = "<h2>Session ID: " + sessionID + "</h2>";
     document.getElementById("pane-bkg").style.display = "none";
+    document.getElementById("screen").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
@@ -4496,6 +4506,8 @@ function sSaveResults() {
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
+
+    let buttonDiv = document.getElementById('main-btn-div');
     
     startOverBtn = createButton('Start Over');
     startOverBtn.id('restart-btn');
@@ -4543,26 +4555,19 @@ function sSaveResults() {
 
   function clickedApprove() {
     ownerEndorse();
-    div3.innerHTML = "";
-    let s = "<h3>Benchmark Results</h3><p>";
-      for(let i=1; i<=MAX_SIM_RESULTS; i++) {
-        s += configs[configIX].simResults[i].actTitle + " ";
-        if (configs[configIX].simResults[i].billPass == true) {
-          s += "&#x2611;<br>"; // checkmark
-        } else {
-          s += "&#x2610;<br>"; // empty checkmark
-        }
-      }
-      s += "</p>";
+    divApproval.innerHTML = "";
+    let s = "";
       if (finalConfigObj.ownerEndorsement == 1) {
         //document.getElementById("main-header").innerHTML = "<h1>Summary & Save</h1><h2>Session ID: " + sessionID + "</h2><h2>Approved!</h2>";
-        s += "<h3 style='font-size: 14px; display: inline-block; vertical-align: top;'>User Approval of Configuration </h3><h3 style='font-size: 32px; display: inline-block; margin: 0; line-height: 1;'>&#x2611;</h3>";
+        //s += "<h3 style='font-size: 14px; display: inline-block; vertical-align: top;'>User Approval of Configuration </h3><h3 style='font-size: 32px; display: inline-block; margin: 0; line-height: 1;'>&#x2611;</h3>";
+        s += "<h3>User Approval of Configuration</h3><img id='approval-check' src='./assets/check-mark-txt-col.svg' style='left:37%'>";
       } else {
         //document.getElementById("main-header").innerHTML = "<h1>Summary & Save</h1><h2>Session ID: " + sessionID + "</h2>";
-        s += "<h3 style='font-size: 14px; display: inline-block; vertical-align: top;'>User Approval of Configuration </h3><h3 style='font-size: 32px; display: inline-block; margin: 0; line-height: 1;'>&#x2610;</h3>";
+        //s += "<h3 style='font-size: 14px; display: inline-block; vertical-align: top;'>User Approval of Configuration </h3><h3 style='font-size: 32px; display: inline-block; margin: 0; line-height: 1;'>&#x2610;</h3>";
+        s  += "<h3>User Approval of Configuration</h3><div id='approval-check'></div>";
       }
-      div3.innerHTML += s;
-      approvalBtn.parent(div3);
+      divApproval.innerHTML += s;
+      approvalBtn.parent(divApproval);
   }
 
   function clickedSave() {
@@ -4626,16 +4631,20 @@ function sSaveResults() {
         }
       }
       s3 = s3 + "</p>";
-      s3 = s3 + "<h3 style='font-size: 14px; display: inline-block; vertical-align: top;'>User Approval of Configuration </h3><h3 style='font-size: 32px; display: inline-block; margin: 0; line-height: 1;'>&#x2610;</h3>";
+
+      //sApproval = sApproval + "<h3 style='font-size: 14px; display: inline-block; vertical-align: top;'>User Approval of Configuration </h3><h3 style='font-size: 32px; display: inline-block; margin: 0; line-height: 1;'>&#x2610;</h3>";
+      sApproval = sApproval + "<h3>User Approval of Configuration</h3><div id='approval-check'></div>";
 
       div1.innerHTML = s1;
       div2.innerHTML = s2;
       div3.innerHTML = s3;
+      divApproval.innerHTML = sApproval;
       
       document.getElementById('start-desc').appendChild(div1);
       document.getElementById('start-desc').appendChild(div2);
       document.getElementById('start-desc').appendChild(div3);
-      approvalBtn.parent(div3);
+      document.getElementById('start-desc').appendChild(divApproval);
+      approvalBtn.parent(divApproval);
       /*
     if (userEditCount >= 2) {
       nextButton.remove();
@@ -4687,6 +4696,8 @@ function sComplete() {
 
     background(bColor);
     document.body.style.backgroundColor = bColor;
+
+    let buttonDiv = document.getElementById('main-btn-div');
 
     startOverBtn = createButton('Start Over');
     startOverBtn.id('restart-btn');

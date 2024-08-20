@@ -154,7 +154,7 @@ button {
   margin: 0px 2px;
   margin-top: 6px;
   z-index: 102;
-  font-size: 105%;
+  font-size: 135%;
 }
 
 #start-desc {
@@ -213,6 +213,17 @@ button {
   top: 0;
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+#main-btn-div {
+  position: fixed;
+  width: 90%;
+  bottom: 40px;
+  left: 5%;
+  right: 5%;
+  text-align: center;
+  z-index: 100;
+  display: block;
 }
 
 #benchResults {
@@ -294,6 +305,7 @@ p {
   line-height: 30px;
 }
 
+/* summary columns */
 #s-col-1, #s-col-2, #s-col-3 {
   width: 30%;
   position: relative;
@@ -302,9 +314,41 @@ p {
   /* border-left: 0.5mm solid var(--text-color); */
   padding: 5px;
   float: left;
-  height: 310px;
+  height: auto;
   text-align: center;
   font-size: .9em;
+}
+
+#approval-div {
+  width: 30%;
+  margin-left: 30px;
+  position: relative;
+  padding-bottom: 15px;
+  /* padding: 5px; */
+  float: left;
+  height: auto;
+  text-align: center;
+  font-size: 1.2em;
+  border-radius: 10px;
+  border: 1mm solid var(--text-color);
+}
+
+#approval-div h3 {
+  font-size: 1.5em !important;
+  text-align: center !important;
+  margin: 10px;
+  margin-left: 0px;
+}
+
+#approval-check {
+  position: relative;
+  width: 70px;
+  height: 70px;
+  left: 40%;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 0.7mm solid var(--text-color);
+  padding: 1px;
 }
 
 #act-list {

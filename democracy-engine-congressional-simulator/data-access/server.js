@@ -8,9 +8,13 @@ app.use(express.json());
 app.use(cors());
 
 mongoose.set("strictQuery", false);
-const mongoDB = "mongodb+srv://Cluster70600:W3FEU0d0aXZe@cluster70600.stuctmh.mongodb.net/db?retryWrites=true&w=majority&appName=Cluster70600"; // the mongodb cloud database
+const mongoDB = "mongodb://demConfigDesk:democracyProj_sim2024@cha-cweb-dma2.sjsu.edu:27017/democracy-project";
 const Session = require("../models/session-model"); // the file for the session schema
+const run = async() => {
 mongoose.connect(mongoDB); // connect to the cloud database
+console.log("connected to DB");
+}
+run().catch((err) => console.error(err));
 
 // get all records in Sessions collection
 app.get('/sessions', async (req, res) => {

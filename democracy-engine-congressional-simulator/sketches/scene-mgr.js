@@ -121,7 +121,7 @@ function preload() {
   helvFont = loadFont('../democracy-engine-congressional-simulator/assets/font/HelveticaNeue-Regular.otf');
   loadingImage = loadImage('../democracy-engine-congressional-simulator/assets/gears-icon.png');
   enterImage = loadImage('../democracy-engine-congressional-simulator/assets/asraProgress.png');
-  checkImage = loadImage('../democracy-engine-congressional-simulator/assets/check-mark.png')
+  checkImage = loadImage('../democracy-engine-congressional-simulator/assets/check-mark-bkg-col.svg'); // check with color of bkg for voting members
   configJSON = loadJSON('../democracy-engine-congressional-simulator/config/config.json');
   
   console.log(configJSON);
@@ -909,15 +909,19 @@ function paneToggle() {
   if (showPanesBool) {
     // if (mgr.isCurrent(SCENE));
     // = "block" whichever html div page corresponds to that scene
-    document.getElementById("pane-bkg").style.display = "block";
+    document.getElementById("pane-bkg").style.display = "block"; 
     document.getElementById("button-div").style.display = "block";
     document.getElementById("top").style.display = "block";
+    //document.getElementById("screen").style.display = "block"; // comment out if want only on first 3 panes
     if (mgr.isCurrent(sBodies)) {
       document.getElementById("page1").style.display = "block";
+      document.getElementById("screen").style.display = "block"; // comment out if want on all panes
     } else if (mgr.isCurrent(sLegislative)) {
       document.getElementById("page2").style.display = "block";
+      document.getElementById("screen").style.display = "block";
     } else if (mgr.isCurrent(sParties)) {
       document.getElementById("page3").style.display = "block";
+      document.getElementById("screen").style.display = "block";
     } else if (mgr.isCurrent(sMembersFirstChamber)) {
       document.getElementById("page4").style.display = "block";
     } else if (mgr.isCurrent(sMembersSecondChamber)) {
@@ -945,6 +949,7 @@ function paneToggle() {
   } else {
     // = "none" for all html div
     // if (mgr.isCurrent(sBodies)) {
+      document.getElementById("screen").style.display = "none";
       document.getElementById("pane-bkg").style.display = "none";
       document.getElementById("button-div").style.display = "none";
       document.getElementById("top").style.display = "none";
