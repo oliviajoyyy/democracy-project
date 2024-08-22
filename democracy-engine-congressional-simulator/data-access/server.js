@@ -8,7 +8,8 @@ app.use(express.json());
 app.use(cors());
 
 mongoose.set("strictQuery", false);
-const mongoDB = "mongodb://demConfigDesk:democracyProj_sim2024@cha-cweb-dma2.sjsu.edu:27017/democracy-project";
+//const mongoDB = "mongodb://demConfigDesk:democracyProj_sim2024@cha-cweb-dma2.sjsu.edu:27017/democracy-project";
+const mongoDB = "mongodb://localhost:27017/democracy-project"
 const Session = require("../models/session-model"); // the file for the session schema
 const run = async() => {
 mongoose.connect(mongoDB); // connect to the cloud database
@@ -29,10 +30,72 @@ app.post('/sessions', cors(), async (req, res, next) => {
     res.json(session);
 });
 
+
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log('Server listening on port ${' + PORT + '}');
 })
+
+/* FOR TESTING
+const s = new Session({
+    timestamp: Date.now(),
+
+    uniqueID: "testing_XXX",
+
+    // user configuration properties
+    configHistory: [{"numLegislativeBodies": 2,
+        "numParties": 2,
+
+        "chamber1": {
+                "totalMembers": 432,
+                "partyA": 220,
+                "partyB": 212,
+                "partyC": 0
+        },
+
+        "chamber2": {
+                "totalMembers": 100,
+                "partyA": 49,
+                "partyB": 51,
+                "partyC": 0
+        },
+
+        "chamber3": {
+                "totalMembers": 0,
+                "partyA": 0,
+                "partyB": 0,
+                "partyC": 0
+        },
+
+        "vicePres": {
+            "totalMembers": 1,
+            "partyA": 0,
+            "partyB": 1,
+            "partyC": 0
+        },
+
+        "president": {
+            "totalMembers": 1,
+            "partyA": 0,
+            "partyB": 1,
+            "partyC": 0
+        },
+
+        "percentMajority": 50,
+        "percentSupermajority": 67,
+
+        "probabilityYesVote": {
+            "partyA": 70,
+            "partyB": 30,
+            "partyC": 50
+        }}],
+
+    finalConfig: { }
+    });
+
+s.save();
+*/
 
 
 

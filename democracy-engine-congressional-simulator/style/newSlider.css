@@ -81,6 +81,7 @@
   width: 50%;
 }
 
+/* hide min & max values on certain sliders */
 #slider-1a .noUi-value-large, #slider-1b .noUi-value-large, #slider-1c .noUi-value-large,
 #slider-2a .noUi-value-large, #slider-2b .noUi-value-large, #slider-2c .noUi-value-large,
 #slider-3a .noUi-value-large, #slider-3b .noUi-value-large, #slider-3c .noUi-value-large,

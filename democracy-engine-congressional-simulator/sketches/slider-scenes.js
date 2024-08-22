@@ -20,7 +20,7 @@ function startUp() {
     // paneArrow = false; // cannot use arrow key to move to next scene
 
     document.getElementById("page-container").style.display = "block";
-    document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1>";
+    document.getElementById("main-header").innerHTML = configJSON.text.title;
     document.getElementById("main-btn-div").style.display = "block";
     document.getElementById("start-desc").style.display = "none";
     document.getElementById("top").style.display = "none";
@@ -72,7 +72,7 @@ function startUp() {
 
   function clickedContinue() {
     removeBtns();
-    mgr.showScene(briefDescription);
+    mgr.showScene(startSession);
   }
 
   function clickedTest() {
@@ -87,7 +87,7 @@ function startUp() {
 }
 
 
-function briefDescription() {
+function startSession() {
   let newSessionBtn, loadSessionBtn, aboutBtn;
 
   this.setup = function () {
@@ -108,7 +108,7 @@ function briefDescription() {
     document.body.style.backgroundColor = bColor;
 
     document.getElementById("page-container").style.display = "block";
-    document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1>";
+    document.getElementById("main-header").innerHTML = configJSON.text.title;
     document.getElementById("main-btn-div").style.display = "block";
     document.getElementById("screen").style.display = "none";
     document.getElementById("start-desc").style.display = "block";
@@ -251,7 +251,7 @@ function hardwareTest() {
 
   function clickedBack() {
     removeBtns();
-    mgr.showScene(briefDescription);
+    mgr.showScene(startSession);
   }
 
   function clickedTest() {
@@ -284,7 +284,7 @@ function aboutProject() {
     console.log("start up scene");
 
     document.getElementById("page-container").style.display = "block";
-    document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1>";
+    document.getElementById("main-header").innerHTML = configJSON.text.title;
     document.getElementById("main-btn-div").style.display = "block";
     document.getElementById("start-desc").style.display = "block";
     document.getElementById("start-desc").innerHTML = configJSON.text.detailedDescription;
@@ -321,7 +321,7 @@ function aboutProject() {
 
   function clickedBack() {
     removeBtns();
-    mgr.showScene(briefDescription);
+    mgr.showScene(startSession);
   }
 
   function removeBtns() {
@@ -352,11 +352,11 @@ function newSessionScene() {
     paramChangedBool = true;
 
     document.getElementById("page-container").style.display = "block";
-    document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1>";
+    document.getElementById("main-header").innerHTML = configJSON.text.title;
     document.getElementById("main-btn-div").style.display = "block";
 
     document.getElementById("start-desc").style.display = "block";
-    document.getElementById("start-desc").innerHTML = "<h2>New Session</h2><h2>ID: " + sessionID + "</h2>" + configJSON.text.newSessionDesc;
+    document.getElementById("start-desc").innerHTML = "<h2>New Session</h2>" + configJSON.text.newSessionDesc;
 
     document.getElementById("top").style.display = "none";
     document.getElementById("page1").style.display = "none";
@@ -397,7 +397,7 @@ function newSessionScene() {
 
   function clickedBack() {
     removeBtns();
-    mgr.showScene(briefDescription);
+    mgr.showScene(startSession);
   }
 
   function clickedNext() {
@@ -448,8 +448,7 @@ function loadSessionS1() {
     showCount = 0;
 
     document.getElementById("page-container").style.display = "block";
-    document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1>";
-    document.getElementById("main-btn-div").style.display = "block";
+    document.getElementById("main-header").innerHTML = configJSON.text.title;
     document.getElementById("start-desc").style.display = "block";
     
     showSessionsList(); // get sessions fr db and display onscreen
@@ -473,6 +472,7 @@ function loadSessionS1() {
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
 
+    document.getElementById("main-btn-div").style.display = "block";
     let buttonDiv = document.getElementById('main-btn-div');
 
     backBtn = createButton('Start Over');
@@ -516,11 +516,9 @@ function loadSessionS1() {
   var rest = false;
   function showSessionsList() {
     document.getElementById("page-container").style.display = "block";
-    document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1>";
-    document.getElementById("main-btn-div").style.display = "none";
+    document.getElementById("main-header").innerHTML = configJSON.text.title;
     document.getElementById("start-desc").style.display = "block";
     document.getElementById("start-desc").innerHTML = "<h2>Select Session</h2>"
-      + "<h2>Your ID: " + sessionID + "</h2>"
       + configJSON.text.selectSessionDesc
       + "<br><p>&nbsp;&nbsp;&nbsp;&nbsp; SESSION ID "
       + getSpaces(12) + " CHAMBERS "
@@ -597,7 +595,7 @@ function loadSessionS1() {
 
   function clickedBack() {
     removeBtns();
-    mgr.showScene(briefDescription);
+    mgr.showScene(startSession);
   }
 
   function clickedNext() {
@@ -652,7 +650,7 @@ function loadSessionS2() {
     paramChangedBool = true;
 
     document.getElementById("page-container").style.display = "block";
-    document.getElementById("main-header").innerHTML = "<h1>Automated Future Democracies Simulator</h1>";
+    document.getElementById("main-header").innerHTML = configJSON.text.title;
     document.getElementById("main-btn-div").style.display = "none";
 
 
@@ -698,7 +696,7 @@ function loadSessionS2() {
 
   function clickedBack() {
     removeBtns();
-    mgr.showScene(briefDescription);
+    mgr.showScene(startSession);
   }
 
   function clickedNext() {
@@ -3820,6 +3818,10 @@ function sYesVotes() {
         pips: {
           mode: 'range',
           density: 'range',
+          format: {
+            to: function(value) {
+              if (value == 100) return 'Yes'; else return '';}
+          }
         },
         step: 1,
         format: wNumb({
@@ -3839,6 +3841,10 @@ function sYesVotes() {
         pips: {
           mode: 'range',
           density: 'range',
+          format: {
+            to: function(value) {
+              if (value == 100) return 'Yes'; else return '';}
+          }
         },
         step: 1,
         format: wNumb({
@@ -3858,6 +3864,10 @@ function sYesVotes() {
         pips: {
           mode: 'range',
           density: 'range',
+          format: {
+            to: function(value) {
+              if (value == 100) return 'Yes'; else return '';}
+          }
         },
         step: 1,
         format: wNumb({
@@ -4439,12 +4449,12 @@ function sBenchmarkResults() {
 
   function clickedStartOver() {
     removeBtns();
-    mgr.showScene(briefDescription);
+    mgr.showScene(startSession);
   }
 
   function clickedSummary() {
     removeBtns();
-    mgr.showScene(sSaveResults)
+    mgr.showScene(sEndorse)
     //saveSession();
   }
 
@@ -4455,11 +4465,8 @@ function sBenchmarkResults() {
 
 }
 
-var prevSessionID;
-
-//page showing all of user inputs
-function sSaveResults() {
-  let saveBtn, startOverBtn, approvalBtn;
+function sEndorse() {
+  let startOverBtn, summarySaveBtn, approvalBtn;
   let div1, div2, div3, divApproval;
   let s1, s2, s3, sApproval;
 
@@ -4485,7 +4492,216 @@ function sSaveResults() {
 
     console.log("user config summary & save page");
     // document.getElementById("top").innerHTML = "DEMOCRACY ENGINE SIMULATOR INPUTS";
-    document.getElementById("main-header").innerHTML = "<h1>Summary & Save</h1>";
+    document.getElementById("main-header").innerHTML = "<h1>Evaluation Page</h1>";
+    document.getElementById("start-desc").innerHTML = configJSON.text.evalDesc;
+    document.getElementById("pane-bkg").style.display = "none";
+    document.getElementById("screen").style.display = "none";
+    document.getElementById("page1").style.display = "none";
+    document.getElementById("page2").style.display = "none";
+    document.getElementById("page3").style.display = "none";
+    document.getElementById("page4").style.display = "none";
+    document.getElementById("page5").style.display = "none";
+    document.getElementById("page6").style.display = "none";
+    document.getElementById("page7").style.display = "none";
+    document.getElementById("page8").style.display = "none";
+    document.getElementById("page9").style.display = "none";
+    document.getElementById("page10").style.display = "none";
+    document.getElementById("page11").style.display = "none";
+    document.getElementById("page12").style.display = "none";
+    document.getElementById("page13").style.display = "block";
+    // document.getElementById("slider-value").style.display = "none";
+    document.getElementById("vote").style.display = "none";
+    document.getElementById("slider-disp").style.display = "none";
+    document.getElementById("sim-info").style.display = "none";
+
+    let buttonDiv = document.getElementById('main-btn-div');
+    
+    startOverBtn = createButton('Start Over');
+    startOverBtn.id('restart-btn');
+    startOverBtn.class('buttons');
+    startOverBtn.parent(buttonDiv);
+    startOverBtn.mousePressed(clickedStartOver);
+
+    approvalBtn = createButton('Endorse');
+    approvalBtn.id('approve-btn');
+    approvalBtn.class('buttons');
+    //approvalBtn.parent(div3);
+    approvalBtn.mousePressed(clickedApprove);
+
+    summarySaveBtn = createButton('Next');
+    summarySaveBtn.id('save-summary-btn');
+    summarySaveBtn.class('buttons');
+    summarySaveBtn.parent(buttonDiv);
+    summarySaveBtn.mousePressed(clickedSummarySave);
+
+    inputTxt();
+
+    // visualizeVote = false;
+
+    // // set new parameters to show updated configuration when entering scene
+    // setEngineParams(engine);
+    // // reset values for calculations
+    // engine.completeReset();
+    // visual.completeReset();
+    // userEdits = false;
+    // reconfigBool = true;
+
+    background(bColor);
+    document.body.style.backgroundColor = bColor;
+
+  }
+
+  this.draw = function () {
+    
+  }
+
+  function clickedStartOver() {
+    removeBtns();
+    mgr.showScene(startSession);
+  }
+
+  function clickedApprove() {
+    ownerEndorse();
+    divApproval.innerHTML = "";
+    let s = "";
+      if (finalConfigObj.ownerEndorsement == 1) {
+        //document.getElementById("main-header").innerHTML = "<h1>Summary & Save</h1><h2>Session ID: " + sessionID + "</h2><h2>Approved!</h2>";
+        //s += "<h3 style='font-size: 14px; display: inline-block; vertical-align: top;'>User Approval of Configuration </h3><h3 style='font-size: 32px; display: inline-block; margin: 0; line-height: 1;'>&#x2611;</h3>";
+        s += "<img id='approval-check' src='./assets/check-mark-txt-col.svg' style='left:37%'>";
+      } else {
+        //document.getElementById("main-header").innerHTML = "<h1>Summary & Save</h1><h2>Session ID: " + sessionID + "</h2>";
+        //s += "<h3 style='font-size: 14px; display: inline-block; vertical-align: top;'>User Approval of Configuration </h3><h3 style='font-size: 32px; display: inline-block; margin: 0; line-height: 1;'>&#x2610;</h3>";
+        s  += "<h3></h3><div id='approval-check'></div>";
+      }
+      divApproval.innerHTML += s;
+      approvalBtn.parent(divApproval);
+  }
+
+  function clickedSummarySave() {
+    removeBtns();
+    mgr.showScene(sSaveResults);
+  }
+
+  function removeBtns() {
+    startOverBtn.remove();
+    approvalBtn.remove();
+    summarySaveBtn.remove();
+  }
+
+  function inputTxt() {
+
+    //userOutputText.innerHTML =
+    s1 = 
+      "<h3>First Legislative Chamber</h3>" +
+      "<p>Voting Members: " + userNumHouse +
+      "<br>Members in Political Party A: " + Math.round(userPerHouseBody[0] * userNumHouse) +
+      "<br>Members in Political Party B: " + Math.round(userPerHouseBody[1] * userNumHouse) +
+      "<br>Members in Political Party C: " + Math.round(userPerHouseBody[2] * userNumHouse) +
+      "</p><h3>Second Legislative Chamber</h3>" +
+      "<p>Voting Members: " + userNumHouse2 +
+      "<br>Members in Political Party A: " + Math.round(userPerHouse2Body[0] * userNumHouse2) +
+      "<br>Members in Political Party B: " + Math.round(userPerHouse2Body[1] * userNumHouse2) +
+      "<br>Members in Political Party C: " + Math.round(userPerHouse2Body[2] * userNumHouse2) +
+      "</p><h3>Third Legislative Chamber</h3>" +
+      "<p>Voting Members: " + userNumSenate +
+      "<br>Members in Political Party A: " + Math.round(userPerSenateBody[0] * userNumSenate) +
+      "<br>Members in Political Party B: " + Math.round(userPerSenateBody[1] * userNumSenate) +
+      "<br>Members in Political Party C: " + Math.round(userPerSenateBody[2] * userNumSenate) + "</p>";
+
+      s2 =
+      "<h3>Vice Presidency</h3>" +
+      "<p>Voting Members: " + userNumVP +
+      "<br>Members in Political Party A: " + Math.round(userPerPresBody[0] * userNumVP) +
+      "<br>Members in Political Party B: " + Math.round(userPerPresBody[1] * userNumVP) +
+      "<br>Members in Political Party C: " + Math.round(userPerPresBody[2] * userNumVP) +
+      "</p><h3>Presidency</h3>" +
+      "<p>Voting Members: " + userNumPres +
+      "<br>Members in Political Party A: " + Math.round(userPerVPBody[0] * userNumPres) +
+      "<br>Members in Political Party B: " + Math.round(userPerVPBody[1] * userNumPres) +
+      "<br>Members in Political Party C: " + Math.round(userPerVPBody[2] * userNumPres) +
+      "</p><h3>Likelihood of Yes Vote: </h3>" +
+      "<p>Political Party A: " + userDemYaythresh +
+      "<br>Political Party B: " + userRepYaythresh +
+      "<br>Political Party C: " + userIndYaythresh + "</p>";
+
+      s3 = 
+      "<h3>Percentage of votes required for approval of bill</h3>" +
+      "<p>Approval By Majority: " + userBodyPass +
+      "<br> Approval By Supermajority: " + userSuperThresh + "</p>";
+      
+      s3 += "<h3>Benchmark Results</h3><p>" ;
+      for(let i=1; i<=MAX_SIM_RESULTS; i++) {
+        s3 = s3 + configs[configIX].simResults[i].actTitle + " ";
+        if (configs[configIX].simResults[i].billPass == true) {
+          s3 = s3 + "&#x2611;<br>"; // checkmark
+        } else {
+          s3 = s3 + "&#x2610;<br>"; // empty checkmark
+        }
+      }
+      s3 = s3 + "</p>";
+
+      //sApproval = sApproval + "<h3 style='font-size: 14px; display: inline-block; vertical-align: top;'>User Approval of Configuration </h3><h3 style='font-size: 32px; display: inline-block; margin: 0; line-height: 1;'>&#x2610;</h3>";
+      sApproval = sApproval + "<h3></h3><div id='approval-check' style='float:none'></div>";
+
+      div1.innerHTML = s1;
+      div2.innerHTML = s2;
+      div3.innerHTML = s3;
+      divApproval.innerHTML = sApproval;
+      
+      document.getElementById('start-desc').appendChild(divApproval);
+      document.getElementById('start-desc').appendChild(div1);
+      document.getElementById('start-desc').appendChild(div2);
+      document.getElementById('start-desc').appendChild(div3);
+      
+      approvalBtn.parent(divApproval);
+      /*
+    if (userEditCount >= 2) {
+      nextButton.remove();
+      recalBtn = createButton('RECALCULATE VOTE');
+      recalBtn.id('recal-btn');
+      recalBtn.class('buttons');
+      // let buttonDiv = document.getElementById('button-div');
+      recalBtn.parent(buttonDiv);
+
+      // recalBtn.position(windowWidth - recalBtn.width - buttonRes.width - buttonRC.width - 20, windowHeight - 45);
+      recalBtn.mousePressed(inputVar);
+    }
+      */
+  }
+
+}
+
+var prevSessionID;
+
+//page showing all of user inputs
+function sSaveResults() {
+  let saveBtn, startOverBtn; //approvalBtn;
+  let div1, div2, div3, divApproval;
+  let s1, s2, s3, sApproval;
+
+  this.setup = function () {
+    //userOutputText = document.getElementById('slider-disp');
+    //userOutputText = document.getElementById('start-desc');
+  }
+
+  this.enter = function () {
+    prevSessionID = sessionID;
+    s1 = "";
+    s2 = "";
+    s3 = "";
+    sApproval = "";
+    div1 = document.createElement('div');
+    div2 = document.createElement('div');
+    div3 = document.createElement('div');
+    divApproval = document.createElement('div');
+    div1.id = 's-col-1';
+    div2.id = 's-col-2';
+    div3.id = 's-col-3';
+    divApproval.id = 'approval-div';
+
+    console.log("user config summary & save page");
+    // document.getElementById("top").innerHTML = "DEMOCRACY ENGINE SIMULATOR INPUTS";
+    document.getElementById("main-header").innerHTML = "<h1>Save Session</h1>";
     document.getElementById("start-desc").innerHTML = "<h2>Session ID: " + sessionID + "</h2>";
     document.getElementById("pane-bkg").style.display = "none";
     document.getElementById("screen").style.display = "none";
@@ -4515,13 +4731,13 @@ function sSaveResults() {
     startOverBtn.parent(buttonDiv);
     startOverBtn.mousePressed(clickedStartOver);
 
-    approvalBtn = createButton('Approve');
-    approvalBtn.id('approve-btn');
-    approvalBtn.class('buttons');
-    //approvalBtn.parent(div3);
-    approvalBtn.mousePressed(clickedApprove);
+    // approvalBtn = createButton('Approve');
+    // approvalBtn.id('approve-btn');
+    // approvalBtn.class('buttons');
+    // //approvalBtn.parent(div3);
+    // approvalBtn.mousePressed(clickedApprove);
 
-    saveBtn = createButton('Save Config');
+    saveBtn = createButton('Save Session');
     saveBtn.id('save-btn');
     saveBtn.class('buttons');
     saveBtn.parent(buttonDiv);
@@ -4550,25 +4766,25 @@ function sSaveResults() {
 
   function clickedStartOver() {
     removeBtns();
-    mgr.showScene(briefDescription);
+    mgr.showScene(startSession);
   }
 
-  function clickedApprove() {
-    ownerEndorse();
-    divApproval.innerHTML = "";
-    let s = "";
-      if (finalConfigObj.ownerEndorsement == 1) {
-        //document.getElementById("main-header").innerHTML = "<h1>Summary & Save</h1><h2>Session ID: " + sessionID + "</h2><h2>Approved!</h2>";
-        //s += "<h3 style='font-size: 14px; display: inline-block; vertical-align: top;'>User Approval of Configuration </h3><h3 style='font-size: 32px; display: inline-block; margin: 0; line-height: 1;'>&#x2611;</h3>";
-        s += "<h3>User Approval of Configuration</h3><img id='approval-check' src='./assets/check-mark-txt-col.svg' style='left:37%'>";
-      } else {
-        //document.getElementById("main-header").innerHTML = "<h1>Summary & Save</h1><h2>Session ID: " + sessionID + "</h2>";
-        //s += "<h3 style='font-size: 14px; display: inline-block; vertical-align: top;'>User Approval of Configuration </h3><h3 style='font-size: 32px; display: inline-block; margin: 0; line-height: 1;'>&#x2610;</h3>";
-        s  += "<h3>User Approval of Configuration</h3><div id='approval-check'></div>";
-      }
-      divApproval.innerHTML += s;
-      approvalBtn.parent(divApproval);
-  }
+  // function clickedApprove() {
+  //   ownerEndorse();
+  //   divApproval.innerHTML = "";
+  //   let s = "";
+  //     if (finalConfigObj.ownerEndorsement == 1) {
+  //       //document.getElementById("main-header").innerHTML = "<h1>Summary & Save</h1><h2>Session ID: " + sessionID + "</h2><h2>Approved!</h2>";
+  //       //s += "<h3 style='font-size: 14px; display: inline-block; vertical-align: top;'>User Approval of Configuration </h3><h3 style='font-size: 32px; display: inline-block; margin: 0; line-height: 1;'>&#x2611;</h3>";
+  //       s += "<h3>User Approval of Configuration</h3><img id='approval-check' src='./assets/check-mark-txt-col.svg' style='left:37%'>";
+  //     } else {
+  //       //document.getElementById("main-header").innerHTML = "<h1>Summary & Save</h1><h2>Session ID: " + sessionID + "</h2>";
+  //       //s += "<h3 style='font-size: 14px; display: inline-block; vertical-align: top;'>User Approval of Configuration </h3><h3 style='font-size: 32px; display: inline-block; margin: 0; line-height: 1;'>&#x2610;</h3>";
+  //       s  += "<h3>User Approval of Configuration</h3><div id='approval-check'></div>";
+  //     }
+  //     divApproval.innerHTML += s;
+  //     approvalBtn.parent(divApproval);
+  // }
 
   function clickedSave() {
     removeBtns();
@@ -4578,7 +4794,7 @@ function sSaveResults() {
 
   function removeBtns() {
     startOverBtn.remove();
-    approvalBtn.remove();
+    // approvalBtn.remove();
     saveBtn.remove();
   }
 
@@ -4616,12 +4832,14 @@ function sSaveResults() {
       "</p><h3>Likelihood of Yes Vote: </h3>" +
       "<p>Political Party A: " + userDemYaythresh +
       "<br>Political Party B: " + userRepYaythresh +
-      "<br>Political Party C: " + userIndYaythresh +
-      "</p><h3>Percentage of votes required for approval of bill</h3>" +
+      "<br>Political Party C: " + userIndYaythresh + "</p>";
+
+      s3 =
+      "<h3>Percentage of votes required for approval of bill</h3>" +
       "<p>Approval By Majority: " + userBodyPass +
       "<br> Approval By Supermajority: " + userSuperThresh + "</p>";
       
-      s3 = "<h3>Benchmark Results</h3><p>" ;
+      s3 += "<h3>Benchmark Results</h3><p>" ;
       for(let i=1; i<=MAX_SIM_RESULTS; i++) {
         s3 = s3 + configs[configIX].simResults[i].actTitle + " ";
         if (configs[configIX].simResults[i].billPass == true) {
@@ -4632,19 +4850,31 @@ function sSaveResults() {
       }
       s3 = s3 + "</p>";
 
+
+      if (finalConfigObj.ownerEndorsement == 1) {
+        //document.getElementById("main-header").innerHTML = "<h1>Summary & Save</h1><h2>Session ID: " + sessionID + "</h2><h2>Approved!</h2>";
+        //s += "<h3 style='font-size: 14px; display: inline-block; vertical-align: top;'>User Approval of Configuration </h3><h3 style='font-size: 32px; display: inline-block; margin: 0; line-height: 1;'>&#x2611;</h3>";
+        sApproval = "<h3>Endorsement</h3><img id='approval-check' src='./assets/check-mark-txt-col.svg' style='left:37%'>";
+      } else {
+        //document.getElementById("main-header").innerHTML = "<h1>Summary & Save</h1><h2>Session ID: " + sessionID + "</h2>";
+        //s += "<h3 style='font-size: 14px; display: inline-block; vertical-align: top;'>User Approval of Configuration </h3><h3 style='font-size: 32px; display: inline-block; margin: 0; line-height: 1;'>&#x2610;</h3>";
+        sApproval = sApproval + "<h3>Endorsement</h3><div id='approval-check'></div>";
+      }
+
       //sApproval = sApproval + "<h3 style='font-size: 14px; display: inline-block; vertical-align: top;'>User Approval of Configuration </h3><h3 style='font-size: 32px; display: inline-block; margin: 0; line-height: 1;'>&#x2610;</h3>";
-      sApproval = sApproval + "<h3>User Approval of Configuration</h3><div id='approval-check'></div>";
+      //sApproval = sApproval + "<h3>User Approval of Configuration</h3><div id='approval-check'></div>";
 
       div1.innerHTML = s1;
       div2.innerHTML = s2;
       div3.innerHTML = s3;
       divApproval.innerHTML = sApproval;
       
+      document.getElementById('start-desc').appendChild(divApproval);
       document.getElementById('start-desc').appendChild(div1);
       document.getElementById('start-desc').appendChild(div2);
       document.getElementById('start-desc').appendChild(div3);
-      document.getElementById('start-desc').appendChild(divApproval);
-      approvalBtn.parent(divApproval);
+      
+      // approvalBtn.parent(divApproval);
       /*
     if (userEditCount >= 2) {
       nextButton.remove();
@@ -4673,7 +4903,7 @@ function sComplete() {
     console.log("save complete page");
     // document.getElementById("top").innerHTML = "DEMOCRACY ENGINE SIMULATOR INPUTS";
     document.getElementById("main-header").innerHTML = "<h1>Session Complete</h1>";
-    document.getElementById("start-desc").innerHTML = "<h2>THANK YOU</h2><h2>Session ID: " + prevSessionID + "</h2><p>Please record your session ID so that you might be able to retrieve it later.</p";
+    document.getElementById("start-desc").innerHTML = "<h2>Session ID: " + prevSessionID + "</h2><p style='text-align:center'>Please record your session ID to retrieve it later.</p";
     document.getElementById("top").style.display = "none";
     document.getElementById("pane-bkg").style.display = "none";
     document.getElementById("page1").style.display = "none";
@@ -4717,7 +4947,7 @@ function sComplete() {
 
   function clickedStartOver() {
     startOverBtn.remove();
-    mgr.showScene(briefDescription);
+    mgr.showScene(startSession);
   }
 
 }

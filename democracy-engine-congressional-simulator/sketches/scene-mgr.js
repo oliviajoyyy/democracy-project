@@ -153,7 +153,7 @@ function setup() {
   noStroke();
   mgr = new SceneManager();
   mgr.addScene(startUp);
-  mgr.addScene(briefDescription);
+  mgr.addScene(startSession);
   mgr.addScene(hardwareTest);
   mgr.addScene(aboutProject);
   mgr.addScene(newSessionScene);
@@ -175,6 +175,7 @@ function setup() {
   mgr.addScene(sVote);
   mgr.addScene(sBenchmarkPane);
   mgr.addScene(sBenchmarkResults);
+  mgr.addScene(sEndorse);
   mgr.addScene(sSaveResults);
   mgr.addScene(sComplete);
   // mgr.addScene(sInfo);
