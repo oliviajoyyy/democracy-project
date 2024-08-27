@@ -403,6 +403,8 @@ function newSessionScene() {
   function clickedNext() {
     removeBtns();
     engine.setDefaultParams(); // set engine params to json govt config vals
+    // setDefaultUserVars();
+    // setEngineParams(engine);
       // reset values for calculations
     engine.completeReset();
     visual.completeReset();
@@ -1273,7 +1275,7 @@ function sBodies() {
 
     nextPaneBtn.mousePressed(nextPane);
     prevPaneBtn.mousePressed(previousPane);
-    document.getElementById('prev-pane-btn').style.visibility = 'hidden';
+    document.getElementById('prev-pane-btn').disabled = true;
   }
 
   this.draw = function () {
@@ -1455,7 +1457,7 @@ function sLegislative() {
 
     checkNumBodies();
     sliders();
-    document.getElementById('prev-pane-btn').style.visibility = 'visible';
+    document.getElementById('prev-pane-btn').disabled = false;
 
     // prevPaneBtn.mousePressed(previousPane);
     // nextPaneBtn.mousePressed(nextPane);
@@ -1926,6 +1928,9 @@ function sMembersFirstChamber() {
     startVals[0] = userPerHouseBody[0];
     startVals[1] = userPerHouseBody[1];
     startVals[2] = userPerHouseBody[2];
+    engine.perDemHouse = roundNum(engine.perDemHouse, 2);
+    engine.perRepHouse = roundNum(engine.perRepHouse, 2);
+    engine.perIndHouse = roundNum(engine.perIndHouse, 2);
   }
 
   this.enter = function () {
@@ -1991,7 +1996,8 @@ function sMembersFirstChamber() {
 
     visual.displayImmediateBlank(engine, false);
     paneToggle();
-    console.log("Party A: " + userPerHouseBody[0] + " Party B: " + userPerHouseBody[1] + " Party C: " + userPerHouseBody[2]);
+    console.log("user Party A: " + userPerHouseBody[0] + " Party B: " + userPerHouseBody[1] + " Party C: " + userPerHouseBody[2]);
+    console.log("engine Party A: " + engine.perDemHouse + " Party B: " + engine.perRepHouse + " Party C: " + engine.perIndHouse);
 
     // if sliders changed any values on this page, enable update button
     if (userPerHouseBody[0] != engine.perDemHouse || userPerHouseBody[1] != engine.perRepHouse || userPerHouseBody[2] != engine.perIndHouse) {
@@ -3579,7 +3585,7 @@ function sBodyPass() {
     console.log("user super pass: " + userSuperThresh);
 
     // if sliders changed any values on this page, enable update button
-    if ((parseFloat(userSuperThresh) / 100.0) != engine.perPass || (parseFloat(userSuperThresh) / 100.0) != engine.superThresh) {
+    if ((parseFloat(userBodyPass) / 100.0) != engine.perPass || (parseFloat(userSuperThresh) / 100.0) != engine.superThresh) {
       document.getElementById("update-btn").disabled = false;
     } else { // otherwise leave disabled
       document.getElementById("update-btn").disabled = true;
@@ -3688,6 +3694,9 @@ function sYesVotes() {
   this.setup = function () {
     createSlider();
     sliderVals();
+    if (engine.numParties == 2) {
+      engine.indYaythresh = 0;
+    }
   }
 
   this.enter = function () {
@@ -3725,8 +3734,8 @@ function sYesVotes() {
     checkParties();
     // sliders();
     slider12.noUiSlider.set(curDemYaythresh);
-    slider13.noUiSlider.set(userRepYaythresh);
-    slider14.noUiSlider.set(userIndYaythresh);
+    slider13.noUiSlider.set(curRepYaythresh);
+    slider14.noUiSlider.set(curIndYaythresh);
     sliderVals();
 
     document.body.style.backgroundColor = bColor;
@@ -3756,6 +3765,9 @@ function sYesVotes() {
   this.draw = function () { 
     visual.displayImmediateBlank(engine, false);
     paneToggle();
+    console.log("user Dem yay: " + (parseFloat(userDemYaythresh)/100.0) + " Rep yay: " + (parseFloat(userRepYaythresh)/100.0) + " Ind yay: " + (parseFloat(userIndYaythresh)/100.0));
+    console.log("engine Dem yay: " + engine.demYaythresh + " Rep yay: " + engine.repYaythresh + " Ind yay: " + engine.indYaythresh);
+
     if ((parseFloat(userDemYaythresh)/100.0) != engine.demYaythresh || (parseFloat(userRepYaythresh)/100.0) != engine.repYaythresh || (parseFloat(userIndYaythresh)/100.0) != engine.indYaythresh) {
       document.getElementById("update-btn").disabled = false;
     } else { // otherwise leave disabled
@@ -4422,12 +4434,16 @@ function sBenchmarkResults() {
     reconfigBool = true;
     background(bColor);
     document.body.style.backgroundColor = bColor;
+    //for (let i=0; i<=120; i++) {
+      //if (i%5 == 0)
+      //visual.displayImmediateBlank(engine, true);
+    //}
     //visual.displayImmediateVotes(engine); // OC TODO - put here when figure out drawing votes all at once (1 frame)
   }
 
   this.draw = function () {
     visual.displayImmediateBlank(engine, true); // draws votes for last calculation
-    if (visual.userInputState) {
+    //if (visual.userInputState) {
         document.body.style.backgroundColor = colorOverlay;
         document.getElementById("screen").style.display = "block";
         // push();
@@ -4443,8 +4459,8 @@ function sBenchmarkResults() {
         // // engine.bodyCount = engine.numBodies;
         // // visual.finalTextDisplayUser(engine, helvFont, colorOverlay, resultIX);
         // //changeText(engine.decisionTxt);
-      visual.userInputState = false;
-    }
+      //visual.userInputState = false;
+    //}
   }
 
   function clickedStartOver() {

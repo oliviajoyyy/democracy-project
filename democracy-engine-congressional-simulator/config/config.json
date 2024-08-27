@@ -162,7 +162,9 @@
         "paneBkg": "#ebe9da",
         "paneBorder": "#757575",
         "sliderStart": "60px",
-        "sliderOffset": "7vh"
+        "sliderOffset": "7vh",
+        "progressVal": "#7d8cb3",
+        "progressRemainder": "#b7bcc9"
     },
 
     "text": {

@@ -383,7 +383,9 @@ function defResult() {
   }
 }
 
-// set user vars to default config of govt json
+/**
+ * set user vars to default config of govt json
+ */
 function setDefaultUserVars() {
   userNumLegislative = govtConfig.numLegislativeBodies;
   userNumParties = govtConfig.numParties;
@@ -428,7 +430,10 @@ function setDefaultUserVars() {
 
 }
 
-// set user vars to loaded config
+/**
+ * set user vars to loaded config
+ * @param {*} lConfig 
+ */
 function setLoadedUserVars(lConfig) {
   userNumLegislative = lConfig.numLegislativeBodies;
   userNumParties = lConfig.numParties;
@@ -466,7 +471,10 @@ function setLoadedUserVars(lConfig) {
   userIndYaythresh = lConfig.probabilityYesVote.partyC * 100;
 }
 
-// set engine params to user vars
+/**
+ * set engine params to user vars
+ * @param {*} engine 
+ */
 function setEngineParams(engine) {
   engine.numBodies = 5; // up to 5 voting bodies
   engine.numLegislativeBodies = parseFloat(userNumLegislative);

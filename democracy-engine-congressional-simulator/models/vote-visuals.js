@@ -512,6 +512,13 @@ class VoteVisual {
     pop();
   }
 
+  /**
+   * Displays configuration with blank boxes, graph of percentages on right side of screen,
+   * and labels above each chamber.
+   * If minimalConfig == true, it does not display the graph nor chamber labels.
+   * @param {*} engineObj 
+   * @param {*} minimalConfig 
+   */
   displayImmediateBlank(engineObj, minimalConfig) {
     this.engine = engineObj;
     this.forUser = this.engine.forUser;
