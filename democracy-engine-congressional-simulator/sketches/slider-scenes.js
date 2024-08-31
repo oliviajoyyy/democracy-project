@@ -1,3 +1,7 @@
+
+/**
+ * A01 Start Up
+ */
 function startUp() {
   let continueBtn, testBtn;
 
@@ -12,12 +16,9 @@ function startUp() {
   }
 
   this.enter = function () {
-    // gui = createGui();
-    // continueBtn = createButton("Continue", width/2, height/2);
     console.log("start up scene");
     background(bColor);
     document.body.style.backgroundColor = bColor;
-    // paneArrow = false; // cannot use arrow key to move to next scene
 
     document.getElementById("page-container").style.display = "block";
     document.getElementById("main-header").innerHTML = configJSON.text.title;
@@ -37,7 +38,6 @@ function startUp() {
     document.getElementById("page11").style.display = "none";
     document.getElementById("page12").style.display = "none";
     document.getElementById("page13").style.display = "none";
-    // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
@@ -45,16 +45,16 @@ function startUp() {
     let buttonDiv = document.getElementById('main-btn-div');
 
     continueBtn = createButton('Continue');
-    continueBtn.id('continue-btn');
+    continueBtn.id('continue-btn-a01');
     continueBtn.class('buttons');
     continueBtn.parent(buttonDiv);
-
-    // buttonDiv.innerHTML += "<br>";
+    continueBtn.mousePressed(clickedContinue);
 
     testBtn = createButton('Hardware Test');
-    testBtn.id('test-btn');
+    testBtn.id('test-btn-a01');
     testBtn.class('buttons');
     testBtn.parent(buttonDiv);
+    testBtn.mousePressed(clickedTest);
 
     // setTimeout(function () {
     //     if (mgr.isCurrent(startUp)) { // OC prevents prgm from moving to test screen if already moved on from the first screen
@@ -64,10 +64,6 @@ function startUp() {
   }
 
   this.draw = function () {
-
-    continueBtn.mousePressed(clickedContinue);
-    testBtn.mousePressed(clickedTest);
-
   }
 
   function clickedContinue() {
@@ -86,7 +82,10 @@ function startUp() {
   }
 }
 
-
+/**
+ * A02 Start Session
+ * Main start up scene for public view
+ */
 function startSession() {
   let newSessionBtn, loadSessionBtn, aboutBtn;
 
@@ -101,8 +100,6 @@ function startSession() {
   }
 
   this.enter = function () {
-    // gui = createGui();
-    // continueBtn = createButton("Continue", width/2, height/2);
     console.log("start up scene");
     background(bColor);
     document.body.style.backgroundColor = bColor;
@@ -127,7 +124,6 @@ function startSession() {
     document.getElementById("page11").style.display = "none";
     document.getElementById("page12").style.display = "none";
     document.getElementById("page13").style.display = "none";
-    // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
@@ -135,31 +131,26 @@ function startSession() {
     let buttonDiv = document.getElementById('main-btn-div');
 
     newSessionBtn = createButton('New Session');
-    newSessionBtn.id('new-session-btn');
+    newSessionBtn.id('new-session-btn-a02');
     newSessionBtn.class('buttons');
     newSessionBtn.parent(buttonDiv);
-
-    // document.getElementById("main-btn-div").innerHTML += "<br>";
+    newSessionBtn.mousePressed(clickedNew);
 
     loadSessionBtn = createButton('Load Session');
-    loadSessionBtn.id('load-session-btn');
+    loadSessionBtn.id('load-session-btn-a02');
     loadSessionBtn.class('buttons');
     loadSessionBtn.parent(buttonDiv);
+    loadSessionBtn.mousePressed(clickedLoad);
 
     aboutBtn = createButton('About the Project');
-    aboutBtn.id('about-btn');
+    aboutBtn.id('about-btn-a02');
     aboutBtn.class('buttons');
     aboutBtn.parent(buttonDiv);
-    
+    aboutBtn.mousePressed(clickedAbout);
 
   }
 
   this.draw = function () {
-
-    newSessionBtn.mousePressed(clickedNew);
-    loadSessionBtn.mousePressed(clickedLoad);
-    aboutBtn.mousePressed(clickedAbout);
-
   }
 
   function clickedNew() {
@@ -185,7 +176,9 @@ function startSession() {
   }
 }
 
-
+/**
+ * A03 Hardware Test
+ */
 function hardwareTest() {
   let backBtn, testBtn;
 
@@ -200,8 +193,6 @@ function hardwareTest() {
   }
 
   this.enter = function () {
-    // gui = createGui();
-    // continueBtn = createButton("Continue", width/2, height/2);
     console.log("start up scene");
 
     document.getElementById("page-container").style.display = "block";
@@ -223,7 +214,6 @@ function hardwareTest() {
     document.getElementById("page11").style.display = "none";
     document.getElementById("page12").style.display = "none";
     document.getElementById("page13").style.display = "none";
-    // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
@@ -231,22 +221,19 @@ function hardwareTest() {
     let buttonDiv = document.getElementById('main-btn-div');
 
     backBtn = createButton('Back to Start Up');
-    backBtn.id('back-btn');
+    backBtn.id('back-btn-a03');
     backBtn.class('buttons');
     backBtn.parent(buttonDiv);
-
-    // buttonDiv.innerHTML += "<br>";
+    backBtn.mousePressed(clickedBack);
 
     testBtn = createButton('Hardware DB Test');
-    testBtn.id('test-btn');
+    testBtn.id('test-btn-a03');
     testBtn.class('buttons');
     testBtn.parent(buttonDiv);
-
+    // testBtn.mousePressed(clickedTest);
   }
 
   this.draw = function () {
-    backBtn.mousePressed(clickedBack);
-    // testBtn.mousePressed(clickedTest);
   }
 
   function clickedBack() {
@@ -256,7 +243,7 @@ function hardwareTest() {
 
   function clickedTest() {
     removeBtns();
-    //mgr.showScene(democracyEngineUser); // scene TBA
+    //mgr.showScene(); // scene TBA
   }
 
   function removeBtns() {
@@ -265,6 +252,9 @@ function hardwareTest() {
   }
 }
 
+/**
+ * A04 More About This Project
+ */
 function aboutProject() {
   let backBtn;
   
@@ -279,8 +269,6 @@ function aboutProject() {
   }
 
   this.enter = function () {
-    // gui = createGui();
-    // continueBtn = createButton("Continue", width/2, height/2);
     console.log("start up scene");
 
     document.getElementById("page-container").style.display = "block";
@@ -302,7 +290,6 @@ function aboutProject() {
     document.getElementById("page11").style.display = "none";
     document.getElementById("page12").style.display = "none";
     document.getElementById("page13").style.display = "none";
-    // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
@@ -310,13 +297,13 @@ function aboutProject() {
     let buttonDiv = document.getElementById('main-btn-div');
 
     backBtn = createButton('Back to Start Up');
-    backBtn.id('back-btn');
+    backBtn.id('back-btn-a04');
     backBtn.class('buttons');
     backBtn.parent(buttonDiv);
+    backBtn.mousePressed(clickedBack);
   }
 
   this.draw = function () {
-    backBtn.mousePressed(clickedBack);
   }
 
   function clickedBack() {
@@ -329,7 +316,9 @@ function aboutProject() {
   }
 }
 
-
+/**
+ * B01 New Session
+ */
 function newSessionScene() {
   let backBtn, nextBtn;
   
@@ -344,8 +333,6 @@ function newSessionScene() {
   }
 
   this.enter = function () {
-    // gui = createGui();
-    // continueBtn = createButton("Continue", width/2, height/2);
     console.log("start up scene");
 
     newSession();
@@ -372,7 +359,6 @@ function newSessionScene() {
     document.getElementById("page11").style.display = "none";
     document.getElementById("page12").style.display = "none";
     document.getElementById("page13").style.display = "none";
-    // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
@@ -380,19 +366,19 @@ function newSessionScene() {
     let buttonDiv = document.getElementById('main-btn-div');
 
     backBtn = createButton('Start Over');
-    backBtn.id('back-btn');
+    backBtn.id('back-btn-b01');
     backBtn.class('buttons');
     backBtn.parent(buttonDiv);
+    backBtn.mousePressed(clickedBack);
 
     nextBtn = createButton('Next');
-    nextBtn.id('next-btn-1');
+    nextBtn.id('next-btn-b01');
     nextBtn.class('buttons');
     nextBtn.parent(buttonDiv);
+    nextBtn.mousePressed(clickedNext);
   }
 
   this.draw = function () {
-    backBtn.mousePressed(clickedBack);
-    nextBtn.mousePressed(clickedNext);
   }
 
   function clickedBack() {
@@ -405,7 +391,7 @@ function newSessionScene() {
     engine.setDefaultParams(); // set engine params to json govt config vals
     // setDefaultUserVars();
     // setEngineParams(engine);
-      // reset values for calculations
+    // reset values for calculations
     engine.completeReset();
     visual.completeReset();
     userEdits = false;
@@ -422,6 +408,9 @@ function newSessionScene() {
   }
 }
 
+/**
+ * B02 Load Session
+ */
 function loadSessionS1() {
   let backBtn, nextBtn, showMoreBtn;
   let selection;
@@ -442,8 +431,6 @@ function loadSessionS1() {
   }
 
   this.enter = function () {
-    // gui = createGui();
-    // continueBtn = createButton("Continue", width/2, height/2);
     console.log("start up scene");
     newSession();
     paramChangedBool = true;
@@ -469,7 +456,6 @@ function loadSessionS1() {
     document.getElementById("page11").style.display = "none";
     document.getElementById("page12").style.display = "none";
     document.getElementById("page13").style.display = "none";
-    // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
@@ -478,31 +464,29 @@ function loadSessionS1() {
     let buttonDiv = document.getElementById('main-btn-div');
 
     backBtn = createButton('Start Over');
-    backBtn.id('back-btn');
+    backBtn.id('back-btn-b02');
     backBtn.class('buttons');
     backBtn.parent(buttonDiv);
+    backBtn.mousePressed(clickedBack);
 
     showMoreBtn = createButton('Show More Sessions');
-    showMoreBtn.id('show-btn');
+    showMoreBtn.id('show-btn-b02');
     showMoreBtn.class('buttons');
     showMoreBtn.parent(buttonDiv);
+    nextBtn.mousePressed(clickedNext);
 
     nextBtn = createButton('Next');
-    nextBtn.id('next-btn-1');
+    nextBtn.id('next-btn-b02');
     nextBtn.class('buttons');
     nextBtn.parent(buttonDiv);
-
-    backBtn.mousePressed(clickedBack);
-    nextBtn.mousePressed(clickedNext);
     showMoreBtn.mousePressed(clickedShowMore);
-
   }
 
   this.draw = function () {
-    if (sessions && selection.value()) { // set c to global var loadedSession
+    if (sessions && selection.value()) { 
       var i = selection.value();
       //console.log("sel val: " + selection.value());
-      loadedConfig = sessions[i].finalConfig.config;
+      loadedConfig = sessions[i].finalConfig.config; // set to global var loadedConfig
       //console.log(loadedConfig);
     }
   }
@@ -535,7 +519,6 @@ function loadSessionS1() {
       console.log(result);
       // show sessions in order from last 10 
       // -- OC written like this so that startIX can move backward to show next prev 10 when triggered (btn press?)
-      //if ()
       if (rest) {
         showCount = 1;
       } else {
@@ -548,11 +531,9 @@ function loadSessionS1() {
         startIX = 0;
         endIX = result.length;
       } else if (startIX < 0) { // reached beginning, so show from beginning
-        //showCount = 1;
         startIX = 0;
         endIX = startIX+numResults;
         rest = true;
-        //startIX = result.length-(numResults);
       } else {
         rest = false;
       }
@@ -568,17 +549,14 @@ function loadSessionS1() {
       let s2 = "";
       let s3 = "";
       for (let i=startIX; (i<endIX); i++) {
-        //if (i<startIX+numResults) {
         console.log("i: " + i);
         let sObj = result[i].finalConfig.config;
         console.log(sObj);
         let totalVoting = sObj.chamber1.totalMembers + sObj.chamber2.totalMembers + sObj.chamber3.totalMembers + sObj.vicePres.totalMembers + sObj.president.totalMembers;
-        selection.option(result[i].uniqueID, i.toString()); //+ " " + totalVoting + " " + result[i].numParties);
-        //s = s + getSpaces(7) + totalVoting + getSpaces(28-totalVoting.toString().length) + sObj.numParties + "<br>";
+        selection.option(result[i].uniqueID, i.toString());
         s = s + sObj.numLegislativeBodies + "<br>";
         s2 = s2 + sObj.numParties + "<br>";
         s3 = s3 + totalVoting + "<br>";
-        //}
       }
       selection.selected(startIX.toString());
       console.log("selected val: " + selection.value());
@@ -592,7 +570,6 @@ function loadSessionS1() {
     document.getElementById("start-desc").innerHTML += "<div id='session-list'></div>";
     selection.parent("session-list"); // put options in div with border
     selection.class('radio-sel');
-    
   }
 
   function clickedBack() {
@@ -618,7 +595,6 @@ function loadSessionS1() {
 
   function clickedShowMore() {
     selection.remove();
-    //showCount++;
     showSessionsList();
   }
 
@@ -630,570 +606,21 @@ function loadSessionS1() {
   }
 }
 
-function loadSessionS2() {
-  let backBtn, nextBtn;
-  
-  this.setup = function () {
-    textFont(helvFont);
-    let dWidth = windowWidth * .8;
-    let dHeight = windowHeight * .8;
-    let canvas = createCanvas(dWidth, dHeight);
-    let canvasDiv = document.getElementById('vote');
-    canvas.parent(canvasDiv);
-    background(bColor);
-  }
-
-  this.enter = function () {
-    // gui = createGui();
-    // continueBtn = createButton("Continue", width/2, height/2);
-    console.log("loadedstart up scene");
-
-    newSession();
-    paramChangedBool = true;
-
-    document.getElementById("page-container").style.display = "block";
-    document.getElementById("main-header").innerHTML = configJSON.text.title;
-    document.getElementById("main-btn-div").style.display = "none";
-
-
-    document.getElementById("start-desc").style.display = "block";
-    document.getElementById("start-desc").innerHTML = "<h2>Load Session</h2><p>[Description here on how to use the interface]</p><p>Session ID: " + sessionID + "</p>";
-
-    document.getElementById("top").style.display = "none";
-    document.getElementById("page1").style.display = "none";
-    document.getElementById("page2").style.display = "none";
-    document.getElementById("page3").style.display = "none";
-    document.getElementById("page4").style.display = "none";
-    document.getElementById("page5").style.display = "none";
-    document.getElementById("page6").style.display = "none";
-    document.getElementById("page7").style.display = "none";
-    document.getElementById("page8").style.display = "none";
-    document.getElementById("page9").style.display = "none";
-    document.getElementById("page10").style.display = "none";
-    document.getElementById("page11").style.display = "none";
-    document.getElementById("page12").style.display = "none";
-    document.getElementById("page13").style.display = "none";
-    // document.getElementById("slider-value").style.display = "none";
-    document.getElementById("vote").style.display = "none";
-    document.getElementById("slider-disp").style.display = "none";
-    document.getElementById("sim-info").style.display = "none";
-
-    // let buttonDiv = document.getElementById('button-div');
-
-    backBtn = createButton('Start Over');
-    backBtn.id('back-btn');
-    backBtn.class('buttons');
-    backBtn.parent(buttonDiv);
-
-    nextBtn = createButton('Next');
-    nextBtn.id('next-btn-1');
-    nextBtn.class('buttons');
-    nextBtn.parent(buttonDiv);
-  }
-
-  this.draw = function () {
-    backBtn.mousePressed(clickedBack);
-    nextBtn.mousePressed(clickedNext);
-  }
-
-  function clickedBack() {
-    removeBtns();
-    mgr.showScene(startSession);
-  }
-
-  function clickedNext() {
-    removeBtns();
-    // engine.setDefaultParams();
-    setEngineParams(engine); // set engine params to user vars, which were loaded
-    // reset values for calculations
-    engine.completeReset();
-    visual.completeReset();
-    userEdits = false;
-    reconfigBool = true;
-
-    //engine.currentCongLogic(true); // uncomment if drawing to screen real time
-    mgr.showScene(sBodies);
-  }
-
-  function removeBtns() {
-    backBtn.remove();
-    nextBtn.remove();
-  }
-}
-
-/*
-//democracy simulater, connected to user values
-function configVisual() {
-  console.log("democracy userEdits: " + userEdits);
-
-  this.setup = function () {
-
-    textFont(helvFont);
-    let dWidth = windowWidth * .8;
-    let dHeight = windowHeight * .8;
-    let canvas = createCanvas(dWidth, dHeight);
-    let canvasDiv = document.getElementById('vote');
-    canvas.parent(canvasDiv);
-    background(bColor);
-    // dispButton();
-    // let fs = fullscreen();
-    // fullscreen(!fs);
-
-  }
-
-
-
-  this.enter = function () {
-    
-    //redraws canvas with new width and height when user simulator restarts
-    if (reconfigBool == true) {
-      // windowResized();
-      visual.dWidth = windowWidth * .8;
-      visual.dHeight = windowHeight * .8;
-      canvas = createCanvas(visual.dWidth, visual.dHeight);
-      let canvasDiv = document.getElementById('vote');
-      canvas.parent(canvasDiv);
-      reconfigBool = false;
-    }
-
-    document.getElementById("page-container").style.display = "none";
-    document.getElementById("top").style.display = "none";
-    document.getElementById("page1").style.display = "none";
-    document.getElementById("page2").style.display = "none";
-    document.getElementById("page3").style.display = "none";
-    document.getElementById("page4").style.display = "none";
-    document.getElementById("page5").style.display = "none";
-    document.getElementById("page6").style.display = "none";
-    document.getElementById("page7").style.display = "none";
-    document.getElementById("page8").style.display = "none";
-    document.getElementById("page9").style.display = "none";
-    document.getElementById("page10").style.display = "none";
-    document.getElementById("page11").style.display = "none";
-    document.getElementById("page12").style.display = "none";
-    document.getElementById("page13").style.display = "none";
-    // document.getElementById("slider-value").style.display = "none";
-    document.getElementById("vote").style.display = "block";
-    document.getElementById("slider-disp").style.display = "none";
-    document.getElementById("sim-info").style.display = "none";
-    document.getElementById("main-btn-div").style.display = "none";
-
-    console.log(mgr.isCurrent(configVisual));
-
-  }
-
-  // run the simulator for user configuration
-  this.draw = function () {
-
-    // if (frameCount >= 2000 && frameCount < 2120) { // for testing multiple runs
-    //   //engine = new DemocracyEngine();
-    //   inputVar();
-     engine.currentCongLogic(userEdits);
-    //   console.log("RESULT " + (frameCount-1999) + " : " + engine.voteResults);
-    // }
-
-    // OC run voting simulation 10 times on this configuration
-    // for (let i=resultIX; i < MAX_SIM_RESULTS; i++) {
-        
-    //     engine.bodyCount = 0;
-    //       engine.bodyPass = [];
-    //       engine.resetCount();
-    //       engine.resetDraw();
-    //       engine.votingBodyCounts = [];
-    //       engine.superThreshIndex = [];
-    //     engine.currentCongLogic(userEdits);
-    //     //let engineSim = new DemocracyEngine
-    //     updateSession();
-    //     resultIX++;
-    // }
-
-    // OC display the last voting result
-    console.log("numBodies in cv: " + this.numBodies);
-    // visual.displayImmediate(engine);
-    // params set and vals reset in prev scene when button is clicked
-    visual.displayImmediateBlank(engine);
-
-
-      // OC when visual display of rectangles is done, show buttons
-      //if (visual.userInputState) { // && resultIX == 0) {
-        //finalDisplay(); // only displays once
-        
-        //updateSession();
-        //resultIX++;
-        //addSession(toSchema(engine)); // OC save session to db after displaying to screen
-      //}
-
-      //showPanes();
-    }
-
-  // Displays the voting results as text on the screen
-  // also displays buttons
-  function finalDisplay() {
-
-    setTimeout(function () {
-      document.body.style.backgroundColor = colorOverlay;
-      userInput(); // show buttons
-      visual.finalTextDisplayUser(engine, helvFont, colorOverlay, resultIX-1);
-      changeText(engine.decisionTxt); // change final decision text at bottom of screen 
-    }, 1500); // 1.5 seconds before text overlay shows
-
-    //engine.finalDisplayBool = false;
-    visual.userInputState = false;
-
-  }
-
-  //Once Bill Pass result has been calculated users can enter in their own variables to reconfigure congress or recalculate the vote with the same parameters
-  function userInput() {
-
-    recalBtn = createButton('RECALCULATE VOTE');
-    recalBtn.id('recal-btn');
-    recalBtn.class('buttons');
-    recalBtn.mousePressed(inputVar);
-
-    buttonRC = createButton('RECONFIGURE GOVERNMENT');
-    buttonRC.id('rec-btn');
-    buttonRC.class('buttons');
-    buttonRC.mousePressed(nextScene);
-
-    buttonRes = createButton('RUN DEFAULT SETTINGS');
-    buttonRes.id('res-btn');
-    buttonRes.class('buttons');
-    buttonRes.mousePressed(userRecount);
-
-    emailBtn = createButton('EMAIL YOUR RESULTS');
-    emailBtn.id('email-btn');
-    emailBtn.class('buttons');
-    emailBtn.mousePressed(emailFunc);
-
-    // let buttonDiv = document.getElementById('button-div');
-    emailBtn.parent(buttonDiv);
-    buttonRC.parent(buttonDiv);
-    buttonRes.parent(buttonDiv);
-    recalBtn.parent(buttonDiv);
-
-  }
-
-  //Reloads the page if user would like to reset values
-  function userRecount() {
-    // save session to db then reload the page
-    saveSession();
-    location.reload();
-    //reset();
-  }
-
-
-  function userVars() {
-    //AB added this here for less confusion for the user
-    buttonRC.remove();
-    // background(0);
-    changeText(" ");
-  }
-}
-
-
-
-
-// --------------------------------------------------------------------------------
-
-
-//democracy simulater, connected to user values
-function democracyEngineUser() {
-  console.log("democracy userEdits: " + userEdits);
-
-  this.setup = function () {
-
-    textFont(helvFont);
-    let dWidth = windowWidth * .8;
-    let dHeight = windowHeight * .8;
-    let canvas = createCanvas(dWidth, dHeight);
-    let canvasDiv = document.getElementById('vote');
-    canvas.parent(canvasDiv);
-    background(bColor);
-    // dispButton();
-    // let fs = fullscreen();
-    // fullscreen(!fs);
-
-  }
-
-
-
-  this.enter = function () {
-    
-    //redraws canvas with new width and height when user simulator restarts
-    if (reconfigBool == true) {
-      // windowResized();
-      visual.dWidth = windowWidth * .8;
-      visual.dHeight = windowHeight * .8;
-      canvas = createCanvas(visual.dWidth, visual.dHeight);
-      let canvasDiv = document.getElementById('vote');
-      canvas.parent(canvasDiv);
-      reconfigBool = false;
-    }
-
-    document.getElementById("page-container").style.display = "none";
-    document.getElementById("top").style.display = "none";
-    document.getElementById("page1").style.display = "none";
-    document.getElementById("page2").style.display = "none";
-    document.getElementById("page3").style.display = "none";
-    document.getElementById("page4").style.display = "none";
-    document.getElementById("page5").style.display = "none";
-    document.getElementById("page6").style.display = "none";
-    document.getElementById("page7").style.display = "none";
-    document.getElementById("page8").style.display = "none";
-    document.getElementById("page9").style.display = "none";
-    document.getElementById("page10").style.display = "none";
-    document.getElementById("page11").style.display = "none";
-    document.getElementById("page12").style.display = "none";
-    document.getElementById("page13").style.display = "none";
-    // document.getElementById("slider-value").style.display = "none";
-    document.getElementById("vote").style.display = "block";
-    document.getElementById("slider-disp").style.display = "none";
-    document.getElementById("sim-info").style.display = "none";
-    document.getElementById("main-btn-div").style.display = "none";
-
-    console.log(mgr.isCurrent(democracyEngineUser));
-
-  }
-
-  // run the simulator for user configuration
-  this.draw = function () {
-
-    // if (frameCount >= 2000 && frameCount < 2120) { // for testing multiple runs
-    //   //engine = new DemocracyEngine();
-    //   inputVar();
-    // engine.currentCongLogic(userEdits);
-    //   console.log("RESULT " + (frameCount-1999) + " : " + engine.voteResults);
-    // }
-
-    // OC run voting simulation 10 times on this configuration
-    for (let i=resultIX; i < MAX_SIM_RESULTS; i++) {
-        
-        engine.bodyCount = 0;
-          engine.bodyPass = [];
-          engine.resetCount();
-          engine.resetDraw();
-          engine.votingBodyCounts = [];
-          engine.superThreshIndex = [];
-        engine.currentCongLogic(userEdits);
-        //let engineSim = new DemocracyEngine
-        updateSession();
-        resultIX++;
-    }
-
-    // OC display the last voting result
-    visual.displayVoting(engine);
-
-      // OC when visual display of rectangles is done, show buttons
-      if (visual.userInputState) { // && resultIX == 0) {
-        finalDisplay();
-        
-        //updateSession();
-        //resultIX++;
-        //addSession(toSchema(engine)); // OC save session to db after displaying to screen
-      }
-
-      //showPanes();
-    }
-
-  // Displays the voting results as text on the screen
-  // also displays buttons
-  function finalDisplay() {
-
-    setTimeout(function () {
-      document.body.style.backgroundColor = colorOverlay;
-      userInput(); // show buttons
-      visual.finalTextDisplayUser(engine, helvFont, colorOverlay, resultIX-1);
-      changeText(engine.decisionTxt); // change final decision text at bottom of screen 
-    }, 1500); // 1.5 seconds before text overlay shows
-
-    //engine.finalDisplayBool = false;
-    visual.userInputState = false;
-
-  }
-
-  //Once Bill Pass result has been calculated users can enter in their own variables to reconfigure congress or recalculate the vote with the same parameters
-  function userInput() {
-
-    recalBtn = createButton('RECALCULATE VOTE');
-    recalBtn.id('recal-btn');
-    recalBtn.class('buttons');
-    recalBtn.mousePressed(inputVar);
-
-    buttonRC = createButton('RECONFIGURE GOVERNMENT');
-    buttonRC.id('rec-btn');
-    buttonRC.class('buttons');
-    buttonRC.mousePressed(nextScene);
-
-    buttonRes = createButton('RUN DEFAULT SETTINGS');
-    buttonRes.id('res-btn');
-    buttonRes.class('buttons');
-    buttonRes.mousePressed(userRecount);
-
-    emailBtn = createButton('EMAIL YOUR RESULTS');
-    emailBtn.id('email-btn');
-    emailBtn.class('buttons');
-    emailBtn.mousePressed(emailFunc);
-
-    // let buttonDiv = document.getElementById('button-div');
-    emailBtn.parent(buttonDiv);
-    buttonRC.parent(buttonDiv);
-    buttonRes.parent(buttonDiv);
-    recalBtn.parent(buttonDiv);
-
-  }
-
-  //Reloads the page if user would like to reset values
-  function userRecount() {
-    // save session to db then reload the page
-    saveSession();
-    location.reload();
-    //reset();
-  }
-
-
-  function userVars() {
-    //AB added this here for less confusion for the user
-    buttonRC.remove();
-    // background(0);
-    changeText(" ");
-  }
-}
-
-//original democracy simulater, connected to current values of 117th congress
-function democracyEngineOrigin() {
-
-  console.log("origin democracy userEdits: " + userEdits);
-
-  this.setup = function () {
-    textFont(helvFont);
-    let dWidth = windowWidth * .8;
-    let dHeight = windowHeight * .8;
-    let canvas = createCanvas(dWidth, dHeight);
-    let canvasDiv = document.getElementById('vote');
-    canvas.parent(canvasDiv);
-
-  }
-
-  this.enter = function () {
-
-    document.getElementById("top").style.display = "none";
-    document.getElementById("page1").style.display = "none";
-    document.getElementById("page2").style.display = "none";
-    document.getElementById("page3").style.display = "none";
-    document.getElementById("page4").style.display = "none";
-    document.getElementById("page5").style.display = "none";
-    document.getElementById("page6").style.display = "none";
-    document.getElementById("page7").style.display = "none";
-    document.getElementById("page8").style.display = "none";
-    document.getElementById("page9").style.display = "none";
-    document.getElementById("page10").style.display = "none";
-    document.getElementById("page11").style.display = "none";
-    document.getElementById("page12").style.display = "none";
-    document.getElementById("page13").style.display = "none";
-    // document.getElementById("slider-value").style.display = "none";
-    document.getElementById("vote").style.display = "block";
-    document.getElementById("slider-disp").style.display = "none";
-
-    // engine.currentCongLogic(forUser);
-    visual.dWidth = windowWidth * .8;
-    visual.dHeight = windowHeight * .8;
-  }
-
-  this.draw = function () {
-
-    // if (frameCount >= 300 && frameCount < 420) {
-    // engine = new DemocracyEngine();
-    // // engine.bodyCount = 0;
-    // // engine.resetCount();
-    // // engine.resetDraw();
-    // // engine.superThreshIndex = [];
-    // // engine.votingBodyCounts = [];
-    // // engine.bodyPass = [];
-    // engine.currentCongLogic(userEdits);
-    // console.log("RESULT " + (frameCount-299) + " : " + engine.voteResults);
-    // }
-
-    engine.currentCongLogic(userEdits);
-
-    // OC when engine is done with voting calculation, show votes
-    //if (engine.finalDisplayBool) {
-      visual.displayVoting(engine);
-
-      // OC when visual display of rectangles is done, show buttons
-      if (visual.userInputState) {
-        finalDisplay();
-        // console.log(engine.votingBodyCounts); // for testing
-        //addSession(toSchema(engine)); // OC save session to db after displaying to screen
-      }
-
-    //}
-
-
-
-  }
-
-
-  //Displays the buttons for user input
-  function finalDisplay() {
-
-    setTimeout(function () {
-      document.body.style.backgroundColor = colorOverlay;
-      userInput(); // show buttons
-      visual.finalTextDisplayDefault(engine, helvFont, colorOverlay);
-      changeText(engine.decisionTxt); // change final decision text at bottom of screen
-    }, 1500); // 1.5 seconds before text overlay showss
-
-    //engine.finalDisplayBool = false;
-    visual.userInputState = false;
-
-  }
-
-  //Once Bill Pass result has been calculated users can enter in their own variables to reconfigure congress or recalculate the vote with the same parameters
-  function userInput() {
-
-    engine.bodyCount = engine.numBodies;
-
-    buttonDef = createButton('DISPLAY DEFAULT SETTINGS');
-    buttonDef.id('def-btn');
-    buttonDef.mousePressed(defResult);
-
-    buttonRes = createButton('RECALCULATE VOTE');
-    buttonRes.id('res-btn');
-    buttonRes.mousePressed(userRecount);
-
-    buttonRC = createButton('RECONFIGURE GOVERNMENT');
-    buttonRC.id('rec-btn');
-    buttonRC.mousePressed(nextScene);
-
-    // let buttonDiv = document.getElementById('button-div');
-    buttonRC.parent(buttonDiv);
-    buttonRes.parent(buttonDiv);
-    buttonDef.parent(buttonDiv);
-    // buttonDiv.center("horizontal");
-  }
-
-  //Reloads the page if user would like to reset values
-  function userRecount() {
-    location.reload();
-    //reset();
-  }
-
-
-}
-
-*/
-
 let updateBtn, nextPaneBtn, prevPaneBtn;
 let paramChangedBool = false;
 var labelSpace = 30;
 
-//user input page for number of legislative bodies (1-3)
+/**
+ * C01 P01 Number of Chambers
+ * User input page for number of chambers bodies (1-3)
+ */
 function sBodies() {
   var slider1 = document.getElementById('slider01');  
 
   this.setup = function () {
     textSize(15);
     noStroke();
-    if (reconfigBool == true) {
+    if (reconfigBool == true) { // set canvas size for drawing votes/config outline
       // windowResized();
       visual.dWidth = windowWidth * .95;
       visual.dHeight = (windowHeight * .9)-labelSpace;
@@ -1203,10 +630,8 @@ function sBodies() {
       canvas.parent(canvasDiv);
       reconfigBool = false;
     }
-
     createSlider();
     sliderVals();
-
   }
 
   this.enter = function () {
@@ -1219,7 +644,7 @@ function sBodies() {
       reconfigBool = false;
     }
 
-    console.log("0 Slider Page");
+    console.log("Pane 01");
     document.getElementById("page-container").style.display = "none";
     showPanesBool = true;
     document.getElementById("page1").style.display = "block";
@@ -1235,17 +660,11 @@ function sBodies() {
     document.getElementById("page11").style.display = "none";
     document.getElementById("page12").style.display = "none";
     document.getElementById("page13").style.display = "none";
-    // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
 
-    // background(bColor);
     document.body.style.backgroundColor = bColor;
-    // // engine.currentCongLogic(true);
-    // visual.ix = 0;
-    // visual.displayImmediateBlank(engine);
 
-    changeText(" ");
     slider1.noUiSlider.set(userNumLegislative);
     sliderVals();
 
@@ -1257,6 +676,7 @@ function sBodies() {
       prevPaneBtn.id('prev-pane-btn');
       prevPaneBtn.class('buttons');
       prevPaneBtn.parent(buttonDiv);
+      prevPaneBtn.mousePressed(previousPane);
     }
 
     if (!document.getElementById('update-btn')) {
@@ -1264,6 +684,7 @@ function sBodies() {
       updateBtn.id('update-btn');
       updateBtn.class('buttons');
       updateBtn.parent(buttonDiv);
+      updateBtn.mousePressed(clickedUpdate);
     }
 
     if (!document.getElementById('next-pane-btn')) {
@@ -1271,25 +692,15 @@ function sBodies() {
       nextPaneBtn.id('next-pane-btn');
       nextPaneBtn.class('buttons');
       nextPaneBtn.parent(buttonDiv);
+      nextPaneBtn.mousePressed(nextPane);
     }
 
-    nextPaneBtn.mousePressed(nextPane);
-    prevPaneBtn.mousePressed(previousPane);
     document.getElementById('prev-pane-btn').disabled = true;
   }
 
   this.draw = function () {
-    // background(bColor);
-    // document.body.style.backgroundColor = bColor;
-    // // engine.currentCongLogic(true);
-    // visual.ix = 0;
-
     visual.displayImmediateBlank(engine, false);
     
-    //visual.displayImmediate(engine);
-
-    //visual.displayVoting(engine); // draws in real time, reset was when previous scene button clicked - not every time this scene is entered
-
     paneToggle();
 
     if (userNumLegislative != engine.numLegislativeBodies) {
@@ -1297,19 +708,14 @@ function sBodies() {
     } else {
       document.getElementById("update-btn").disabled = true;
     }
-
-    
-    updateBtn.mousePressed(clickedUpdate);
   }
 
   function clickedUpdate() {
     document.getElementById("update-btn").disabled = true; // disable after clicking it
-    //removeButtons();
-    //engine.setDefaultParams();
 
     if (userNumHouse2 == 0) {
       userNumHouse2 = 100;
-      userPerHouse2Body = [1, 0, 0];
+      userPerHouse2Body = [1, 0, 0]; // if previously no chamber 2, put members in party A
     }
     if (userNumSenate == 0) { // chamber 3
       userNumSenate = 100; // just to give default value
@@ -1321,29 +727,11 @@ function sBodies() {
     }
     
     setEngineParams(engine);
-    // if (engine.numHouse2 == 0) {
-    //   engine.numHouse2 = 100;
-    // }
-    // if (engine.numSenate == 0) { // chamber 3
-    //   engine.numSenate = 100; // just to give default value
-    //   //engine.perRepSenate
-    //   userNumSenate = 100;
-    //   userPerSenateBody = [1, 0, 0];
-    //   engine.perDemSenate = 1;
-    // }
-    // if (engine.numPres == 0) {
-    //   engine.numPres = 1;
-    // }
 
     // reset values for calculations
     //engine.completeReset();
     visual.completeReset();
     userEdits = false;
-    //reconfigBool = true;
-  }
-
-  function removeButtons() {
-    updateBtn.remove();
   }
 
     function createSlider() {
@@ -1367,9 +755,7 @@ function sBodies() {
       });
     }
 
-
     // COME BACK HERE FOR CODE REVIEW
-
     function sliderVals() {
       //connecting values to html, each tab value is stored in an array
       // var rangeSliderValueElement = document.getElementById('slider-value');
@@ -1382,13 +768,15 @@ function sBodies() {
 
 }
 
-//user input page for for amount of members in each legislative body
+/**
+ * C01 P02 Number of Voting Members for Each Chamber
+ * User input page for for amount of members in each legislative body
+ */
 function sLegislative() {
 
   var slider1 = document.getElementById('slider1'); // original house
   var slider2;// = document.getElementById('s2-p2'); // house2
   var slider3;// = document.getElementById('s3-p2'); // senate
-  // create var for third legislative chamber
   var slider4;// = document.getElementById('s4-p2'); // vp
   var slider5;// = document.getElementById('s5-p2'); // pres
    
@@ -1397,13 +785,8 @@ function sLegislative() {
   var curNumSen;// = parseInt(engine.numSenate);
   var curNumVP;// = parseInt(engine.numVP);
   var curNumPres;// = parseInt(engine.numPres);
-  //userNumLegislative = parseFloat(userNumLegislative);
-
 
   this.setup = function () {
-    // textSize(15);
-    // noStroke();
-
   }
 
   this.enter = function () {
@@ -1411,20 +794,17 @@ function sLegislative() {
 
     if (userNumLegislative == 1) {
       userNumHouse2 = 0; // 0 in chamber 2 & all its parties
-      userPerHouse2Body[0] = 0.0;
-      userPerHouse2Body[1] = 0.0;
-      userPerHouse2Body[2] = 0.0;
+      userPerHouse2Body = [0.0, 0.0, 0.0];
+      // userPerHouse2Body[0] = 0.0;
+      // userPerHouse2Body[1] = 0.0;
+      // userPerHouse2Body[2] = 0.0;
 
       userNumSenate = 0; // 0 in chamber 3 & all its parties
-      userPerSenateBody[0] = 0.0;
-      userPerSenateBody[1] = 0.0;
-      userPerSenateBody[2] = 0.0;
+      userPerSenateBody = [0.0, 0.0, 0.0];
 
     } else if (userNumLegislative == 2) {
       userNumSenate = 0; // 0 in chamber 3 & all its parties
-      userPerSenateBody[0] = 0.0;
-      userPerSenateBody[1] = 0.0;
-      userPerSenateBody[2] = 0.0;
+      userPerSenateBody = [0.0, 0.0, 0.0];
     }
 
     curNumHouse = parseInt(userNumHouse);
@@ -1432,9 +812,8 @@ function sLegislative() {
     curNumSen = parseInt(userNumSenate);
     curNumVP = parseInt(userNumVP);
     curNumPres = parseInt(userNumPres);
-    
 
-    console.log("1st Slider Page");
+    console.log("Pane 02");
     document.getElementById("top").style.display = "block";
     document.getElementById("top").innerHTML = "<h2>NUMBER OF VOTING MEMBERS</h2>" + configJSON.text.p02desc;
     showPanesBool = true;
@@ -1451,25 +830,18 @@ function sLegislative() {
     document.getElementById("page11").style.display = "none";
     document.getElementById("page12").style.display = "none";
     document.getElementById("page13").style.display = "none";
-    // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
 
     checkNumBodies();
     sliders();
     document.getElementById('prev-pane-btn').disabled = false;
-
-    // prevPaneBtn.mousePressed(previousPane);
-    // nextPaneBtn.mousePressed(nextPane);
-
+    updateBtn.mousePressed(clickedUpdate);
   }
 
   this.draw = function () {
-    // draws in real time, reset was when previous scene button clicked - not every time this scene is entered
-    //visual.displayVoting(engine);
     visual.displayImmediateBlank(engine, false);
     paneToggle();
-
 
     // if sliders changed any values on this page, enable update button
     if (userNumHouse != engine.numHouse || userNumHouse2 != engine.numHouse2 || userNumSenate != engine.numSenate ||userNumVP != engine.numVP || userNumPres != engine.numPres) {
@@ -1477,17 +849,13 @@ function sLegislative() {
     } else { // otherwise leave disabled
       document.getElementById("update-btn").disabled = true;
     }
-    updateBtn.mousePressed(clickedUpdate);
-    // prevPaneBtn.mousePressed(previousPane);
-    // nextPaneBtn.mousePressed(nextPane);
-
+    //updateBtn.mousePressed(clickedUpdate);
   }
 
   function clickedUpdate() {
     document.getElementById("update-btn").disabled = true; // disable after clicking it
 
     setEngineParams(engine);
-
     // reset values for calculations
     //engine.completeReset();
     visual.completeReset();
@@ -1600,8 +968,6 @@ function sLegislative() {
         })
       });
 
-      // OC TODO create slider for 3rd legislative body
-
       noUiSlider.create(slider4, {
         start: curNumVP,
         range: {
@@ -1620,7 +986,6 @@ function sLegislative() {
         })
       });
 
-
       noUiSlider.create(slider5, {
         start: curNumPres,
         range: {
@@ -1638,7 +1003,6 @@ function sLegislative() {
           decimals: 0
         })
       });
-
 
       noUiSlider.create(slider2, {
         start: curNumHouse2,
@@ -1659,21 +1023,18 @@ function sLegislative() {
       });
     }
 
-
-    // COME BACK HERE FOR CODE REVIEW
-
     function sliderVals() {
       //connecting values to html, each tab value is stored in an array
       // var rangeSliderValueElement = document.getElementById('slider-value');
 
-      // house
+      // chamber 1
       slider1.noUiSlider.on('update', function (values, handle) {
         userNumHouse = values[0];
         curNumHouse = userNumHouse;
         // rangeSliderValueElement.innerHTML = userNumHouse + " " + userNumSenate + " " + userNumPres + " " + userNumVP;
       });
 
-      // house2
+      // chamber 2
       if (userNumLegislative >= 2) {
         // update new slider
         slider2.noUiSlider.on('update', function (values, handle) {
@@ -1683,13 +1044,14 @@ function sLegislative() {
       } else {
         // update new var to 0
         userNumHouse2 = 0;
-        userPerHouse2Body[0] = 0;
-        userPerHouse2Body[1] = 0;
-        userPerHouse2Body[2] = 0;
+        userPerHouse2Body = [0,0,0];
+        // userPerHouse2Body[0] = 0;
+        // userPerHouse2Body[1] = 0;
+        // userPerHouse2Body[2] = 0;
       }
 
       // OC update slider for 2nd body if user chose >=2 bodies
-      // senate
+      // chamber 3
       if (userNumLegislative == 3) {
         slider3.noUiSlider.on('update', function (values, handle) {
           userNumSenate = values[0];
@@ -1698,9 +1060,7 @@ function sLegislative() {
         });
       } else {
           userNumSenate = 0; // set senate members to 0 later, in sMembers
-          userPerSenateBody[0] = 0;
-          userPerSenateBody[1] = 0;
-          userPerSenateBody[2] = 0;
+          userPerSenateBody = [0,0,0];
       }
 
       // always update vp and pres
@@ -1719,7 +1079,10 @@ function sLegislative() {
   }
 }
 
-//user input page for number of parties, current maximum of 3
+/**
+ * C01 P03
+ * User input page for number of parties, maximum of 3
+ */
 function sParties() {
   var slider5 = document.getElementById('slider5');
 
@@ -1728,7 +1091,7 @@ function sParties() {
     sliderVals();
   }
   this.enter = function () {
-    console.log("2nd Slider Page");
+    console.log("Pane 03");
     document.getElementById("top").style.display = "block";
     document.getElementById("top").innerHTML = "<h2>NUMBER OF POLITICAL PARTIES</h2>" + configJSON.text.p03desc;
     showPanesBool = true;
@@ -1745,19 +1108,15 @@ function sParties() {
     document.getElementById("page11").style.display = "none";
     document.getElementById("page12").style.display = "none";
     document.getElementById("page13").style.display = "none";
-    // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
 
     slider5.noUiSlider.set(userNumParties);
     sliderVals();
-    
-    // OC disable update button on this pane for now - not sure what to update visually
-    //document.getElementById("update-btn").disabled = true;
+    updateBtn.mousePressed(clickedUpdate);
   }
 
   this.draw = function () {
-    //visual.displayVoting(engine);
     visual.displayImmediateBlank(engine, false);
     paneToggle();
 
@@ -1766,58 +1125,47 @@ function sParties() {
     } else { // otherwise leave disabled
       document.getElementById("update-btn").disabled = true;
     }
-    updateBtn.mousePressed(clickedUpdate);
   }
 
   function clickedUpdate() {
     document.getElementById("update-btn").disabled = true; // disable after clicking it
-    // set default vars so update visualization reflects change
+    // set equal split btwn parties so that visualization update reflects change
+    // members per party are set by user in subsequent panes
     if (userNumParties == 2) {
       if (userNumVP >= 2) {
-      userPerVPBody[0] = 0.5;
-      userPerVPBody[1] = 0.5;
-      userPerVPBody[2] = 0.0;
+        userPerVPBody = [0.5, 0.5, 0.0];
+        // userPerVPBody[0] = 0.5;
+        // userPerVPBody[1] = 0.5;
+        // userPerVPBody[2] = 0.0;
       }
+
       if (userNumPres >= 2) {
-      userPerPresBody[0] = 0.5;
-      userPerPresBody[1] = 0.5;
-      userPerPresBody[2] = 0.0;
+        userPerPresBody = [0.5, 0.5, 0.0];
       }
-      userPerHouseBody[0] = 0.5;
-      userPerHouseBody[1] = 0.5;
-      userPerHouseBody[2] = 0.0;
+
+      userPerHouseBody = [0.5, 0.5, 0.0];
+
       if (userNumLegislative >= 2) {
-        userPerHouse2Body[0] = 0.5;
-        userPerHouse2Body[1] = 0.5;
-        userPerHouse2Body[2] = 0.0;
+        userPerHouse2Body = [0.5, 0.5, 0.0];
+
         if (userNumLegislative == 3) {
-          userPerSenateBody[0] = 0.5;
-          userPerSenateBody[1] = 0.5;
-          userPerSenateBody[2] = 0.0;
+          userPerSenateBody = [0.5, 0.5, 0.0];
         }
       }
     } else if (userNumParties == 3) {
       if (userNumVP >= 3) {
-      userPerVPBody[0] = 0.34;
-      userPerVPBody[1] = 0.33;
-      userPerVPBody[2] = 0.33;
+        userPerVPBody = [0.34, 0.33, 0.33];
       }
       if (userNumPres >= 3) {
-      userPerPresBody[0] = 0.34;
-      userPerPresBody[1] = 0.33;
-      userPerPresBody[2] = 0.33;
+        userPerPresBody = [0.34, 0.33, 0.33];
       }
-      userPerHouseBody[0] = 0.34;
-      userPerHouseBody[1] = 0.33;
-      userPerHouseBody[2] = 0.33;
+      userPerHouseBody = [0.34, 0.33, 0.33]; 
+
       if (userNumLegislative >= 2) {
-        userPerHouse2Body[0] = 0.34;
-        userPerHouse2Body[1] = 0.33;
-        userPerHouse2Body[2] = 0.33;
+        userPerHouse2Body = [0.34, 0.33, 0.33]; 
+
         if (userNumLegislative == 3) {
-          userPerSenateBody[0] = 0.34;
-          userPerSenateBody[1] = 0.33;
-          userPerSenateBody[2] = 0.33;
+          userPerSenateBody = [0.34, 0.33, 0.33]; 
         }
       }
     }
@@ -1827,11 +1175,9 @@ function sParties() {
     //engine.completeReset();
     visual.completeReset();
     userEdits = false;
-    //reconfigBool = true;
   }
 
     function createSlider() {
-
 
       noUiSlider.create(slider5, {
         start: userNumParties,
@@ -1869,25 +1215,15 @@ function sParties() {
         // set 0 vals for parties not in this config
         if (userNumParties <= 1) {
           userPerHouseBody = [];
+          userPerHouseBody = [1.0, 0.0, 0.0];
           userPerHouse2Body = [];
+          userPerHouse2Body = [1.0, 0.0, 0.0];
           userPerSenateBody = [];
+          userPerSenateBody = [1.0, 0.0, 0.0];
           userPerPresBody = [];
+          userPerPresBody = [1.0, 0.0, 0.0];
           userPerVPBody = [];
-          userPerHouseBody[0] = 1.0;
-          userPerHouse2Body[0] = 1.0;
-          userPerSenateBody[0] = 1.0;
-          userPerPresBody[0] = 1.0;
-          userPerVPBody[0] = 1.0;
-          userPerHouseBody[1] = 0.0;
-          userPerHouse2Body[1] = 0.0;
-          userPerSenateBody[1] = 0.0;
-          userPerVPBody[1] = 0.0;
-          userPerPresBody[1] = 0.0;
-          userPerHouseBody[2] = 0.0;
-          userPerHouse2Body[2] = 0.0;
-          userPerSenateBody[2] = 0.0;
-          userPerVPBody[2] = 0.0;
-          userPerPresBody[2] = 0.0;
+          userPerVPBody = [1.0, 0.0, 0.0];
           userNumParties = parseInt(userNumParties);
           onePartyBool = true;
 
@@ -1912,15 +1248,15 @@ function sParties() {
     }
 }
 
+/**
+ * C01 P04 Number of Voting Members per Party in Chamber 1
+ */
 function sMembersFirstChamber() {
 
   var slider1;// = document.getElementById('slider-1a'); // party a
   var slider2;// = document.getElementById('slider-1b');; // party b
   var slider3; // = document.getElementById('slider-1c');; // party c
   var curNumHouse = parseInt(userNumHouse); //parseInt(engine.numHouse); // current number of total members in chamber 1
-  // var slider1max; // = parseInt(userNumHouse);
-  // var slider2max; // = floor(slider1max / 2);
-  // var slider3max; // = slider1max - slider2max;
   var maxSlider;
   var startVals = [];
 
@@ -1934,14 +1270,6 @@ function sMembersFirstChamber() {
   }
 
   this.enter = function () {
-    // OC TODO - move to sParties? or to each scene that sets party members for a chamber
-
-    // if (userNumParties == 2) {
-    //   maxSlider = parseInt(userNumHouse) - 1; // OC total minus 1 bc w/ 2 bodies chosen, at least 1 member must always be in the other body
-    // } else if (userNumParties == 3) {
-    //   maxSlider = parseInt(userNumHouse - 2); // party B and C each must have at least 1 member since 3 parties were chosen
-    // } else {
-
     // makes slider start vals always reflect total members
       maxSlider = parseInt(userNumHouse);
       startVals[0] = userPerHouseBody[0];
@@ -1957,13 +1285,9 @@ function sMembersFirstChamber() {
         startVals[2] = 1.0 - (startVals[0] + startVals[1]);
       }
       
-    //}
-    // slider1max = parseInt(userNumHouse);
-    // slider2max = floor(slider1max / 2);
-    // slider3max = slider1max - slider2max;
-    document.getElementById("screen").style.display = "none"; // OC TODO - remove this if want screen function for all panes
+    //document.getElementById("screen").style.display = "none"; // OC TODO - remove this if want screen function for all panes
 
-    console.log("Slider Page Chamber 1 Party Members ");
+    console.log("Pane 04: Chamber 1 Party Members");
     document.getElementById("top").style.display = "block";
     document.getElementById("top").innerHTML = "<h2>NUMBER OF VOTING MEMBERS FOR FIRST CHAMBER</h2>" + configJSON.text.p04desc;
     showPanesBool = true;
@@ -1980,7 +1304,6 @@ function sMembersFirstChamber() {
     document.getElementById("page11").style.display = "none";
     document.getElementById("page12").style.display = "none";
     document.getElementById("page13").style.display = "none";
-    // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
 
@@ -1989,11 +1312,10 @@ function sMembersFirstChamber() {
 
     checkNumBodies();
     sliders();
+    updateBtn.mousePressed(clickedUpdate);
   }
 
   this.draw = function () {
-    //visual.displayVoting(engine);
-
     visual.displayImmediateBlank(engine, false);
     paneToggle();
     console.log("user Party A: " + userPerHouseBody[0] + " Party B: " + userPerHouseBody[1] + " Party C: " + userPerHouseBody[2]);
@@ -2005,20 +1327,16 @@ function sMembersFirstChamber() {
     } else { // otherwise leave disabled
       document.getElementById("update-btn").disabled = true;
     }
-    updateBtn.mousePressed(clickedUpdate);
-
   }
 
   function clickedUpdate() {
     document.getElementById("update-btn").disabled = true; // disable after clicking it
 
     setEngineParams(engine);
-
     // reset values for calculations
     //engine.completeReset();
     visual.completeReset();
     userEdits = false;
-    //reconfigBool = true;
   }
 
   function checkNumBodies() {
@@ -2030,25 +1348,18 @@ function sMembersFirstChamber() {
       document.getElementById("s1-p3").style.display = "block";
       document.getElementById("s2-p3").style.display = "none";
       document.getElementById("s3-p3").style.display = "none";
-      // document.getElementById("slider-1a").style.display = "block";
-      // document.getElementById("slider-1b").style.display = "none";
-      // document.getElementById("slider-1c").style.display = "none";
 
     } else if (userNumParties == 2) {
       console.log("here first chamber");
       document.getElementById("s1-p3").style.display = "block";
       document.getElementById("s2-p3").style.display = "block";
       document.getElementById("s3-p3").style.display = "none";
-      // document.getElementById("slider-1a").style.display = "block";
-      // document.getElementById("slider-1b").style.display = "block";
-      // document.getElementById("slider-1c").style.display = "none";
+
     } else {
       document.getElementById("s1-p3").style.display = "block";
       document.getElementById("s2-p3").style.display = "block";
       document.getElementById("s3-p3").style.display = "block";
-      // document.getElementById("slider-1a").style.display = "block";
-      // document.getElementById("slider-1b").style.display = "block";
-      // document.getElementById("slider-1c").style.display = "block";
+
     }
     slider1 = document.getElementById('slider-1a'); // party a
     slider2 = document.getElementById('slider-1b');; // party b
@@ -2066,7 +1377,7 @@ function sMembersFirstChamber() {
       // if only 1 party, create slider A so that there is no change
       if (userNumParties == 1) {
         noUiSlider.create(slider1, {
-          start: (startVals[0] * maxSlider), // fix later where to start
+          start: (startVals[0] * maxSlider),
           range: {
             'min': [maxSlider],
             'max': [maxSlider]
@@ -2085,7 +1396,7 @@ function sMembersFirstChamber() {
       } else {
 
       noUiSlider.create(slider1, {
-        start: (startVals[0] * maxSlider), // fix later where to start
+        start: (startVals[0] * maxSlider),
         range: {
           'min': [0], //[1],
           'max': [maxSlider]
@@ -2104,7 +1415,7 @@ function sMembersFirstChamber() {
     }
 
       noUiSlider.create(slider2, {
-        start: (startVals[1] * maxSlider), // fix later where to start
+        start: (startVals[1] * maxSlider),
         range: {
           'min': [0], //[1],
           'max': [maxSlider]
@@ -2122,7 +1433,7 @@ function sMembersFirstChamber() {
       });
 
       noUiSlider.create(slider3, {
-        start: (startVals[2] * maxSlider), // fix later where to start
+        start: (startVals[2] * maxSlider), 
         range: {
           'min': [0], //[1],
           'max': [maxSlider]
@@ -2143,7 +1454,6 @@ function sMembersFirstChamber() {
     function sliderVals() {
       //connecting values to html, each tab value is stored in an array
       // var rangeSliderValueElement = document.getElementById('slider-value');
-
       userPerHouseBody = [];
       var numPerHouseBody = [];
       var housePercentage; // helper var
@@ -2159,9 +1469,6 @@ function sMembersFirstChamber() {
         housePercentage = userPerHouseBody[0] / userNumHouse;
         housePercentage = roundNum(housePercentage, 2);
         userPerHouseBody[0] = housePercentage;
-        // if (userNumParties == 2) {
-        //   slider2.noUiSlider.set(userNumHouse - values[0]);
-        // }
       });
 
       if (userNumParties >= 2) { // party a and b
@@ -2172,9 +1479,6 @@ function sMembersFirstChamber() {
           housePercentage = userPerHouseBody[1] / userNumHouse;
           housePercentage = roundNum(housePercentage, 2);
           userPerHouseBody[1] = housePercentage;
-          // if (userNumParties == 2) {
-          //   slider1.noUiSlider.set(userNumHouse - values[0]);
-          // }
         });
       } else { // set party b to 0
         userPerHouseBody[1] = 0;
@@ -2216,14 +1520,6 @@ function sMembersFirstChamber() {
           slider3.noUiSlider.set(sliderCval);
         });
 
-        // // when user slides the party B slider, update sliders A and B evenly
-        // slider2.noUiSlider.on('slide', function(event) {
-        //   let sliderAval = floor((userNumHouse - numPartyB) / 2);
-        //   let sliderCval = (userNumHouse - numPartyB) - sliderAval;
-        //   slider1.noUiSlider.set(sliderAval);
-        //   slider3.noUiSlider.set(sliderCval);
-        // });
-
         // when user slides party B slider, allow party B to go up to party A
         // and make party C update to the remainder
         slider2.noUiSlider.on('slide', function(event) {
@@ -2236,14 +1532,6 @@ function sMembersFirstChamber() {
           slider3.noUiSlider.set(sliderCval);
         });
 
-        // // when user slides the party C slider, update sliders A and B evenly
-        // slider3.noUiSlider.on('slide', function(event) {
-        //   let sliderAval = floor((userNumHouse - numPartyC) / 2);
-        //   let sliderBval = (userNumHouse - numPartyC) - sliderAval;
-        //   slider1.noUiSlider.set(sliderAval);
-        //   slider2.noUiSlider.set(sliderBval);
-        // });
-
         // when user slides party C slider, allow party C to go up to party A remainder
         // and make party B update to the remainder of A + B
         // i.e. reverses of what happens when slider B is moved
@@ -2254,16 +1542,14 @@ function sMembersFirstChamber() {
           }          
           slider2.noUiSlider.set((maxSlider - numPartyC) - numPartyA);
         });
-
-        
       }
-
-
     }
-
   }
 }
 
+/**
+ * C01 P05 Number of Voting Members per Party in Chamber 2
+ */
 function sMembersSecondChamber() {
 
   var slider1;// = document.getElementById('slider-1a'); // party a
@@ -2272,9 +1558,6 @@ function sMembersSecondChamber() {
   var curNumHouse2 = parseInt(userNumHouse2); //parseInt(engine.numHouse); // current number of total members in chamber 1
   var maxSlider;
   var startVals = [];
-  // var slider1max; // = parseInt(userNumHouse);
-  // var slider2max; // = floor(slider1max / 2);
-  // var slider3max; // = slider1max - slider2max;
 
   this.setup = function () {
     startVals[0] = userPerHouse2Body[0];
@@ -2296,12 +1579,8 @@ function sMembersSecondChamber() {
       startVals[1] = floor(maxSlider/3) / maxSlider;
       startVals[2] = 1.0 - (startVals[0] + startVals[1]);
     }
-    
-    // slider1max = parseInt(userNumHouse2);
-    // slider2max = floor(slider1max / 2);
-    // slider3max = slider1max - slider2max;
 
-    console.log("Slider Page Chamber 2 Party Members ");
+    console.log("P05: Chamber 2 Party Members");
     document.getElementById("top").style.display = "block";
     document.getElementById("top").innerHTML = "<h2>NUMBER OF VOTING MEMBERS FOR SECOND CHAMBER</h2>" + configJSON.text.p05desc;
     showPanesBool = true;
@@ -2318,7 +1597,6 @@ function sMembersSecondChamber() {
     document.getElementById("page11").style.display = "none";
     document.getElementById("page12").style.display = "none";
     document.getElementById("page13").style.display = "none";
-    // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
 
@@ -2327,6 +1605,7 @@ function sMembersSecondChamber() {
 
     checkNumBodies();
     sliders();    
+    updateBtn.mousePressed(clickedUpdate);
   }
 
   this.draw = function () {
@@ -2339,20 +1618,16 @@ function sMembersSecondChamber() {
     } else { // otherwise leave disabled
       document.getElementById("update-btn").disabled = true;
     }
-    updateBtn.mousePressed(clickedUpdate);
-
   }
 
   function clickedUpdate() {
     document.getElementById("update-btn").disabled = true; // disable after clicking it
 
     setEngineParams(engine);
-
     // reset values for calculations
     //engine.completeReset();
     visual.completeReset();
     userEdits = false;
-    //reconfigBool = true;
   }
 
   function checkNumBodies() {
@@ -2391,7 +1666,7 @@ function sMembersSecondChamber() {
       // if only 1 party, create slider A so that there is no change
       if (userNumParties == 1) {
         noUiSlider.create(slider1, {
-          start: (startVals[0] * maxSlider), // fix later where to start
+          start: (startVals[0] * maxSlider), 
           range: {
             'min': [maxSlider],
             'max': [maxSlider]
@@ -2410,7 +1685,7 @@ function sMembersSecondChamber() {
       } else {
 
       noUiSlider.create(slider1, {
-        start: (startVals[0] * maxSlider), // fix later where to start
+        start: (startVals[0] * maxSlider),
         range: {
           'min': [0], //[1],
           'max': [maxSlider]
@@ -2429,7 +1704,7 @@ function sMembersSecondChamber() {
     }
 
       noUiSlider.create(slider2, {
-        start: (startVals[1] * maxSlider), // fix later where to start
+        start: (startVals[1] * maxSlider), 
         range: {
           'min': [0], //[1],
           'max': [maxSlider]
@@ -2447,7 +1722,7 @@ function sMembersSecondChamber() {
       });
 
       noUiSlider.create(slider3, {
-        start: (startVals[2] * maxSlider), // fix later where to start
+        start: (startVals[2] * maxSlider), 
         range: {
           'min': [0], //[1],
           'max': [maxSlider]
@@ -2468,7 +1743,6 @@ function sMembersSecondChamber() {
     function sliderVals() {
       //connecting values to html, each tab value is stored in an array
       // var rangeSliderValueElement = document.getElementById('slider-value');
-
       userPerHouse2Body = [];
       var numPerHouse2Body = [];
       var house2Percentage; // helper var
@@ -2476,7 +1750,6 @@ function sMembersSecondChamber() {
       var numPartyB;
       var numPartyC;
 
-      // house
       slider1.noUiSlider.on('update', function (values, handle) {
         numPartyA = values[0];
         userPerHouse2Body[0] = values[0];
@@ -2534,14 +1807,6 @@ function sMembersSecondChamber() {
           slider3.noUiSlider.set(sliderCval);
         });
 
-        // // when user slides the party B slider, update sliders A and B evenly
-        // slider2.noUiSlider.on('slide', function(event) {
-        //   let sliderAval = floor((maxSlider - numPartyB) / 2);
-        //   let sliderCval = (maxSlider - numPartyB) - sliderAval;
-        //   slider1.noUiSlider.set(sliderAval);
-        //   slider3.noUiSlider.set(sliderCval);
-        // });
-
         // when user slides party B slider, allow party B to go up to party A remainder
         // and make party C update to the remainder of party A + B
         slider2.noUiSlider.on('slide', function(event) {
@@ -2550,17 +1815,8 @@ function sMembersSecondChamber() {
           }
           let sliderAval = ceil((maxSlider - numPartyB) / 2);
           let sliderCval = (maxSlider - numPartyB) - numPartyA;
-          //slider1.noUiSlider.set(sliderAval);
           slider3.noUiSlider.set(sliderCval);
         });
-
-        // // when user slides the party C slider, update sliders A and B evenly
-        // slider3.noUiSlider.on('slide', function(event) {
-        //   let sliderAval = floor((maxSlider - numPartyC) / 2);
-        //   let sliderBval = (maxSlider - numPartyC) - sliderAval;
-        //   slider1.noUiSlider.set(sliderAval);
-        //   slider2.noUiSlider.set(sliderBval);
-        // });
 
         // when user slides party C slider, allow party C to go up to party A remainder
         // and make party B update to the remainder of A + B
@@ -2573,11 +1829,13 @@ function sMembersSecondChamber() {
           slider2.noUiSlider.set((maxSlider - numPartyC) - numPartyA);
         });
       }
-
     }
   }
 }
 
+/**
+ * C01 P06 Number of Voting Members per Party in Chamber 3
+ */
 function sMembersThirdChamber() {
 
   var slider1;// = document.getElementById('slider-1a'); // party a
@@ -2595,12 +1853,6 @@ function sMembersThirdChamber() {
 
   this.enter = function () {
     maxSlider = parseInt(userNumSenate);
-    // set up since default doesn't have a 3rd body
-    // if (startVals[0] + startVals[1] + startVals[2] < maxSlider) {
-    //   startVals[0] = ceil(maxSlider/3) / maxSlider; // split evenly
-    //   startVals[1] = 1 - startVals[0];
-    //   startVals[2] = 1 - (startVals[0] + startVals[1]);
-    // }
     startVals[0] = userPerSenateBody[0];
     startVals[1] = userPerSenateBody[1];
     startVals[2] = userPerSenateBody[2];
@@ -2614,7 +1866,7 @@ function sMembersThirdChamber() {
       startVals[2] = 1.0 - (startVals[0] + startVals[1]);
     }
 
-    console.log("Slider Page Chamber 3 Party Members ");
+    console.log("P06: Chamber 3 Voting Members");
     document.getElementById("top").style.display = "block";
     document.getElementById("top").innerHTML = "<h2>NUMBER OF VOTING MEMBERS FOR THIRD CHAMBER</h2>" + configJSON.text.p06desc;
     showPanesBool = true;
@@ -2631,7 +1883,6 @@ function sMembersThirdChamber() {
     document.getElementById("page11").style.display = "none";
     document.getElementById("page12").style.display = "none";
     document.getElementById("page13").style.display = "none";
-    // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
 
@@ -2640,8 +1891,7 @@ function sMembersThirdChamber() {
 
     checkNumBodies();
     sliders();
-    //sliderVals();
-    
+    updateBtn.mousePressed(clickedUpdate);
   }
 
   this.draw = function () {
@@ -2654,20 +1904,16 @@ function sMembersThirdChamber() {
     } else { // otherwise leave disabled
       document.getElementById("update-btn").disabled = true;
     }
-    updateBtn.mousePressed(clickedUpdate);
-
   }
 
   function clickedUpdate() {
     document.getElementById("update-btn").disabled = true; // disable after clicking it
 
     setEngineParams(engine);
-
     // reset values for calculations
     //engine.completeReset();
     visual.completeReset();
     userEdits = false;
-    //reconfigBool = true;
   }
 
   function checkNumBodies() {
@@ -2706,7 +1952,7 @@ function sMembersThirdChamber() {
       // if only 1 party, create slider A so that there is no change
       if (userNumParties == 1) {
         noUiSlider.create(slider1, {
-          start: (startVals[0] * maxSlider), // fix later where to start
+          start: (startVals[0] * maxSlider), 
           range: {
             'min': [maxSlider],
             'max': [maxSlider]
@@ -2725,7 +1971,7 @@ function sMembersThirdChamber() {
       } else {
 
       noUiSlider.create(slider1, {
-        start: (startVals[0] * maxSlider), // fix later where to start
+        start: (startVals[0] * maxSlider), 
         range: {
           'min': [0], //[1],
           'max': [maxSlider]
@@ -2744,7 +1990,7 @@ function sMembersThirdChamber() {
     }
 
       noUiSlider.create(slider2, {
-        start: (startVals[1] * maxSlider), // fix later where to start
+        start: (startVals[1] * maxSlider), 
         range: {
           'min': [0], //[1],
           'max': [maxSlider]
@@ -2762,7 +2008,7 @@ function sMembersThirdChamber() {
       });
 
       noUiSlider.create(slider3, {
-        start: (startVals[2] * maxSlider), // fix later where to start
+        start: (startVals[2] * maxSlider), 
         range: {
           'min': [0], //[1],
           'max': [maxSlider]
@@ -2783,7 +2029,6 @@ function sMembersThirdChamber() {
     function sliderVals() {
       //connecting values to html, each tab value is stored in an array
       // var rangeSliderValueElement = document.getElementById('slider-value');
-
       userPerSenateBody = [];
       var numPerSenateBody = [];
       var senatePercentage; // helper var
@@ -2791,7 +2036,6 @@ function sMembersThirdChamber() {
       var numPartyB;
       var numPartyC;
 
-      // house
       slider1.noUiSlider.on('update', function (values, handle) {
         numPartyA = values[0];
         userPerSenateBody[0] = values[0];
@@ -2850,14 +2094,6 @@ function sMembersThirdChamber() {
           slider3.noUiSlider.set(sliderCval);
         });
 
-        // // when user slides the party B slider, update sliders A and B evenly
-        // slider2.noUiSlider.on('slide', function(event) {
-        //   let sliderAval = floor((maxSlider - numPartyB) / 2);
-        //   let sliderCval = (maxSlider - numPartyB) - sliderAval;
-        //   slider1.noUiSlider.set(sliderAval);
-        //   slider3.noUiSlider.set(sliderCval);
-        // });
-
         // when user slides party B slider, allow party B to go up to party A remainder
         // and make party C update to the remainder of party A + B
         slider2.noUiSlider.on('slide', function(event) {
@@ -2869,14 +2105,6 @@ function sMembersThirdChamber() {
           //slider1.noUiSlider.set(sliderAval);
           slider3.noUiSlider.set(sliderCval);
         });
-
-        // // when user slides the party C slider, update sliders A and B evenly
-        // slider3.noUiSlider.on('slide', function(event) {
-        //   let sliderAval = floor((maxSlider - numPartyC) / 2);
-        //   let sliderBval = (maxSlider - numPartyC) - sliderAval;
-        //   slider1.noUiSlider.set(sliderAval);
-        //   slider2.noUiSlider.set(sliderBval);
-        // });
 
         // when user slides party C slider, allow party C to go up to party A remainder
         // and make party B update to the remainder of A + B
@@ -2893,6 +2121,9 @@ function sMembersThirdChamber() {
   }
 }
 
+/**
+ * C01 P07 Number of Voting Members per Party in VP
+ */
 function sMembersVP() {
 
   var slider1;// = document.getElementById('slider-1a'); // party a
@@ -2923,7 +2154,7 @@ function sMembersVP() {
       startVals[2] = 1.0 - (startVals[0] + startVals[1]);
     }
 
-    console.log("Slider Page VP Party Members ");
+    console.log("P07: Voting Members in VP");
     document.getElementById("top").style.display = "block";
     document.getElementById("top").innerHTML = "<h2>NUMBER OF VOTING MEMBERS FOR VICE PRESIDENCY</h2>" + configJSON.text.p07desc;
     showPanesBool = true;
@@ -2940,7 +2171,6 @@ function sMembersVP() {
     document.getElementById("page11").style.display = "none";
     document.getElementById("page12").style.display = "none";
     document.getElementById("page13").style.display = "none";
-    // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
 
@@ -2949,8 +2179,7 @@ function sMembersVP() {
 
     checkNumBodies();
     sliders();
-    //sliderVals();
-    
+    updateBtn.mousePressed(clickedUpdate);
   }
 
   this.draw = function () {
@@ -2963,15 +2192,12 @@ function sMembersVP() {
     } else { // otherwise leave disabled
       document.getElementById("update-btn").disabled = true;
     }
-    updateBtn.mousePressed(clickedUpdate);
-
   }
 
   function clickedUpdate() {
     document.getElementById("update-btn").disabled = true; // disable after clicking it
 
     setEngineParams(engine);
-
     // reset values for calculations
     //engine.completeReset();
     visual.completeReset();
@@ -3092,7 +2318,6 @@ function sMembersVP() {
     function sliderVals() {
       //connecting values to html, each tab value is stored in an array
       // var rangeSliderValueElement = document.getElementById('slider-value');
-
       userPerVPBody = [];
       var numPerVPBody = [];
       var vpPercentage; // helper var
@@ -3100,7 +2325,6 @@ function sMembersVP() {
       var numPartyB;
       var numPartyC;
 
-      // house
       slider1.noUiSlider.on('update', function (values, handle) {
         numPartyA = values[0];
         userPerVPBody[0] = values[0];
@@ -3158,14 +2382,6 @@ function sMembersVP() {
           slider3.noUiSlider.set(sliderCval);
         });
 
-        // // when user slides the party B slider, update sliders A and B evenly
-        // slider2.noUiSlider.on('slide', function(event) {
-        //   let sliderAval = floor((maxSlider - numPartyB) / 2);
-        //   let sliderCval = (maxSlider - numPartyB) - sliderAval;
-        //   slider1.noUiSlider.set(sliderAval);
-        //   slider3.noUiSlider.set(sliderCval);
-        // });
-
         // when user slides party B slider, allow party B to go up to party A remainder
         // and make party C update to the remainder of party A + B
         slider2.noUiSlider.on('slide', function(event) {
@@ -3177,14 +2393,6 @@ function sMembersVP() {
           //slider1.noUiSlider.set(sliderAval);
           slider3.noUiSlider.set(sliderCval);
         });
-
-        // // when user slides the party C slider, update sliders A and B evenly
-        // slider3.noUiSlider.on('slide', function(event) {
-        //   let sliderAval = floor((maxSlider - numPartyC) / 2);
-        //   let sliderBval = (maxSlider - numPartyC) - sliderAval;
-        //   slider1.noUiSlider.set(sliderAval);
-        //   slider2.noUiSlider.set(sliderBval);
-        // });
 
         // when user slides party C slider, allow party C to go up to party A remainder
         // and make party B update to the remainder of A + B
@@ -3201,7 +2409,9 @@ function sMembersVP() {
   }
 }
 
-// OC note - either skip pane when 0 pres members, or leave pane to have sliders all 0
+/**
+ * C01 P08 Number of Voting Members per Party in Presidency
+ */
 function sMembersPres() {
 
   var slider1;// = document.getElementById('slider-1a'); // party a
@@ -3232,7 +2442,7 @@ function sMembersPres() {
       startVals[2] = 1.0 - (startVals[0] + startVals[1]);
     }
 
-    console.log("Slider Page Pres Party Members ");
+    console.log("P08: Voting Members in Pres");
     document.getElementById("top").style.display = "block";
     showPanesBool = true;
     document.getElementById("top").innerHTML = "<h2>NUMBER OF VOTING MEMBERS FOR PRESIDENCY</h2>" + configJSON.text.p08desc;
@@ -3249,7 +2459,6 @@ function sMembersPres() {
     document.getElementById("page11").style.display = "none";
     document.getElementById("page12").style.display = "none";
     document.getElementById("page13").style.display = "none";
-    // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
 
@@ -3258,8 +2467,7 @@ function sMembersPres() {
 
     checkNumBodies();
     sliders();
-    //sliderVals();
-    
+    updateBtn.mousePressed(clickedUpdate);
   }
 
   this.draw = function () {
@@ -3272,15 +2480,12 @@ function sMembersPres() {
     } else { // otherwise leave disabled
       document.getElementById("update-btn").disabled = true;
     }
-    updateBtn.mousePressed(clickedUpdate);
-
   }
 
   function clickedUpdate() {
     document.getElementById("update-btn").disabled = true; // disable after clicking it
 
     setEngineParams(engine);
-
     // reset values for calculations
     //engine.completeReset();
     visual.completeReset();
@@ -3324,7 +2529,7 @@ function sMembersPres() {
       // if only 1 party, create slider A so that there is no change
       if (userNumParties == 1) {
         noUiSlider.create(slider1, {
-          start: (startVals[0] * maxSlider), // fix later where to start
+          start: (startVals[0] * maxSlider),
           range: {
             'min': [maxSlider],
             'max': [maxSlider]
@@ -3343,7 +2548,7 @@ function sMembersPres() {
       } else {
 
       noUiSlider.create(slider1, {
-        start: (startVals[0] * maxSlider), // fix later where to start
+        start: (startVals[0] * maxSlider),
         range: {
           'min': [0], //[1],
           'max': [maxSlider]
@@ -3362,7 +2567,7 @@ function sMembersPres() {
     }
 
       noUiSlider.create(slider2, {
-        start: (startVals[1] * maxSlider), // fix later where to start
+        start: (startVals[1] * maxSlider),
         range: {
           'min': [0], //[1],
           'max': [maxSlider]
@@ -3380,7 +2585,7 @@ function sMembersPres() {
       });
 
       noUiSlider.create(slider3, {
-        start: (startVals[2] * maxSlider), // fix later where to start
+        start: (startVals[2] * maxSlider),
         range: {
           'min': [0], //[1],
           'max': [maxSlider]
@@ -3401,7 +2606,6 @@ function sMembersPres() {
     function sliderVals() {
       //connecting values to html, each tab value is stored in an array
       // var rangeSliderValueElement = document.getElementById('slider-value');
-
       userPerPresBody = [];
       var numPerPresBody = [];
       var presPercentage; // helper var
@@ -3410,7 +2614,6 @@ function sMembersPres() {
       var numPartyC;
 
       if (userNumPres > 0) {
-      // house
       slider1.noUiSlider.on('update', function (values, handle) {
         numPartyA = values[0];
         userPerPresBody[0] = values[0];
@@ -3468,14 +2671,6 @@ function sMembersPres() {
           slider3.noUiSlider.set(sliderCval);
         });
 
-        // // when user slides the party B slider, update sliders A and B evenly
-        // slider2.noUiSlider.on('slide', function(event) {
-        //   let sliderAval = floor((maxSlider - numPartyB) / 2);
-        //   let sliderCval = (maxSlider - numPartyB) - sliderAval;
-        //   slider1.noUiSlider.set(sliderAval);
-        //   slider3.noUiSlider.set(sliderCval);
-        // });
-
         // when user slides party B slider, allow party B to go up to party A remainder
         // and make party C update to the remainder of party A + B
         slider2.noUiSlider.on('slide', function(event) {
@@ -3487,14 +2682,6 @@ function sMembersPres() {
           //slider1.noUiSlider.set(sliderAval);
           slider3.noUiSlider.set(sliderCval);
         });
-
-        // // when user slides the party C slider, update sliders A and B evenly
-        // slider3.noUiSlider.on('slide', function(event) {
-        //   let sliderAval = floor((maxSlider - numPartyC) / 2);
-        //   let sliderBval = (maxSlider - numPartyC) - sliderAval;
-        //   slider1.noUiSlider.set(sliderAval);
-        //   slider2.noUiSlider.set(sliderBval);
-        // });
 
         // when user slides party C slider, allow party C to go up to party A remainder
         // and make party B update to the remainder of A + B
@@ -3516,11 +2703,11 @@ function sMembersPres() {
   }
 }
 
-//user input page for percentage of votes required for bill approval
+/**
+ * C01 P09 Majority & Supermajority Approval Percentage
+ * user input page for percentage of votes required for bill approval
+ */
 function sBodyPass() {
-
-  // var currSuperThresh = parseFloat(engine.superThresh * 100);
-  // var currPerPass = parseFloat(engine.perPass * 100);
   var currPerPass = parseFloat(userBodyPass);
   var currSuperThresh = parseFloat(userSuperThresh);
   var slider10 = document.getElementById('slider10');
@@ -3529,24 +2716,14 @@ function sBodyPass() {
   this.setup = function () {
     textSize(15);
     noStroke();
-    // engine.dWidth = width;
-    // engine.dHeight = height;
-    // v.dWidth = width;
-    // v.dHeight = height;
-    // background("#012244");
-    // currPerPass = parseFloat(userBodyPass);
-    // currSuperThresh = parseFloat(userSuperThresh);
     createSlider();
     sliderVals();
   }
 
   this.enter = function () {
-    // currPerPass = parseFloat(userBodyPass);
-    // currSuperThresh = parseFloat(userSuperThresh);
-    // noCursor();
     currPerPass = parseFloat(userBodyPass);
     currSuperThresh = parseFloat(userSuperThresh);
-    console.log("4th Slider Page");
+    console.log("P09: Majority & Supermajority");
     document.getElementById("top").innerHTML = "<h2>PERCENT OF VOTES REQUIRED FOR APPROVAL PER CHAMBER<h2>" + configJSON.text.p09desc;
     showPanesBool = true;
     document.getElementById("page1").style.display = "none";
@@ -3562,20 +2739,13 @@ function sBodyPass() {
     document.getElementById("page11").style.display = "none";
     document.getElementById("page12").style.display = "none";
     document.getElementById("page13").style.display = "none";
-    // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
-    // let millisecond;
-    //
-    // if (millisecond == 1000) {
-    //   mgr.showScene(main);
-    // }
 
-    // sliders();
     slider10.noUiSlider.set(currPerPass);
     slider11.noUiSlider.set(currSuperThresh);
     sliderVals();
-    
+    updateBtn.mousePressed(clickedUpdate);
   }
 
   this.draw = function () {
@@ -3590,31 +2760,17 @@ function sBodyPass() {
     } else { // otherwise leave disabled
       document.getElementById("update-btn").disabled = true;
     }
-    updateBtn.mousePressed(clickedUpdate);
-
   }
 
   function clickedUpdate() {
     document.getElementById("update-btn").disabled = true; // disable after clicking it
     setEngineParams(engine);
-
     // reset values for calculations
     //engine.completeReset();
     visual.completeReset();
     userEdits = false;
-    //reconfigBool = true;
   }
 
-  // function sliders() {
-
-
-
-  //   if (userEdits == true) {
-  //     sliderVals();
-  //   } else {
-  //     createSlider();
-  //     sliderVals();
-  //   }
     // NOui slider slides
     function createSlider() {
       noUiSlider.create(slider10, {
@@ -3660,7 +2816,6 @@ function sBodyPass() {
     function sliderVals() {
       //connecting values to html, each tab value is stored in an array
       // var rangeSliderValueElement = document.getElementById('slider-value');
-
       userBodyPass = "";
       userSuperThresh = "";
 
@@ -3674,15 +2829,13 @@ function sBodyPass() {
         // rangeSliderValueElement.innerHTML = userBodyPass + " " + userSuperThresh;
 
       });
-
     }
-
-
-  //}
-
 }
 
-//user input page for probabily of a yes vote
+/**
+ * C01 P10 Yes Likelihood
+ * user input page for probabily of a yes vote
+ */
 function sYesVotes() {
   var curDemYaythresh = parseFloat(userDemYaythresh);// PARTY A = parseInt(engine.demYaythresh * 100);
   var curRepYaythresh = parseFloat(userRepYaythresh);// = parseInt(engine.repYaythresh * 100);
@@ -3703,16 +2856,13 @@ function sYesVotes() {
     if (reconfigBool == true) {
       visual.dWidth = windowWidth * .95;
         visual.dHeight = (windowHeight * .9)-labelSpace;
-        // canvas = createCanvas(visual.dWidth, windowHeight * .9);
-        // let canvasDiv = document.getElementById('vote');
-        // canvas.parent(canvasDiv);
         reconfigBool = false;
-      }
+    }
     curDemYaythresh = parseFloat(userDemYaythresh);
     curRepYaythresh = parseFloat(userRepYaythresh);
     curIndYaythresh = parseFloat(userIndYaythresh);
 
-    console.log("5th slider page");
+    console.log("P10: Affirmative Vote");
     document.getElementById("top").innerHTML = "<h2>PROBABILITY OF AN AFFIRMATIVE VOTE BY A PARTY MEMBER</h2>" + configJSON.text.p10desc;
     showPanesBool = true;
     document.getElementById("page1").style.display = "none";
@@ -3730,9 +2880,7 @@ function sYesVotes() {
     document.getElementById("page13").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
-    // document.getElementById("slider-value").style.display = "none";
     checkParties();
-    // sliders();
     slider12.noUiSlider.set(curDemYaythresh);
     slider13.noUiSlider.set(curRepYaythresh);
     slider14.noUiSlider.set(curIndYaythresh);
@@ -3780,7 +2928,6 @@ function sYesVotes() {
   function clickedUpdate() {
     document.getElementById("update-btn").disabled = true; // disable after clicking it
     setEngineParams(engine);
-
     // reset values for calculations
     //engine.completeReset();
     visual.completeReset();
@@ -3806,17 +2953,6 @@ function sYesVotes() {
 
     }
   }
-
-  // function sliders() {
-  //   // NOui slider slides
-
-
-  //   if (userEdits == true) {
-  //     sliderVals();
-  //   } else {
-  //     createSlider();
-  //     sliderVals();
-  //   }
 
     function createSlider() {
       noUiSlider.create(slider12, {
@@ -3893,7 +3029,6 @@ function sYesVotes() {
     function sliderVals() {
       //connecting values to html, each tab value is stored in an array
       // var rangeSliderValueElement = document.getElementById('slider-value');
-
       userDemYaythresh = "";
       userRepYaythresh = "";
       userIndYaythresh = "";
@@ -3922,42 +3057,26 @@ function sYesVotes() {
       } else {
         userIndYaythresh = 0 + "%";
       }
-
-
     }
-
-  //}
-
-
 }
 
-  var visualizeVote;
-  var visualizeImmediate;
+var visualizeVote;
+var visualizeImmediate;
+
 // page to run bill
+/**
+ * C01 P11 Vote Page
+ */
 function sVote() {
   let voteBtn;
-
-
   this.setup = function () {
-
     userOutputText = document.getElementById('slider-disp');
     visualizeVote = false;
     visualizeImmediate = false;
-
   }
 
   this.enter = function () {
-    // configIX = userEditCount; // OC config array index is 1 less than editCount until it reaches max attempts
-    // if (configIX > MAX_CONFIG_ATTEMPTS - 1) {
-    //   configs.shift(); // remove first entered in array
-    //   configIX == MAX_CONFIG_ATTEMPTS - 1; // decrement IX to last position in array
-    // }
-    // results = []; // OC new results array since it is a new config
-    // resultIX = 0; // OC reset resultIX bc new configuration
-    // userEditCount++;
-    // console.log("user edit count: " + userEditCount);
     console.log("run bill page");
-    // document.getElementById("top").innerHTML = "DEMOCRACY ENGINE SIMULATOR INPUTS";
     document.getElementById("top").innerHTML = "<h2>TEST VOTING</h2>" + configJSON.text.p11desc1;
     showPanesBool = true;
     document.getElementById("page1").style.display = "none";
@@ -3973,7 +3092,6 @@ function sVote() {
     document.getElementById("page11").style.display = "block";
     document.getElementById("page12").style.display = "none";
     document.getElementById("page13").style.display = "none";
-    // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
@@ -4018,7 +3136,6 @@ function sVote() {
       //   document.getElementById('vote-btn').disabled = true; // disable it if prev clicked
       // }
     }
-    
 
     if (!document.getElementById('next-pane-btn')) {
       nextPaneBtn = createButton('Next');
@@ -4028,13 +3145,6 @@ function sVote() {
       nextPaneBtn.mousePressed(nextPane);
     }
 
-    // // can do if any params at all changed else true
-    // if (document.getElementById("vote-btn").disabled == true) {
-    //   // means vote button was clicked previously, so enable it
-    //   document.getElementById("vote-btn").disabled == true;
-    //   visualizeVote = true; // leave screen showing visualized vote
-
-    // } else {
     checkParamChange();
     if (visualizeVote) {
       document.getElementById('vote-btn').disabled = true; // disable it if prev clicked
@@ -4042,7 +3152,6 @@ function sVote() {
     console.log("oc paramChangedBool: " + paramChangedBool);
     console.log("oc button disabled: " + document.getElementById("vote-btn").disabled );
     console.log("oc visualize vote: " + visualizeVote);
-
     
     // if any parameters changed, don't visualize the vote yet (display blank) & enable button
     if (paramChangedBool) {
@@ -4059,14 +3168,10 @@ function sVote() {
       // visualize vote immediately when no param changed & vote button already clicked (disabled == true) when scene is entered
       visual.dWidth = windowWidth * .95;
       visual.dHeight = windowHeight * .9;
-      // canvas = createCanvas(visual.dWidth, visual.dHeight);
-      // let canvasDiv = document.getElementById('vote');
-      // canvas.parent(canvasDiv);
       visualizeVote = true;
       visualizeImmediate = true;
       document.getElementById("top").innerHTML = "<h2>TEST VOTINGs</h2>" + configJSON.text.p11desc2;
     }
-    //}
 
     // set new parameters to show updated configuration when entering scene
     setEngineParams(engine);
@@ -4075,11 +3180,9 @@ function sVote() {
     visual.completeReset();
     userEdits = false;
     reconfigBool = true;
-
   }
 
   this.draw = function () {
-    //visualizeImmediate = true;
     if (visualizeVote == false) {
       visual.displayImmediateBlank(engine, false);
     } else if (visualizeVote == true && visualizeImmediate == true) {
@@ -4091,7 +3194,6 @@ function sVote() {
           engine.bodyCount = engine.numBodies;
           visual.finalTextDisplayUser(engine, helvFont, colorOverlay, resultIX);
           }
-          //changeText(engine.decisionTxt);
         }, 1000); // 1 second before text overlay shows
         visual.userInputState = false;
       }
@@ -4102,9 +3204,8 @@ function sVote() {
         finalDisplay();
       }
     }
+
     paneToggle();
-    
-    
   }
 
   function finalDisplay() {
@@ -4117,7 +3218,6 @@ function sVote() {
         document.getElementById("top").innerHTML = "<h2>TEST VOTING</h2>" + configJSON.text.p11desc2;
         showPanesBool = true;
       }, 1500);
-      //changeText(engine.decisionTxt);
     }
     }, 1500); // 1.5 seconds before text overlay shows
     visual.userInputState = false;
@@ -4125,21 +3225,11 @@ function sVote() {
   }
   
   function clickedVote() {
-    //if (reconfigBool == true) {
-      // windowResized();
       visual.dWidth = windowWidth * .95;
       visual.dHeight = windowHeight * .9;
-      // canvas = createCanvas(visual.dWidth, visual.dHeight);
-      // let canvasDiv = document.getElementById('vote');
-      // canvas.parent(canvasDiv);
-      //reconfigBool = false;
-    //}
-    //console.log("configIX beginning clicked vote: " + configIX);
-    //voteBtn.remove();
     document.getElementById("vote-btn").disabled = true; // disable vote button after clicked
     showPanesBool = false; // make pane disappear so user can see voting in full view
 
-    //configIX = userEditCount; // OC config array index is 1 less than editCount until it reaches max attempts
     if (configIX > MAX_CONFIG_ATTEMPTS - 1) {
       configs.shift(); // remove first entered in array
       configIX = MAX_CONFIG_ATTEMPTS - 1; // decrement IX to last position in array
@@ -4155,7 +3245,6 @@ function sVote() {
     paramChangedBool = false;
     console.log("oc paramChangedBool in clickedVote(): " + paramChangedBool);
     
-
     // reset values for calculations and drawings
     engine.completeReset();
     visual.completeReset();
@@ -4166,7 +3255,6 @@ function sVote() {
     updateSession(); // save this config and resutls of running this configuration
     resultIX++; // saves this result
     configIX++;
-    //console.log("configIX after clicked vote: " + configIX);
   }
 
   // check if there are any param changes since the last time vote btn was clicked
@@ -4190,14 +3278,11 @@ function sVote() {
     } else { paramChangedBool = false; visualizeVote = true;} // no params changed so visualize vote
     return paramChangedBool;
   }
-
-  // //supermajority Cutoff for override of presidential veto
-  // userSuperThresh;
-  //
-  // userBodyPass;
-
 }
 
+/**
+ * C01 P12 Prompt to run benchmark
+ */
 function sBenchmarkPane() {
   let benchmarkBtn;
 
@@ -4225,24 +3310,9 @@ function sBenchmarkPane() {
     document.getElementById("page11").style.display = "none";
     document.getElementById("page12").style.display = "block";
     document.getElementById("page13").style.display = "none";
-    // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
-
-    // if any parameters changed, don't visualize the vote yet (display blank) & enable button
-    // if (paramChangedBool) {
-    //   visualizeVote = false;
-    //   //document.getElementById("vote-btn").disabled = false;
-    // } else if (paramChangedBool == false && document.getElementById("vote-btn").disabled == false) {
-    //   // otherwise if no params changed but vote button not yet clicked (enabled -> disabled == false), don't visualize (display blank)
-    //   visualizeVote = false; 
-    // } else if (paramChangedBool == false && document.getElementById("vote-btn").disabled == true){
-    //   // visualize vote immediately when no param changed & vote button already clicked (disabled == true) when scene is entered
-    //   visualizeVote = true;
-    //   visualizeImmediate = true;
-    //   //document.getElementById("top").innerHTML = "TEST VOTING<br><br>Change configuration parameters to run another test vote";
-    // }
 
     document.getElementById('vote-btn').remove();
     document.getElementById('next-pane-btn').remove();
@@ -4253,26 +3323,6 @@ function sBenchmarkPane() {
     benchmarkBtn.parent(buttonDiv);
     benchmarkBtn.mousePressed(clickedBenchmark);
 
-    // if (resultIX == 0) { // vote wasn't clicked on prev screen, so do it now to save first test result
-    //   setEngineParams(engine); // set new parameters
-    //   // reset values for calculations and drawings
-    //   engine.completeReset();
-    //   userEdits = false;
-    //   reconfigBool = true;
-    //   engine.currentCongLogic(true); // get results for this configuration
-    //   updateSession(); // save this config and resutls of running this configuration
-    //   resultIX++;
-    // }
-
-    // if (configIX > 0) {
-    //   configIX--; // decrement because last click for vote prepared for another config
-    // }
-
-    // set new parameters to show updated configuration when entering scene
-    //setEngineParams(engine);
-    // reset values for calculations
-    //engine.completeReset();
-    
     visual.completeReset();
     userEdits = false;
     reconfigBool = true;
@@ -4282,16 +3332,10 @@ function sBenchmarkPane() {
   }
 
   this.draw = function () {
-    // if (visualizeVote == false) {
-    //   visual.displayImmediateBlank(engine, 11);
-    // } else if (visualizeVote == true && visualizeImmediate == true) {
-    //   visual.displayImmediateVotes(engine); // OC can move to enter if get loop working for drawing all at once?
-    // }
     //let minimalConfig = true;
     visual.displayImmediateBlank(engine, false);
     paneToggle();
   }
-
 
   function clickedBenchmark() {
     if (resultIX == 0) { // vote wasn't clicked on prev screen, so do it now to save first test result
@@ -4312,24 +3356,19 @@ function sBenchmarkPane() {
     benchmarkBtn.remove();
 
     showPanesBool = false;
-    // document.getElementById("pane-bkg").style.display = "none";
     document.getElementById("start-desc").innerHTML = "";
     document.getElementById("start-desc").style.display = "none";
     benchmarkBtn.remove();
     var benchResults = "";
 
     let newDiv = document.createElement('div');
-    let newDiv2 = document.createElement('div');
-    let newDiv3 = document.createElement('div');
     newDiv.id = 'act-list';
     let s = "<table><thead><tr><th>ACT TITLE</th><th>BILL PASSED?</th></thead><tbody>";
     console.log("configIX before benchmarking: " + configIX);
     for (let i=resultIX; i < MAX_SIM_RESULTS+1; i++) { // + 1 because the first was the test result
       engine.completeReset();
       engine.currentCongLogic(true);
-      //let engineSim = new DemocracyEngine
       updateSession();
-      //benchResults = (configs[configIX].simResults[resultIX].actTitle + " --- " + configs[configIX].simResults[resultIX].finalDecision.substring(10));//sessionObj.configHistory[configIX].
       s = s + "<tr><td>" + configs[configIX].simResults[resultIX].actTitle + "</td>";
       if (configs[configIX].simResults[resultIX].billPass == true) {
         s = s + "<td>YES</td></tr>";
@@ -4349,30 +3388,21 @@ function sBenchmarkPane() {
 
 }
 
+/**
+ * C02 Benchmark Results
+ */
 function sBenchmarkResults() {
   let startOverBtn, summaryBtn;
 
   this.setup = function () {
-
     userOutputText = document.getElementById('slider-disp');
     visualizeVote = false;
-
   }
 
   this.enter = function () {
     visual.dWidth = windowWidth * .95;
     visual.dHeight = windowHeight * .9;
-    // configIX = userEditCount; // OC config array index is 1 less than editCount until it reaches max attempts
-    // if (configIX > MAX_CONFIG_ATTEMPTS - 1) {
-    //   configs.shift(); // remove first entered in array
-    //   configIX == MAX_CONFIG_ATTEMPTS - 1; // decrement IX to last position in array
-    // }
-    // results = []; // OC new results array since it is a new config
-    // resultIX = 0; // OC reset resultIX bc new configuration
-    // userEditCount++;
-    // console.log("user edit count: " + userEditCount);
     console.log("benchmark results page");
-    // document.getElementById("top").innerHTML = "DEMOCRACY ENGINE SIMULATOR INPUTS";
     
     document.getElementById("page-container").style.display = "block";
     document.getElementById("pane-bkg").style.display = "none";
@@ -4394,7 +3424,6 @@ function sBenchmarkResults() {
     document.getElementById("page11").style.display = "none";
     document.getElementById("page12").style.display = "block";
     document.getElementById("page13").style.display = "none";
-    // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
@@ -4402,32 +3431,16 @@ function sBenchmarkResults() {
     let buttonDiv = document.getElementById('main-btn-div');
 
     startOverBtn = createButton('Start Over');
-    startOverBtn.id('restart-btn');
+    startOverBtn.id('restart-btn-c02');
     startOverBtn.class('buttons');
     startOverBtn.parent(buttonDiv);
     startOverBtn.mousePressed(clickedStartOver);
 
-    summaryBtn = createButton('See Summary');
-    summaryBtn.id('summary-btn');
+    summaryBtn = createButton('Go to Evaluation');
+    summaryBtn.id('to-eval-btn-c02');
     summaryBtn.class('buttons');
     summaryBtn.parent(buttonDiv);
     summaryBtn.mousePressed(clickedSummary);
-
-    // if (resultIX == 0) { // vote wasn't clicked on prev screen, so do it now to save first test result
-    //   setEngineParams(engine); // set new parameters
-    //   // reset values for calculations and drawings
-    //   engine.completeReset();
-    //   userEdits = false;
-    //   reconfigBool = true;
-    //   engine.currentCongLogic(true); // get results for this configuration
-    //   updateSession(); // save this config and resutls of running this configuration
-    //   resultIX++;
-    // }
-
-    // set new parameters to show updated configuration when entering scene
-    //setEngineParams(engine);
-    // reset values for calculations
-    //engine.completeReset();
     
     visual.completeReset();
     userEdits = false;
@@ -4443,24 +3456,8 @@ function sBenchmarkResults() {
 
   this.draw = function () {
     visual.displayImmediateBlank(engine, true); // draws votes for last calculation
-    //if (visual.userInputState) {
         document.body.style.backgroundColor = colorOverlay;
         document.getElementById("screen").style.display = "block";
-        // push();
-        // //translate(-(3 * (width/visual.numBodies)), 0);
-        // translate(0, 0);
-        // var resBColor = color(colorOverlay); // color(0, 0, 0); // result overlay
-        // noStroke();
-        // rectMode(CORNER);
-        // resBColor.setAlpha(200);
-        // fill(resBColor);
-        // rect(-width, 0, width*2, height);
-        // pop();
-        // // engine.bodyCount = engine.numBodies;
-        // // visual.finalTextDisplayUser(engine, helvFont, colorOverlay, resultIX);
-        // //changeText(engine.decisionTxt);
-      //visual.userInputState = false;
-    //}
   }
 
   function clickedStartOver() {
@@ -4471,7 +3468,6 @@ function sBenchmarkResults() {
   function clickedSummary() {
     removeBtns();
     mgr.showScene(sEndorse)
-    //saveSession();
   }
 
   function removeBtns() {
@@ -4481,14 +3477,15 @@ function sBenchmarkResults() {
 
 }
 
+/**
+ * C03 Evaluation for Endorsement Page
+ */
 function sEndorse() {
   let startOverBtn, summarySaveBtn, approvalBtn;
   let div1, div2, div3, divApproval;
   let s1, s2, s3, sApproval;
 
   this.setup = function () {
-    //userOutputText = document.getElementById('slider-disp');
-    //userOutputText = document.getElementById('start-desc');
   }
 
   this.enter = function () {
@@ -4506,8 +3503,7 @@ function sEndorse() {
     div3.id = 's-col-3';
     divApproval.id = 'approval-div';
 
-    console.log("user config summary & save page");
-    // document.getElementById("top").innerHTML = "DEMOCRACY ENGINE SIMULATOR INPUTS";
+    console.log("user config endorsement page");
     document.getElementById("main-header").innerHTML = "<h1>Evaluation Page</h1>";
     document.getElementById("start-desc").innerHTML = configJSON.text.evalDesc;
     document.getElementById("pane-bkg").style.display = "none";
@@ -4525,7 +3521,6 @@ function sEndorse() {
     document.getElementById("page11").style.display = "none";
     document.getElementById("page12").style.display = "none";
     document.getElementById("page13").style.display = "block";
-    // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
@@ -4533,7 +3528,7 @@ function sEndorse() {
     let buttonDiv = document.getElementById('main-btn-div');
     
     startOverBtn = createButton('Start Over');
-    startOverBtn.id('restart-btn');
+    startOverBtn.id('restart-btn-c03');
     startOverBtn.class('buttons');
     startOverBtn.parent(buttonDiv);
     startOverBtn.mousePressed(clickedStartOver);
@@ -4545,30 +3540,18 @@ function sEndorse() {
     approvalBtn.mousePressed(clickedApprove);
 
     summarySaveBtn = createButton('Next');
-    summarySaveBtn.id('save-summary-btn');
+    summarySaveBtn.id('save-summary-btn-c03');
     summarySaveBtn.class('buttons');
     summarySaveBtn.parent(buttonDiv);
     summarySaveBtn.mousePressed(clickedSummarySave);
 
     inputTxt();
 
-    // visualizeVote = false;
-
-    // // set new parameters to show updated configuration when entering scene
-    // setEngineParams(engine);
-    // // reset values for calculations
-    // engine.completeReset();
-    // visual.completeReset();
-    // userEdits = false;
-    // reconfigBool = true;
-
     background(bColor);
     document.body.style.backgroundColor = bColor;
-
   }
 
   this.draw = function () {
-    
   }
 
   function clickedStartOver() {
@@ -4606,7 +3589,6 @@ function sEndorse() {
 
   function inputTxt() {
 
-    //userOutputText.innerHTML =
     s1 = 
       "<h3>First Legislative Chamber</h3>" +
       "<p>Voting Members: " + userNumHouse +
@@ -4670,34 +3652,22 @@ function sEndorse() {
       document.getElementById('start-desc').appendChild(div3);
       
       approvalBtn.parent(divApproval);
-      /*
-    if (userEditCount >= 2) {
-      nextButton.remove();
-      recalBtn = createButton('RECALCULATE VOTE');
-      recalBtn.id('recal-btn');
-      recalBtn.class('buttons');
-      // let buttonDiv = document.getElementById('button-div');
-      recalBtn.parent(buttonDiv);
-
-      // recalBtn.position(windowWidth - recalBtn.width - buttonRes.width - buttonRC.width - 20, windowHeight - 45);
-      recalBtn.mousePressed(inputVar);
-    }
-      */
   }
 
 }
 
 var prevSessionID;
 
-//page showing all of user inputs
+/**
+ * C04 Final Summary & Save Page
+ * page showing all of user inputs
+ */
 function sSaveResults() {
   let saveBtn, startOverBtn; //approvalBtn;
   let div1, div2, div3, divApproval;
   let s1, s2, s3, sApproval;
 
   this.setup = function () {
-    //userOutputText = document.getElementById('slider-disp');
-    //userOutputText = document.getElementById('start-desc');
   }
 
   this.enter = function () {
@@ -4715,8 +3685,7 @@ function sSaveResults() {
     div3.id = 's-col-3';
     divApproval.id = 'approval-div';
 
-    console.log("user config summary & save page");
-    // document.getElementById("top").innerHTML = "DEMOCRACY ENGINE SIMULATOR INPUTS";
+    console.log("user config final summary & save page");
     document.getElementById("main-header").innerHTML = "<h1>Save Session</h1>";
     document.getElementById("start-desc").innerHTML = "<h2>Session ID: " + sessionID + "</h2>";
     document.getElementById("pane-bkg").style.display = "none";
@@ -4734,7 +3703,6 @@ function sSaveResults() {
     document.getElementById("page11").style.display = "none";
     document.getElementById("page12").style.display = "none";
     document.getElementById("page13").style.display = "block";
-    // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
@@ -4742,16 +3710,10 @@ function sSaveResults() {
     let buttonDiv = document.getElementById('main-btn-div');
     
     startOverBtn = createButton('Start Over');
-    startOverBtn.id('restart-btn');
+    startOverBtn.id('restart-btn-c04');
     startOverBtn.class('buttons');
     startOverBtn.parent(buttonDiv);
     startOverBtn.mousePressed(clickedStartOver);
-
-    // approvalBtn = createButton('Approve');
-    // approvalBtn.id('approve-btn');
-    // approvalBtn.class('buttons');
-    // //approvalBtn.parent(div3);
-    // approvalBtn.mousePressed(clickedApprove);
 
     saveBtn = createButton('Save Session');
     saveBtn.id('save-btn');
@@ -4761,46 +3723,17 @@ function sSaveResults() {
 
     inputTxt();
 
-    // visualizeVote = false;
-
-    // // set new parameters to show updated configuration when entering scene
-    // setEngineParams(engine);
-    // // reset values for calculations
-    // engine.completeReset();
-    // visual.completeReset();
-    // userEdits = false;
-    // reconfigBool = true;
-
     background(bColor);
     document.body.style.backgroundColor = bColor;
-
   }
 
   this.draw = function () {
-    
   }
 
   function clickedStartOver() {
     removeBtns();
     mgr.showScene(startSession);
   }
-
-  // function clickedApprove() {
-  //   ownerEndorse();
-  //   divApproval.innerHTML = "";
-  //   let s = "";
-  //     if (finalConfigObj.ownerEndorsement == 1) {
-  //       //document.getElementById("main-header").innerHTML = "<h1>Summary & Save</h1><h2>Session ID: " + sessionID + "</h2><h2>Approved!</h2>";
-  //       //s += "<h3 style='font-size: 14px; display: inline-block; vertical-align: top;'>User Approval of Configuration </h3><h3 style='font-size: 32px; display: inline-block; margin: 0; line-height: 1;'>&#x2611;</h3>";
-  //       s += "<h3>User Approval of Configuration</h3><img id='approval-check' src='./assets/check-mark-txt-col.svg' style='left:37%'>";
-  //     } else {
-  //       //document.getElementById("main-header").innerHTML = "<h1>Summary & Save</h1><h2>Session ID: " + sessionID + "</h2>";
-  //       //s += "<h3 style='font-size: 14px; display: inline-block; vertical-align: top;'>User Approval of Configuration </h3><h3 style='font-size: 32px; display: inline-block; margin: 0; line-height: 1;'>&#x2610;</h3>";
-  //       s  += "<h3>User Approval of Configuration</h3><div id='approval-check'></div>";
-  //     }
-  //     divApproval.innerHTML += s;
-  //     approvalBtn.parent(divApproval);
-  // }
 
   function clickedSave() {
     removeBtns();
@@ -4810,13 +3743,11 @@ function sSaveResults() {
 
   function removeBtns() {
     startOverBtn.remove();
-    // approvalBtn.remove();
     saveBtn.remove();
   }
 
   function inputTxt() {
 
-    //userOutputText.innerHTML =
     s1 = 
       "<h3>First Legislative Chamber</h3>" +
       "<p>Voting Members: " + userNumHouse +
@@ -4891,23 +3822,12 @@ function sSaveResults() {
       document.getElementById('start-desc').appendChild(div3);
       
       // approvalBtn.parent(divApproval);
-      /*
-    if (userEditCount >= 2) {
-      nextButton.remove();
-      recalBtn = createButton('RECALCULATE VOTE');
-      recalBtn.id('recal-btn');
-      recalBtn.class('buttons');
-      // let buttonDiv = document.getElementById('button-div');
-      recalBtn.parent(buttonDiv);
-
-      // recalBtn.position(windowWidth - recalBtn.width - buttonRes.width - buttonRC.width - 20, windowHeight - 45);
-      recalBtn.mousePressed(inputVar);
-    }
-      */
   }
-
 }
 
+/**
+ * C05 Save Complete Page
+ */
 function sComplete() {
   let startOverBtn;
 
@@ -4917,7 +3837,6 @@ function sComplete() {
   this.enter = function () {
 
     console.log("save complete page");
-    // document.getElementById("top").innerHTML = "DEMOCRACY ENGINE SIMULATOR INPUTS";
     document.getElementById("main-header").innerHTML = "<h1>Session Complete</h1>";
     document.getElementById("start-desc").innerHTML = "<h2>Session ID: " + prevSessionID + "</h2><p style='text-align:center'>Please record your session ID to retrieve it later.</p";
     document.getElementById("top").style.display = "none";
@@ -4935,7 +3854,6 @@ function sComplete() {
     document.getElementById("page11").style.display = "none";
     document.getElementById("page12").style.display = "none";
     document.getElementById("page13").style.display = "block";
-    // document.getElementById("slider-value").style.display = "none";
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
@@ -4946,7 +3864,7 @@ function sComplete() {
     let buttonDiv = document.getElementById('main-btn-div');
 
     startOverBtn = createButton('Start Over');
-    startOverBtn.id('restart-btn');
+    startOverBtn.id('restart-btn-c05');
     startOverBtn.class('buttons');
     startOverBtn.parent(buttonDiv);
     startOverBtn.mousePressed(clickedStartOver)
@@ -4965,225 +3883,6 @@ function sComplete() {
     startOverBtn.remove();
     mgr.showScene(startSession);
   }
-
 }
 
-/*
-//explanation text before user goes back into simulator
-function sInfo() {
 
-  this.setup = function () {
-    simInfoText = document.getElementById('sim-info');
-  }
-
-  this.enter = function () {
-    console.log("simulator info page");
-    document.getElementById("top").innerHTML = " ";
-    document.getElementById("page1").style.display = "none";
-    document.getElementById("page2").style.display = "none";
-    document.getElementById("page3").style.display = "none";
-    document.getElementById("page4").style.display = "none";
-    document.getElementById("page5").style.display = "none";
-    document.getElementById("page6").style.display = "none";
-    document.getElementById("page7").style.display = "none";
-    document.getElementById("page8").style.display = "none";
-    document.getElementById("page9").style.display = "none";
-    document.getElementById("page10").style.display = "none";
-    document.getElementById("page13").style.display = "none";
-    // document.getElementById("slider-value").style.display = "none";
-    document.getElementById("vote").style.display = "none";
-    document.getElementById("slider-disp").style.display = "none";
-    document.getElementById("sim-info").style.display = "block";
-    nextButton.remove();
-    inputTxt();
-    var delayInMilliseconds = 120; //13000; // 15 seconds
-
-    setTimeout(function () {
-      inputVar();
-    }, delayInMilliseconds);
-
-
-  }
-
-  this.draw = function () {
-
-  }
-
-  function inputTxt() {
-    simInfoText.innerHTML = "<div id='page-container'><div id='content-wrap'><div class='body-text'><p>The simulator will now run through one legislative cycle with the provided inputs. The user will then have the option of running the simulator through additional legislative cycles with the same values or changing the parameters by clicking on the 'Reconfigure Government' button.</p></div></div></div>";
-
-  }
-
-
-}
-
-//display of user inputs while in simulator
-function sDisplay() {
-
-  this.setup = function () {
-
-  }
-
-  this.enter = function () {
-
-    console.log("user display page");
-    document.getElementById("top").innerHTML = "DEMOCRACY ENGINE SIMULATOR INPUT DISPLAY";
-    document.getElementById("page1").style.display = "none";
-    document.getElementById("page2").style.display = "none";
-    document.getElementById("page3").style.display = "none";
-    document.getElementById("page4").style.display = "none";
-    document.getElementById("page5").style.display = "none";
-    document.getElementById("page6").style.display = "none";
-    document.getElementById("page7").style.display = "none";
-    document.getElementById("page8").style.display = "none";
-    document.getElementById("page9").style.display = "none";
-    document.getElementById("page10").style.display = "none";
-    document.getElementById("page13").style.display = "block";
-    // document.getElementById("slider-value").style.display = "none";
-    document.getElementById("vote").style.display = "none";
-    document.getElementById("slider-disp").style.display = "block";
-    document.getElementById("sim-info").style.display = "none";
-    inputTxt();
-  }
-
-  this.draw = function () {
-
-
-  }
-
-  function inputTxt() {
-    // OC if 2 bodies, "Second Legislative Chamber" is for the senate
-    //    if 3 bodies, "Third Legislative Chamber" is for the senate
-    userOutputText.innerHTML =
-      "<div><h3>First Legislative Chamber</h3>" +
-      "<p>Voting Members: " + userNumHouse +
-      "<br>Members in Political Party A: " + Math.round(userPerHouseBody[0] * userNumHouse) +
-      "<br>Members in Political Party B: " + Math.round(userPerHouseBody[1] * userNumHouse) +
-      "<br>Members in Political Party C: " + Math.round(userPerHouseBody[2] * userNumHouse); // +
-
-      // if (userNumLegislative == 2) {
-      // userOutputText.innerHTML +=
-      // "</p><h3>Second Legislative Chamber</h3>" +
-      // "<p>Voting Members: " + userNumSenate +
-      // "<br>Members in Political Party A: " + Math.round(userPerSenateBody[0] * userNumSenate) +
-      // "<br>Members in Political Party B: " + Math.round(userPerSenateBody[1] * userNumSenate) +
-      // "<br>Members in Political Party C: " + Math.round(userPerSenateBody[2] * userNumSenate) +
-      // "</p><h3>Third Legislative Chamber</h3>" +
-      // "<p>Voting Members: " + userNumHouse2 +
-      // "<br>Members in Political Party A: " + Math.round(userPerHouse2Body[0] * userNumHouse2) +
-      // "<br>Members in Political Party B: " + Math.round(userPerHouse2Body[1] * userNumHouse2) +
-      // "<br>Members in Political Party C: " + Math.round(userPerHouse2Body[2] * userNumHouse2); // +
-      // } else {
-      userOutputText.innerHTML +=
-      "</p><h3>Second Legislative Chamber</h3>" +
-      "<p>Voting Members: " + userNumHouse2 +
-      "<br>Members in Political Party A: " + Math.round(userPerHouse2Body[0] * userNumHouse2) +
-      "<br>Members in Political Party B: " + Math.round(userPerHouse2Body[1] * userNumHouse2) +
-      "<br>Members in Political Party C: " + Math.round(userPerHouse2Body[2] * userNumHouse2) +
-      "</p><h3>Third Legislative Chamber</h3>" +
-      "<p>Voting Members: " + userNumSenate +
-      "<br>Members in Political Party A: " + Math.round(userPerSenateBody[0] * userNumSenate) +
-      "<br>Members in Political Party B: " + Math.round(userPerSenateBody[1] * userNumSenate) +
-      "<br>Members in Political Party C: " + Math.round(userPerSenateBody[2] * userNumSenate);
-      //}
-
-      userOutputText.innerHTML +=
-      "</p><h3>Vice Presidency</h3>" +
-      "<p>Voting Members: " + userNumVP +
-      "<br>Members in Political Party A: " + Math.round(userPerPresBody[0] * userNumVP) +
-      "<br>Members in Political Party B: " + Math.round(userPerPresBody[1] * userNumVP) +
-      "<br>Members in Political Party C: " + Math.round(userPerPresBody[2] * userNumVP) +
-      "</p><h3>Presidency</h3>" +
-      "<p>Voting Members: " + userNumPres +
-      "<br>Members in Political Party A: " + Math.round(userPerVPBody[0] * userNumPres) +
-      "<br>Members in Political Party B: " + Math.round(userPerVPBody[1] * userNumPres) +
-      "<br>Members in Political Party C: " + Math.round(userPerVPBody[2] * userNumPres) +
-      "</p><h3>Likelihood of Yes Vote: </h3>" +
-      "<p>Political Party A: " + userDemYaythresh +
-      "<br>Political Party B: " + userRepYaythresh +
-      "<br>Political Party C: " + userIndYaythresh +
-      "</p><h3>Percentage of votes required for approval of bill</h3>" +
-      "<p>Approval By Majority: " + userBodyPass +
-      "<br> Approval By Supermajority: " + userSuperThresh + "</div></p>";
-  }
-
-
-  // //supermajority Cutoff for override of presidential veto
-  // userSuperThresh;
-  //
-  // userBodyPass;
-
-}
-
-//shows default congress settings at end of original simulator
-function sDefault() {
-
-  this.setup = function () {
-    userOutputText = document.getElementById('slider-disp');
-  }
-
-  this.enter = function () {
-
-    console.log("default settings display page");
-    document.getElementById("top").innerHTML = " ";
-    document.getElementById("page1").style.display = "none";
-    document.getElementById("page2").style.display = "none";
-    document.getElementById("page3").style.display = "none";
-    document.getElementById("page4").style.display = "none";
-    document.getElementById("page5").style.display = "none";
-    document.getElementById("page6").style.display = "none";
-    document.getElementById("page7").style.display = "none";
-    document.getElementById("page8").style.display = "none";
-    document.getElementById("page9").style.display = "none";
-    document.getElementById("page10").style.display = "none";
-    document.getElementById("page13").style.display = "none";
-    // document.getElementById("slider-value").style.display = "none";
-    document.getElementById("vote").style.display = "none";
-    document.getElementById("slider-disp").style.display = "block";
-    document.getElementById("sim-info").style.display = "none";
-    inputTxt();
-  }
-
-  this.draw = function () {
-
-
-  }
-
-  function inputTxt() {
-    userOutputText.innerHTML =
-      "<div><h3>House</h3>" +
-      "<p>Voting Members: " + engine.numHouse +
-      "<br>Members in Democrat Party: " + Math.round(engine.perDemHouse * engine.numHouse) +
-      "<br>Members in Independent Party: " + Math.round(engine.perIndHouse * engine.numHouse) +
-      "<br>Members in Republican Party: " + Math.round(engine.perRepHouse * engine.numHouse) +
-      "</p><h3>Senate</h3>" +
-      "<p>Voting Members: " + engine.numHouse2 +
-      "<br>Members in Democrat Party: " + Math.round(engine.perDemSenate * engine.numHouse2) +
-      "<br>Members in Independent Party: " + Math.round(engine.perIndSenate * engine.numHouse2) +
-      "<br>Members in Republican Party: " + Math.round(engine.perRepSenate * engine.numHouse2) +
-      // "<p>Voting Members: " + engine.numSenate +
-      // "<br>Members in Democrat Party: " + Math.round(engine.perDemSenate * engine.numSenate) +
-      // "<br>Members in Independent Party: " + Math.round(engine.perIndSenate * engine.numSenate) +
-      // "<br>Members in Republican Party: " + Math.round(engine.perRepSenate * engine.numSenate) +
-      "</p><h3>Vice Presidency</h3>" +
-      "<p>Voting Members: " + engine.numVP +
-      "<br>Members in Democrat Party: " + Math.round(engine.perDemVP * engine.numVP) +
-      "<br>Members in Independent Party: " + Math.round(engine.perIndVP * engine.numVP) +
-      "<br>Members in Republican Party: " + Math.round(engine.perRepVP * engine.numVP) +
-      "</p><h3>Presidency</h3>" +
-      "<p>Voting Members: " + engine.numPres +
-      "<br>Members in Democrat Party: " + Math.round(engine.perDemPres * engine.numPres) +
-      "<br>Members in Independent Party: " + Math.round(engine.perIndPres * engine.numPres) +
-      "<br>Members in Republican Party: " + Math.round(engine.perRepPres * engine.numPres) +
-      "</p><h3>Likelihood of Yes Vote: </h3>" +
-      "<p>Democrat Party: " + engine.demYaythresh +
-      "<br>Independent Party: " + engine.indYaythresh +
-      "<br>Republican Party: " + engine.repYaythresh +
-      "</p><h3>Percentage of votes required for approval of bill</h3>" +
-      "<p>Approval By Majority: " + engine.perPass +
-      "<br> Approval By Supermajority: " + engine.superThresh + "</p></div>";
-  }
-
-
-}
-  */

@@ -115,7 +115,6 @@ var MAX_CONFIG_ATTEMPTS = 10; // 10th config is final config
 var MAX_SIM_RESULTS = 10;
 
 var showPanesBool = true;
-// var paneArrow = false; // allows for arrow keys to move to next pane (controlled why which scene its on)
 
 function preload() {
   helvFont = loadFont('../democracy-engine-congressional-simulator/assets/font/HelveticaNeue-Regular.otf');
@@ -158,9 +157,6 @@ function setup() {
   mgr.addScene(aboutProject);
   mgr.addScene(newSessionScene);
   mgr.addScene(loadSessionS1);
-  mgr.addScene(loadSessionS2);
-  //mgr.addScene(democracyEngineOrigin);
-  //mgr.addScene(democracyEngineUser);
   mgr.addScene(sBodies);
   mgr.addScene(sLegislative);
   mgr.addScene(sParties);
@@ -169,7 +165,6 @@ function setup() {
   mgr.addScene(sMembersThirdChamber);
   mgr.addScene(sMembersVP);
   mgr.addScene(sMembersPres);
-  //mgr.addScene(sMembers);
   mgr.addScene(sBodyPass);
   mgr.addScene(sYesVotes);
   mgr.addScene(sVote);
@@ -178,67 +173,28 @@ function setup() {
   mgr.addScene(sEndorse);
   mgr.addScene(sSaveResults);
   mgr.addScene(sComplete);
-  // mgr.addScene(sInfo);
-  // mgr.addScene(sDisplay);
-  // mgr.addScene(sDefault);
   mgr.showNextScene();
-  //mgr.showScene(sBodies);
   
   console.log("end of scene-mgr.js setup");
 }
 
 function draw() {
   mgr.draw();
-
 }
 
 function mousePressed() {
   mgr.mousePressed();
 }
 
-function nextScene() {
-  if (mgr.isCurrent(democracyEngineOrigin)) {
-    //mgr.showScene(sLegislative);
-    mgr.showScene(sBodies);
-  } else if (mgr.isCurrent(sBodies)) {
-    mgr.showScene(sLegislative);
-  } else if (mgr.isCurrent(sLegislative)) {
-    mgr.showScene(sParties);
-  } else if (mgr.isCurrent(sParties) && userNumParties <= 1) {
-    mgr.showScene(sBodyPass);
-  } else if (mgr.isCurrent(sParties)) {
-    mgr.showScene(sMembers);
-  } else if (mgr.isCurrent(sMembers)) {
-    mgr.showScene(sBodyPass);
-  } else if (mgr.isCurrent(sBodyPass)) {
-    mgr.showScene(sYesVotes);
-  } else if (mgr.isCurrent(sYesVotes)) {
-    mgr.showScene(sResults);
-  }  else if (mgr.isCurrent(sResults) && userEditCount < 2) {
-    mgr.showScene(sInfo);
-  }  else if (mgr.isCurrent(sInfo) && userEdits == true) {
-    mgr.showScene(democracyEngineUser);
-  } else if (mgr.isCurrent(democracyEngineUser)) {
-    // OC update config count var here?
-    //mgr.showScene(sLegislative);
-    mgr.showScene(sBodies);
-  } else if (mgr.isCurrent(sDefault)) {
-   //mgr.showScene(sLegislative);
-   mgr.showScene(sBodies);
-  } else if (mgr.isCurrent(sDisplay)) {
-    //mgr.showScene(sLegislative);
-    mgr.showScene(sBodies);
-   }
-
-}
-
+/**
+ * Show next pane scene, control order
+ */
 function nextPane() {
   if (mgr.isCurrent(sBodies)) {
     mgr.showScene(sLegislative);
   } else if (mgr.isCurrent(sLegislative)) {
     mgr.showScene(sParties);
   } else if (mgr.isCurrent(sParties)) {
-    // mgr.showScene(sMembers);
     mgr.showScene(sMembersFirstChamber);
   } else if (mgr.isCurrent(sMembersFirstChamber) && userNumLegislative == 1) { 
     mgr.showScene(sMembersVP);
@@ -260,20 +216,12 @@ function nextPane() {
     mgr.showScene(sVote);
   }  else if (mgr.isCurrent(sVote)) {
     mgr.showScene(sBenchmarkPane);
-  } //else if (mgr.isCurrent(sResults) && userEditCount < 2) {
-  //   mgr.showScene(sInfo);
-  // }  else if (mgr.isCurrent(sInfo) && userEdits == true) {
-  //   // mgr.showScene(democracyEngineUser);  
-  //   mgr.showScene(sBodies);
-  // } else if (mgr.isCurrent(sDefault)) {
-  //  //mgr.showScene(sLegislative);
-  //  mgr.showScene(sBodies);
-  // } else if (mgr.isCurrent(sDisplay)) {
-  //   //mgr.showScene(sLegislative);
-  //   mgr.showScene(sBodies);
-  //  }
+  } 
 }
 
+/**
+ * Show previous pane scene
+ */
 function previousPane() {
   if (mgr.isCurrent(sLegislative)) {
     mgr.showScene(sBodies);
@@ -312,79 +260,13 @@ function previousPane() {
   }
 }
 
-// function lastScene() {
-//   if (mgr.isCurrent(sYesVotes)) {
-//     mgr.showScene(sBodyPass);
-//   } else if (mgr.isCurrent(sBodyPass)) {
-//     mgr.showScene(sMembers);
-//   } else if (mgr.isCurrent(sMembers)) {
-//     mgr.showScene(sLegislative);
-//   } else if (mgr.isCurrent(sLegislative)) {}
-//
-// }
-
-// function keyPressed() {
-//   // You can optionaly handle the key press at global level...
-//   switch (key) {
-//     case '1':
-//       mgr.showScene(democracyEngineUser);
-//       break;
-//     case '2':
-//       mgr.showScene(sResults);
-//       break;
-//     case '3':
-//       mgr.showScene(sMembers);
-//       break;
-//       // case 'space':
-//       //     mgr.showScene(main);
-//       //     break;
-//
-//   }
-//
-//   // ... then dispatch via the SceneManager.
-//   mgr.keyPressed();
-// }
-
 // might not work for fullscreen
 // function windowResized() {
 //   resizeCanvas(windowWidth*8, windowHeight*8);
 // }
 
-
-function button() {
-  mgr.showNextScene();
-}
-
-function dispResult() {
-  if (mgr.isCurrent(sDisplay)) {
-    mgr.showScene(democracyEngineUser);
-    dispBtn.elt.textContent = "DISPLAY USER SETTINGS";
-    // emailBtn.elt.style.opacity = "1";
-    // buttonRC.elt.style.opacity = "1";
-    // buttonRes.elt.style.opacity = "1";
-    // recalBtn.elt.style.opacity = "1";
-  } else {
-    mgr.showScene(sDisplay);
-    dispBtn.elt.textContent = "DISPLAY VOTE";
-    // emailBtn.elt.style.opacity = "0";
-    // buttonRC.elt.style.opacity = "0";
-    // buttonRes.elt.style.opacity = "0";
-    // recalBtn.elt.style.opacity = "0";
-  }
-}
-
-function defResult() {
-  if (mgr.isCurrent(sDefault)) {
-    mgr.showScene(democracyEngineOrigin);
-    buttonDef.elt.textContent = "DISPLAY DEFAULT SETTINGS";
-  } else {
-    mgr.showScene(sDefault);
-    buttonDef.elt.textContent = "DISPLAY VOTE";
-  }
-}
-
 /**
- * set user vars to default config of govt json
+ * Set user vars to default config of govt json
  */
 function setDefaultUserVars() {
   userNumLegislative = govtConfig.numLegislativeBodies;
@@ -431,8 +313,8 @@ function setDefaultUserVars() {
 }
 
 /**
- * set user vars to loaded config
- * @param {*} lConfig 
+ * Set user vars to loaded config
+ * @param {*} lConfig - the object for the loaded configuration
  */
 function setLoadedUserVars(lConfig) {
   userNumLegislative = lConfig.numLegislativeBodies;
@@ -472,8 +354,8 @@ function setLoadedUserVars(lConfig) {
 }
 
 /**
- * set engine params to user vars
- * @param {*} engine 
+ * Set engine params to user vars
+ * @param {*} engine - the engine object to be set to user vars
  */
 function setEngineParams(engine) {
   engine.numBodies = 5; // up to 5 voting bodies
@@ -527,151 +409,14 @@ function setEngineParams(engine) {
   console.log("ind yay thresh: " + engine.indYaythresh);
 }
 
-//User Input Values for Congressional Reconfiguration
-function inputVar() {
-
-  // OC if coming from the user engine page or the user display page, 
-  // increment resultIX bc using the same configuration
-  // if (mgr.isCurrent(democracyEngineUser) || mgr.isCurrent(sDisplay)) {
-  //   resultIX++;
-  //   console.log("incremented resultIX: " + resultIX);
-  // }
-
-  document.body.style.backgroundColor = bColor;
-  changeText(" ");
-  if(!document.getElementById('disp-btn')){
-          dispButton();
-   }
-
-
-  //Number voting members
-  engine.numHouse = userNumHouse;
-  engine.numHouse2 = userNumHouse2;
-  engine.numSenate = userNumSenate;
-  engine.numPres = userNumPres;
-  engine.numVP = userNumVP;
-
-  engine.numParties = userNumParties;
-
-  //Demographics of House as decimal percentages 1 = 100%
-  engine.perDemHouse = userPerHouseBody[0];
-  engine.perRepHouse = userPerHouseBody[1];
-  engine.perIndHouse = userPerHouseBody[2];
-
-  //Demographics of House 2 as decimal percentages 1 = 100%
-  engine.perDemHouse2 = userPerHouse2Body[0];
-  engine.perRepHouse2 = userPerHouse2Body[1];
-  engine.perIndHouse2 = userPerHouse2Body[2];
-
-  //Demographics of Senate as decimal percentages 1 = 100%
-  engine.perDemSenate = userPerSenateBody[0];
-  engine.perRepSenate = userPerSenateBody[1];
-  engine.perIndSenate = userPerSenateBody[2];
-
-  //Demographics of President as decimal percentages 1 = 100%
-  engine.perDemPres = userPerPresBody[0];
-  engine.perRepPres = userPerPresBody[1];
-  engine.perIndPres = userPerPresBody[2];
-
-  //Demographics of Vice President as decimal percentages
-  engine.perDemVP = userPerVPBody[0];
-  engine.perRepVP = userPerVPBody[1];
-  engine.perIndVP = userPerVPBody[2];
-
-  //Historical Likelihood of party affiliation & likelihood of 'yay' vote
-  engine.repYaythresh = parseFloat(userRepYaythresh) / 100.0;
-  console.log("rep yay thresh: " + engine.repYaythresh);
-  engine.demYaythresh = parseFloat(userDemYaythresh) / 100.0;
-  console.log("dem yay thresh: " + engine.demYaythresh);
-  engine.indYaythresh = parseFloat(userIndYaythresh) / 100.0;
-  console.log("ind yay thresh: " + engine.indYaythresh);
-
-  //supermajority Cutoff for override of presidential veto
-  engine.superThresh = parseFloat(userSuperThresh) / 100.0;
-  console.log("superThresh: " + engine.superThresh);
-
-  //supermajority in a body
-  engine.perPass = parseFloat(userBodyPass) / 100.0;
-  console.log("per pass: " + engine.perPass);
-
-  //How Many Voting Bodies (house, senate, president, VP = 4) *for V2 - see TODO at top
-  engine.numLegislativeBodies = parseFloat(userNumLegislative);
-  //engine.numBodies = parseFloat(userNumLegislative) + 2; // OC add 2 for vp and pres
-  engine.numBodies = 5; // OC numBodies always 5 as place holders for house, house2, senate, vp, president
-  console.log("USER NUM BODIES: " + engine.numBodies);
-
-
-
-  // //Your Stress Value
-  // stressSensorval = userStressSensorval.value();
-  //
-  // //Planets Stress Value
-  // stressPlanet = userStressPlanet.value();
-
-  // reset values for calculations
-  engine.bodyCount = 0;
-  engine.bodyPass = [];
-  engine.resetCount();
-  engine.resetDraw();
-  engine.votingBodyCounts = [];
-  engine.superThreshIndex = [];
-
-  visual.bodyCount = 0;
-  visual.bodyPass = [];
-  visual.resetCount();
-  visual.resetDraw();
-  
-  removeField();
-  // resetSliders();
-  userEdits = true;
-  reconfigBool = true;
-  mgr.showScene(democracyEngineUser);
-}
-
-function dispButton() {
-  dispBtn = createButton('DISPLAY USER SETTINGS');
-  dispBtn.id("disp-btn");
-  dispBtn.class('buttons');
-  let buttonDiv = document.getElementById('button-div');
-  dispBtn.parent(buttonDiv);
-  // dispBtn.position(19, 19);
-  dispBtn.mousePressed(dispResult);
-}
-
-
-function removeField() {
-  if(document.getElementById('res-btn')){
-    buttonRes.remove();
-  }
-  if(document.getElementById('rec-btn')){
-    buttonRC.remove();
-  }
-  if (userEdits==true)
-  {
-    if(document.getElementById('recal-btn')){
-      recalBtn.remove();
-    }
-    if(document.getElementById('email-btn')){
-      emailBtn.remove();
-    }
-  }
-  if(document.getElementById('next-btn')){
-      nextButton.remove();
-  }
-}
-
-function emailFunc(){
-  window.location.href='mailto'+':democracy'+'.project.'+'cadre@'+'gmail.com?subject=The%20Future%20Democracies%20Laboratory%20Simulator%7C%20User%20Results%20and%20Settings&body=Please%20insert%20a%20copy%20of%20your%20user%20settings%20and%20a%20screenshot%20of%20the%20generated%20voting%20results%0D%0A';
-}
-
 function roundNum(value, decimals) {
   return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
 }
 
-//changes the text on the HTML body for final voting decision
-function changeText(text) {
-  document.getElementById("result").innerHTML = text;
-}
+// //changes the text on the HTML body for final voting decision
+// function changeText(text) {
+//   document.getElementById("result").innerHTML = text;
+// }
 
 const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -900,37 +645,22 @@ function keyPressed() {
 }
 
 function paneToggle() {
-
-    // OC - put visal in draw() of the scences instead?
-    // ---------------------------------------------- for drawing to screen immediately // OC - no longer needed?
-    //background(bColor);
-    //document.body.style.backgroundColor = bColor;
-    // engine.currentCongLogic(true); // leave comented out
-    // visual.ix = 0; // leave commented out
-    //visual.completeReset();
-    //visual.displayImmediateBlank(engine);
-    // -----------------------------------------------
-
-    // ----------------------------------------------- for drawing in real time, reset was when previous scene button clicked
-    // visual.displayVoting(engine);
-    // -----------------------------------------------
-
   if (showPanesBool) {
     // if (mgr.isCurrent(SCENE));
     // = "block" whichever html div page corresponds to that scene
     document.getElementById("pane-bkg").style.display = "block"; 
     document.getElementById("button-div").style.display = "block";
     document.getElementById("top").style.display = "block";
-    //document.getElementById("screen").style.display = "block"; // comment out if want only on first 3 panes
+    document.getElementById("screen").style.display = "block"; // comment out if want only on first 3 panes
     if (mgr.isCurrent(sBodies)) {
       document.getElementById("page1").style.display = "block";
-      document.getElementById("screen").style.display = "block"; // comment out if want on all panes
+      //document.getElementById("screen").style.display = "block"; // comment out if want on all panes
     } else if (mgr.isCurrent(sLegislative)) {
       document.getElementById("page2").style.display = "block";
-      document.getElementById("screen").style.display = "block";
+      //document.getElementById("screen").style.display = "block";
     } else if (mgr.isCurrent(sParties)) {
       document.getElementById("page3").style.display = "block";
-      document.getElementById("screen").style.display = "block";
+      //document.getElementById("screen").style.display = "block";
     } else if (mgr.isCurrent(sMembersFirstChamber)) {
       document.getElementById("page4").style.display = "block";
     } else if (mgr.isCurrent(sMembersSecondChamber)) {
@@ -957,7 +687,6 @@ function paneToggle() {
     
   } else {
     // = "none" for all html div
-    // if (mgr.isCurrent(sBodies)) {
       document.getElementById("screen").style.display = "none";
       document.getElementById("pane-bkg").style.display = "none";
       document.getElementById("button-div").style.display = "none";
@@ -976,7 +705,6 @@ function paneToggle() {
       document.getElementById("page12").style.display = "none";
       document.getElementById("page13").style.display = "none";
       document.getElementById("slider-disp").style.display = "none";
-    // }
   }
 
 }

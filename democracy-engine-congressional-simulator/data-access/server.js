@@ -8,8 +8,8 @@ app.use(express.json());
 app.use(cors());
 
 mongoose.set("strictQuery", false);
-//const mongoDB = "mongodb://demConfigDesk:democracyProj_sim2024@cha-cweb-dma2.sjsu.edu:27017/democracy-project";
-const mongoDB = "mongodb://localhost:27017/democracy-project"
+const mongoDB = "mongodb://demConfigDesk:democracyProj_sim2024@cha-cweb-dma2.sjsu.edu:27017/democracy-project";
+//const mongoDB = "mongodb://localhost:27017/democracy-project"
 const Session = require("../models/session-model"); // the file for the session schema
 const run = async() => {
 mongoose.connect(mongoDB); // connect to the cloud database
