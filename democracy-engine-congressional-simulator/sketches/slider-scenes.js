@@ -645,6 +645,9 @@ function sBodies() {
     }
 
     console.log("Pane 01");
+    document.getElementById('progress-dots').style.display = "flex";
+    checkNumChambers();
+    document.getElementById('dot-p01').className = 'dot-active';
     document.getElementById("page-container").style.display = "none";
     showPanesBool = true;
     document.getElementById("page1").style.display = "block";
@@ -684,8 +687,8 @@ function sBodies() {
       updateBtn.id('update-btn');
       updateBtn.class('buttons');
       updateBtn.parent(buttonDiv);
-      updateBtn.mousePressed(clickedUpdate);
     }
+    updateBtn.mousePressed(clickedUpdate);
 
     if (!document.getElementById('next-pane-btn')) {
       nextPaneBtn = createButton('Next');
@@ -710,8 +713,28 @@ function sBodies() {
     }
   }
 
+  /**
+   * display progress dots according how how many panes users go thru
+   */
+  function checkNumChambers() {
+    if (userNumLegislative == 1) {
+      document.getElementById('dot-p04').style.display = "flex";
+      document.getElementById('dot-p05').style.display = "none";
+      document.getElementById('dot-p06').style.display = "none";
+    } else if (userNumLegislative == 2) {
+      document.getElementById('dot-p04').style.display = "flex";
+      document.getElementById('dot-p05').style.display = "flex";
+      document.getElementById('dot-p06').style.display = "none";
+    } else {
+      document.getElementById('dot-p04').style.display = "flex";
+      document.getElementById('dot-p05').style.display = "flex";
+      document.getElementById('dot-p06').style.display = "flex";
+    }
+  }
+
   function clickedUpdate() {
     document.getElementById("update-btn").disabled = true; // disable after clicking it
+    checkNumChambers();
 
     if (userNumHouse2 == 0) {
       userNumHouse2 = 100;
@@ -814,6 +837,7 @@ function sLegislative() {
     curNumPres = parseInt(userNumPres);
 
     console.log("Pane 02");
+    document.getElementById('dot-p02').className = 'dot-active'; // activate dot on this pane
     document.getElementById("top").style.display = "block";
     document.getElementById("top").innerHTML = "<h2>NUMBER OF VOTING MEMBERS</h2>" + configJSON.text.p02desc;
     showPanesBool = true;
@@ -1092,6 +1116,7 @@ function sParties() {
   }
   this.enter = function () {
     console.log("Pane 03");
+    document.getElementById('dot-p03').className = 'dot-active'; // activate dot on this pane
     document.getElementById("top").style.display = "block";
     document.getElementById("top").innerHTML = "<h2>NUMBER OF POLITICAL PARTIES</h2>" + configJSON.text.p03desc;
     showPanesBool = true;
@@ -1288,6 +1313,7 @@ function sMembersFirstChamber() {
     //document.getElementById("screen").style.display = "none"; // OC TODO - remove this if want screen function for all panes
 
     console.log("Pane 04: Chamber 1 Party Members");
+    document.getElementById('dot-p04').className = 'dot-active'; // activate dot on this pane
     document.getElementById("top").style.display = "block";
     document.getElementById("top").innerHTML = "<h2>NUMBER OF VOTING MEMBERS FOR FIRST CHAMBER</h2>" + configJSON.text.p04desc;
     showPanesBool = true;
@@ -1581,6 +1607,7 @@ function sMembersSecondChamber() {
     }
 
     console.log("P05: Chamber 2 Party Members");
+    document.getElementById('dot-p05').className = 'dot-active'; // activate dot on this pane
     document.getElementById("top").style.display = "block";
     document.getElementById("top").innerHTML = "<h2>NUMBER OF VOTING MEMBERS FOR SECOND CHAMBER</h2>" + configJSON.text.p05desc;
     showPanesBool = true;
@@ -1867,6 +1894,7 @@ function sMembersThirdChamber() {
     }
 
     console.log("P06: Chamber 3 Voting Members");
+    document.getElementById('dot-p06').className = 'dot-active'; // activate dot on this pane
     document.getElementById("top").style.display = "block";
     document.getElementById("top").innerHTML = "<h2>NUMBER OF VOTING MEMBERS FOR THIRD CHAMBER</h2>" + configJSON.text.p06desc;
     showPanesBool = true;
@@ -2155,6 +2183,7 @@ function sMembersVP() {
     }
 
     console.log("P07: Voting Members in VP");
+    document.getElementById('dot-p07').className = 'dot-active'; // activate dot on this pane
     document.getElementById("top").style.display = "block";
     document.getElementById("top").innerHTML = "<h2>NUMBER OF VOTING MEMBERS FOR VICE PRESIDENCY</h2>" + configJSON.text.p07desc;
     showPanesBool = true;
@@ -2443,6 +2472,7 @@ function sMembersPres() {
     }
 
     console.log("P08: Voting Members in Pres");
+    document.getElementById('dot-p08').className = 'dot-active'; // activate dot on this pane
     document.getElementById("top").style.display = "block";
     showPanesBool = true;
     document.getElementById("top").innerHTML = "<h2>NUMBER OF VOTING MEMBERS FOR PRESIDENCY</h2>" + configJSON.text.p08desc;
@@ -2724,6 +2754,7 @@ function sBodyPass() {
     currPerPass = parseFloat(userBodyPass);
     currSuperThresh = parseFloat(userSuperThresh);
     console.log("P09: Majority & Supermajority");
+    document.getElementById('dot-p09').className = 'dot-active'; // activate dot on this pane
     document.getElementById("top").innerHTML = "<h2>PERCENT OF VOTES REQUIRED FOR APPROVAL PER CHAMBER<h2>" + configJSON.text.p09desc;
     showPanesBool = true;
     document.getElementById("page1").style.display = "none";
@@ -2863,6 +2894,8 @@ function sYesVotes() {
     curIndYaythresh = parseFloat(userIndYaythresh);
 
     console.log("P10: Affirmative Vote");
+    document.getElementById('dot-p10').className = 'dot-active'; // activate dot on this pane
+    document.getElementById('progress-dots').style.display = "flex";
     document.getElementById("top").innerHTML = "<h2>PROBABILITY OF AN AFFIRMATIVE VOTE BY A PARTY MEMBER</h2>" + configJSON.text.p10desc;
     showPanesBool = true;
     document.getElementById("page1").style.display = "none";
@@ -2898,8 +2931,9 @@ function sYesVotes() {
       updateBtn.id('update-btn');
       updateBtn.class('buttons');
       updateBtn.parent(buttonDiv);
-      updateBtn.mousePressed(clickedUpdate);
     }
+    updateBtn.mousePressed(clickedUpdate);
+
     nextPaneBtn.remove();
     // if (!document.getElementById('next-pane-btn')) {
       nextPaneBtn = createButton('Next');
@@ -2921,7 +2955,6 @@ function sYesVotes() {
     } else { // otherwise leave disabled
       document.getElementById("update-btn").disabled = true;
     }
-    updateBtn.mousePressed(clickedUpdate);
 
   }
 
@@ -3077,6 +3110,7 @@ function sVote() {
 
   this.enter = function () {
     console.log("run bill page");
+    document.getElementById('progress-dots').style.display = "none";
     document.getElementById("top").innerHTML = "<h2>TEST VOTING</h2>" + configJSON.text.p11desc1;
     showPanesBool = true;
     document.getElementById("page1").style.display = "none";

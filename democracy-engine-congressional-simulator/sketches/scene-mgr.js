@@ -191,28 +191,41 @@ function mousePressed() {
  */
 function nextPane() {
   if (mgr.isCurrent(sBodies)) {
+    document.getElementById('dot-p01').className = 'dot'; // deactivate dot on pane before moving to next pane
     mgr.showScene(sLegislative);
   } else if (mgr.isCurrent(sLegislative)) {
+    document.getElementById('dot-p02').className = 'dot';
     mgr.showScene(sParties);
   } else if (mgr.isCurrent(sParties)) {
+    document.getElementById('dot-p03').className = 'dot';
     mgr.showScene(sMembersFirstChamber);
   } else if (mgr.isCurrent(sMembersFirstChamber) && userNumLegislative == 1) { 
+    document.getElementById('dot-p04').className = 'dot';
     mgr.showScene(sMembersVP);
   } else if (mgr.isCurrent(sMembersFirstChamber) && userNumLegislative >= 2) {
+    document.getElementById('dot-p04').className = 'dot';
     mgr.showScene(sMembersSecondChamber);
   } else if (mgr.isCurrent(sMembersSecondChamber) && userNumLegislative == 3) {
+    document.getElementById('dot-p05').className = 'dot';
     mgr.showScene(sMembersThirdChamber);
   } else if (mgr.isCurrent(sMembersSecondChamber) && userNumLegislative == 2) {
+    document.getElementById('dot-p05').className = 'dot';
     mgr.showScene(sMembersVP);
   } else if (mgr.isCurrent(sMembersThirdChamber)) {
+    document.getElementById('dot-p06').className = 'dot';
     mgr.showScene(sMembersVP);
   } else if (mgr.isCurrent(sMembersVP)) {
+    document.getElementById('dot-p07').className = 'dot';
     mgr.showScene(sMembersPres);
+    document.getElementById('dot-p08').className = 'dot';
   } else if (mgr.isCurrent(sMembersPres)) {
+    document.getElementById('dot-p08').className = 'dot';
     mgr.showScene(sBodyPass);
   } else if (mgr.isCurrent(sBodyPass)) {
+    document.getElementById('dot-p09').className = 'dot';
     mgr.showScene(sYesVotes);
   } else if (mgr.isCurrent(sYesVotes)) {
+    document.getElementById('dot-p10').className = 'dot';
     mgr.showScene(sVote);
   }  else if (mgr.isCurrent(sVote)) {
     mgr.showScene(sBenchmarkPane);
@@ -224,26 +237,37 @@ function nextPane() {
  */
 function previousPane() {
   if (mgr.isCurrent(sLegislative)) {
+    document.getElementById('dot-p02').className = 'dot'; // deactivate dot on pane before moving to next pane
     mgr.showScene(sBodies);
   } else if (mgr.isCurrent(sParties)) {
+    document.getElementById('dot-p03').className = 'dot';
     mgr.showScene(sLegislative);
   } else if (mgr.isCurrent(sMembersFirstChamber)) {
+    document.getElementById('dot-p04').className = 'dot';
     mgr.showScene(sParties);
   } else if (mgr.isCurrent(sMembersSecondChamber)) {
+    document.getElementById('dot-p05').className = 'dot';
     mgr.showScene(sMembersFirstChamber);
   } else if (mgr.isCurrent(sMembersThirdChamber)) {
+    document.getElementById('dot-p06').className = 'dot';
     mgr.showScene(sMembersSecondChamber);
   } else if (mgr.isCurrent(sMembersVP) && userNumLegislative == 1) {
+    document.getElementById('dot-p07').className = 'dot';
     mgr.showScene(sMembersFirstChamber);
   } else if (mgr.isCurrent(sMembersVP) && userNumLegislative == 2) {
+    document.getElementById('dot-p07').className = 'dot';
     mgr.showScene(sMembersSecondChamber);
   } else if (mgr.isCurrent(sMembersVP) && userNumLegislative == 3) {
+    document.getElementById('dot-p07').className = 'dot';
     mgr.showScene(sMembersThirdChamber);
   } else if (mgr.isCurrent(sMembersPres)) {
+    document.getElementById('dot-p08').className = 'dot';
     mgr.showScene(sMembersVP);
   } else if (mgr.isCurrent(sBodyPass)) {
+    document.getElementById('dot-p09').className = 'dot';
     mgr.showScene(sMembersPres);
   } else if (mgr.isCurrent(sYesVotes)) {
+    document.getElementById('dot-p10').className = 'dot';
     mgr.showScene(sBodyPass);
   } else if (mgr.isCurrent(sVote)) {
     if (visualizeVote) {
