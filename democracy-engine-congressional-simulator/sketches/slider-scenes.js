@@ -3717,11 +3717,11 @@ function sSaveResults() {
     div1.id = 's-col-1';
     div2.id = 's-col-2';
     div3.id = 's-col-3';
-    divApproval.id = 'approval-div';
+    divApproval.id = 'approval-div2';
 
     console.log("user config final summary & save page");
     document.getElementById("main-header").innerHTML = "<h1>Save Session</h1>";
-    document.getElementById("start-desc").innerHTML = "<h2>Session ID: " + sessionID + "</h2>";
+    document.getElementById("start-desc").innerHTML = "<h2>Session ID: " + sessionID + "</h2>" + configJSON.text.saveDesc;
     document.getElementById("pane-bkg").style.display = "none";
     document.getElementById("screen").style.display = "none";
     document.getElementById("page1").style.display = "none";
@@ -3813,14 +3813,13 @@ function sSaveResults() {
       "</p><h3>Likelihood of Yes Vote: </h3>" +
       "<p>Political Party A: " + userDemYaythresh +
       "<br>Political Party B: " + userRepYaythresh +
-      "<br>Political Party C: " + userIndYaythresh + "</p>";
-
-      s3 =
+      "<br>Political Party C: " + userIndYaythresh + "</p>" +
+      //s3 =
       "<h3>Percentage of votes required for approval of bill</h3>" +
       "<p>Approval By Majority: " + userBodyPass +
       "<br> Approval By Supermajority: " + userSuperThresh + "</p>";
       
-      s3 += "<h3>Benchmark Results</h3><p>" ;
+      s3 = "<h3>Benchmark Results</h3><p>" ;
       for(let i=1; i<=MAX_SIM_RESULTS; i++) {
         s3 = s3 + configs[configIX].simResults[i].actTitle + " ";
         if (configs[configIX].simResults[i].billPass == true) {
@@ -3850,11 +3849,11 @@ function sSaveResults() {
       div3.innerHTML = s3;
       divApproval.innerHTML = sApproval;
       
-      document.getElementById('start-desc').appendChild(divApproval);
+      
       document.getElementById('start-desc').appendChild(div1);
       document.getElementById('start-desc').appendChild(div2);
       document.getElementById('start-desc').appendChild(div3);
-      
+      div3.appendChild(divApproval);
       // approvalBtn.parent(divApproval);
   }
 }
@@ -3872,7 +3871,7 @@ function sComplete() {
 
     console.log("save complete page");
     document.getElementById("main-header").innerHTML = "<h1>Session Complete</h1>";
-    document.getElementById("start-desc").innerHTML = "<h2>Session ID: " + prevSessionID + "</h2><p style='text-align:center'>Please record your session ID to retrieve it later.</p";
+    document.getElementById("start-desc").innerHTML = "<h2>Session ID: " + prevSessionID + "</h2>" + configJSON.text.saveCompleteDesc;
     document.getElementById("top").style.display = "none";
     document.getElementById("pane-bkg").style.display = "none";
     document.getElementById("page1").style.display = "none";

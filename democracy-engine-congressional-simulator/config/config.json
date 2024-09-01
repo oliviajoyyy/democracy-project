@@ -187,7 +187,9 @@
         "p11desc2": "<p>If the system is behaving as anticipated, press the 'Next' button. If you want to adjust parameters, press 'Back'.</p>",
         "p12desc": "<p>Use this benchmark test to assess the performance of your governmental configuration in real-world conditions. The emulator will run ten times, voting on ten historically important bills that significantly changed the political status quo. The benchmark test will show how the bills might have fared given the system you have modeled. </p>",
         "benchResultsDesc": "<p style='font-weight:bold;'>Review the following benchmark results to assess whether your governmental system meets your standards. If so, approve the model on the next page and save it for others to assess and modify.</p>",
-        "evalDesc": "<h2>This is the form of government you designed.<br>Do you endorse this?</h2>"
+        "evalDesc": "<h2>This is the form of government you designed.<br>Do you endorse this?</h2>",
+        "saveDesc": "<p style='text-align:center'>Please record your session ID.<br>You can add your modifications to the database for further modification by others.</p>",
+        "saveCompleteDesc": "<p style='text-align:center'>Please record your session ID to retrieve it later.</p>"
     }
     
 }

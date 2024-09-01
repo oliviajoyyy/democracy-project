@@ -165,7 +165,7 @@ button[disabled] {
 #start-desc {
   border-radius: 3px;
   display: none;
-  width: 90%;
+  width: 100%;
   height: 80vh;
   left: 5%;
   right: 5%;
@@ -280,7 +280,7 @@ p {
   text-align: justify;
   font-size: 18px;
   /* font-family: "Work Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; */
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Helvetica, Arial, sans-serif;
   font-style: normal;
   font-variant: normal;
   font-weight: lighter;
@@ -340,7 +340,7 @@ p {
   float: left;
   height: auto;
   text-align: center;
-  font-size: .9em;
+  font-size: .84em;
 }
 
 #approval-div {
@@ -359,7 +359,23 @@ p {
   border: 1mm solid var(--text-color);
 }
 
-#approval-div h3 {
+#approval-div2 {
+  width: 100%;
+  margin-left: 30px;
+  margin-bottom: 20px;
+  position: relative;
+  padding-bottom: 15px;
+  /* padding: 5px; */
+  /* float: left; */
+  left: 2%;
+  height: auto;
+  text-align: center;
+  font-size: 1.05em;
+  border-radius: 10px;
+  border: 1mm solid var(--text-color);
+}
+
+#approval-div h3, #approval-div2 h3 {
   font-size: 1.5em !important;
   text-align: center !important;
   margin: 10px;
