@@ -414,7 +414,7 @@ table {
   border-collapse: collapse;
   border: 2px solid var(--text-color);
   background-color: var(--overlay);
-  
+  margin-top: -35px;
 }
 
 th, td {

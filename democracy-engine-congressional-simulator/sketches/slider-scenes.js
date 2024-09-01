@@ -785,6 +785,7 @@ function sBodies() {
 
       slider1.noUiSlider.on('update', function (values, handle) {
         userNumLegislative = values[0];
+        checkNumChambers();
         // rangeSliderValueElement.innerHTML = userNumHouse + " " + userNumSenate + " " + userNumPres + " " + userNumVP;
       });
     }
@@ -3390,7 +3391,7 @@ function sBenchmarkPane() {
     benchmarkBtn.remove();
 
     showPanesBool = false;
-    document.getElementById("start-desc").innerHTML = "";
+    document.getElementById("start-desc").innerHTML = configJSON.text.benchResultsDesc;
     document.getElementById("start-desc").style.display = "none";
     benchmarkBtn.remove();
     var benchResults = "";
@@ -3441,7 +3442,7 @@ function sBenchmarkResults() {
     document.getElementById("page-container").style.display = "block";
     document.getElementById("pane-bkg").style.display = "none";
     document.getElementById("start-desc").style.display = "block";
-    document.getElementById("main-header").innerHTML = "<h1>Benchmark Results</h1>" + configJSON.text.benchResultsDesc;
+    document.getElementById("main-header").innerHTML = "<h1>Benchmark Results</h1>";
     document.getElementById("top").innerHTML = "";
     document.getElementById("top").style.display = "none";
     showPanesBool = true;
