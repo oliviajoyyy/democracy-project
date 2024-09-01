@@ -3631,7 +3631,7 @@ function sEndorse() {
     //approvalBtn.parent(div3);
     approvalBtn.mousePressed(clickedApprove);
 
-    summarySaveBtn = createButton('Next');
+    summarySaveBtn = createButton('See Final Summary');
     summarySaveBtn.id('save-summary-btn-c03');
     summarySaveBtn.class('buttons');
     summarySaveBtn.parent(buttonDiv);
