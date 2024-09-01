@@ -3428,16 +3428,19 @@ function sBenchmarkPane() {
  */
 function sBenchmarkResults() {
   let startOverBtn, summaryBtn;
+  let resDelay, endGear; // time until results all displayed
 
   this.setup = function () {
     userOutputText = document.getElementById('slider-disp');
     visualizeVote = false;
+    resDelay = 500;
   }
 
   this.enter = function () {
     visual.dWidth = windowWidth * .95;
     visual.dHeight = windowHeight * .9;
     console.log("benchmark results page");
+    endGear = false;
     
     document.getElementById("page-container").style.display = "block";
     document.getElementById("pane-bkg").style.display = "none";
@@ -3462,6 +3465,8 @@ function sBenchmarkResults() {
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
+    document.getElementById("screen").style.display = "none"; // OC to have solid bkg
+    //document.getElementById("screen").style.display = "block"; // OC to show config in bkg
 
     let buttonDiv = document.getElementById('main-btn-div');
 
@@ -3500,9 +3505,11 @@ function sBenchmarkResults() {
         tds[i].innerHTML = "NO";
       }
       rIX++;
+      if (i >= tds.length-1)
+        endGear = true;
+      console.log("i: " + i);
       // tds[i].innerHTML = "test";
-      }, 500*i);
-      
+      }, resDelay*i);
     }
     
   //  let newDiv = document.createElement('div');
@@ -3534,9 +3541,15 @@ function sBenchmarkResults() {
   }
 
   this.draw = function () {
-    visual.displayImmediateBlank(engine, true); // draws votes for last calculation
-        document.body.style.backgroundColor = colorOverlay;
-        document.getElementById("screen").style.display = "block";
+   //visual.displayImmediateBlank(engine, true); // draws votes for last calculation // OC comment out if want solid bkg
+        //document.body.style.backgroundColor = colorOverlay; // OC comment out if want solid bkg
+        //document.getElementById("screen").style.display = "block"; // OC comment out if want solid bkg
+        
+        if (endGear) {
+          background(bColor);
+        } else {
+          visual.rotLoadImage2(endGear);
+        }
   }
 
   function clickedStartOver() {

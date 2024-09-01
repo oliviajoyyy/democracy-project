@@ -1213,7 +1213,7 @@ class VoteVisual {
   }
 
   /**
-   * Rotates loading image on screen
+   * Rotates loading image on screen where chamber members show
    */
   rotLoadImage() {
     this.rot += 0.5;
@@ -1235,6 +1235,27 @@ class VoteVisual {
     if (this.count >= this.numCon - 2) {
       ellipse(0, 0, 160, 160);
     }
+    pop();
+  }
+
+  /**
+   * Rotate image on left side of screen
+   */
+  rotLoadImage2() {
+    this.rot += 1.25;
+    push();
+    rectMode(CORNER);
+    noStroke();
+    this.pColor.setAlpha(255);
+    tint(this.tColor);
+    fill(this.bColor);
+
+    translate(this.dWidth / 8, this.dHeight / 2);
+    rectMode(CENTER);
+    rect(0, 0, 160, 160);
+    rotate(PI / 180 * this.rot);
+    imageMode(CENTER);
+    image(this.loadingImage, 0, 0, 150, 150);
     pop();
   }
 
