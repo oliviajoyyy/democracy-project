@@ -3397,25 +3397,25 @@ function sBenchmarkPane() {
 
     let newDiv = document.createElement('div');
     newDiv.id = 'act-list';
-    let s = "<table><thead><tr><th>ACT TITLE</th><th>BILL PASSED?</th></thead><tbody>";
+    let s = "<table id='benchRes'><colgroup><col id='tbl-c1'><col id='tbl-c2'></colgroup><thead><tr><th>ACT TITLE</th><th>BILL PASSED?</th></thead><tbody>";
     console.log("configIX before benchmarking: " + configIX);
     for (let i=resultIX; i < MAX_SIM_RESULTS+1; i++) { // + 1 because the first was the test result
       engine.completeReset();
       engine.currentCongLogic(true);
       updateSession();
-      s = s + "<tr><td>" + configs[configIX].simResults[resultIX].actTitle + "</td>";
-      if (configs[configIX].simResults[resultIX].billPass == true) {
-        s = s + "<td>YES</td></tr>";
-      } else {
-        s = s + "<td>NO</td></tr>";
-      }
+      s = s + "<tr id='trow" + i + "'><td> " /*+ configs[configIX].simResults[resultIX].actTitle*/ + "</td>";
+      //if (configs[configIX].simResults[resultIX].billPass == true) {
+        s = s + "<td>&nbsp;</td></tr>";
+      //} else {
+        //s = s + "<td>&nbsp;</td></tr>";
+      //}
       
       resultIX++;
     }
     s = s + "</tbody></table>";
     newDiv.innerHTML = s;
     document.getElementById('start-desc').appendChild(newDiv);
-    console.log("configIX after benchmarking: " + configIX);
+    // console.log("configIX after benchmarking: " + configIX);
 
     mgr.showScene(sBenchmarkResults);
   }
@@ -3481,6 +3481,50 @@ function sBenchmarkResults() {
     reconfigBool = true;
     background(bColor);
     document.body.style.backgroundColor = bColor;
+    
+    var tds = document.getElementById("benchRes").getElementsByTagName("td");
+    // for (let i=0, j = tds.length; i<j; ++i) {
+    //   tds[i].style.color = bColor;
+    //   setTimeout(function () {
+    //   tds[i].style.color = "#00AA00";
+    //   }, 1000*i);
+    // }
+    var rIX = 1;
+    for (let i=1; i<=tds.length; i+=2) {
+      setTimeout(function () {
+      tds[i-1].innerHTML = configs[configIX].simResults[rIX].actTitle;
+      if (configs[configIX].simResults[rIX].billPass == true) {
+        tds[i].innerHTML = "YES";
+      } else {
+        tds[i].innerHTML = "NO";
+      }
+      rIX++;
+      // tds[i].innerHTML = "test";
+      }, 500*i);
+      
+    }
+    
+  //  let newDiv = document.createElement('div');
+  //   newDiv.id = 'act-list';
+  //   let s = "<table id='benchRes'><thead><tr><th>ACT TITLE</th><th>BILL PASSED?</th></thead><tbody>";
+  //   console.log("configIX before benchmarking: " + configIX);
+  //   for (let i=resultIX; i < MAX_SIM_RESULTS+1; i++) { // + 1 because the first was the test result
+  //     engine.completeReset();
+  //     engine.currentCongLogic(true);
+  //     updateSession();
+  //     s = s + "<tr id='trow" + i + "'><td>" + configs[configIX].simResults[resultIX].actTitle + "</td>";
+  //     if (configs[configIX].simResults[resultIX].billPass == true) {
+  //       s = s + "<td>YES</td></tr>";
+  //     } else {
+  //       s = s + "<td>NO</td></tr>";
+  //     }
+      
+  //     resultIX++;
+  //   }
+  //   s = s + "</tbody></table>";
+  //   newDiv.innerHTML = s;
+  //   document.getElementById('start-desc').appendChild(newDiv);
+
     //for (let i=0; i<=120; i++) {
       //if (i%5 == 0)
       //visual.displayImmediateBlank(engine, true);

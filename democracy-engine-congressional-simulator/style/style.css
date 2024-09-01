@@ -431,6 +431,10 @@ th {
   border-bottom: 2px solid var(--text-color);
 }
 
+#tbl-c2 {
+  width: 20%;
+}
+
 /* #info-list-2 {
   width: 125px;
   position: relative;
