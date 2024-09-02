@@ -176,12 +176,15 @@ function startSession() {
   }
 }
 
+
+
 /**
  * A03 Hardware Test
  */
 function hardwareTest() {
   let backBtn, testBtn;
-
+  let port;
+  let connectBtn;
   this.setup = function () {
     textFont(helvFont);
     let dWidth = windowWidth * .8;
@@ -190,14 +193,13 @@ function hardwareTest() {
     let canvasDiv = document.getElementById('vote');
     canvas.parent(canvasDiv);
     background(bColor);
+
   }
 
   this.enter = function () {
     console.log("start up scene");
-
     document.getElementById("page-container").style.display = "block";
     document.getElementById("main-header").innerHTML = "<h1>Hardware & DB Test </h1>";
-
     document.getElementById("main-btn-div").style.display = "block";
     document.getElementById("start-desc").style.display = "none";
     document.getElementById("top").style.display = "none";
@@ -231,9 +233,117 @@ function hardwareTest() {
     testBtn.class('buttons');
     testBtn.parent(buttonDiv);
     // testBtn.mousePressed(clickedTest);
+
+    hardwareSetup();
+  }
+
+  function hardwareSetup() {
+    port = createSerial();
+
+    // in setup, we can open ports we have used previously
+    // without user interaction
+  
+    let usedPorts = usedSerialPorts();
+    console.log(usedPorts);
+    if (usedPorts.length > 0) {
+      port.open(usedPorts[0],9600);
+  
+    }
+  
+    // any other ports can be opened via a dialog after
+    // user interaction (see connectBtnClick below)
+  
+    connectBtn = createButton('Connect to Arduino');
+    connectBtn.position(80, 450);
+    connectBtn.mousePressed(connectBtnClick);
+  
+    let sendBtn = createButton('Blink Led');
+    sendBtn.position(500, 450);
+    sendBtn.mousePressed(sendBtnClick);
+  }
+
+  function connectBtnClick() {
+    if (!port.opened()) {
+    //  port.open('Arduino', 57600);
+      port.open(115200);
+    } else {
+      port.close();
+    }
+  }
+  
+  function sendBtnClick() {
+    port.write("Hello from p5.js\n");
   }
 
   this.draw = function () {
+      // this makes received text scroll up
+   background(0);
+   //copy(0, 0, width, height, 0, -1, width, height);
+ 
+   // changes button label based on connection status
+   if (port.opened()) {
+  
+     connectBtn.html('Disconnect');
+   // reads in complete lines and prints them at the
+   // bottom of the canvas
+ 
+ 
+   //let arr = port.readBytes();   
+   let arr = port.readBytes(14); 
+ 
+   //console.log(arr);
+   fill(255);
+   textSize(20)
+   text(arr, 5, height-120);
+ 
+ 
+      fill(255,0,0);
+      ellipse(arr[1]*2,50,40,40); // slider1
+ 
+      if (arr[6] == 200 ) {
+           fill(200);
+           triangle(150,200,200,150,200,250);
+           console.log("clicked left btn");
+      }
+ 
+       if (arr[7] == 200 ) {
+       fill(200);
+       triangle(300,200,250,150,250,250);
+        }
+ 
+        if (arr[8] == 200 ) {
+         fill(90);
+         rect(200,200,200,75);
+         fill(255);
+         textSize(30);
+         text("hide/show",215,225);
+        }
+ 
+        if (arr[9] == 200 ) {
+         fill(90);
+         rect(200,250,200,75);
+         fill(255);
+         textSize(30);
+         text("Update",215,275);
+        }
+   
+ 
+   //   fill(0,0,255);
+   //   ellipse(arr[2],150,40,40);
+   //   fill(200,255,0);
+   //   ellipse(arr[3],200,40,40);
+   //   fill(200,0,255);
+   //   ellipse(arr[4],250,40,40);
+ 
+ 
+   // }
+ 
+ 
+   } else {
+ 
+ 
+     connectBtn.html('Connect to Hardware');
+   }
   }
 
   function clickedBack() {
@@ -635,6 +745,8 @@ function sBodies() {
   }
 
   this.enter = function () {
+    arrPrev = 0;
+    hardwareUpdate = false;
     if (reconfigBool == true) {
     visual.dWidth = windowWidth * .95;
       visual.dHeight = (windowHeight * .9)-labelSpace;
@@ -710,6 +822,19 @@ function sBodies() {
       document.getElementById("update-btn").disabled = false; // enable button
     } else {
       document.getElementById("update-btn").disabled = true;
+    }
+
+    checkHardwareInput();
+    checkHardwareUpdateInput();
+  }
+
+  /**
+   * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
+   */
+  function checkHardwareUpdateInput() {
+    if (hardwareUpdate && document.getElementById("update-btn").disabled == false) {
+      clickedUpdate();
+      hardwareUpdate = false;
     }
   }
 
@@ -814,6 +939,7 @@ function sLegislative() {
   }
 
   this.enter = function () {
+    hardwareUpdate = false;
     userNumLegislative = parseFloat(userNumLegislative);
 
     if (userNumLegislative == 1) {
@@ -867,6 +993,8 @@ function sLegislative() {
   this.draw = function () {
     visual.displayImmediateBlank(engine, false);
     paneToggle();
+    checkHardwareInput();
+    checkHardwareUpdateInput();
 
     // if sliders changed any values on this page, enable update button
     if (userNumHouse != engine.numHouse || userNumHouse2 != engine.numHouse2 || userNumSenate != engine.numSenate ||userNumVP != engine.numVP || userNumPres != engine.numPres) {
@@ -875,6 +1003,16 @@ function sLegislative() {
       document.getElementById("update-btn").disabled = true;
     }
     //updateBtn.mousePressed(clickedUpdate);
+  }
+
+  /**
+   * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
+   */
+  function checkHardwareUpdateInput() {
+    if (hardwareUpdate && document.getElementById("update-btn").disabled == false) {
+      clickedUpdate();
+      hardwareUpdate = false;
+    }
   }
 
   function clickedUpdate() {
@@ -1109,6 +1247,7 @@ function sLegislative() {
  * User input page for number of parties, maximum of 3
  */
 function sParties() {
+  arrPrev = 200;
   var slider5 = document.getElementById('slider5');
 
   this.setup = function () {
@@ -1117,6 +1256,7 @@ function sParties() {
   }
   this.enter = function () {
     console.log("Pane 03");
+    hardwareUpdate = false;
     document.getElementById('dot-p03').className = 'dot-active'; // activate dot on this pane
     document.getElementById("top").style.display = "block";
     document.getElementById("top").innerHTML = "<h2>NUMBER OF POLITICAL PARTIES</h2>" + configJSON.text.p03desc;
@@ -1145,6 +1285,8 @@ function sParties() {
   this.draw = function () {
     visual.displayImmediateBlank(engine, false);
     paneToggle();
+    checkHardwareInput();
+    checkHardwareUpdateInput();
 
     if (userNumParties != engine.numParties) {
       document.getElementById("update-btn").disabled = false;
@@ -1152,6 +1294,16 @@ function sParties() {
       document.getElementById("update-btn").disabled = true;
     }
   }
+
+  /**
+ * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
+ */
+function checkHardwareUpdateInput() {
+  if (hardwareUpdate && document.getElementById("update-btn").disabled == false) {
+    clickedUpdate();
+    hardwareUpdate = false;
+  }
+}
 
   function clickedUpdate() {
     document.getElementById("update-btn").disabled = true; // disable after clicking it
@@ -1345,6 +1497,8 @@ function sMembersFirstChamber() {
   this.draw = function () {
     visual.displayImmediateBlank(engine, false);
     paneToggle();
+    checkHardwareInput();
+
     console.log("user Party A: " + userPerHouseBody[0] + " Party B: " + userPerHouseBody[1] + " Party C: " + userPerHouseBody[2]);
     console.log("engine Party A: " + engine.perDemHouse + " Party B: " + engine.perRepHouse + " Party C: " + engine.perIndHouse);
 
@@ -1639,6 +1793,8 @@ function sMembersSecondChamber() {
   this.draw = function () {
     visual.displayImmediateBlank(engine, false);
     paneToggle();
+    checkHardwareInput();
+
     console.log("Party A: " + userPerHouse2Body[0] + " Party B: " + userPerHouse2Body[1] + " Party C: " + userPerHouse2Body[2]);
     // if sliders changed any values on this page, enable update button
     if (userPerHouse2Body[0] != engine.perDemHouse2 || userPerHouse2Body[1] != engine.perRepHouse2 || userPerHouse2Body[2] != engine.perIndHouse2) {
@@ -1926,6 +2082,8 @@ function sMembersThirdChamber() {
   this.draw = function () {
     visual.displayImmediateBlank(engine, false);
     paneToggle();
+    checkHardwareInput();
+
     console.log("Party A: " + userPerSenateBody[0] + " Party B: " + userPerSenateBody[1] + " Party C: " + userPerSenateBody[2]);
     // if sliders changed any values on this page, enable update button
     if (userPerSenateBody[0] != engine.perDemSenate || userPerSenateBody[1] != engine.perRepSenate || userPerSenateBody[2] != engine.perIndSenate) {
@@ -2215,6 +2373,8 @@ function sMembersVP() {
   this.draw = function () {
     visual.displayImmediateBlank(engine, false);
     paneToggle();
+    checkHardwareInput();
+
     console.log("Party A: " + userPerVPBody[0] + " Party B: " + userPerVPBody[1] + " Party C: " + userPerVPBody[2]);
     // if sliders changed any values on this page, enable update button
     if (userPerVPBody[0] != engine.perDemVP || userPerVPBody[1] != engine.perRepVP || userPerVPBody[2] != engine.perIndVP) {
@@ -2504,6 +2664,8 @@ function sMembersPres() {
   this.draw = function () {
     visual.displayImmediateBlank(engine, false);
     paneToggle();
+    checkHardwareInput();
+
     console.log("Party A: " + userPerPresBody[0] + " Party B: " + userPerPresBody[1] + " Party C: " + userPerPresBody[2]);
     // if sliders changed any values on this page, enable update button
     if (userPerPresBody[0] != engine.perDemPres || userPerPresBody[1] != engine.perRepPres || userPerPresBody[2] != engine.perIndPres) {
@@ -2783,6 +2945,8 @@ function sBodyPass() {
   this.draw = function () {
     visual.displayImmediateBlank(engine, false);
     paneToggle();
+    checkHardwareInput();
+
     console.log("user body pass: " + userBodyPass);
     console.log("user super pass: " + userSuperThresh);
 
@@ -2948,6 +3112,8 @@ function sYesVotes() {
   this.draw = function () { 
     visual.displayImmediateBlank(engine, false);
     paneToggle();
+    checkHardwareInput();
+
     console.log("user Dem yay: " + (parseFloat(userDemYaythresh)/100.0) + " Rep yay: " + (parseFloat(userRepYaythresh)/100.0) + " Ind yay: " + (parseFloat(userIndYaythresh)/100.0));
     console.log("engine Dem yay: " + engine.demYaythresh + " Rep yay: " + engine.repYaythresh + " Ind yay: " + engine.indYaythresh);
 
@@ -3241,6 +3407,7 @@ function sVote() {
     }
 
     paneToggle();
+    checkHardwareInput();
   }
 
   function finalDisplay() {
@@ -3370,6 +3537,7 @@ function sBenchmarkPane() {
     //let minimalConfig = true;
     visual.displayImmediateBlank(engine, false);
     paneToggle();
+    checkHardwareInput();
   }
 
   function clickedBenchmark() {

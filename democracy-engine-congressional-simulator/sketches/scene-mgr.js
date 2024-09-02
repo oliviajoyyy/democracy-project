@@ -116,6 +116,9 @@ var MAX_SIM_RESULTS = 10;
 
 var showPanesBool = true;
 
+var port;
+var connectBtn;
+
 function preload() {
   helvFont = loadFont('../democracy-engine-congressional-simulator/assets/font/HelveticaNeue-Regular.otf');
   loadingImage = loadImage('../democracy-engine-congressional-simulator/assets/gears-icon.png');
@@ -175,6 +178,7 @@ function setup() {
   mgr.addScene(sComplete);
   mgr.showNextScene();
   
+  hardwareSetup();
   console.log("end of scene-mgr.js setup");
 }
 
@@ -184,6 +188,94 @@ function draw() {
 
 function mousePressed() {
   mgr.mousePressed();
+}
+
+function hardwareSetup() {
+  port = createSerial();
+
+  // in setup, we can open ports we have used previously
+  // without user interaction
+
+  let usedPorts = usedSerialPorts();
+  console.log(usedPorts);
+  if (usedPorts.length > 0) {
+    port.open(usedPorts[0],9600);
+
+  }
+
+  // any other ports can be opened via a dialog after
+  // user interaction (see connectBtnClick below)
+
+  // connectBtn = createButton('Connect to Arduino');
+  // connectBtn.position(80, 450);
+  // connectBtn.mousePressed(connectBtnClick);
+
+  // let sendBtn = createButton('Blink Led');
+  // sendBtn.position(500, 450);
+  // sendBtn.mousePressed(sendBtnClick);
+}
+var arrPrev = 200;
+var movePanes = true;
+var hardwareHideShow = false;
+var hardwareNextPane = false;
+var hardwarePrevPane = false;
+var hardwareUpdate = false;
+function checkHardwareInput() {
+  let arr = port.readBytes(14); 
+  
+  if (mgr.isCurrent(sBodies) || mgr.isCurrent(sLegislative) || mgr.isCurrent(sParties) || mgr.isCurrent(sMembersFirstChamber) || 
+  mgr.isCurrent(sMembersSecondChamber) || mgr.isCurrent(sMembersThirdChamber) || mgr.isCurrent(sMembersVP) || mgr.isCurrent(sMembersPres) || 
+  mgr.isCurrent(sBodyPass) || mgr.isCurrent(sYesVotes) || mgr.isCurrent(sVote) || mgr.isCurrent(sBenchmarkPane) ) {
+    // if (arr[7] == 200 && arrPrev != 200) {
+    //   arrPrev = 0;
+    //   nextPane();
+    // }
+
+    //console.log("arr[6] = " + arr[6]);
+    if (arr[6] == 200) {
+      hardwarePrevPane = true;
+    } else if (arr[6] == 0) {
+      if (hardwarePrevPane == true) {
+        previousPane();
+      }
+      hardwarePrevPane = false;
+    }
+
+    //console.log("arr[7] = " + arr[7]);
+    if (arr[7] == 200) {
+      hardwareNextPane = true;
+    } else if (arr[7] == 0) {
+      if (hardwareNextPane == true) {
+        nextPane();
+      }
+      hardwareNextPane = false;
+    }
+
+    //console.log("arr[8] = " + arr[8]);
+    if (arr[8] == 200) {
+      hardwareHideShow = true;
+    } else if (arr[8] == 0) {
+      if (hardwareHideShow == true) {
+        if (showPanesBool == true) {
+          showPanesBool = false;
+        } else {
+          showPanesBool = true;
+        }
+      }
+      hardwareHideShow = false;
+    }
+
+    console.log("arr[10] = " + arr[10]);
+    if (arr[10] == 200) {
+      hardwareUpdate = true;
+    } else if (arr[10] == 0) {
+      // if (hardwareUpdate == true) {
+      //   console.log("update button hardware clicked");
+      // }
+      hardwareUpdate = false;
+    }
+  }
+
 }
 
 /**
