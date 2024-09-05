@@ -12,7 +12,7 @@ const mongoDB = "mongodb://demConfigDesk:democracyProj_sim2024@cha-cweb-dma2.sjs
 //const mongoDB = "mongodb://localhost:27017/democracy-project"
 const Session = require("../models/session-model"); // the file for the session schema
 const run = async() => {
-mongoose.connect(mongoDB); // connect to the cloud database
+mongoose.connect(mongoDB); // connect to the database
 console.log("connected to DB");
 }
 run().catch((err) => console.error(err));

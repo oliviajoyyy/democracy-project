@@ -183,7 +183,7 @@ function startSession() {
  */
 function hardwareTest() {
   let backBtn, testBtn;
-  let port;
+  //let port;
   let connectBtn;
   this.setup = function () {
     textFont(helvFont);
@@ -550,7 +550,7 @@ function loadSessionS1() {
     document.getElementById("main-header").innerHTML = configJSON.text.title;
     document.getElementById("start-desc").style.display = "block";
     
-    showSessionsList(); // get sessions fr db and display onscreen
+    
 
     document.getElementById("top").style.display = "none";
     document.getElementById("page1").style.display = "none";
@@ -583,13 +583,14 @@ function loadSessionS1() {
     showMoreBtn.id('show-btn-b02');
     showMoreBtn.class('buttons');
     showMoreBtn.parent(buttonDiv);
-    nextBtn.mousePressed(clickedNext);
+    showMoreBtn.mousePressed(clickedShowMore);
 
     nextBtn = createButton('Next');
     nextBtn.id('next-btn-b02');
     nextBtn.class('buttons');
     nextBtn.parent(buttonDiv);
-    showMoreBtn.mousePressed(clickedShowMore);
+    nextBtn.mousePressed(clickedNext);
+    showSessionsList(); // get sessions fr db and display onscreen
   }
 
   this.draw = function () {
@@ -611,12 +612,13 @@ function loadSessionS1() {
 
   var rest = false;
   function showSessionsList() {
+    var emptydb = false;
     document.getElementById("page-container").style.display = "block";
     document.getElementById("main-header").innerHTML = configJSON.text.title;
     document.getElementById("start-desc").style.display = "block";
     document.getElementById("start-desc").innerHTML = "<h2>Select Session</h2>"
       + configJSON.text.selectSessionDesc
-      + "<br><p>&nbsp;&nbsp;&nbsp;&nbsp; SESSION ID "
+      + "<br><p style='text-align:center'>&nbsp;&nbsp;&nbsp;&nbsp; SESSION ID "
       + getSpaces(12) + " CHAMBERS "
       + getSpaces(3) + " PARTIES "
       + getSpaces(4) + " TOTAL VOTING MEMBERS </p>";
@@ -627,6 +629,18 @@ function loadSessionS1() {
     getSessions().then((result) => {
       sessions = result;
       console.log(result);
+      if (result.length == 0) { // no sessions in db yet
+        emptydb = true;
+        document.getElementById('next-btn-b02').disabled = true;
+        document.getElementById('show-btn-b02').disabled = true;
+        document.getElementById("start-desc").innerHTML = "<h2>Select Session</h2>"
+      + configJSON.text.selectSessionDesc
+      + "<br><p style='text-align:center'>&nbsp;&nbsp;&nbsp;&nbsp; SESSION ID "
+      + getSpaces(12) + " CHAMBERS "
+      + getSpaces(3) + " PARTIES "
+      + getSpaces(4) + " TOTAL VOTING MEMBERS </p>" 
+      + "<div id='session-list'><p>There are no sessions saved to the database yet. Create a new session to save and retrieve it here.</p></div>";
+      } else {
       // show sessions in order from last 10 
       // -- OC written like this so that startIX can move backward to show next prev 10 when triggered (btn press?)
       if (rest) {
@@ -676,10 +690,12 @@ function loadSessionS1() {
       document.getElementById('start-desc').appendChild(newDiv);
       document.getElementById('start-desc').appendChild(newDiv2);
       document.getElementById('start-desc').appendChild(newDiv3);
+    } // end else
     });
     document.getElementById("start-desc").innerHTML += "<div id='session-list'></div>";
     selection.parent("session-list"); // put options in div with border
     selection.class('radio-sel');
+    
   }
 
   function clickedBack() {
@@ -3666,6 +3682,7 @@ function sBenchmarkResults() {
     var rIX = 1;
     for (let i=1; i<=tds.length; i+=2) {
       setTimeout(function () {
+      if (mgr.isCurrent(sBenchmarkResults)) {
       tds[i-1].innerHTML = configs[configIX].simResults[rIX].actTitle;
       if (configs[configIX].simResults[rIX].billPass == true) {
         tds[i].innerHTML = "YES";
@@ -3677,6 +3694,7 @@ function sBenchmarkResults() {
         endGear = true;
       console.log("i: " + i);
       // tds[i].innerHTML = "test";
+      }
       }, resDelay*i);
     }
     
