@@ -178,7 +178,7 @@ function setup() {
   mgr.addScene(sComplete);
   mgr.showNextScene();
   
-  hardwareSetup();
+  //hardwareSetup();
   console.log("end of scene-mgr.js setup");
 }
 

@@ -234,7 +234,7 @@ function hardwareTest() {
     testBtn.parent(buttonDiv);
     // testBtn.mousePressed(clickedTest);
 
-    hardwareSetup();
+    //hardwareSetup();
   }
 
   function hardwareSetup() {
@@ -280,6 +280,7 @@ function hardwareTest() {
    background(0);
    //copy(0, 0, width, height, 0, -1, width, height);
  
+   /*
    // changes button label based on connection status
    if (port.opened()) {
   
@@ -343,7 +344,7 @@ function hardwareTest() {
  
  
      connectBtn.html('Connect to Hardware');
-   }
+   } */
   }
 
   function clickedBack() {
@@ -840,8 +841,8 @@ function sBodies() {
       document.getElementById("update-btn").disabled = true;
     }
 
-    checkHardwareInput();
-    checkHardwareUpdateInput();
+    //checkHardwareInput();
+    //checkHardwareUpdateInput();
   }
 
   /**
@@ -1009,8 +1010,8 @@ function sLegislative() {
   this.draw = function () {
     visual.displayImmediateBlank(engine, false);
     paneToggle();
-    checkHardwareInput();
-    checkHardwareUpdateInput();
+    //checkHardwareInput();
+    //checkHardwareUpdateInput();
 
     // if sliders changed any values on this page, enable update button
     if (userNumHouse != engine.numHouse || userNumHouse2 != engine.numHouse2 || userNumSenate != engine.numSenate ||userNumVP != engine.numVP || userNumPres != engine.numPres) {
@@ -1301,8 +1302,8 @@ function sParties() {
   this.draw = function () {
     visual.displayImmediateBlank(engine, false);
     paneToggle();
-    checkHardwareInput();
-    checkHardwareUpdateInput();
+    //checkHardwareInput();
+    //checkHardwareUpdateInput();
 
     if (userNumParties != engine.numParties) {
       document.getElementById("update-btn").disabled = false;
@@ -1513,7 +1514,7 @@ function sMembersFirstChamber() {
   this.draw = function () {
     visual.displayImmediateBlank(engine, false);
     paneToggle();
-    checkHardwareInput();
+    //checkHardwareInput();
 
     console.log("user Party A: " + userPerHouseBody[0] + " Party B: " + userPerHouseBody[1] + " Party C: " + userPerHouseBody[2]);
     console.log("engine Party A: " + engine.perDemHouse + " Party B: " + engine.perRepHouse + " Party C: " + engine.perIndHouse);
@@ -1809,7 +1810,7 @@ function sMembersSecondChamber() {
   this.draw = function () {
     visual.displayImmediateBlank(engine, false);
     paneToggle();
-    checkHardwareInput();
+    //checkHardwareInput();
 
     console.log("Party A: " + userPerHouse2Body[0] + " Party B: " + userPerHouse2Body[1] + " Party C: " + userPerHouse2Body[2]);
     // if sliders changed any values on this page, enable update button
@@ -2098,7 +2099,7 @@ function sMembersThirdChamber() {
   this.draw = function () {
     visual.displayImmediateBlank(engine, false);
     paneToggle();
-    checkHardwareInput();
+    //checkHardwareInput();
 
     console.log("Party A: " + userPerSenateBody[0] + " Party B: " + userPerSenateBody[1] + " Party C: " + userPerSenateBody[2]);
     // if sliders changed any values on this page, enable update button
@@ -2389,7 +2390,7 @@ function sMembersVP() {
   this.draw = function () {
     visual.displayImmediateBlank(engine, false);
     paneToggle();
-    checkHardwareInput();
+    //checkHardwareInput();
 
     console.log("Party A: " + userPerVPBody[0] + " Party B: " + userPerVPBody[1] + " Party C: " + userPerVPBody[2]);
     // if sliders changed any values on this page, enable update button
@@ -2680,7 +2681,7 @@ function sMembersPres() {
   this.draw = function () {
     visual.displayImmediateBlank(engine, false);
     paneToggle();
-    checkHardwareInput();
+    //checkHardwareInput();
 
     console.log("Party A: " + userPerPresBody[0] + " Party B: " + userPerPresBody[1] + " Party C: " + userPerPresBody[2]);
     // if sliders changed any values on this page, enable update button
@@ -2961,7 +2962,7 @@ function sBodyPass() {
   this.draw = function () {
     visual.displayImmediateBlank(engine, false);
     paneToggle();
-    checkHardwareInput();
+    //checkHardwareInput();
 
     console.log("user body pass: " + userBodyPass);
     console.log("user super pass: " + userSuperThresh);
@@ -3128,7 +3129,7 @@ function sYesVotes() {
   this.draw = function () { 
     visual.displayImmediateBlank(engine, false);
     paneToggle();
-    checkHardwareInput();
+    //checkHardwareInput();
 
     console.log("user Dem yay: " + (parseFloat(userDemYaythresh)/100.0) + " Rep yay: " + (parseFloat(userRepYaythresh)/100.0) + " Ind yay: " + (parseFloat(userIndYaythresh)/100.0));
     console.log("engine Dem yay: " + engine.demYaythresh + " Rep yay: " + engine.repYaythresh + " Ind yay: " + engine.indYaythresh);
@@ -3423,7 +3424,7 @@ function sVote() {
     }
 
     paneToggle();
-    checkHardwareInput();
+    //checkHardwareInput();
   }
 
   function finalDisplay() {
@@ -3553,7 +3554,7 @@ function sBenchmarkPane() {
     //let minimalConfig = true;
     visual.displayImmediateBlank(engine, false);
     paneToggle();
-    checkHardwareInput();
+    //checkHardwareInput();
   }
 
   function clickedBenchmark() {
