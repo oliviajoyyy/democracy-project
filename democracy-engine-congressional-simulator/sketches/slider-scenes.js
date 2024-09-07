@@ -3784,7 +3784,9 @@ function sEndorse() {
 
     console.log("user config endorsement page");
     document.getElementById("main-header").innerHTML = "<h1>Evaluation Page</h1>";
-    document.getElementById("start-desc").innerHTML = configJSON.text.evalDesc;
+    document.getElementById("start-desc").style.display = "none";
+    document.getElementById("end-summary").style.display = "block";
+    document.getElementById("end-summary").innerHTML = configJSON.text.evalDesc;
     document.getElementById("pane-bkg").style.display = "none";
     document.getElementById("screen").style.display = "none";
     document.getElementById("page1").style.display = "none";
@@ -3864,6 +3866,7 @@ function sEndorse() {
     startOverBtn.remove();
     approvalBtn.remove();
     summarySaveBtn.remove();
+    document.getElementById("end-summary").style.display = "none";
   }
 
   function inputTxt() {
@@ -3923,10 +3926,10 @@ function sEndorse() {
       div3.innerHTML = s3;
       divApproval.innerHTML = sApproval;
       
-      document.getElementById('start-desc').appendChild(divApproval);
-      document.getElementById('start-desc').appendChild(div1);
-      document.getElementById('start-desc').appendChild(div2);
-      document.getElementById('start-desc').appendChild(div3);
+      document.getElementById('end-summary').appendChild(divApproval);
+      document.getElementById('end-summary').appendChild(div1);
+      document.getElementById('end-summary').appendChild(div2);
+      document.getElementById('end-summary').appendChild(div3);
       
       approvalBtn.parent(divApproval);
   }
@@ -3964,7 +3967,8 @@ function sSaveResults() {
 
     console.log("user config final summary & save page");
     document.getElementById("main-header").innerHTML = "<h1>Save Session</h1>";
-    document.getElementById("start-desc").innerHTML = "<h2>Session ID: " + sessionID + "</h2>" + configJSON.text.saveDesc;
+    document.getElementById("end-summary").style.display = "block";
+    document.getElementById("end-summary").innerHTML = "<h2>Session ID: " + sessionID + "</h2>" + configJSON.text.saveDesc;
     document.getElementById("pane-bkg").style.display = "none";
     document.getElementById("screen").style.display = "none";
     document.getElementById("page1").style.display = "none";
@@ -4021,6 +4025,7 @@ function sSaveResults() {
   function removeBtns() {
     startOverBtn.remove();
     saveBtn.remove();
+    document.getElementById("end-summary").style.display = "none";
   }
 
   function inputTxt() {
@@ -4093,9 +4098,9 @@ function sSaveResults() {
       divApproval.innerHTML = sApproval;
       
       
-      document.getElementById('start-desc').appendChild(div1);
-      document.getElementById('start-desc').appendChild(div2);
-      document.getElementById('start-desc').appendChild(div3);
+      document.getElementById('end-summary').appendChild(div1);
+      document.getElementById('end-summary').appendChild(div2);
+      document.getElementById('end-summary').appendChild(div3);
       div3.appendChild(divApproval);
       // approvalBtn.parent(divApproval);
   }

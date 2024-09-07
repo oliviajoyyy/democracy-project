@@ -1403,30 +1403,22 @@ class VoteVisual {
       rect(this.x, this.y, this.diam, this.diam, this.diam / 8);
     }
 
-    // //creates the x on squares that are "no votes"
-    // if (vote == "nay" && this.stopVoteBool == false && !(this.bodyCount == 4 && this.engine.numPres == 0)) {
-    //   fill(this.bColor);
-    //   textSize(this.diam + 3);
-    //   textAlign(CENTER, CENTER);
-    //   textFont('Arial');
-    //   text("x", this.x, this.y);
-    // }
+    //creates the x on squares that are "no votes"
+    if (vote == "nay" && this.stopVoteBool == false && !(this.bodyCount == 4 && this.engine.numPres == 0)) {
+      fill(this.bColor);
+      textSize(this.diam + 3);
+      textAlign(CENTER, CENTER);
+      textFont('Arial');
+      text("x", this.x, this.y);
+    }
 
     //creates the x on squares that are "yay" votes
     if (vote == "yay" && this.stopVoteBool == false && !(this.bodyCount == 4 && this.engine.numPres == 0)) {
-      // fill(this.bColor);
-      // textSize(this.diam + 3);
-      // textAlign(CENTER, CENTER);
-      // textFont('Arial');
-      // text("v", this.x, this.y);
-      // push();
-      //tint(this.bColor);
-      // rectMode(CENTER);
-      let imgW = this.diam*0.9;
+      let imgW = this.diam*0.8;
       let imgH = this.diam*0.9;
       image(this.checkImage, this.x-(imgW/2), this.y-(imgH/2), imgW, imgH);
-      // pop();
     }
+
 
 
     if ((this.y += this.skip) >= this.dHeight - (this.skip / 2)) {
@@ -1829,12 +1821,18 @@ class VoteVisual {
     stroke(this.tColor);
     strokeWeight(2);
     fill(this.tColor);
-    let boxW = 250;
-    let boxH = 250;
+    let boxW = 300;
+    let boxH = 300;
     rect(padX, height/2 + (padY*2), boxW, boxH, 10);
     if (engine.billPass == true) { // check mark if bill passed, empty box if not passed
-      //tint(this.tColor);
-      image(this.checkImage, padX+5, height/2 + (padY*2), boxW-10, boxH-10);
+      image(this.checkImage, padX+22, height/2 + (padY*2), boxW*0.85, boxH-10);
+    } else {
+      fill(this.bColor);
+      textSize(boxW*1.5);
+      //textAlign(CENTER, CENTER);
+      textAlign(CENTER, CENTER);
+      textFont('Arial');
+      text("x", padX+(boxW/2), height/2 + (padY*2) + (boxH/2));
     }
     this.percentageGraphs((3/4) * width, width, (3/5)*height);
     pop();
