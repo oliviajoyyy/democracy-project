@@ -112,7 +112,7 @@ var sessionID = "ID" + userEditCount;
 var configIX = 0;
 var resultIX = 0;
 var MAX_CONFIG_ATTEMPTS = 10; // 10th config is final config
-var MAX_SIM_RESULTS = 10;
+var MAX_SIM_RESULTS = 12; // run simulation 12 times for the 12 benchmarking tests
 
 var showPanesBool = true;
 
@@ -686,7 +686,7 @@ function addResult(pConfigIX) {
   if (resultIX == 0) {
     aTitle = "Test Bill";
   } else {
-    aTitle = historicalActs[resultIX-1].title; // get act titles in order
+    aTitle = historicalActs[resultIX-1].title + " (" + historicalActs[resultIX-1].date + ")"; // get act titles in order as listed on config file, with date
   }
 
   // for this configuration, add the result to the array

@@ -3899,14 +3899,12 @@ function sEndorse() {
       "</p><h3>Likelihood of Yes Vote: </h3>" +
       "<p>Political Party A: " + userDemYaythresh +
       "<br>Political Party B: " + userRepYaythresh +
-      "<br>Political Party C: " + userIndYaythresh + "</p>";
-
-      s3 = 
-      "<h3>Percentage of votes required for approval of bill</h3>" +
+      "<br>Political Party C: " + userIndYaythresh + "</p>" +
+      "<h3>Percentage of votes required <br>for approval of bill</h3>" +
       "<p>Approval By Majority: " + userBodyPass +
       "<br> Approval By Supermajority: " + userSuperThresh + "</p>";
       
-      s3 += "<h3>Benchmark Results</h3><p>" ;
+      s3 = "<h3>Benchmark Results</h3><p>" ;
       for(let i=1; i<=MAX_SIM_RESULTS; i++) {
         s3 = s3 + configs[configIX].simResults[i].actTitle + " ";
         if (configs[configIX].simResults[i].billPass == true) {
@@ -4060,7 +4058,7 @@ function sSaveResults() {
       "<br>Political Party B: " + userRepYaythresh +
       "<br>Political Party C: " + userIndYaythresh + "</p>" +
       //s3 =
-      "<h3>Percentage of votes required for approval of bill</h3>" +
+      "<h3>Percentage of votes required <br>for approval of bill</h3>" +
       "<p>Approval By Majority: " + userBodyPass +
       "<br> Approval By Supermajority: " + userSuperThresh + "</p>";
       

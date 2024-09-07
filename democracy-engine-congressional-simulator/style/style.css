@@ -175,7 +175,7 @@ button[disabled] {
   z-index: 99;
   margin-top: 15vh;
   position: fixed;
-  top: 0;
+  top: 0px;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -346,12 +346,22 @@ p {
 }
 
 /* summary columns */
-#s-col-1, #s-col-2, #s-col-3 {
-  width: 30%;
+#s-col-1, #s-col-2{
+  width: auto;
   position: relative;
   /* left: -490px; */
   /* border-right: 0.5mm solid var(--text-color); */
   /* border-left: 0.5mm solid var(--text-color); */
+  padding: 5px;
+  float: left;
+  height: auto;
+  text-align: center;
+  font-size: .84em;
+}
+
+#s-col-3 {
+  width: 35%;
+  position: relative;
   padding: 5px;
   float: left;
   height: auto;
@@ -410,9 +420,9 @@ p {
 }
 
 #act-list {
-  width: 80%;
-  left: 8%;
-  right: 12%;
+  width: 90%;
+  left: 5%;
+  right: 5%;
   position: relative;
   /* border-right: 0.5mm solid var(--text-color); */
   padding: 5px;
