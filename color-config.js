@@ -6,6 +6,7 @@ fetch('democracy-engine-congressional-simulator/config/config.json') // path wor
         document.documentElement.style.setProperty('--header-footer-bkg', data.cssParams.headerFooterBkg);
         document.documentElement.style.setProperty('--text-color', data.cssParams.text);
         document.documentElement.style.setProperty('--button', data.cssParams.button);
+        document.documentElement.style.setProperty('--slider-handle', data.cssParams.sliderHandle);
         document.documentElement.style.setProperty('--active-nav', data.cssParams.activeNav);
         document.documentElement.style.setProperty('--link', data.cssParams.link);
         document.documentElement.style.setProperty('--link-hover', data.cssParams.linkHover);

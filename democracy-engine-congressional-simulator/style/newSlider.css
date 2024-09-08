@@ -3,6 +3,7 @@
   --header-footer-bkg: #7487a1; /* #3c1b36; */
   /* OC note: set default bkg-color to same custom color from json to load more smoothly */
   --text-color: white;
+  --slider-handle: #012266;
   --button: #012266;
   --scroll-bar: #012255;
   --scroll-bar-hover: #012266;
@@ -49,7 +50,7 @@
 .noUi-handle {
   border-style: none;
   outline: none;
-  background: var(--button); /* #012266; */
+  background: var(--slider-handle); /* #012266; */ /* color of circle slider handle */
   width: 20px !important;
   height: 20px !important;
   margin-top: 2px;
@@ -62,7 +63,7 @@
   position: absolute;
   border: none;
   border-radius: 3px;
-  background: var(--button); /* #012266; */
+  background: var(--slider-handle); /* #012266; */ /* color of value above slider handle */
   color: var(--text-color); /* white; */
   padding: 5px;
   text-align: center;
@@ -235,7 +236,7 @@
   display: none;
   font-size: .65em;
   text-transform: uppercase;
-  background-color: var(--button); /* #012266; */
+  background-color: var(--slider-handle); /* #012266; */
   padding: 2px;
   border-radius: 2px;
   z-index: 1;
@@ -289,11 +290,11 @@
 }
 
 .c-2-color {
-  background: var(--button); /* #00287a; */
+  background: var(--slider-handle); /* #00287a; */
 }
 
 .c-1-color {
-  background: var(--button); /* #012266; */
+  background: var(--slider-handle); /* #012266; */
 }
 
 #next-btn {
