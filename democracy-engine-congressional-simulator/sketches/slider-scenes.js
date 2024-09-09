@@ -619,10 +619,10 @@ function loadSessionS1() {
     document.getElementById("start-desc").style.display = "block";
     document.getElementById("start-desc").innerHTML = "<h2>Select Session</h2>"
       + configJSON.text.selectSessionDesc
-      + "<br><p style='text-align:center'>&nbsp;&nbsp;&nbsp;&nbsp; SESSION ID "
-      + getSpaces(12) + " CHAMBERS "
-      + getSpaces(3) + " PARTIES "
-      + getSpaces(4) + " TOTAL VOTING MEMBERS </p>";
+      // + "<br><p style='text-align:center'>&nbsp;&nbsp;&nbsp;&nbsp; SESSION ID "
+      // + getSpaces(12) + " CHAMBERS "
+      // + getSpaces(3) + " PARTIES "
+      // + getSpaces(4) + " TOTAL VOTING MEMBERS </p>";
 
     selection = createRadio("sessions"); // attatch to HTML
     selection.size(230);
@@ -636,10 +636,10 @@ function loadSessionS1() {
         document.getElementById('show-btn-b02').disabled = true;
         document.getElementById("start-desc").innerHTML = "<h2>Select Session</h2>"
       + configJSON.text.selectSessionDesc
-      + "<br><p style='text-align:center'>&nbsp;&nbsp;&nbsp;&nbsp; SESSION ID "
-      + getSpaces(12) + " CHAMBERS "
-      + getSpaces(3) + " PARTIES "
-      + getSpaces(4) + " TOTAL VOTING MEMBERS </p>" 
+      // + "<br><p style='text-align:center'>&nbsp;&nbsp;&nbsp;&nbsp; SESSION ID "
+      // + getSpaces(12) + " CHAMBERS "
+      // + getSpaces(3) + " PARTIES "
+      // + getSpaces(4) + " TOTAL VOTING MEMBERS </p>" 
       + "<div id='session-list'><p>There are no sessions saved to the database yet. Create a new session to save and retrieve it here.</p></div>";
       } else {
       // show sessions in order from last 10 
@@ -688,11 +688,43 @@ function loadSessionS1() {
       newDiv.innerHTML = s;
       newDiv2.innerHTML = s2;
       newDiv3.innerHTML = s3;
+
+      // let spanWrap = document.createElement('span');
+      // spanWrap.class = "session-labels";
+      // let span1 = document.createElement('span');
+      // span1.innerHTML = "SESSION ID";
+      // let span2 = document.createElement('span');
+      // span2.innerHTML = "CHAMBERS";
+      // let span3 = document.createElement('span');
+      // span3.innerHTML = "PARTIES";
+      // let span4 = document.createElement('span');
+      // span4.innerHTML = "TOTAL VOTING MEMBERS";
+      // spanWrap.appendChild(span1);
+      // spanWrap.appendChild(span2);
+      // spanWrap.appendChild(span3);
+      // spanWrap.appendChild(span4);
+      // document.getElementById('start-desc').appendChild(spanWrap);
+
       document.getElementById('start-desc').appendChild(newDiv);
       document.getElementById('start-desc').appendChild(newDiv2);
       document.getElementById('start-desc').appendChild(newDiv3);
     } // end else
     });
+    let spanWrap = document.createElement('span');
+    spanWrap.className = 'session-labels';
+      let span1 = document.createElement('span');
+      span1.innerHTML = "SESSION ID";
+      let span2 = document.createElement('span');
+      span2.innerHTML = "CHAMBERS";
+      let span3 = document.createElement('span');
+      span3.innerHTML = "PARTIES";
+      let span4 = document.createElement('span');
+      span4.innerHTML = "TOTAL VOTING MEMBERS";
+      spanWrap.appendChild(span1);
+      spanWrap.appendChild(span2);
+      spanWrap.appendChild(span3);
+      spanWrap.appendChild(span4);
+      document.getElementById('start-desc').appendChild(spanWrap);
     document.getElementById("start-desc").innerHTML += "<div id='session-list'></div>";
     selection.parent("session-list"); // put options in div with border
     selection.class('radio-sel');
