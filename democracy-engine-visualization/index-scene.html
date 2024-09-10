@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <script src="p5/p5.js"></script>
+  <!-- <script src="p5/p5.sound.min.js"></script> -->
+  <script src="slider/nouislider.min.js"></script>
+  <script src="slider/nouislider.js"></script>
+  <script src="slider/wNumb.min.js"></script>
+  <script src="p5/scene-manager.js"></script>
+  <script src="p5/p5.webserial.js"></script>
+  <script language="javascript" type="text/javascript" src="sketches/slider-scenes.js"></script>
+  <script language="javascript" type="text/javascript" src="sketches/scene-mgr.js"></script>
+  <script language="javascript" type="text/javascript" src="models/engine.js"></script>
+  <script language="javascript" type="text/javascript" src="models/vote-visuals.js"></script>
+  <script language="javascript" type="text/javascript" src="../democracy-engine-congressional-simulator/data-access/session-api.js"></script>
+  <script language="javascript" type="text/javascript" src="color-config.js"></script>
+  <!-- <script language="javascript" type="text/javascript" src="../color-config.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" type="text/css" href="../css/style.css">
+  <link rel="stylesheet" type="text/css" href="slider/nouislider.css">
+  <link rel="stylesheet" type="text/css" href="style/style.css">
+  <link rel="stylesheet" type="text/css" href="style/newSlider.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cardo:wght@700&display=swap" rel="stylesheet">
+
+
+  <meta charset="utf-8">
+
+  <style id="jsbin-css">
+    span {
+      color: blue;
+      font-family: sans-serif;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- <script class="sketch" src="sketches/nouislider.js"></script> -->
+
+  <div id="page-container">
+    <div id="content-wrap">
+      <div id="main-header" class="body-header">
+        <!-- <h1>Automated Future Democracies Simulator </h1> -->
+      </div>
+      <div id="start-desc" class="body-text">
+        <!-- <div id="session-list"></div> -->
+        <!-- <p>
+          The legislative apparatus of the current US government is represented in default mode, which will initially run through one legislative cycle. The user may configure alternative values in subsequent cycles in order to evaluate the effects of
+          systemic changes to the mechanism of governance.
+
+        </p> -->
+      </div>
+      <!-- <canvas id="chart-chambers"></canvas> -->
+      <div id="end-summary" class="body-text"></div>
+       <div id="main-btn-div" style="position: absolute; left: 50%; transform: translateX(-50%);"></div>
+    </div>
+  </div>
+
+  
+  
+  
+  <div id="vote">
+    <section id="charts">
+      <canvas id="chart-chambers"></canvas>
+      <canvas id="chart-parties"></canvas>
+      <canvas id="chart-members"></canvas>
+      <canvas id="chart-bench"></canvas>
+    </section>
+  </div>
+  <div id="slider-pages">
+
+    <div id="screen"></div>
+    <div class="pane-bkg" id="pane-bkg">
+      <!-- <h1 id="top"></h1> -->
+       <div id="top"></div>
+       
+    <div id="page1">
+      <br>
+      <span class="session-labels">
+      <span>SESSION ID</span>
+      <span>CHAMBERS</span>
+      <span>PARTIES</span>
+      <span>VOTING MEMBERS</span>
+      <span>BENCH SCORE</span>
+      </span>
+      <br>
+      <div id="session-list">
+        <div id="info-list-1"></div>
+        <div id="info-list-2"></div>
+        <div id="info-list-3"></div>
+        <div id="info-list-4"></div>
+      </div>
+    </div>
+
+    <div id="page2"> 
+
+    </div>
+
+    <div id="page3"> 
+
+    </div>
+
+    <div id="button-div"></div>
+
+    <div id="progress-dots">
+      <span class="dot" id="dot-p01"></span>
+      <span class="dot" id="dot-p02"></span>
+      <span class="dot" id="dot-p03"></span>
+    </div>
+
+  </div> <!-- end div for pane-bkg-->
+    
+    
+  </div>
+    <div id="slider-disp"></div>
+
+    <div id="sim-info"></div>
+
+
+
+  <!--RH Add from drop-down menu-->
+  <script>
+    function myFunction() {
+      var x = document.getElementById("myTopnav");
+      if (x.className === "topnav") {
+        x.className += " responsive";
+      } else {
+        x.className = "topnav";
+      }
+    }
+  </script>
+  <!--RH Add from drop-down menu-->
+
+
+
+  <!-- <footer> -->
+    <p id="result"></p>
+    <!-- <div id="button-div">
+    </div> -->
+  <!-- </footer> -->
+</body>
+
+</html>

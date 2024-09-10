@@ -31,3 +31,29 @@ async function getSessions() {
     }
 }
 
+
+// update session for a field based on the id
+async function updateSessionField(sID, updatedField) {
+    if (!updatedField || typeof updatedField !== 'object') {
+        console.error('Invalid updatedFields object');
+        return;
+      }
+
+    try {
+        const response = await fetch('http://localhost:3000/sessions/update', {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                uniqueID: sID,
+                updatedField
+            })
+        });
+        const sessions = await response.json();
+        console.log('Item partially updated:', sessions);
+    } catch (e) {
+        console.error(e);
+    }
+}
+

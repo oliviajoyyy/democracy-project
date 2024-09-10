@@ -30,6 +30,26 @@ app.post('/sessions', cors(), async (req, res, next) => {
     res.json(session);
 });
 
+// update the document
+app.patch('/sessions/update', async (req, res) => {
+    try {
+    const { uniqueID, updatedField } = req.body;
+    console.log('Session to update:', uniqueID);
+    console.log('Updated fields:', updatedField);
+    const updatedSession = await Session.findOneAndUpdate(
+        { uniqueID },
+        { $set: updatedField },
+        { new: true }
+    );
+    if (!updatedSession) {
+        return res.status(404).json({ error: 'Session not found' });
+      }
+    res.json(updatedSession);
+    } catch (e) {
+        console.log(e);
+    }
+});
+
 
 
 const PORT = process.env.PORT || 3000;
