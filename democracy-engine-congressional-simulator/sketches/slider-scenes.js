@@ -44,17 +44,18 @@ function startUp() {
 
     let buttonDiv = document.getElementById('main-btn-div');
 
-    continueBtn = createButton('Continue');
-    continueBtn.id('continue-btn-a01');
-    continueBtn.class('buttons');
-    continueBtn.parent(buttonDiv);
-    continueBtn.mousePressed(clickedContinue);
-
     testBtn = createButton('Hardware Test');
     testBtn.id('test-btn-a01');
     testBtn.class('buttons');
     testBtn.parent(buttonDiv);
     testBtn.mousePressed(clickedTest);
+
+    continueBtn = createButton('Continue');
+    continueBtn.id('continue-btn-a01');
+    continueBtn.class('buttons');
+    continueBtn.parent(buttonDiv);
+    continueBtn.mousePressed(clickedContinue);
+    
 
     // setTimeout(function () {
     //     if (mgr.isCurrent(startUp)) { // OC prevents prgm from moving to test screen if already moved on from the first screen
@@ -130,11 +131,11 @@ function startSession() {
 
     let buttonDiv = document.getElementById('main-btn-div');
 
-    newSessionBtn = createButton('New Session');
-    newSessionBtn.id('new-session-btn-a02');
-    newSessionBtn.class('buttons');
-    newSessionBtn.parent(buttonDiv);
-    newSessionBtn.mousePressed(clickedNew);
+    aboutBtn = createButton('About the Project');
+    aboutBtn.id('about-btn-a02');
+    aboutBtn.class('buttons');
+    aboutBtn.parent(buttonDiv);
+    aboutBtn.mousePressed(clickedAbout);
 
     loadSessionBtn = createButton('Load Session');
     loadSessionBtn.id('load-session-btn-a02');
@@ -142,15 +143,37 @@ function startSession() {
     loadSessionBtn.parent(buttonDiv);
     loadSessionBtn.mousePressed(clickedLoad);
 
-    aboutBtn = createButton('About the Project');
-    aboutBtn.id('about-btn-a02');
-    aboutBtn.class('buttons');
-    aboutBtn.parent(buttonDiv);
-    aboutBtn.mousePressed(clickedAbout);
+    newSessionBtn = createButton('New Session');
+    newSessionBtn.id('new-session-btn-a02');
+    newSessionBtn.class('buttons');
+    newSessionBtn.parent(buttonDiv);
+    newSessionBtn.mousePressed(clickedNew);
 
   }
 
   this.draw = function () {
+    if (enableHardware) {
+      checkHardwareInput();
+      //checkHardwareBtnInput();
+    }
+  }
+
+  /**
+   * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
+   */
+  function checkHardwareBtnInput() {
+    if (hardwareLeftBtn == true) {
+      clickedAbout();
+      hardwareLeftBtn = false;
+    } 
+    if (hardwareMidBtn == true) {
+      clickedLoad();
+      hardwareMidBtn = false;
+    }
+    if (hardwareRightBtn == true) {
+      clickedNew();
+      hardwareRightBtn = false;
+    }
   }
 
   function clickedNew() {
@@ -356,7 +379,7 @@ function hardwareTest() {
 
   function clickedBack() {
     removeBtns();
-    mgr.showScene(startSession);
+    mgr.showScene(startUp);
   }
 
   function clickedTest() {
@@ -422,6 +445,20 @@ function aboutProject() {
   }
 
   this.draw = function () {
+    if (enableHardware) {
+      checkHardwareInput();
+      //checkHardwareBtnInput();
+    }
+  }
+
+  /**
+   * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
+   */
+  function checkHardwareBtnInput() {
+    if (hardwareMidBtn == true) {
+      hardwareMidBtn = false;
+      clickedBack();
+    }
   }
 
   function clickedBack() {
@@ -843,7 +880,7 @@ function sBodies() {
     document.getElementById("top").innerHTML = "<h2>NUMBER OF CHAMBERS</h2>" + configJSON.text.p01desc;
 
     if (!document.getElementById('prev-pane-btn')) {
-      prevPaneBtn = createButton('Back');
+      prevPaneBtn = createButton('&larr; Back');
       prevPaneBtn.id('prev-pane-btn');
       prevPaneBtn.class('buttons');
       prevPaneBtn.parent(buttonDiv);
@@ -851,7 +888,7 @@ function sBodies() {
     }
 
     if (!document.getElementById('update-btn')) {
-      updateBtn = createButton('Update');
+      updateBtn = createButton('Update &#9737;');
       updateBtn.id('update-btn');
       updateBtn.class('buttons');
       updateBtn.parent(buttonDiv);
@@ -859,7 +896,7 @@ function sBodies() {
     updateBtn.mousePressed(clickedUpdate);
 
     if (!document.getElementById('next-pane-btn')) {
-      nextPaneBtn = createButton('Next');
+      nextPaneBtn = createButton('Next &rarr;');
       nextPaneBtn.id('next-pane-btn');
       nextPaneBtn.class('buttons');
       nextPaneBtn.parent(buttonDiv);
@@ -1561,6 +1598,7 @@ function sMembersFirstChamber() {
     paneToggle();
     if (enableHardware) {
     checkHardwareInput();
+    checkHardwareUpdateInput();
     }
 
     console.log("user Party A: " + userPerHouseBody[0] + " Party B: " + userPerHouseBody[1] + " Party C: " + userPerHouseBody[2]);
@@ -1571,6 +1609,16 @@ function sMembersFirstChamber() {
       document.getElementById("update-btn").disabled = false;
     } else { // otherwise leave disabled
       document.getElementById("update-btn").disabled = true;
+    }
+  }
+
+  /**
+   * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
+   */
+  function checkHardwareUpdateInput() {
+    if (hardwareUpdate && document.getElementById("update-btn").disabled == false) {
+      clickedUpdate();
+      hardwareUpdate = false;
     }
   }
 
@@ -1859,6 +1907,7 @@ function sMembersSecondChamber() {
     paneToggle();
     if (enableHardware) {
     checkHardwareInput();
+    checkHardwareUpdateInput();
     }
 
     console.log("Party A: " + userPerHouse2Body[0] + " Party B: " + userPerHouse2Body[1] + " Party C: " + userPerHouse2Body[2]);
@@ -1867,6 +1916,16 @@ function sMembersSecondChamber() {
       document.getElementById("update-btn").disabled = false;
     } else { // otherwise leave disabled
       document.getElementById("update-btn").disabled = true;
+    }
+  }
+
+  /**
+   * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
+   */
+  function checkHardwareUpdateInput() {
+    if (hardwareUpdate && document.getElementById("update-btn").disabled == false) {
+      clickedUpdate();
+      hardwareUpdate = false;
     }
   }
 
@@ -2150,6 +2209,7 @@ function sMembersThirdChamber() {
     paneToggle();
     if (enableHardware) {
     checkHardwareInput();
+    checkHardwareUpdateInput();
     }
 
     console.log("Party A: " + userPerSenateBody[0] + " Party B: " + userPerSenateBody[1] + " Party C: " + userPerSenateBody[2]);
@@ -2158,6 +2218,16 @@ function sMembersThirdChamber() {
       document.getElementById("update-btn").disabled = false;
     } else { // otherwise leave disabled
       document.getElementById("update-btn").disabled = true;
+    }
+  }
+
+  /**
+   * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
+   */
+  function checkHardwareUpdateInput() {
+    if (hardwareUpdate && document.getElementById("update-btn").disabled == false) {
+      clickedUpdate();
+      hardwareUpdate = false;
     }
   }
 
@@ -2443,6 +2513,7 @@ function sMembersVP() {
     paneToggle();
     if (enableHardware) {
     checkHardwareInput();
+    checkHardwareUpdateInput();
     }
 
     console.log("Party A: " + userPerVPBody[0] + " Party B: " + userPerVPBody[1] + " Party C: " + userPerVPBody[2]);
@@ -2451,6 +2522,16 @@ function sMembersVP() {
       document.getElementById("update-btn").disabled = false;
     } else { // otherwise leave disabled
       document.getElementById("update-btn").disabled = true;
+    }
+  }
+
+  /**
+   * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
+   */
+  function checkHardwareUpdateInput() {
+    if (hardwareUpdate && document.getElementById("update-btn").disabled == false) {
+      clickedUpdate();
+      hardwareUpdate = false;
     }
   }
 
@@ -2736,6 +2817,7 @@ function sMembersPres() {
     paneToggle();
     if (enableHardware) {
     checkHardwareInput();
+    checkHardwareUpdateInput();
     }
 
     console.log("Party A: " + userPerPresBody[0] + " Party B: " + userPerPresBody[1] + " Party C: " + userPerPresBody[2]);
@@ -2744,6 +2826,16 @@ function sMembersPres() {
       document.getElementById("update-btn").disabled = false;
     } else { // otherwise leave disabled
       document.getElementById("update-btn").disabled = true;
+    }
+  }
+
+  /**
+   * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
+   */
+  function checkHardwareUpdateInput() {
+    if (hardwareUpdate && document.getElementById("update-btn").disabled == false) {
+      clickedUpdate();
+      hardwareUpdate = false;
     }
   }
 
@@ -3019,6 +3111,7 @@ function sBodyPass() {
     paneToggle();
     if (enableHardware) {
     checkHardwareInput();
+    checkHardwareUpdateInput();
     }
 
     console.log("user body pass: " + userBodyPass);
@@ -3029,6 +3122,16 @@ function sBodyPass() {
       document.getElementById("update-btn").disabled = false;
     } else { // otherwise leave disabled
       document.getElementById("update-btn").disabled = true;
+    }
+  }
+
+  /**
+   * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
+   */
+  function checkHardwareUpdateInput() {
+    if (hardwareUpdate && document.getElementById("update-btn").disabled == false) {
+      clickedUpdate();
+      hardwareUpdate = false;
     }
   }
 
@@ -3166,7 +3269,7 @@ function sYesVotes() {
 
     // OC to keep order of buttons
     if (!document.getElementById('update-btn')) {
-      updateBtn = createButton('Update');
+      updateBtn = createButton('Update &#9737;');
       updateBtn.id('update-btn');
       updateBtn.class('buttons');
       updateBtn.parent(buttonDiv);
@@ -3175,7 +3278,7 @@ function sYesVotes() {
 
     nextPaneBtn.remove();
     // if (!document.getElementById('next-pane-btn')) {
-      nextPaneBtn = createButton('Next');
+      nextPaneBtn = createButton('Next &rarr;');
       nextPaneBtn.id('next-pane-btn');
       nextPaneBtn.class('buttons');
       nextPaneBtn.parent(buttonDiv);
@@ -3188,6 +3291,7 @@ function sYesVotes() {
     paneToggle();
     if (enableHardware) {
     checkHardwareInput();
+    checkHardwareUpdateInput();
     }
 
     console.log("user Dem yay: " + (parseFloat(userDemYaythresh)/100.0) + " Rep yay: " + (parseFloat(userRepYaythresh)/100.0) + " Ind yay: " + (parseFloat(userIndYaythresh)/100.0));
@@ -3199,6 +3303,16 @@ function sYesVotes() {
       document.getElementById("update-btn").disabled = true;
     }
 
+  }
+
+  /**
+   * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
+   */
+  function checkHardwareUpdateInput() {
+    if (hardwareUpdate && document.getElementById("update-btn").disabled == false) {
+      clickedUpdate();
+      hardwareUpdate = false;
+    }
   }
 
   function clickedUpdate() {
@@ -3415,7 +3529,7 @@ function sVote() {
     }
 
     if (!document.getElementById('next-pane-btn')) {
-      nextPaneBtn = createButton('Next');
+      nextPaneBtn = createButton('Next &rarr;');
       nextPaneBtn.id('next-pane-btn');
       nextPaneBtn.class('buttons');
       nextPaneBtn.parent(buttonDiv);
@@ -3485,6 +3599,7 @@ function sVote() {
     paneToggle();
     if (enableHardware) {
     checkHardwareInput();
+    checkHardwareUpdateInput();
     }
   }
 
@@ -3502,6 +3617,16 @@ function sVote() {
     }, 1500); // 1.5 seconds before text overlay shows
     visual.userInputState = false;
 
+  }
+
+  /**
+   * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
+   */
+  function checkHardwareUpdateInput() {
+    if (hardwareUpdate && document.getElementById("vote-btn").disabled == false) {
+      clickedVote();
+      hardwareUpdate = false;
+    }
   }
   
   function clickedVote() {

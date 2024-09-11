@@ -225,12 +225,64 @@ var hardwareShow = false;
 var hardwareNextPane = false;
 var hardwarePrevPane = false;
 var hardwareUpdate = false;
+var hardwareLeftBtn = false;
+var hMidBtn = false;
+var hardwareMidBtn = false;
+var hardwareRightBtn = false;
+
 function checkHardwareInput() {
   if (!port) {
+    console.log("no port");
     return;
   }
   //let arr = port.readBytes(14); 
+
+  // these scenes use the left button
+  if (mgr.isCurrent(startSession)) {
+    let arr = port.readBytes(14); 
+    if (arr[9] == 200) {
+      hardwareLeftBtn = true;
+    } else if (arr[9] == 0) {
+      if (hardwareLeftBtn == true) {
+        // do action
+      }
+      hardwareLeftBtn = false;
+    }
+
+    if (arr[10] == 200) {
+      hardwareMidBtn = true;
+    } else if (arr[10] == 0) {
+      if (hardwareMidBtn == true) {
+        document.getElementById('new-session-btn-a02').remove();
+        document.getElementById('load-session-btn-a02').remove();
+        document.getElementById('about-btn-a02').remove();
+        mgr.showScene(loadSessionS1);
+      }
+      hardwareMidBtn = false;
+    }
+
+    if (arr[11] == 200) {
+      hardwareRightBtn = true;
+    } else if (arr[10] == 0) {
+      hardwareRightBtn = false;
+    }
+  } else
+
+  // these scenes use the middle button
+  if (mgr.isCurrent(aboutProject)) {
+    let arr = port.readBytes(14); 
+    if (arr[10] == 200) {
+      hardwareMidBtn = true;
+    } else if (arr[10] == 0) {
+      if (hardwareMidBtn == true) {
+        document.getElementById('back-btn-a04').remove();
+        mgr.showScene(startSession);
+      }
+      hardwareMidBtn = false;
+    }
+  }
   
+  // slider scenes
   if (mgr.isCurrent(sBodies) || mgr.isCurrent(sLegislative) || mgr.isCurrent(sParties) || mgr.isCurrent(sMembersFirstChamber) || 
   mgr.isCurrent(sMembersSecondChamber) || mgr.isCurrent(sMembersThirdChamber) || mgr.isCurrent(sMembersVP) || mgr.isCurrent(sMembersPres) || 
   mgr.isCurrent(sBodyPass) || mgr.isCurrent(sYesVotes) || mgr.isCurrent(sVote) || mgr.isCurrent(sBenchmarkPane) ) {
@@ -285,7 +337,8 @@ function checkHardwareInput() {
       hardwareShow = false;
     }
 
-    //console.log("arr[10] = " + arr[10]);
+    // update button on joystick
+    // there are functions in specific scenes that are called when this button is clicked (hardwareUpdate = true)
     if (arr[8] == 200) {
       hardwareUpdate = true;
     } else if (arr[8] == 0) {

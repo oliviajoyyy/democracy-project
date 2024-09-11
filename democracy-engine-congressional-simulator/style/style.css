@@ -166,6 +166,15 @@ button[disabled] {
   color: darkslategray;/* darkgrey;  */
 }
 
+#next-pane-btn, #prev-pane-btn {
+  background: none;
+  border: solid 1px var(--text-color);
+}
+
+button#next-pane-btn:disabled, button#prev-pane-btn:disabled {
+  color: grey;
+}
+
 #start-desc {
   border-radius: 3px;
   display: none;
