@@ -447,7 +447,7 @@ function aboutProject() {
   this.draw = function () {
     if (enableHardware) {
       checkHardwareInput();
-      //checkHardwareBtnInput();
+      checkHardwareBtnInput();
     }
   }
 
@@ -455,9 +455,9 @@ function aboutProject() {
    * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
    */
   function checkHardwareBtnInput() {
-    if (hardwareMidBtn == true) {
-      hardwareMidBtn = false;
+    if (hMidBtn == true) {
       clickedBack();
+      hMidBtn = false;
     }
   }
 
@@ -657,17 +657,21 @@ function loadSessionS1() {
     showSessionsList(); // get sessions fr db and display onscreen
   }
 
+  let sVal = 0;
   this.draw = function () {
     if (sessions && selection.value()) { 
       var i = selection.value();
+      //if (i == 0)
+      sVal = i;
       //console.log("sel val: " + selection.value());
       loadedConfig = sessions[i].finalConfig.config; // set to global var loadedConfig
       //console.log(loadedConfig);
-    }
-    if (enableHardware) {
+      if (enableHardware) {
       checkHardwareInput();
       checkHardwareBtnInput();
     }
+    }
+    
   }
 
   /**
@@ -686,6 +690,10 @@ function loadSessionS1() {
       clickedNext();
       hRightBtn = false;
     }
+    if (hCycle == true) {
+      clickedSession();
+      hCycle = false;
+    }
   }
 
   function getSpaces(x) {
@@ -694,6 +702,17 @@ function loadSessionS1() {
       s += "\u00A0";
     }
     return s;
+  }
+
+  let choice = 0;
+  function clickedSession(sVal) {
+    console.log("sVal: " + sVal);
+    if (sVal != 0) { // < numResults
+      choice = sVal;
+    }
+    choice = (choice + 1) % numResults;
+    selection.selected(choice.toString());
+    console.log("clicked to cycle thru sessions: " + choice);
   }
 
   var rest = false;
@@ -1558,7 +1577,7 @@ function checkHardwareUpdateInput() {
           userPerSenateBody[2] = 0.0;
           userPerVPBody[2] = 0.0;
           userPerPresBody[2] = 0.0;
-        } else if (userNumParties == 3) {
+        } else if (userNumParties == 3 ) { //&& engine.indYaythresh == 0
           userIndYaythresh = 50;
         }
 
@@ -4089,6 +4108,28 @@ function sEndorse() {
   }
 
   this.draw = function () {
+    if (enableHardware) {
+      checkHardwareInput();
+      checkHardwareBtnInput();
+    }
+  }
+
+  /**
+   * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
+   */
+  function checkHardwareBtnInput() {
+    if (hLeftBtn == true) {
+      clickedStartOver();
+      hLeftBtn = false;
+    } 
+    if (hMidBtn == true) {
+      clickedApprove();
+      hMidBtn = false;
+    }
+    if (hRightBtn == true) {
+      clickedSummarySave();
+      hRightBtn = false;
+    }
   }
 
   function clickedStartOver() {
@@ -4265,8 +4306,27 @@ function sSaveResults() {
   }
 
   this.draw = function () {
+    if (enableHardware) {
+      checkHardwareInput();
+      checkHardwareBtnInput();
+    }
   }
 
+  /**
+   * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
+   */
+  function checkHardwareBtnInput() {
+    if (hLeftBtn == true) {
+      clickedStartOver();
+      hLeftBtn = false;
+    } 
+
+    if (hRightBtn == true) {
+      clickedSave();
+      hRightBtn = false;
+    }
+  }
+  
   function clickedStartOver() {
     removeBtns();
     mgr.showScene(startSession);
@@ -4376,6 +4436,7 @@ function sComplete() {
     console.log("save complete page");
     document.getElementById("main-header").innerHTML = "<h1>Session Complete</h1>";
     document.getElementById("start-desc").innerHTML = "<h2>Session ID: " + prevSessionID + "</h2>" + configJSON.text.saveCompleteDesc;
+    document.getElementById("start-desc").style.display = "block";
     document.getElementById("top").style.display = "none";
     document.getElementById("pane-bkg").style.display = "none";
     document.getElementById("page1").style.display = "none";
@@ -4414,6 +4475,20 @@ function sComplete() {
   }
 
   this.draw = function () {
+    if (enableHardware) {
+      checkHardwareInput();
+      checkHardwareBtnInput();
+    }
+  }
+
+  /**
+   * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
+   */
+  function checkHardwareBtnInput() {
+    if (hMidBtn == true) {
+      clickedStartOver();
+      hMidBtn = false;
+    }
   }
 
   function clickedStartOver() {

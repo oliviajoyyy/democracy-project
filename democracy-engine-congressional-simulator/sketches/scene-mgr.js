@@ -225,6 +225,7 @@ var hardwareShow = false;
 var hardwareNextPane = false;
 var hardwarePrevPane = false;
 var hardwareUpdate = false;
+var hCycle = false;
 var hLeftBtn = false;
 var hardwareLeftBtn = false;
 var hMidBtn = false;
@@ -239,8 +240,8 @@ function checkHardwareInput() {
   }
   //let arr = port.readBytes(14); 
 
-  // these scenes use the left right middle btns
-  if (mgr.isCurrent(startSession) || mgr.isCurrent(loadSessionS1)) {
+  // these scenes use the left, right, middle btns
+  if (mgr.isCurrent(startSession) || mgr.isCurrent(loadSessionS1) || mgr.isCurrent(sEndorse)) {
     let arr = port.readBytes(14); 
 
     if (arr[9] == 200) { // left btn
@@ -275,24 +276,38 @@ function checkHardwareInput() {
       }
       hardwareRightBtn = false;
     }
+
+    // loadSessionS1 also uses middle button to cycle thru sessions
+    if (mgr.isCurrent(loadSessionS1)) {
+    // update button on joystick
+    // there are functions in specific scenes that are called when this button is clicked (hardwareUpdate = true)
+    if (arr[8] == 200) {
+      hardwareUpdate = true;
+    } else if (arr[8] == 0) {
+      if (hardwareUpdate == true) {
+        hCycle = true;
+      }
+      hardwareUpdate = false;
+    }
+    }
+
   } else
 
   // these scenes use only the middle button
-  if (mgr.isCurrent(aboutProject)) {
+  if (mgr.isCurrent(aboutProject) || mgr.isCurrent(sComplete)) {
     let arr = port.readBytes(14); 
     if (arr[10] == 200) { // middle btn
       hardwareMidBtn = true;
     } else if (arr[10] == 0) {
       if (hardwareMidBtn == true) {
-        document.getElementById('back-btn-a04').remove();
-        mgr.showScene(startSession);
+        hMidBtn = true;
       }
       hardwareMidBtn = false;
     }
   } else
 
-  // these scenes use only the left right buttons
-  if (mgr.isCurrent(newSessionScene) || mgr.isCurrent(sBenchmarkResults)) {
+  // these scenes use only the left and right buttons
+  if (mgr.isCurrent(newSessionScene) || mgr.isCurrent(sBenchmarkResults) || mgr.isCurrent(sSaveResults)) {
     let arr = port.readBytes(14); 
     if (arr[9] == 200) { // left btn
       hardwareLeftBtn = true;
