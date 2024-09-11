@@ -225,9 +225,11 @@ var hardwareShow = false;
 var hardwareNextPane = false;
 var hardwarePrevPane = false;
 var hardwareUpdate = false;
+var hLeftBtn = false;
 var hardwareLeftBtn = false;
 var hMidBtn = false;
 var hardwareMidBtn = false;
+var hRightBtn = false;
 var hardwareRightBtn = false;
 
 function checkHardwareInput() {
@@ -237,41 +239,48 @@ function checkHardwareInput() {
   }
   //let arr = port.readBytes(14); 
 
-  // these scenes use the left button
-  if (mgr.isCurrent(startSession)) {
+  // these scenes use the left right middle btns
+  if (mgr.isCurrent(startSession) || mgr.isCurrent(loadSessionS1)) {
     let arr = port.readBytes(14); 
-    if (arr[9] == 200) {
+
+    if (arr[9] == 200) { // left btn
       hardwareLeftBtn = true;
     } else if (arr[9] == 0) {
       if (hardwareLeftBtn == true) {
-        // do action
+        hLeftBtn = true;
       }
       hardwareLeftBtn = false;
     }
 
-    if (arr[10] == 200) {
+    if (arr[10] == 200) { // middle btn
       hardwareMidBtn = true;
+      console.log("middle btn clicked var[10] == 200");
     } else if (arr[10] == 0) {
       if (hardwareMidBtn == true) {
-        document.getElementById('new-session-btn-a02').remove();
-        document.getElementById('load-session-btn-a02').remove();
-        document.getElementById('about-btn-a02').remove();
-        mgr.showScene(loadSessionS1);
+        hMidBtn = true;
+        console.log("middle btn clicked");
+        // document.getElementById('new-session-btn-a02').remove();
+        // document.getElementById('load-session-btn-a02').remove();
+        // document.getElementById('about-btn-a02').remove();
+        // mgr.showScene(loadSessionS1);
       }
       hardwareMidBtn = false;
     }
 
     if (arr[11] == 200) {
       hardwareRightBtn = true;
-    } else if (arr[10] == 0) {
+    } else if (arr[10] == 0) { // right btn
+      if (hardwareRightBtn == true) {
+        hRightBtn = true;
+      }
       hardwareRightBtn = false;
     }
   } else
 
-  // these scenes use the middle button
+  // these scenes use only the middle button
   if (mgr.isCurrent(aboutProject)) {
     let arr = port.readBytes(14); 
-    if (arr[10] == 200) {
+    if (arr[10] == 200) { // middle btn
       hardwareMidBtn = true;
     } else if (arr[10] == 0) {
       if (hardwareMidBtn == true) {
@@ -280,7 +289,42 @@ function checkHardwareInput() {
       }
       hardwareMidBtn = false;
     }
-  }
+  } else
+
+  // these scenes use only the left right buttons
+  if (mgr.isCurrent(newSessionScene) || mgr.isCurrent(sBenchmarkResults)) {
+    let arr = port.readBytes(14); 
+    if (arr[9] == 200) { // left btn
+      hardwareLeftBtn = true;
+    } else if (arr[9] == 0) {
+      if (hardwareLeftBtn == true) {
+        hLeftBtn = true;
+      }
+      hardwareLeftBtn = false;
+    }
+
+    if (arr[11] == 200) { // right btn
+      hardwareRightBtn = true;
+    } else if (arr[10] == 0) {
+      if (hardwareRightBtn == true) {
+        hRightBtn = true;
+      }
+      hardwareRightBtn = false;
+    }
+  } //else 
+
+  // these scenes use only the right button
+  // if (mgr.isCurrent(sBenchmarkPane)) {
+  //   let arr = port.readBytes(14); 
+  //   if (arr[11] == 200) { // right btn
+  //     hardwareRightBtn = true;
+  //   } else if (arr[10] == 0) {
+  //     if (hardwareRightBtn == true) {
+  //       hRightBtn = true;
+  //     }
+  //     hardwareRightBtn = false;
+  //   }
+  // }
   
   // slider scenes
   if (mgr.isCurrent(sBodies) || mgr.isCurrent(sLegislative) || mgr.isCurrent(sParties) || mgr.isCurrent(sMembersFirstChamber) || 
@@ -348,7 +392,17 @@ function checkHardwareInput() {
       hardwareUpdate = false;
     }
 
-    
+    if (mgr.isCurrent(sBenchmarkPane)) {
+      //let arr = port.readBytes(14); 
+      if (arr[11] == 200) { // right btn
+        hardwareRightBtn = true;
+      } else if (arr[10] == 0) {
+        if (hardwareRightBtn == true) {
+          hRightBtn = true;
+        }
+        hardwareRightBtn = false;
+      }
+    }
     
     // if (arr[7] == 200 && arrPrev != 200) {
     //   arrPrev = 0;
