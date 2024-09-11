@@ -118,6 +118,7 @@ var showPanesBool = true;
 
 var port;
 var connectBtn;
+var enableHardware = true; // true
 
 function preload() {
   helvFont = loadFont('../democracy-engine-congressional-simulator/assets/font/HelveticaNeue-Regular.otf');
@@ -178,7 +179,9 @@ function setup() {
   mgr.addScene(sComplete);
   mgr.showNextScene();
   
-  //hardwareSetup();
+  if (enableHardware) {
+  hardwareSetup();
+  }
   console.log("end of scene-mgr.js setup");
 }
 
@@ -217,21 +220,24 @@ function hardwareSetup() {
 var arrPrev = 200;
 var movePanes = true;
 var hardwareHideShow = false;
+var hardwareHide = false;
+var hardwareShow = false;
 var hardwareNextPane = false;
 var hardwarePrevPane = false;
 var hardwareUpdate = false;
 function checkHardwareInput() {
-  let arr = port.readBytes(14); 
+  if (!port) {
+    return;
+  }
+  //let arr = port.readBytes(14); 
   
   if (mgr.isCurrent(sBodies) || mgr.isCurrent(sLegislative) || mgr.isCurrent(sParties) || mgr.isCurrent(sMembersFirstChamber) || 
   mgr.isCurrent(sMembersSecondChamber) || mgr.isCurrent(sMembersThirdChamber) || mgr.isCurrent(sMembersVP) || mgr.isCurrent(sMembersPres) || 
   mgr.isCurrent(sBodyPass) || mgr.isCurrent(sYesVotes) || mgr.isCurrent(sVote) || mgr.isCurrent(sBenchmarkPane) ) {
-    // if (arr[7] == 200 && arrPrev != 200) {
-    //   arrPrev = 0;
-    //   nextPane();
-    // }
+    
+    let arr = port.readBytes(14); 
 
-    //console.log("arr[6] = " + arr[6]);
+    // left / back
     if (arr[6] == 200) {
       hardwarePrevPane = true;
     } else if (arr[6] == 0) {
@@ -241,39 +247,104 @@ function checkHardwareInput() {
       hardwarePrevPane = false;
     }
 
-    //console.log("arr[7] = " + arr[7]);
-    if (arr[7] == 200) {
+    // right / next
+    if (arr[6] == 100) {
       hardwareNextPane = true;
-    } else if (arr[7] == 0) {
+    } else if (arr[6] == 0) {
       if (hardwareNextPane == true) {
         nextPane();
       }
       hardwareNextPane = false;
     }
 
-    //console.log("arr[8] = " + arr[8]);
-    if (arr[8] == 200) {
-      hardwareHideShow = true;
-    } else if (arr[8] == 0) {
-      if (hardwareHideShow == true) {
+    // joy up to hide pane when == 200 (can swap to joy down to hide - change to == 100 )
+    if (arr[7] == 100) {
+      hardwareHide = true;
+    } else if (arr[7] == 0) {
+      if (hardwareHide == true) {
         if (showPanesBool == true) {
           showPanesBool = false;
-        } else {
-          showPanesBool = true;
-        }
+        } //else {
+        //   showPanesBool = true;
+        // }
       }
-      hardwareHideShow = false;
+      hardwareHide = false;
     }
 
-    console.log("arr[10] = " + arr[10]);
-    if (arr[10] == 200) {
+    // joy down to show pane when == 100 (can swap to joy up to show - change to == 200 )
+    if (arr[7] == 200) {
+      hardwareShow = true;
+    } else if (arr[7] == 0) {
+      if (hardwareShow == true) {
+        if (showPanesBool == false) {
+          showPanesBool = true;
+        } //else {
+        //   showPanesBool = true;
+        // }
+      }
+      hardwareShow = false;
+    }
+
+    //console.log("arr[10] = " + arr[10]);
+    if (arr[8] == 200) {
       hardwareUpdate = true;
-    } else if (arr[10] == 0) {
+    } else if (arr[8] == 0) {
       // if (hardwareUpdate == true) {
       //   console.log("update button hardware clicked");
       // }
       hardwareUpdate = false;
     }
+
+    
+    
+    // if (arr[7] == 200 && arrPrev != 200) {
+    //   arrPrev = 0;
+    //   nextPane();
+    // }
+
+    // //console.log("arr[6] = " + arr[6]);
+    // if (arr[6] == 200) {
+    //   hardwarePrevPane = true;
+    // } else if (arr[6] == 0) {
+    //   if (hardwarePrevPane == true) {
+    //     previousPane();
+    //   }
+    //   hardwarePrevPane = false;
+    // }
+
+    // //console.log("arr[7] = " + arr[7]);
+    // if (arr[7] == 200) {
+    //   hardwareNextPane = true;
+    // } else if (arr[7] == 0) {
+    //   if (hardwareNextPane == true) {
+    //     nextPane();
+    //   }
+    //   hardwareNextPane = false;
+    // }
+
+    // //console.log("arr[8] = " + arr[8]);
+    // if (arr[8] == 200) {
+    //   hardwareHideShow = true;
+    // } else if (arr[8] == 0) {
+    //   if (hardwareHideShow == true) {
+    //     if (showPanesBool == true) {
+    //       showPanesBool = false;
+    //     } else {
+    //       showPanesBool = true;
+    //     }
+    //   }
+    //   hardwareHideShow = false;
+    // }
+
+    // console.log("arr[10] = " + arr[10]);
+    // if (arr[10] == 200) {
+    //   hardwareUpdate = true;
+    // } else if (arr[10] == 0) {
+    //   // if (hardwareUpdate == true) {
+    //   //   console.log("update button hardware clicked");
+    //   // }
+    //   hardwareUpdate = false;
+    // }
   }
 
 }

@@ -195,13 +195,13 @@ function hardwareTest() {
     backBtn.parent(buttonDiv);
     backBtn.mousePressed(clickedBack);
 
-    testBtn = createButton('Hardware DB Test');
+    testBtn = createButton('Connect to Hardware');
     testBtn.id('test-btn-a03');
     testBtn.class('buttons');
     testBtn.parent(buttonDiv);
     // testBtn.mousePressed(clickedTest);
 
-    //hardwareSetup();
+    hardwareSetup();
   }
 
   function hardwareSetup() {
@@ -220,13 +220,14 @@ function hardwareTest() {
     // any other ports can be opened via a dialog after
     // user interaction (see connectBtnClick below)
   
-    connectBtn = createButton('Connect to Arduino');
-    connectBtn.position(80, 450);
-    connectBtn.mousePressed(connectBtnClick);
+    // connectBtn = createButton('Connect to Arduino');
+    // connectBtn.position(80, 450);
+    // connectBtn.mousePressed(connectBtnClick);
+    testBtn.mousePressed(connectBtnClick);
   
-    let sendBtn = createButton('Blink Led');
-    sendBtn.position(500, 450);
-    sendBtn.mousePressed(sendBtnClick);
+    // let sendBtn = createButton('Blink Led');
+    // sendBtn.position(500, 450);
+    // sendBtn.mousePressed(sendBtnClick);
   }
 
   function connectBtnClick() {
@@ -251,7 +252,8 @@ function hardwareTest() {
    // changes button label based on connection status
    if (port.opened()) {
   
-     connectBtn.html('Disconnect');
+    testBtn.html('Disconnect');
+    //  connectBtn.html('Disconnect');
    // reads in complete lines and prints them at the
    // bottom of the canvas
  
@@ -309,8 +311,8 @@ function hardwareTest() {
  
    } else {
  
- 
-     connectBtn.html('Connect to Hardware');
+    testBtn.html('Connect to Hardware');
+    //  connectBtn.html('Connect to Hardware');
    }
   }
 
@@ -327,6 +329,7 @@ function hardwareTest() {
   function removeBtns() {
     backBtn.remove();
     testBtn.remove();
+    // connectBtn.remove();
   }
 }
 
@@ -507,7 +510,9 @@ function sLoadSession() {
       inputTxt();
     }
     paneToggle();
-    //checkHardwareInput();
+    if (enableHardware) {
+    checkHardwareInput();
+    }
   }
 
   function getSpaces(x) {
@@ -1187,7 +1192,9 @@ function calcBenchScore(sObj) {
     console.log("loaded: " + loadedConfig.chamber1.totalMembers);
 
     paneToggle();
-    //checkHardwareInput();
+    if (enableHardware) {
+    checkHardwareInput();
+    }
   }
 
   function getSpaces(x) {
@@ -1324,7 +1331,9 @@ function sPublicEndorsement() {
 
   this.draw = function () {
     paneToggle();
-    //checkHardwareInput();
+    if (enableHardware) {
+    checkHardwareInput();
+    }
   }
 
   function addPublicEndorsement() {

@@ -120,6 +120,7 @@ var showPanesBool = true;
 
 var port;
 var connectBtn;
+var enableHardware = false; // true
 
 function preload() {
   helvFont = loadFont('../democracy-engine-congressional-simulator/assets/font/HelveticaNeue-Regular.otf');
@@ -165,7 +166,9 @@ function setup() {
   mgr.addScene(sPublicEndorsement);
   mgr.showNextScene();
   
-  //hardwareSetup();
+  if (enableHardware) {
+  hardwareSetup();
+  }
   console.log("end of scene-mgr.js setup");
 }
 
@@ -211,6 +214,9 @@ var hardwarePrevPane = false;
 var hardwareUpdate = false;
 
 function checkHardwareInput() {
+  if (!port) {
+    return;
+  }
   let arr = port.readBytes(14); 
   
   if (mgr.isCurrent(sLoadSession) || mgr.isCurrent(sSessionVis)) {
