@@ -185,7 +185,9 @@ function setup() {
   console.log("end of scene-mgr.js setup");
 }
 
+var arr; 
 function draw() {
+  arr = port.readBytes(14);
   mgr.draw();
 }
 
@@ -242,7 +244,7 @@ function checkHardwareInput() {
 
   // these scenes use the left, right, middle btns
   if (mgr.isCurrent(startSession) || mgr.isCurrent(loadSessionS1) || mgr.isCurrent(sEndorse)) {
-    let arr = port.readBytes(14); 
+    //let arr = port.readBytes(14); 
 
     if (arr[9] == 200) { // left btn
       hardwareLeftBtn = true;
@@ -255,11 +257,9 @@ function checkHardwareInput() {
 
     if (arr[10] == 200) { // middle btn
       hardwareMidBtn = true;
-      console.log("middle btn clicked var[10] == 200");
     } else if (arr[10] == 0) {
       if (hardwareMidBtn == true) {
         hMidBtn = true;
-        console.log("middle btn clicked");
         // document.getElementById('new-session-btn-a02').remove();
         // document.getElementById('load-session-btn-a02').remove();
         // document.getElementById('about-btn-a02').remove();
@@ -295,7 +295,7 @@ function checkHardwareInput() {
 
   // these scenes use only the middle button
   if (mgr.isCurrent(aboutProject) || mgr.isCurrent(sComplete)) {
-    let arr = port.readBytes(14); 
+    //let arr = port.readBytes(14); 
     if (arr[10] == 200) { // middle btn
       hardwareMidBtn = true;
     } else if (arr[10] == 0) {
@@ -308,7 +308,7 @@ function checkHardwareInput() {
 
   // these scenes use only the left and right buttons
   if (mgr.isCurrent(newSessionScene) || mgr.isCurrent(sBenchmarkResults) || mgr.isCurrent(sSaveResults)) {
-    let arr = port.readBytes(14); 
+    //let arr = port.readBytes(14); 
     if (arr[9] == 200) { // left btn
       hardwareLeftBtn = true;
     } else if (arr[9] == 0) {
@@ -346,22 +346,27 @@ function checkHardwareInput() {
   mgr.isCurrent(sMembersSecondChamber) || mgr.isCurrent(sMembersThirdChamber) || mgr.isCurrent(sMembersVP) || mgr.isCurrent(sMembersPres) || 
   mgr.isCurrent(sBodyPass) || mgr.isCurrent(sYesVotes) || mgr.isCurrent(sVote) || mgr.isCurrent(sBenchmarkPane) ) {
     
-    let arr = port.readBytes(14); 
+    //let arr = port.readBytes(14); 
 
-    // left / back
-    if (arr[6] == 200) {
+    // if (arr[1]) {
+    // let s1 = round(map(arr[1], 10, 245, 1, 3, true));
+    // console.log("s1: " + s1);
+    // }
+
+    // left joystick or left button to go to prev pane
+    if (arr[6] == 200 || arr[9] == 200) {
       hardwarePrevPane = true;
-    } else if (arr[6] == 0) {
+    } else if (arr[6] == 0 || arr[9] == 0) {
       if (hardwarePrevPane == true) {
         previousPane();
       }
       hardwarePrevPane = false;
     }
 
-    // right / next
-    if (arr[6] == 100) {
+    // right joystick or right button to go to next pane
+    if (arr[6] == 100 || arr[11] == 200) {
       hardwareNextPane = true;
-    } else if (arr[6] == 0) {
+    } else if (arr[6] == 0 || arr[11] == 0) {
       if (hardwareNextPane == true) {
         nextPane();
       }
@@ -398,14 +403,40 @@ function checkHardwareInput() {
 
     // update button on joystick
     // there are functions in specific scenes that are called when this button is clicked (hardwareUpdate = true)
-    if (arr[8] == 200) {
+    if (arr[8] == 200 || arr[10] == 200) {
       hardwareUpdate = true;
-    } else if (arr[8] == 0) {
+    } else if (arr[8] == 0 || arr[10] == 0) {
       // if (hardwareUpdate == true) {
       //   console.log("update button hardware clicked");
       // }
       hardwareUpdate = false;
     }
+
+  //   if (!mgr.isCurrent(sBenchmarkPane)) {
+  //   if (arr[9] == 200) { // left btn
+  //     hardwarePrevPane = true;
+  //   } else if (arr[9] == 0) {
+  //     if (hardwarePrevPane == true) {
+  //       previousPane();
+  //     }
+  //     hardwarePrevPane = false;
+  //   }
+
+  //   if (arr[10] == 200) { // middle btn
+  //     hardwareUpdate = true;
+  //   } else if (arr[10] == 0) {
+  //     hardwareUpdate = false;
+  //   }
+
+  //   if (arr[11] == 200) {
+  //     hardwareNextPane = true;
+  //   } else if (arr[10] == 0) { // right btn
+  //     if (hardwareNextPane == true) {
+  //       nextPane();
+  //     }
+  //     hardwareNextPane = false;
+  //   }
+  // }
 
     if (mgr.isCurrent(sBenchmarkPane)) {
       //let arr = port.readBytes(14); 

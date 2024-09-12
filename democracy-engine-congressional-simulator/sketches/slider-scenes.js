@@ -586,7 +586,7 @@ function newSessionScene() {
  * B02 Load Session
  */
 function loadSessionS1() {
-  let backBtn, nextBtn, showMoreBtn;
+  let upBtn, downBtn, nextBtn;
   let selection;
   let sessions;
   let numResults = 10; // number of results shown on screen
@@ -637,19 +637,21 @@ function loadSessionS1() {
     document.getElementById("main-btn-div").style.display = "block";
     let buttonDiv = document.getElementById('main-btn-div');
 
-    backBtn = createButton('Start Over');
-    backBtn.id('back-btn-b02');
-    backBtn.class('buttons');
-    backBtn.parent(buttonDiv);
-    backBtn.mousePressed(clickedBack);
+    upBtn = createButton('Scroll Up');
+    upBtn.id('back-btn-b02');
+    upBtn.class('buttons');
+    upBtn.parent(buttonDiv);
+    upBtn.mousePressed(clickedScrollUp);
+    // backBtn.mousePressed(clickedBack);
 
-    showMoreBtn = createButton('Show More Sessions');
-    showMoreBtn.id('show-btn-b02');
-    showMoreBtn.class('buttons');
-    showMoreBtn.parent(buttonDiv);
-    showMoreBtn.mousePressed(clickedShowMore);
+    downBtn = createButton('Scroll Down');
+    downBtn.id('show-btn-b02');
+    downBtn.class('buttons');
+    downBtn.parent(buttonDiv);
+    downBtn.mousePressed(clickedScrollDown);
+    //showMoreBtn.mousePressed(clickedShowMore);
 
-    nextBtn = createButton('Next');
+    nextBtn = createButton('Select');
     nextBtn.id('next-btn-b02');
     nextBtn.class('buttons');
     nextBtn.parent(buttonDiv);
@@ -663,7 +665,7 @@ function loadSessionS1() {
       var i = selection.value();
       //if (i == 0)
       sVal = i;
-      //console.log("sel val: " + selection.value());
+      console.log("sel val: " + selection.value());
       loadedConfig = sessions[i].finalConfig.config; // set to global var loadedConfig
       //console.log(loadedConfig);
       if (enableHardware) {
@@ -679,11 +681,12 @@ function loadSessionS1() {
    */
   function checkHardwareBtnInput() {
     if (hLeftBtn == true) {
-      clickedBack();
+      //clickedBack();
+      clickedScrollUp();
       hLeftBtn = false;
     } 
     if (hMidBtn == true) {
-      clickedShowMore();
+      clickedScrollDown();
       hMidBtn = false;
     }
     if (hRightBtn == true) {
@@ -694,6 +697,20 @@ function loadSessionS1() {
       clickedSession();
       hCycle = false;
     }
+  }
+
+  function clickedScrollUp() {
+    //if (sessions && (sVal+1)<sessions.length) {
+      sVal++;
+    //}      
+    selection.selected(sVal.toString());
+  }
+
+  function clickedScrollDown() {
+    //if (sessions && ((sVal-1)>=sessions.length-numResults || (sVal-1)>=0)) {
+      sVal--;
+    //} 
+    selection.selected(sVal.toString());
   }
 
   function getSpaces(x) {
@@ -787,7 +804,7 @@ function loadSessionS1() {
         s2 = s2 + sObj.numParties + "<br>";
         s3 = s3 + totalVoting + "<br>";
       }
-      selection.selected(startIX.toString());
+      selection.selected((endIX-1).toString());
       console.log("selected val: " + selection.value());
       newDiv.innerHTML = s;
       newDiv2.innerHTML = s2;
@@ -863,8 +880,9 @@ function loadSessionS1() {
 
   function removeBtns() {
     selection.remove();
-    showMoreBtn.remove();
-    backBtn.remove();
+    //showMoreBtn.remove();
+    downBtn.remove();
+    upBtn.remove();
     nextBtn.remove();
   }
 }
@@ -933,6 +951,7 @@ function sBodies() {
 
     document.body.style.backgroundColor = bColor;
 
+    // slider1.noUiSlider.set(userNumLegislative);
     slider1.noUiSlider.set(userNumLegislative);
     sliderVals();
 
@@ -977,9 +996,22 @@ function sBodies() {
       document.getElementById("update-btn").disabled = true;
     }
 
+    
+
     if (enableHardware) {
     checkHardwareInput();
     checkHardwareUpdateInput();
+    // let arr = port.readBytes(14); 
+    // if (arr[1]) {
+    // let s1 = map(arr[1], 10, 245, 1, 3, true);
+    // console.log("s1: " + s1);
+    // slider1.noUiSlider.set(s1);
+    // }
+    if (arr[1]) {
+      let s1 = map(arr[1], 0, 255, 1, 3, true);
+      console.log("s1: " + s1);
+      slider1.noUiSlider.set(s1);
+    }
     }
   }
 
@@ -1066,6 +1098,7 @@ function sBodies() {
       slider1.noUiSlider.on('update', function (values, handle) {
         userNumLegislative = values[0];
         checkNumChambers();
+        console.log("num legislative updated: " + userNumLegislative);
         // rangeSliderValueElement.innerHTML = userNumHouse + " " + userNumSenate + " " + userNumPres + " " + userNumVP;
       });
     }
@@ -1078,9 +1111,9 @@ function sBodies() {
  */
 function sLegislative() {
 
-  var slider1 = document.getElementById('slider1'); // original house
-  var slider2;// = document.getElementById('s2-p2'); // house2
-  var slider3;// = document.getElementById('s3-p2'); // senate
+  var slider1 = document.getElementById('slider1'); // chamber 1
+  var slider2;// = document.getElementById('s2-p2'); // chamber 2
+  var slider3;// = document.getElementById('s3-p2'); // chamber 3
   var slider4;// = document.getElementById('s4-p2'); // vp
   var slider5;// = document.getElementById('s5-p2'); // pres
    
@@ -1151,6 +1184,42 @@ function sLegislative() {
     if (enableHardware) {
     checkHardwareInput();
     checkHardwareUpdateInput();
+    if (arr[1]) {
+      let s1 = map(arr[1], 10, 245, 1, 500, true);
+      console.log("s1: " + s1);
+      slider1.noUiSlider.set(s1);
+    }
+    if (userNumLegislative == 1 && arr[2] && arr[3]) {
+      let s2 = map(arr[2], 10, 245, 1, 500, true); 
+      console.log("s2: " + s2);
+      slider4.noUiSlider.set(s2); // set to vp's slider, slider 4
+      let s3 = map(arr[3], 10, 245, 0, 500, true); 
+      console.log("s3: " + s3);
+      slider5.noUiSlider.set(s3); // set to president slider, slider 5
+    } else if (userNumLegislative == 2 && arr[2] && arr[3] && arr[4]) {
+      let s2 = map(arr[2], 10, 245, 1, 500, true); 
+      console.log("s2: " + s2);
+      slider2.noUiSlider.set(s2); // set to chamber 2 slider, slider 3
+      let s3 = map(arr[3], 10, 245, 1, 500, true); 
+      console.log("s3: " + s3);
+      slider4.noUiSlider.set(s3); // set to vp slider, slider 4
+      let s4 = map(arr[4], 10, 245, 0, 500, true); 
+      console.log("s4: " + s4);
+      slider5.noUiSlider.set(s4); // set to pres slider, slider 5
+    } else if (userNumLegislative == 3 && arr[2] && arr[3] && arr[4] && arr[5]) {
+      let s2 = map(arr[2], 10, 245, 1, 500, true); 
+      console.log("s2: " + s2);
+      slider2.noUiSlider.set(s2); // set to chamber 2 slider, slider 3
+      let s3 = map(arr[3], 10, 245, 1, 500, true); 
+      console.log("s2: " + s3);
+      slider3.noUiSlider.set(s3); // set to chamber 2 slider, slider 3
+      let s4 = map(arr[4], 10, 245, 1, 500, true); 
+      console.log("s3: " + s4);
+      slider4.noUiSlider.set(s4); // set to vp slider, slider 4
+      let s5 = map(arr[5], 10, 245, 0, 500, true); 
+      console.log("s4: " + s5);
+      slider5.noUiSlider.set(s5); // set to pres slider, slider 5
+    }
     }
 
     // if sliders changed any values on this page, enable update button
@@ -1445,6 +1514,11 @@ function sParties() {
     if (enableHardware) {
     checkHardwareInput();
     checkHardwareUpdateInput();
+    if (arr[1]) {
+      let s1 = map(arr[1], 10, 245, 1, 3, true);
+      console.log("s1: " + s1);
+      slider5.noUiSlider.set(s1);
+    }
     }
 
     if (userNumParties != engine.numParties) {
@@ -1659,10 +1733,79 @@ function sMembersFirstChamber() {
     if (enableHardware) {
     checkHardwareInput();
     checkHardwareUpdateInput();
+    if (userNumParties == 1 && arr[1]) {
+      let s1 = map(arr[1], 10, 245, 0, maxSlider, true);
+      console.log("s1: " + s1);
+      slider1.noUiSlider.set(s1);
+
+    } else if (userNumParties == 2 && arr[1] && arr[2]) {
+      let s1 = map(arr[1], 10, 245, 0, maxSlider, true);
+      console.log("s1: " + s1);
+      slider1.noUiSlider.set(s1);
+      
+      let s2 = map(arr[2], 10, 245, 0, maxSlider, true);
+      console.log("s2: " + s2);
+      //if (s2 != userNumHouse - slider1.noUiSlider.get()) {
+        slider2.noUiSlider.set(userNumHouse - slider1.noUiSlider.get());
+      //} else {
+        //slider2.noUiSlider.set(s2);
+      //}
+      
+      // console.log("slider direct val: " + slider2.noUiSlider.get());
+
+      // let s2 = map(arr[2], 10, 245, 0, maxSlider, true);
+      // console.log("s1: " + s2);
+      // slider2.noUiSlider.set(s2);
+
+      // let s1 = map(arr[1], 10, 245, 0, maxSlider, true);
+      // console.log("s1: " + s1);
+      // if (s1 != userNumHouse - slider2.noUiSlider.get()) {
+      //   slider1.noUiSlider.set(userNumHouse - slider2.noUiSlider.get());
+      // } else {
+      //   slider2.noUiSlider.set(s2);
+      // }
+
+
+      // // when user slides the party A slider, update slider B
+      //   slider1.noUiSlider.on('slide', function(event) {
+      //     slider2.noUiSlider.set((userNumHouse - numPartyA));
+      //     console.log("minus value: " + (userNumHouse - numPartyA));
+      //   });
+
+      //   // when user slides the party B slider, update slider A
+      //   slider2.noUiSlider.on('slide', function(event) {
+      //     slider1.noUiSlider.set(userNumHouse - numPartyB);
+      //   });
+    } else if (userNumParties == 3 && arr[1] && arr[2] && arr[3]) {
+      let s1 = map(arr[1], 10, 245, 0, maxSlider, true);
+      console.log("s1: " + s1);
+      slider1.noUiSlider.set(s1);
+      
+      let s2 = map(arr[2], 10, 245, 0, maxSlider, true);
+      console.log("s2: " + s2);
+      // if (s2 != userNumHouse - slider1.noUiSlider.get()) {
+      //   slider2.noUiSlider.set(userNumHouse - slider1.noUiSlider.get());
+      // } else {
+      //   slider2.noUiSlider.set(s2);
+      // }
+      let sliderBval = ceil((userNumHouse - slider1.noUiSlider.get()) / 2);
+          let sliderCval = (userNumHouse - slider1.noUiSlider.get()) - slider2.noUiSlider.get();
+          slider2.noUiSlider.set(sliderBval);
+          slider3.noUiSlider.set(sliderCval);
+
+          // slider2.noUiSlider.set(s2);
+          // if (parseInt(slider2.noUiSlider.get()) > userNumHouse - slider1.noUiSlider.get()) {
+          //   slider2.noUiSlider.set(userNumHouse - slider1.noUiSlider.get());
+          // }
+          // let sliderCval2 = (userNumHouse - slider2.noUiSlider.get()) - slider1.noUiSlider.get();
+          // //slider1.noUiSlider.set(sliderAval);
+          // slider3.noUiSlider.set(sliderCval2);
     }
 
-    console.log("user Party A: " + userPerHouseBody[0] + " Party B: " + userPerHouseBody[1] + " Party C: " + userPerHouseBody[2]);
-    console.log("engine Party A: " + engine.perDemHouse + " Party B: " + engine.perRepHouse + " Party C: " + engine.perIndHouse);
+    }
+
+    // console.log("user Party A: " + userPerHouseBody[0] + " Party B: " + userPerHouseBody[1] + " Party C: " + userPerHouseBody[2]);
+    // console.log("engine Party A: " + engine.perDemHouse + " Party B: " + engine.perRepHouse + " Party C: " + engine.perIndHouse);
 
     // if sliders changed any values on this page, enable update button
     if (userPerHouseBody[0] != engine.perDemHouse || userPerHouseBody[1] != engine.perRepHouse || userPerHouseBody[2] != engine.perIndHouse) {
