@@ -1330,9 +1330,13 @@ function sPublicEndorsement() {
   }
 
   this.draw = function () {
+    if (document.getElementById('prev-pane-btn').disabled) {
+      showPanesBool = false;
+    }
     paneToggle();
-    if (enableHardware) {
-    checkHardwareInput();
+    if (enableHardware) { // add check to prevent hardware from moving panes
+      if (document.getElementById('prev-pane-btn').disabled == false)
+        checkHardwareInput();
     }
   }
 
@@ -1349,6 +1353,13 @@ function sPublicEndorsement() {
     addPublicEndorsement();
     inputTxt();
     document.getElementById('middle-btn').disabled = true;
+    document.getElementById('next-pane-btn').disabled = true;
+    document.getElementById('prev-pane-btn').disabled = true;
+    // also need to disallow key press when prev/next buttons are disabled
+    setTimeout(function() {
+      removeBtns();
+      mgr.showScene(startSession);
+    }, 5000);
   }
   
   function clickedStartOver() {
@@ -1419,8 +1430,6 @@ function sPublicEndorsement() {
       } else {
         sApproval  = "<h3>Creator Endorsement</h3><div id='approval-check'></div>";
       }
-      //sApproval = sApproval + "<h3 style='font-size: 14px; display: inline-block; vertical-align: top;'>User Approval of Configuration </h3><h3 style='font-size: 32px; display: inline-block; margin: 0; line-height: 1;'>&#x2610;</h3>";
-      // sApproval = sApproval + "<h3>User Approval of Configuration</h3><div id='approval-check'></div>";
 
       div1.innerHTML = s1;
       div2.innerHTML = s2;
