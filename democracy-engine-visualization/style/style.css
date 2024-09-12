@@ -147,9 +147,10 @@ footer {
 }
 
 button {
-  background-color: var(--button); /* #012266; */
+  /* background-color: var(--button); /* #012266; */
+  background: none;
+  border: solid 2px var(--button) !important;
   color: var(--text-color); /* white */
-  border: none;
   border-radius: 7px;
   margin: 0px 15px;
   margin-top: 6px;
@@ -163,7 +164,7 @@ button {
 
 button:disabled,
 button[disabled] {
-  color: darkslategray;/* darkgrey;  */
+  color: grey; /*darkslategray; darkgrey;  */
 }
 
 #start-desc {
@@ -391,7 +392,7 @@ p {
 
 /* summary columns */
 #s-col-1, #s-col-2{
-  width: 33%;
+  width: 29%;
   position: relative;
   /* left: -490px; */
   /* border-right: 0.5mm solid var(--text-color); */
@@ -400,17 +401,17 @@ p {
   float: left;
   height: auto;
   text-align: center;
-  font-size: .84em;
+  font-size: .85em;
 }
 
 #s-col-3 {
-  width: 34%;
+  width: 42%;
   position: relative;
   padding: 5px;
   float: left;
   height: auto;
   text-align: center;
-  font-size: .84em;
+  font-size: .85em;
 }
 
 /* for across page */
@@ -481,6 +482,16 @@ p {
   border: 1mm solid var(--text-color);
 }
 
+.public-approved {
+  background-color: var(--text-color);
+  color: var(--bkg-color);
+  font-weight: bold;
+}
+
+.public-normal {
+  background-color: none;
+}
+
 #act-list {
   width: 90%;
   left: 5%;
@@ -531,34 +542,34 @@ th {
 
 #chart-chambers {
   /* position: top left; */
-  width: 40vw !important;
+  width: 35vw !important;
   height: auto !important;
-  margin: 2%;
+  margin: 2% 4%;
   /* margin-bottom: 4%; */
   /* float:left; */
 }
 
 #chart-parties {
   /* position: top right; */
-  width: 40vw !important;
+  width: 35vw !important;
   height: auto !important;
-  margin: 2%;
+  margin: 2% 4%;
   /* float:left; */
 }
 
 #chart-members {
   /* position: bottom left; */
-  width: 40vw !important;
+  width: 35vw !important;
   height: auto !important;
-  margin: 2%;
+  margin: 2% 4%;
   /* float:left; */
 }
 
 #chart-bench {
   /* position: bottom left; */
-  width: 40vw !important;
+  width: 35vw !important;
   height: auto !important;
-  margin: 2%;
+  margin: 2% 4%;
   /* float:left; */
 }
 

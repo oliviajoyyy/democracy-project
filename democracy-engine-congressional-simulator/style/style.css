@@ -147,9 +147,10 @@ footer {
 }
 
 button {
-  background-color: var(--button); /* #012266; */
+  /* background-color: var(--button); /* #012266; */
+  background: none;
+  border: solid 2px var(--button) !important;
   color: var(--text-color); /* white */
-  border: none;
   border-radius: 7px;
   margin: 0px 15px;
   margin-top: 6px;
@@ -163,17 +164,17 @@ button {
 
 button:disabled,
 button[disabled] {
-  color: darkslategray;/* darkgrey;  */
+  color: grey; /*darkslategray; darkgrey;  */
 }
 
-#next-pane-btn, #prev-pane-btn {
+/* #next-pane-btn, #prev-pane-btn, #update-btn, #vote-btn {
   background: none;
-  border: solid 1px var(--text-color);
-}
+  border: solid 1px var(--button);
+} */
 
-button#next-pane-btn:disabled, button#prev-pane-btn:disabled {
+/* button#next-pane-btn:disabled, button#prev-pane-btn:disabled, button#update-btn:disabled {
   color: grey;
-}
+} */
 
 #start-desc {
   border-radius: 3px;
@@ -429,7 +430,7 @@ p {
 
 /* summary columns */
 #s-col-1, #s-col-2{
-  width: 33%;
+  width: 29%;
   position: relative;
   /* left: -490px; */
   /* border-right: 0.5mm solid var(--text-color); */
@@ -438,17 +439,17 @@ p {
   float: left;
   height: auto;
   text-align: center;
-  font-size: .84em;
+  font-size: .85em;
 }
 
 #s-col-3 {
-  width: 34%;
+  width: 42%;
   position: relative;
   padding: 5px;
   float: left;
   height: auto;
   text-align: center;
-  font-size: .84em;
+  font-size: .85em;
 }
 
 /* for across page */

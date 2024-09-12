@@ -777,7 +777,7 @@ function loadSessionS1() {
       let s = "";
       let s2 = "";
       let s3 = "";
-      for (let i=startIX; (i<endIX); i++) {
+      for (let i=endIX-1; (i>=startIX); i--) {
         console.log("i: " + i);
         let sObj = result[i].finalConfig.config;
         console.log(sObj);
@@ -4208,9 +4208,9 @@ function sEndorse() {
       for(let i=1; i<=MAX_SIM_RESULTS; i++) {
         s3 = s3 + configs[configIX].simResults[i].actTitle + " ";
         if (configs[configIX].simResults[i].billPass == true) {
-          s3 = s3 + "&#x2611;<br>"; // checkmark
+          s3 = s3 + "&#x2611;<br>"; // checkmark in box
         } else {
-          s3 = s3 + "&#x2610;<br>"; // empty checkmark
+          s3 = s3 + "&#9746;<br>"; // x mark in box (for empty box use &#x2610;)
         }
       }
       s3 = s3 + "</p>";
@@ -4389,7 +4389,7 @@ function sSaveResults() {
         if (configs[configIX].simResults[i].billPass == true) {
           s3 = s3 + "&#x2611;<br>"; // checkmark
         } else {
-          s3 = s3 + "&#x2610;<br>"; // empty checkmark
+          s3 = s3 + "&#9746;<br>"; // x mark in box (for empty box use &#x2610;)
         }
       }
       s3 = s3 + "</p>";
@@ -4417,7 +4417,7 @@ function sSaveResults() {
       document.getElementById('end-summary').appendChild(div1);
       document.getElementById('end-summary').appendChild(div2);
       document.getElementById('end-summary').appendChild(div3);
-      div3.appendChild(divApproval);
+      //div3.appendChild(divApproval);
       // approvalBtn.parent(divApproval);
   }
 }

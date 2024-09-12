@@ -88,6 +88,7 @@ var colorOverlay;
 var rectColor;
 var rectColor2;
 var rectColor3;
+var barDark;
 var majorityBar;
 var superBar;
 
@@ -146,6 +147,7 @@ function setup() {
   rectColor = colorConfig.rectColor;
   rectColor2 = colorConfig.rectColor2;
   rectColor3 = colorConfig.rectColor3;
+  barDark = colorConfig.barDark;
   majorityBar = colorConfig.majorityBar;
   superBar = colorConfig.supermajorityBar;
   document.body.style.backgroundColor = bColor;

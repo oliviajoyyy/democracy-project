@@ -113,7 +113,7 @@ function startSession() {
 
     let buttonDiv = document.getElementById('main-btn-div');
 
-    loadSessionBtn = createButton('See Previous Sessions');
+    loadSessionBtn = createButton('View Sessions');
     loadSessionBtn.id('load-session-btn-a02');
     loadSessionBtn.class('buttons');
     loadSessionBtn.parent(buttonDiv);
@@ -531,7 +531,7 @@ function sLoadSession() {
     document.getElementById("main-header").innerHTML = configJSON.text.titleVis;
     // document.getElementById("page1").style.display = "block";
     document.getElementById("top").style.display = "block";
-    document.getElementById("top").innerHTML = "<h2>Select Session</h2>"
+    document.getElementById("top").innerHTML = "<h2>Last 10 Sessions</h2>"
       //+ configJSON.text.selectSessionDesc
       // + "<br><p>" + getSpaces(15) + "SESSION ID</p>"
       // + getSpaces(12) + " CHAMBERS "
@@ -588,7 +588,7 @@ function sLoadSession() {
       let s2 = "";
       let s3 = "";
       let s4 = "";
-      for (let i=startIX; (i<endIX); i++) {
+      for (let i=endIX-1; (i>=startIX); i--) {
         console.log("i: " + i);
         let sObj = result[i].finalConfig.config;
         console.log(sObj);
@@ -724,6 +724,12 @@ function sLoadSession() {
       s3 = s3 + "</p>";
 
       if (finalConfigObj.ownerEndorsement == 1) {
+      s3 += "<h3>Endorsement: Yes</h3>";
+      } else {
+        s3 += "<h3>Endorsement: No</h3>";
+      }
+
+      if (finalConfigObj.ownerEndorsement == 1) {
         sApproval = "<h3>Creator Endorsement</h3><img id='approval-check' src='./assets/check-mark-txt-col.svg' style='left:37%'>";
       } else {
         sApproval  = "<h3>Creator Endorsement</h3><div id='approval-check'></div>";
@@ -739,7 +745,7 @@ function sLoadSession() {
       document.getElementById('end-summary').appendChild(div1);
       document.getElementById('end-summary').appendChild(div2);
       document.getElementById('end-summary').appendChild(div3);
-      div3.appendChild(divApproval);
+      //div3.appendChild(divApproval);
       // approvalBtn.parent(divApproval);
     }
 }
@@ -801,7 +807,8 @@ function sSessionVis() {
     document.getElementById("main-header").innerHTML = configJSON.text.titleVis;
     document.getElementById("start-desc").innerHTML = "";
     document.getElementById("start-desc").style.display = "none";
-    document.getElementById("top").innerHTML = "<h2>Session Visualization</h2>" + "<p>[paragraph here]</p>";
+    document.getElementById("chart-subtitle").innerHTML = "Session ID: " + selectedSessionID;
+    document.getElementById("top").innerHTML = "<h2>Session Histograms</h2>"; // + "<p>[paragraph here]</p>";
     document.getElementById("end-summary").style.display = "none";
     
     //showSessionsList(); // get sessions fr db and display onscreen
@@ -917,7 +924,7 @@ function sSessionVis() {
             if (loadedConfig.numLegislativeBodies == ranges[j]) {
               barColors[j] = rectColor2;
             } else {
-              barColors[j] = rectColor;
+              barColors[j] = barDark;
             }
           }
         }
@@ -1032,7 +1039,7 @@ function sSessionVis() {
           if (loadedConfig.numParties == ranges[j]) {
             barColors[j] = rectColor2;
           } else {
-            barColors[j] = rectColor;
+            barColors[j] = barDark;
           }
         }
       }
@@ -1096,7 +1103,7 @@ function sSessionVis() {
             if (loadedTotal >= ranges[j][0] && loadedTotal < ranges[j][1]) {
               barColors[j] = rectColor2;
             } else {
-              barColors[j] = rectColor;
+              barColors[j] = barDark;
             }
           }
         }
@@ -1158,7 +1165,7 @@ function sSessionVis() {
         if (thisBenchScore >= ranges[j][0] && thisBenchScore < ranges[j][1]) {
           barColors[j] = rectColor2;
         } else {
-          barColors[j] = rectColor;
+          barColors[j] = barDark;
         }
       }
     }
@@ -1166,7 +1173,7 @@ function sSessionVis() {
     console.log("total voting values: " + values);
     console.log("bar colors members: " + barColors);
 
-    displayHistogram(xText, values, "BENCH SCORE", document.getElementById("chart-bench"), barColors);
+    displayHistogram(xText, values, "BENCHMARK SCORE", document.getElementById("chart-bench"), barColors);
 }
 
 function calcBenchScore(sObj) {
@@ -1288,7 +1295,7 @@ function sPublicEndorsement() {
     document.getElementById("main-header").innerHTML = configJSON.text.titleVis;
     document.getElementById("start-desc").innerHTML = "";
     document.getElementById("start-desc").style.display = "none";
-    document.getElementById("top").innerHTML = "<h2>Public Endorsement</h2>" + "<p style='text-align:center'>Do you endorse this configuration of government?</p>"
+    document.getElementById("top").innerHTML = "<h2>Endorsement</h2>" + "<p style='text-align:center'>Do you endorse this configuration of government?</p>"
     document.getElementById("end-summary").style.display = "block";
     
     inputTxt();
@@ -1352,6 +1359,7 @@ function sPublicEndorsement() {
     showPanesBool = false;
     addPublicEndorsement();
     inputTxt();
+    document.getElementById('approval-public').className = 'public-approved';
     document.getElementById('middle-btn').disabled = true;
     document.getElementById('next-pane-btn').disabled = true;
     document.getElementById('prev-pane-btn').disabled = true;
@@ -1359,7 +1367,8 @@ function sPublicEndorsement() {
     setTimeout(function() {
       removeBtns();
       mgr.showScene(startSession);
-    }, 5000);
+      document.getElementById('approval-public').className = 'public-normal';
+    }, 25000); 
   }
   
   function clickedStartOver() {
@@ -1376,7 +1385,7 @@ function sPublicEndorsement() {
 
   function inputTxt() {
     document.getElementById("end-summary").innerHTML = "<h2>Session ID: " + selectedSessionID + "</h2>";
-    document.getElementById("end-summary").innerHTML += "<h2 id='approval-public'>Public Endorsements: " + endorseVal + "</h2>";
+    document.getElementById("end-summary").innerHTML += "<h2 id='approval-public' class='public-normal'>Total Endorsements: " + (endorseVal + finalConfigObj.ownerEndorsement) + "</h2>";
 
     s1 = 
       "<h3>First Legislative Chamber</h3>" +
@@ -1439,7 +1448,7 @@ function sPublicEndorsement() {
       document.getElementById('end-summary').appendChild(div1);
       document.getElementById('end-summary').appendChild(div2);
       document.getElementById('end-summary').appendChild(div3);
-      div3.appendChild(divApproval);
+      //div3.appendChild(divApproval);
       // approvalBtn.parent(divApproval);
     }
 }
