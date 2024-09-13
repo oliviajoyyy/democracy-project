@@ -2,6 +2,20 @@
 const express = require('express');
 const mongoose = require("mongoose"); // mongoose used for mongodb schema
 const cors = require('cors'); // allows for requests to be sent btwn servers
+// const https = require('https');
+// const http = require('http');
+// const fs = require('fs');
+
+// const httpsOptions = {
+//     cert: fs.readFileSync('/etc/ssl/certs/cha-cweb-dma2.sjsu.edu.cer'),
+//     key: fs.readFileSync('/etc/ssl/private/cha-cweb-dma2.sjsu.edu.key')
+// };
+// const httpsServer = https.createServer(httpsOptions, (req, res) => {
+//     res.statusCode = 200;
+//     res.setHeader('Content-Type', 'text/html');
+//     res.end('<h1>Connection is secured<h1>');
+// });
+// httpsServer.listen(443, 'cha-cweb-dma2.sjsu.edu');
 
 const app = express();
 app.use(express.json());
@@ -50,7 +64,18 @@ app.patch('/sessions/update', async (req, res) => {
     }
 });
 
+// const httpServer = http.createServer(app);
+// httpServer.listen(80, () => {
+//     console.log('HTTP Server running on port 80');
+// });
+// const httpsServer = https.createServer({
+//     cert: fs.readFileSync('/etc/ssl/certs/cha-cweb-dma2.sjsu.edu.cer'),
+//     key: fs.readFileSync('/etc/ssl/private/cha-cweb-dma2.sjsu.edu.key')
+// }, app);
 
+// httpsServer.listen(443, () => {
+//     console.log('HTTPS Server running on port 443');
+// })
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

@@ -35,17 +35,17 @@ function startUp() {
 
     let buttonDiv = document.getElementById('main-btn-div');
 
-    continueBtn = createButton('Continue');
-    continueBtn.id('continue-btn-a01');
-    continueBtn.class('buttons');
-    continueBtn.parent(buttonDiv);
-    continueBtn.mousePressed(clickedContinue);
-
     testBtn = createButton('Hardware Test');
     testBtn.id('test-btn-a01');
     testBtn.class('buttons');
     testBtn.parent(buttonDiv);
     testBtn.mousePressed(clickedTest);
+
+    continueBtn = createButton('Continue');
+    continueBtn.id('continue-btn-a01');
+    continueBtn.class('buttons');
+    continueBtn.parent(buttonDiv);
+    continueBtn.mousePressed(clickedContinue);
 
     // setTimeout(function () {
     //     if (mgr.isCurrent(startUp)) { // OC prevents prgm from moving to test screen if already moved on from the first screen
@@ -55,6 +55,25 @@ function startUp() {
   }
 
   this.draw = function () {
+    if (enableHardware) {
+      checkHardwareInput();
+      checkHardwareBtnInput();
+    }
+  }
+
+  /**
+   * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
+   */
+  function checkHardwareBtnInput() {
+    if (hLeftBtn == true) {
+      clickedTest();
+      hLeftBtn = false;
+    } 
+
+    if (hRightBtn == true) {
+      clickedContinue();
+      hRightBtn = false;
+    }
   }
 
   function clickedContinue() {
@@ -113,26 +132,39 @@ function startSession() {
 
     let buttonDiv = document.getElementById('main-btn-div');
 
-    loadSessionBtn = createButton('View Sessions');
-    loadSessionBtn.id('load-session-btn-a02');
-    loadSessionBtn.class('buttons');
-    loadSessionBtn.parent(buttonDiv);
-    loadSessionBtn.mousePressed(clickedLoad);
-
     aboutBtn = createButton('About the Project');
     aboutBtn.id('about-btn-a02');
     aboutBtn.class('buttons');
     aboutBtn.parent(buttonDiv);
     aboutBtn.mousePressed(clickedAbout);
 
+    loadSessionBtn = createButton('View Sessions');
+    loadSessionBtn.id('load-session-btn-a02');
+    loadSessionBtn.class('buttons');
+    loadSessionBtn.parent(buttonDiv);
+    loadSessionBtn.mousePressed(clickedLoad);
   }
 
   this.draw = function () {
+    if (enableHardware) {
+      checkHardwareInput();
+      checkHardwareBtnInput();
+    }
   }
 
-  function clickedNew() {
-    removeBtns();
-    mgr.showScene(newSessionScene);
+  /**
+   * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
+   */
+  function checkHardwareBtnInput() {
+    if (hLeftBtn == true) {
+      clickedAbout();
+      hLeftBtn = false;
+    } 
+
+    if (hRightBtn == true) {
+      clickedLoad();
+      hRightBtn = false;
+    }
   }
 
   function clickedLoad() {
@@ -245,7 +277,7 @@ function hardwareTest() {
 
   this.draw = function () {
       // this makes received text scroll up
-   background(0);
+   //background(0);
    //copy(0, 0, width, height, 0, -1, width, height);
  
    
@@ -262,40 +294,40 @@ function hardwareTest() {
    let arr = port.readBytes(14); 
  
    //console.log(arr);
-   fill(255);
-   textSize(20)
-   text(arr, 5, height-120);
+  //  fill(255);
+  //  textSize(20)
+  //  text(arr, 5, height-120);
  
  
-      fill(255,0,0);
-      ellipse(arr[1]*2,50,40,40); // slider1
+  //     fill(255,0,0);
+  //     ellipse(arr[1]*2,50,40,40); // slider1
  
-      if (arr[6] == 200 ) {
-           fill(200);
-           triangle(150,200,200,150,200,250);
-           console.log("clicked left btn");
-      }
+  //     if (arr[6] == 200 ) {
+  //          fill(200);
+  //          triangle(150,200,200,150,200,250);
+  //          console.log("clicked left btn");
+  //     }
  
-       if (arr[7] == 200 ) {
-       fill(200);
-       triangle(300,200,250,150,250,250);
-        }
+  //      if (arr[7] == 200 ) {
+  //      fill(200);
+  //      triangle(300,200,250,150,250,250);
+  //       }
  
-        if (arr[8] == 200 ) {
-         fill(90);
-         rect(200,200,200,75);
-         fill(255);
-         textSize(30);
-         text("hide/show",215,225);
-        }
+  //       if (arr[8] == 200 ) {
+  //        fill(90);
+  //        rect(200,200,200,75);
+  //        fill(255);
+  //        textSize(30);
+  //        text("hide/show",215,225);
+  //       }
  
-        if (arr[9] == 200 ) {
-         fill(90);
-         rect(200,250,200,75);
-         fill(255);
-         textSize(30);
-         text("Update",215,275);
-        }
+  //       if (arr[9] == 200 ) {
+  //        fill(90);
+  //        rect(200,250,200,75);
+  //        fill(255);
+  //        textSize(30);
+  //        text("Update",215,275);
+  //       }
    
  
    //   fill(0,0,255);
@@ -376,6 +408,20 @@ function aboutProject() {
   }
 
   this.draw = function () {
+    if (enableHardware) {
+      checkHardwareInput();
+      checkHardwareBtnInput();
+    }
+  }
+
+  /**
+   * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
+   */
+  function checkHardwareBtnInput() {
+    if (hMidBtn == true) {
+      clickedBack();
+      hMidBtn = false;
+    } 
   }
 
   function clickedBack() {
@@ -460,42 +506,47 @@ function sLoadSession() {
 
 
     if (!document.getElementById('prev-pane-btn')) {
-    prevPaneBtn = createButton('Back');
+    prevPaneBtn = createButton('&larr; Back');
     prevPaneBtn.id('prev-pane-btn');
     prevPaneBtn.class('buttons');
     prevPaneBtn.parent(buttonDiv);
     }
+    document.getElementById('prev-pane-btn').innerHTML = 'Scroll Up';
+    //document.getElementById('prev-pane-btn').disabled = true;
 
-    document.getElementById('prev-pane-btn').disabled = true;
-
+    if (middleBtn) {
+      middleBtn.remove();
+    }
     if (!document.getElementById('middle-btn')) {
-    middleBtn = createButton('Show More Sessions');
+    middleBtn = createButton('Scroll Down');
     middleBtn.id('middle-btn');
     middleBtn.class('buttons');
     middleBtn.parent(buttonDiv);
     } else {
-      document.getElementById('middle-btn').innerHTML = 'Show More Sessions';
+      document.getElementById('middle-btn').innerHTML = 'Scroll Down';
     }
 
+    if (nextPaneBtn) {
+      nextPaneBtn.remove();
+    }
     if (!document.getElementById('next-pane-btn')) {
-    nextPaneBtn = createButton('Next');
+    nextPaneBtn = createButton('Select &rarr;');
     nextPaneBtn.id('next-pane-btn');
     nextPaneBtn.class('buttons');
     nextPaneBtn.parent(buttonDiv);
     }
+    document.getElementById('next-pane-btn').innerHTML = 'Select &rarr;';
 
-    prevPaneBtn.mousePressed(previousPane);
-
-    document.getElementById('next-pane-btn').innerHTML = "Next";
+    prevPaneBtn.mousePressed(clickedScrollUp);
+    middleBtn.mousePressed(clickedScrollDown);
     nextPaneBtn.mousePressed(nextPane);
-    
-    middleBtn.mousePressed(clickedShowMore);
-
   }
 
+  let sVal = 0;
   this.draw = function () {
     if (sessions && selection.value()) { // set c to global var loadedSession
       var i = selection.value();
+      sVal = i;
       console.log("sel val: " + i);
       //console.log("sel val: " + selection.value());
       entireSessionObj = sessions[i];
@@ -511,8 +562,41 @@ function sLoadSession() {
     }
     paneToggle();
     if (enableHardware) {
-    checkHardwareInput();
+      checkHardwareInput();
+      checkHardwareBtnInput();
     }
+  }
+
+  /**
+   * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
+   */
+  function checkHardwareBtnInput() {
+    if (hLeftBtn == true) {
+      clickedScrollUp();
+      hLeftBtn = false;
+    } 
+    if (hMidBtn == true) {
+      clickedScrollDown();
+      hMidBtn = false;
+    }
+    if (hRightBtn == true) {
+      nextPane();
+      hRightBtn = false;
+    }
+  }
+
+  function clickedScrollUp() {
+    //if (sessions && (sVal+1)<sessions.length) {
+      sVal++;
+    //}      
+    selection.selected(sVal.toString());
+  }
+
+  function clickedScrollDown() {
+    //if (sessions && ((sVal-1)>=sessions.length-numResults || (sVal-1)>=0)) {
+      sVal--;
+    //} 
+    selection.selected(sVal.toString());
   }
 
   function getSpaces(x) {
@@ -600,7 +684,7 @@ function sLoadSession() {
         s4 += calcBenchScore(sObj).toString() + "%<br>";
         
       }
-      selection.selected(startIX.toString());
+      selection.selected((endIX-1).toString()); // selection.selected(startIX.toString());
       console.log("selected val: " + selection.value());
       // newDiv.innerHTML = s;
       // newDiv2.innerHTML = s2;
@@ -818,60 +902,26 @@ function sSessionVis() {
     document.getElementById("page2").style.display = "block";
     document.getElementById("page3").style.display = "none";
     document.getElementById("vote").style.display = "block";
-
     document.getElementById("main-btn-div").style.display = "none";
     // let buttonDiv = document.getElementById('main-btn-div');
 
-    // prevPaneBtn = createButton('Back');
-    // prevPaneBtn.id('back-btn-c01');
-    // prevPaneBtn.class('buttons');
-    // prevPaneBtn.parent(buttonDiv);
     document.getElementById('prev-pane-btn').disabled = false;
+    document.getElementById('prev-pane-btn').innerHTML = '&larr; Back';
 
-    //middleBtn = createButton('Show More Sessions');
-    //middleBtn.id('show-btn-c01');
-    // middleBtn.class('buttons');
-    // middleBtn.parent(buttonDiv);
+    if (middleBtn) {
+      middleBtn.remove();
+    }
 
-    // nextPaneBtn = createButton('Next');
-    // nextPaneBtn.id('next-btn-c01');
-    // nextPaneBtn.class('buttons');
-    // nextPaneBtn.parent(buttonDiv);
+    if (!document.getElementById('next-pane-btn')) {
+      nextPaneBtn = createButton('Next &rarr;');
+      nextPaneBtn.id('next-pane-btn');
+      nextPaneBtn.class('buttons');
+      nextPaneBtn.parent(buttonDiv);
+    }
+    document.getElementById('next-pane-btn').innerHTML = 'Next &rarr;';
 
     prevPaneBtn.mousePressed(previousPane);
-
-    document.getElementById('next-pane-btn').innerHTML = "Next";
     nextPaneBtn.mousePressed(nextPane);
-
-    document.getElementById('middle-btn').innerHTML = "Refresh";
-    middleBtn.mousePressed(clickedRefresh);
-    document.getElementById('middle-btn').disabled = false;
-    
-    //middleBtn.mousePressed(clickedShowMore);
-    // fill(255);
-    // rect(width/2, height/2, 100, 100);
-
-//     var xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
-// var yValues = [55, 49, 44, 24, 15];
-// var barColors = ["red", "green","blue","orange","brown"];
-
-// var c1 = new Chart(document.getElementById("chart1"), {
-//   type: "bar",
-//   data: {
-//     labels: xValues,
-//     datasets: [{
-//       backgroundColor: barColors,
-//       data: yValues
-//     }]
-//   },
-//   options: {
-//     legend: {display: false},
-//     title: {
-//       display: true,
-//       text: "World Wine Production 2018"
-//     }
-//   }
-// });
 
     calcStats();
   }
@@ -1311,29 +1361,29 @@ function sPublicEndorsement() {
     document.getElementById("main-btn-div").style.display = "none";
 
     if (!document.getElementById('middle-btn')) {
-    middleBtn = createButton('Show More Sessions');
+    middleBtn = createButton('Endorse');
     middleBtn.id('middle-btn');
     middleBtn.class('buttons');
     middleBtn.parent(buttonDiv);
     } else {
-      document.getElementById('middle-btn').innerHTML = 'Show More Sessions';
+      document.getElementById('middle-btn').innerHTML = 'Endorse';
     }
 
-    // if (!document.getElementById('next-pane-btn')) {
-    // nextPaneBtn = createButton('Next');
-    // nextPaneBtn.id('next-pane-btn');
-    // nextPaneBtn.class('buttons');
-    // nextPaneBtn.parent(buttonDiv);
-    // }
+    if (nextPaneBtn) 
+      nextPaneBtn.remove();
+
+    if (!document.getElementById('next-pane-btn')) {
+      nextPaneBtn = createButton('Start Over');
+      nextPaneBtn.id('next-pane-btn');
+      nextPaneBtn.class('buttons');
+      nextPaneBtn.parent(buttonDiv);
+    } else {
+      document.getElementById('next-pane-btn').innerHTML = 'Start Over';
+    }
 
     prevPaneBtn.mousePressed(previousPane);
-
-    document.getElementById('next-pane-btn').innerHTML = "Start Over";
-    nextPaneBtn.mousePressed(clickedStartOver);
-
-    document.getElementById('middle-btn').innerHTML = "ENDORSE";
     middleBtn.mousePressed(clickedPublicEndorse);
-
+    nextPaneBtn.mousePressed(clickedStartOver);
   }
 
   this.draw = function () {
@@ -1344,6 +1394,21 @@ function sPublicEndorsement() {
     if (enableHardware) { // add check to prevent hardware from moving panes
       if (document.getElementById('prev-pane-btn').disabled == false)
         checkHardwareInput();
+        checkHardwareBtnInput();
+    }
+  }
+
+  /**
+   * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
+   */
+  function checkHardwareBtnInput() {
+    if (hMidBtn == true) {
+      clickedPublicEndorse();
+      hMidBtn = false;
+    }
+    if (hRightBtn == true) {
+      clickedPublicEndorse();
+      hRightBtn = false;
     }
   }
 

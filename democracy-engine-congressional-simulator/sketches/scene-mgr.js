@@ -203,6 +203,12 @@ function hardwareSetup() {
 
   let usedPorts = usedSerialPorts();
   console.log(usedPorts);
+  // if (!port.opened()) {
+  //   //  port.open('Arduino', 57600);
+  //     port.open(115200);
+  //   } else {
+  //     port.close();
+  //   }
   if (usedPorts.length > 0) {
     port.open(usedPorts[0],9600);
 
@@ -277,19 +283,19 @@ function checkHardwareInput() {
       hardwareRightBtn = false;
     }
 
-    // loadSessionS1 also uses middle button to cycle thru sessions
-    if (mgr.isCurrent(loadSessionS1)) {
-    // update button on joystick
-    // there are functions in specific scenes that are called when this button is clicked (hardwareUpdate = true)
-    if (arr[8] == 200) {
-      hardwareUpdate = true;
-    } else if (arr[8] == 0) {
-      if (hardwareUpdate == true) {
-        hCycle = true;
-      }
-      hardwareUpdate = false;
-    }
-    }
+    // // loadSessionS1 also uses middle button to cycle thru sessions
+    // if (mgr.isCurrent(loadSessionS1)) {
+    // // update button on joystick
+    // // there are functions in specific scenes that are called when this button is clicked (hardwareUpdate = true)
+    // if (arr[8] == 200) {
+    //   hardwareUpdate = true;
+    // } else if (arr[8] == 0) {
+    //   if (hardwareUpdate == true) {
+    //     hCycle = true;
+    //   }
+    //   hardwareUpdate = false;
+    // }
+    // }
 
   } else
 
@@ -307,7 +313,7 @@ function checkHardwareInput() {
   } else
 
   // these scenes use only the left and right buttons
-  if (mgr.isCurrent(newSessionScene) || mgr.isCurrent(sBenchmarkResults) || mgr.isCurrent(sSaveResults)) {
+  if (mgr.isCurrent(startUp) || mgr.isCurrent(newSessionScene) || mgr.isCurrent(sBenchmarkResults) || mgr.isCurrent(sSaveResults)) {
     //let arr = port.readBytes(14); 
     if (arr[9] == 200) { // left btn
       hardwareLeftBtn = true;

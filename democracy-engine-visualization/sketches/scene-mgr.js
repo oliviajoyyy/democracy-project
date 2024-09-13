@@ -121,7 +121,7 @@ var showPanesBool = true;
 
 var port;
 var connectBtn;
-var enableHardware = false; // true
+var enableHardware = true;
 
 function preload() {
   helvFont = loadFont('../democracy-engine-congressional-simulator/assets/font/HelveticaNeue-Regular.otf');
@@ -206,29 +206,64 @@ function hardwareSetup() {
   // sendBtn.position(500, 450);
   // sendBtn.mousePressed(sendBtnClick);
 }
-var arrPrev = 200;
-var movePanes = true;
+
+
 var hardwareHideShow = false;
 var hardwareHide = false;
 var hardwareShow = false;
 var hardwareNextPane = false;
 var hardwarePrevPane = false;
 var hardwareUpdate = false;
+var hCycle = false;
+var hLeftBtn = false;
+var hardwareLeftBtn = false;
+var hMidBtn = false;
+var hardwareMidBtn = false;
+var hRightBtn = false;
+var hardwareRightBtn = false;
 
 function checkHardwareInput() {
   if (!port) {
     return;
   }
   let arr = port.readBytes(14); 
-  
-  if (mgr.isCurrent(sLoadSession) || mgr.isCurrent(sSessionVis)) {
-    // if (arr[7] == 200 && arrPrev != 200) {
-    //   arrPrev = 0;
-    //   nextPane();
-    // }
 
-    //console.log("arr[6] = " + arr[6]);
-    // left / back
+    // these scenes use the left, right, middle btns
+    if (mgr.isCurrent(sLoadSession)) {
+      //let arr = port.readBytes(14); 
+  
+      if (arr[9] == 200) { // left btn
+        hardwareLeftBtn = true;
+      } else if (arr[9] == 0) {
+        if (hardwareLeftBtn == true) {
+          hLeftBtn = true;
+        }
+        hardwareLeftBtn = false;
+      }
+  
+      if (arr[10] == 200) { // middle btn
+        hardwareMidBtn = true;
+      } else if (arr[10] == 0) {
+        if (hardwareMidBtn == true) {
+          hMidBtn = true;
+          // document.getElementById('new-session-btn-a02').remove();
+          // document.getElementById('load-session-btn-a02').remove();
+          // document.getElementById('about-btn-a02').remove();
+          // mgr.showScene(loadSessionS1);
+        }
+        hardwareMidBtn = false;
+      }
+  
+      if (arr[11] == 200) {
+        hardwareRightBtn = true;
+      } else if (arr[10] == 0) { // right btn
+        if (hardwareRightBtn == true) {
+          hRightBtn = true;
+        }
+        hardwareRightBtn = false;
+      }
+
+    // left joystick to go to prev pane
     if (arr[6] == 200) {
       hardwarePrevPane = true;
     } else if (arr[6] == 0) {
@@ -238,8 +273,7 @@ function checkHardwareInput() {
       hardwarePrevPane = false;
     }
 
-    //console.log("arr[7] = " + arr[7]);
-    // right / next
+    // right joystick or right button to go to next pane
     if (arr[6] == 100) {
       hardwareNextPane = true;
     } else if (arr[6] == 0) {
@@ -248,30 +282,94 @@ function checkHardwareInput() {
       }
       hardwareNextPane = false;
     }
+    
+    // joy up to hide pane when == 200 (can swap to joy down to hide - change to == 100 )
+    if (arr[7] == 100) {
+      hardwareHide = true;
+    } else if (arr[7] == 0) {
+      if (hardwareHide == true) {
+        if (showPanesBool == true) {
+          showPanesBool = false;
+        }
+      }
+      hardwareHide = false;
+    }
 
-    /*
-     * TO HIDE SHOW PANES USING JOY BUTTON
-     */
-    // //console.log("arr[8] = " + arr[8]);
-    // // joy button to hide/show
-    // if (arr[8] == 200) {
-    //   hardwareHideShow = true;
-    // } else if (arr[8] == 0) {
-    //   if (hardwareHideShow == true) {
-    //     if (showPanesBool == true) {
-    //       showPanesBool = false;
-    //     } else {
-    //       showPanesBool = true;
-    //     }
-    //   }
-    //   hardwareHideShow = false;
+    // joy down to show pane when == 100 (can swap to joy up to show - change to == 200 )
+    if (arr[7] == 200) {
+      hardwareShow = true;
+    } else if (arr[7] == 0) {
+      if (hardwareShow == true) {
+        if (showPanesBool == false) {
+          showPanesBool = true;
+        }
+      }
+      hardwareShow = false;
+    }
+  
+  } else
+  // these scenes only use the middle button
+  if (mgr.isCurrent(aboutProject)) {
+    //let arr = port.readBytes(14); 
+    if (arr[10] == 200) { // middle btn
+      hardwareMidBtn = true;
+    } else if (arr[10] == 0) {
+      if (hardwareMidBtn == true) {
+        hMidBtn = true;
+      }
+      hardwareMidBtn = false;
+    }
+  } else
+
+  // these scenes use only the left and right buttons
+  if (mgr.isCurrent(startUp) || mgr.isCurrent(startSession)) {
+    //let arr = port.readBytes(14); 
+    if (arr[9] == 200) { // left btn
+      hardwareLeftBtn = true;
+    } else if (arr[9] == 0) {
+      if (hardwareLeftBtn == true) {
+        hLeftBtn = true;
+      }
+      hardwareLeftBtn = false;
+    }
+
+    if (arr[11] == 200) { // right btn
+      hardwareRightBtn = true;
+    } else if (arr[10] == 0) {
+      if (hardwareRightBtn == true) {
+        hRightBtn = true;
+      }
+      hardwareRightBtn = false;
+    }
+  } else
+  if (mgr.isCurrent(sSessionVis)) {
+    // if (arr[7] == 200 && arrPrev != 200) {
+    //   arrPrev = 0;
+    //   nextPane();
     // }
 
-    /*  
-     * TO HIDE AND SHOW PANES USING JOY STICK UP/DOWN
-     */
-    // joy up/down to hide/show
-    if (arr[7] == 200) {
+    // left joystick or left button to go to prev pane
+    if (arr[6] == 200 || arr[9] == 200) {
+      hardwarePrevPane = true;
+    } else if (arr[6] == 0 || arr[9] == 0) {
+      if (hardwarePrevPane == true) {
+        previousPane();
+      }
+      hardwarePrevPane = false;
+    }
+
+    // right joystick or right button to go to next pane
+    if (arr[6] == 100 || arr[11] == 200) {
+      hardwareNextPane = true;
+    } else if (arr[6] == 0 || arr[11] == 0) {
+      if (hardwareNextPane == true) {
+        nextPane();
+      }
+      hardwareNextPane = false;
+    }
+
+    // joy up to hide pane when == 200 (can swap to joy down to hide - change to == 100 )
+    if (arr[7] == 100) {
       hardwareHide = true;
     } else if (arr[7] == 0) {
       if (hardwareHide == true) {
@@ -284,7 +382,8 @@ function checkHardwareInput() {
       hardwareHide = false;
     }
 
-    if (arr[7] == 100) {
+    // joy down to show pane when == 100 (can swap to joy up to show - change to == 200 )
+    if (arr[7] == 200) {
       hardwareShow = true;
     } else if (arr[7] == 0) {
       if (hardwareShow == true) {
@@ -296,16 +395,72 @@ function checkHardwareInput() {
       }
       hardwareShow = false;
     }
+  } else 
+  if (mgr.isCurrent(sPublicEndorsement)) {
+    // left joystick or left button to go back
+    if (arr[6] == 200 || arr[9] == 200) {
+      hardwarePrevPane = true;
+    } else if (arr[6] == 0 || arr[9] == 0) {
+      if (hardwarePrevPane == true) {
+        previousPane();
+      }
+      hardwarePrevPane = false;
+    }
 
+    // right joystick
+    if (arr[6] == 100) {
+      hardwareNextPane = true;
+    } else if (arr[6] == 0) {
+      if (hardwareNextPane == true) {
+        nextPane();
+      }
+      hardwareNextPane = false;
+    }
 
-    console.log("arr[10] = " + arr[10]);
-    if (arr[10] == 200) {
-      hardwareUpdate = true;
+    if (arr[11] == 200) { // right btn
+      hardwareRightBtn = true;
     } else if (arr[10] == 0) {
-      // if (hardwareUpdate == true) {
-      //   console.log("update button hardware clicked");
-      // }
-      hardwareUpdate = false;
+      if (hardwareRightBtn == true) {
+        hRightBtn = true;
+      }
+      hardwareRightBtn = false;
+    }
+
+    if (arr[10] == 200) { // middle btn
+      hardwareMidBtn = true;
+    } else if (arr[10] == 0) {
+      if (hardwareMidBtn == true) {
+        hMidBtn = true;
+      }
+      hardwareMidBtn = false;
+    }
+
+    // joy up to hide pane when == 200 (can swap to joy down to hide - change to == 100 )
+    if (arr[7] == 100) {
+      hardwareHide = true;
+    } else if (arr[7] == 0) {
+      if (hardwareHide == true) {
+        if (showPanesBool == true) {
+          showPanesBool = false;
+        } //else {
+        //   showPanesBool = true;
+        // }
+      }
+      hardwareHide = false;
+    }
+
+    // joy down to show pane when == 100 (can swap to joy up to show - change to == 200 )
+    if (arr[7] == 200) {
+      hardwareShow = true;
+    } else if (arr[7] == 0) {
+      if (hardwareShow == true) {
+        if (showPanesBool == false) {
+          showPanesBool = true;
+        } //else {
+        //   showPanesBool = true;
+        // }
+      }
+      hardwareShow = false;
     }
   }
 
@@ -328,7 +483,9 @@ function nextPane() {
  * Show previous pane scene
  */
 function previousPane() {
-  if (mgr.isCurrent(sSessionVis)) {
+  if (mgr.isCurrent(sLoadSession)) {
+    mgr.showScene(startSession);
+  } else if (mgr.isCurrent(sSessionVis)) {
     document.getElementById('dot-p02').className = 'dot';
     mgr.showScene(sLoadSession);
   } else if (mgr.isCurrent(sPublicEndorsement)) {

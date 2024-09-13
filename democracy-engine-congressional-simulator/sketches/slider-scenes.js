@@ -65,6 +65,24 @@ function startUp() {
   }
 
   this.draw = function () {
+    if (enableHardware) {
+      checkHardwareInput();
+      checkHardwareBtnInput();
+    }
+  }
+
+  /**
+   * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
+   */
+  function checkHardwareBtnInput() {
+    if (hLeftBtn == true) {
+      clickedTest();
+      hLeftBtn = false;
+    } 
+    if (hRightBtn == true) {
+      clickedContinue();
+      hRightBtn = false;
+    }
   }
 
   function clickedContinue() {
@@ -897,6 +915,7 @@ var labelSpace = 30;
  */
 function sBodies() {
   var slider1 = document.getElementById('slider01');  
+  var slider1proxy;
 
   this.setup = function () {
     textSize(15);
@@ -983,6 +1002,15 @@ function sBodies() {
     }
 
     document.getElementById('prev-pane-btn').disabled = true;
+
+    // const handler = {
+    //   set(slider1, prop, val) {
+    //     if (true) {
+    //       return
+    //     }
+    //   }
+    // }
+    // slider1proxy = new Proxy(slider1, handler);
   }
 
   this.draw = function () {
@@ -1001,17 +1029,15 @@ function sBodies() {
     if (enableHardware) {
     checkHardwareInput();
     checkHardwareUpdateInput();
-    // let arr = port.readBytes(14); 
-    // if (arr[1]) {
-    // let s1 = map(arr[1], 10, 245, 1, 3, true);
-    // console.log("s1: " + s1);
-    // slider1.noUiSlider.set(s1);
-    // }
+    checkHardwareSliders();
+    }
+  }
+
+  function checkHardwareSliders() {
     if (arr[1]) {
       let s1 = map(arr[1], 0, 255, 1, 3, true);
       console.log("s1: " + s1);
       slider1.noUiSlider.set(s1);
-    }
     }
   }
 
@@ -1184,6 +1210,19 @@ function sLegislative() {
     if (enableHardware) {
     checkHardwareInput();
     checkHardwareUpdateInput();
+    checkHardwareSliders();
+    }
+
+    // if sliders changed any values on this page, enable update button
+    if (userNumHouse != engine.numHouse || userNumHouse2 != engine.numHouse2 || userNumSenate != engine.numSenate ||userNumVP != engine.numVP || userNumPres != engine.numPres) {
+      document.getElementById("update-btn").disabled = false;
+    } else { // otherwise leave disabled
+      document.getElementById("update-btn").disabled = true;
+    }
+    //updateBtn.mousePressed(clickedUpdate);
+  }
+
+  function checkHardwareSliders() {
     if (arr[1]) {
       let s1 = map(arr[1], 10, 245, 1, 500, true);
       console.log("s1: " + s1);
@@ -1220,15 +1259,6 @@ function sLegislative() {
       console.log("s4: " + s5);
       slider5.noUiSlider.set(s5); // set to pres slider, slider 5
     }
-    }
-
-    // if sliders changed any values on this page, enable update button
-    if (userNumHouse != engine.numHouse || userNumHouse2 != engine.numHouse2 || userNumSenate != engine.numSenate ||userNumVP != engine.numVP || userNumPres != engine.numPres) {
-      document.getElementById("update-btn").disabled = false;
-    } else { // otherwise leave disabled
-      document.getElementById("update-btn").disabled = true;
-    }
-    //updateBtn.mousePressed(clickedUpdate);
   }
 
   /**
@@ -1514,17 +1544,21 @@ function sParties() {
     if (enableHardware) {
     checkHardwareInput();
     checkHardwareUpdateInput();
-    if (arr[1]) {
-      let s1 = map(arr[1], 10, 245, 1, 3, true);
-      console.log("s1: " + s1);
-      slider5.noUiSlider.set(s1);
-    }
+    checkHardwareSliders();
     }
 
     if (userNumParties != engine.numParties) {
       document.getElementById("update-btn").disabled = false;
     } else { // otherwise leave disabled
       document.getElementById("update-btn").disabled = true;
+    }
+  }
+
+  function checkHardwareSliders() {
+    if (arr[1]) {
+      let s1 = map(arr[1], 10, 245, 1, 3, true);
+      console.log("s1: " + s1);
+      slider5.noUiSlider.set(s1);
     }
   }
 
@@ -1670,6 +1704,9 @@ function sMembersFirstChamber() {
   var curNumHouse = parseInt(userNumHouse); //parseInt(engine.numHouse); // current number of total members in chamber 1
   var maxSlider;
   var startVals = [];
+  var prevSliderVals = [];
+  var changeRange = 10;
+  var activeSlider = [0,0,0];
 
   this.setup = function () {
     startVals[0] = userPerHouseBody[0];
@@ -1725,14 +1762,46 @@ function sMembersFirstChamber() {
     checkNumBodies();
     sliders();
     updateBtn.mousePressed(clickedUpdate);
+
+    //const proxy1 = new Proxy(slider1)
+    if (enableHardware) {
+      // 2 parties, 2 sliders
+      if (userNumParties == 2) {
+        //let s1 = map(arr[1], 10, 245, 0, maxSlider, true);
+        //console.log("s1 in enter: " + s1);
+        prevSliderVals[0] = startVals[0] * maxSlider;
+        //let s2 = map(arr[2], 10, 245, 0, maxSlider, true);
+        prevSliderVals[1] = startVals[1] * maxSlider;
+        //console.log("s2 in enter: " + s1);
+        activeSlider = [1,0,0]; // set slider 1 to active
+      }
+    }
+
   }
 
+  var prevMillis1 = millis();
+  var prevMillis2 = millis();
   this.draw = function () {
     visual.displayImmediateBlank(engine, false);
     paneToggle();
     if (enableHardware) {
     checkHardwareInput();
     checkHardwareUpdateInput();
+    checkHardwareSliders();
+    }
+
+    // console.log("user Party A: " + userPerHouseBody[0] + " Party B: " + userPerHouseBody[1] + " Party C: " + userPerHouseBody[2]);
+    // console.log("engine Party A: " + engine.perDemHouse + " Party B: " + engine.perRepHouse + " Party C: " + engine.perIndHouse);
+
+    // if sliders changed any values on this page, enable update button
+    if (userPerHouseBody[0] != engine.perDemHouse || userPerHouseBody[1] != engine.perRepHouse || userPerHouseBody[2] != engine.perIndHouse) {
+      document.getElementById("update-btn").disabled = false;
+    } else { // otherwise leave disabled
+      document.getElementById("update-btn").disabled = true;
+    }
+  }
+
+  function checkHardwareSliders() {
     if (userNumParties == 1 && arr[1]) {
       let s1 = map(arr[1], 10, 245, 0, maxSlider, true);
       console.log("s1: " + s1);
@@ -1740,17 +1809,87 @@ function sMembersFirstChamber() {
 
     } else if (userNumParties == 2 && arr[1] && arr[2]) {
       let s1 = map(arr[1], 10, 245, 0, maxSlider, true);
-      console.log("s1: " + s1);
-      slider1.noUiSlider.set(s1);
-      
       let s2 = map(arr[2], 10, 245, 0, maxSlider, true);
-      console.log("s2: " + s2);
-      //if (s2 != userNumHouse - slider1.noUiSlider.get()) {
+      if (activeSlider[0] == 1) {
+        if (s1 > prevSliderVals[0]+changeRange || s1 < prevSliderVals[0]-changeRange) {
+        slider1.noUiSlider.set(s1); // set slider based on hardware movement
         slider2.noUiSlider.set(userNumHouse - slider1.noUiSlider.get());
-      //} else {
-        //slider2.noUiSlider.set(s2);
-      //}
+        //activeSlider = [1,0,0];
+        prevSliderVals[0] = s1;
+        //prevSliderVals[1] = s2;
+        prevMillis1 = millis();
+        } else {
+          activeSlider = [0,1,0];
+          console.log("a changing active slider to 2");
+        }
+      } else if (activeSlider[1] == 1) {
+        if (s2 > prevSliderVals[1]+changeRange || s2 < prevSliderVals[1]-changeRange) {
+        slider2.noUiSlider.set(s2);
+        slider1.noUiSlider.set(userNumHouse - slider2.noUiSlider.get());
+        //activeSlider = [0,1,0];
+        //prevSliderVals[0] = s1;
+        prevSliderVals[1] = s2;
+        prevMillis2 = millis();
+        } else {
+          activeSlider[1,0,0];
+          console.log("a changing active slider to 1");
+        }
+      }
+
+      // let n = millis();
+      // if (n - prevMillis1 >= n - prevMillis2) {
+      //   activeSlider = [1,0,0];
+      //   console.log("changing active slider to 1");
+      // } else {
+      //   activeSlider = [0,1,0];
+      //   console.log("changing active slider to 2");
+      // }
+
+      // if ((s1 > prevSliderVals[0]+changeRange || s1 < prevSliderVals[0]-changeRange) && activeSlider[0] == 1) {
+      //   console.log("s1: " + s1);
+      //   slider1.noUiSlider.set(s1);
+      //   prevSliderVals[0] = s1;
+      //   prevMillis1 = millis();
+      //   //activeSlider = [1,0,0];
+      // } else if (activeSlider[1] == 1){
+      //   slider1.noUiSlider.set(userNumHouse - slider2.noUiSlider.get());
+      //   //activeSlider = [0,1,0];
+      // }
+
+      // if ((s2 > prevSliderVals[1]+changeRange || s2 < prevSliderVals[1]-changeRange) && activeSlider[1] == 1) {
+      //   console.log("s2: " + s2);
+      //   slider2.noUiSlider.set(s2);
+      //   prevSliderVals[1] = s2;
+      //   prevMillis2 = millis();
+      //   //activeSlider = [0,1,0];
+      // } else if (activeSlider[0] == 1) {
+      //   slider2.noUiSlider.set(userNumHouse - slider1.noUiSlider.get());
+      //   //activeSlider = [0,1,0];
+      //   //activeSlider[0] == 1
+      // }
+
+      // let n = millis();
+      // if (n - prevMillis1 > n - prevMillis2) {
+      //   activeSlider = [1,0,0];
+      // } else {
+      //   activeSlider = [0,1,0];
+      // }
+
+
+      // let s1 = map(arr[1], 10, 245, 0, maxSlider, true);
+      // console.log("s1: " + s1);
+      // slider1.noUiSlider.set(s1);
       
+      //c let s2 = map(arr[2], 10, 245, 0, maxSlider, true);
+      // console.log("s2: " + s2);
+      // //if (s2 != userNumHouse - slider1.noUiSlider.get()) {
+      //   slider2.noUiSlider.set(userNumHouse - slider1.noUiSlider.get());
+      // //} else {
+      //   //slider2.noUiSlider.set(s2);
+      // //}
+
+
+
       // console.log("slider direct val: " + slider2.noUiSlider.get());
 
       // let s2 = map(arr[2], 10, 245, 0, maxSlider, true);
@@ -1800,18 +1939,6 @@ function sMembersFirstChamber() {
           // let sliderCval2 = (userNumHouse - slider2.noUiSlider.get()) - slider1.noUiSlider.get();
           // //slider1.noUiSlider.set(sliderAval);
           // slider3.noUiSlider.set(sliderCval2);
-    }
-
-    }
-
-    // console.log("user Party A: " + userPerHouseBody[0] + " Party B: " + userPerHouseBody[1] + " Party C: " + userPerHouseBody[2]);
-    // console.log("engine Party A: " + engine.perDemHouse + " Party B: " + engine.perRepHouse + " Party C: " + engine.perIndHouse);
-
-    // if sliders changed any values on this page, enable update button
-    if (userPerHouseBody[0] != engine.perDemHouse || userPerHouseBody[1] != engine.perRepHouse || userPerHouseBody[2] != engine.perIndHouse) {
-      document.getElementById("update-btn").disabled = false;
-    } else { // otherwise leave disabled
-      document.getElementById("update-btn").disabled = true;
     }
   }
 
@@ -1995,6 +2122,8 @@ function sMembersFirstChamber() {
 
       
       if (userNumParties == 2) {
+        // slider1.noUiSlider.set(s1);
+        // slider2.noUiSlider.set(s2);
         // when user slides the party A slider, update slider B
         slider1.noUiSlider.on('slide', function(event) {
           slider2.noUiSlider.set((userNumHouse - numPartyA));
@@ -3315,6 +3444,16 @@ function sBodyPass() {
     if (enableHardware) {
     checkHardwareInput();
     checkHardwareUpdateInput();
+    if (arr[1]) {
+      let s1 = map(arr[1], 10, 245, 0, 100, true);
+      console.log("s1: " + s1);
+      slider10.noUiSlider.set(s1);
+    }
+    if (arr[2]) {
+      let s2 = map(arr[2], 10, 245, 0, 100, true);
+      console.log("s2: " + s2);
+      slider11.noUiSlider.set(s2);
+    }
     }
 
     console.log("user body pass: " + userBodyPass);
@@ -3495,6 +3634,7 @@ function sYesVotes() {
     if (enableHardware) {
     checkHardwareInput();
     checkHardwareUpdateInput();
+    checkHardwareSliders();
     }
 
     console.log("user Dem yay: " + (parseFloat(userDemYaythresh)/100.0) + " Rep yay: " + (parseFloat(userRepYaythresh)/100.0) + " Ind yay: " + (parseFloat(userIndYaythresh)/100.0));
@@ -3506,6 +3646,24 @@ function sYesVotes() {
       document.getElementById("update-btn").disabled = true;
     }
 
+  }
+
+  function checkHardwareSliders() {
+    if (arr[1]) {
+      let s1 = map(arr[1], 10, 245, 0, 100, true);
+      console.log("s1: " + s1);
+      slider12.noUiSlider.set(s1);
+    }
+    if (userNumParties >= 2 && arr[2]) {
+      let s2 = map(arr[2], 10, 245, 0, 100, true);
+      console.log("s2: " + s2);
+      slider13.noUiSlider.set(s2);
+    }
+    if (userNumParties == 3 && arr[3]) {
+      let s3 = map(arr[3], 10, 245, 0, 100, true);
+      console.log("s2: " + s3);
+      slider14.noUiSlider.set(s3);
+    }
   }
 
   /**
