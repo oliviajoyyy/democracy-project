@@ -802,7 +802,7 @@ function sLoadSession() {
         if (loadedConfig.simResults[i].billPass == true) {
           s3 = s3 + "&#x2611;<br>"; // checkmark
         } else {
-          s3 = s3 + "&#x2610;<br>"; // empty checkmark
+          s3 = s3 + "&#9746;<br>"; // empty checkmark
         }
       }
       s3 = s3 + "</p>";
@@ -818,7 +818,7 @@ function sLoadSession() {
       } else {
         sApproval  = "<h3>Creator Endorsement</h3><div id='approval-check'></div>";
       }
-      //sApproval = sApproval + "<h3 style='font-size: 14px; display: inline-block; vertical-align: top;'>User Approval of Configuration </h3><h3 style='font-size: 32px; display: inline-block; margin: 0; line-height: 1;'>&#x2610;</h3>";
+      //sApproval = sApproval + "<h3 style='font-size: 14px; display: inline-block; vertical-align: top;'>User Approval of Configuration </h3><h3 style='font-size: 32px; display: inline-block; margin: 0; line-height: 1;'>&#9746;</h3>";
       // sApproval = sApproval + "<h3>User Approval of Configuration</h3><div id='approval-check'></div>";
 
       div1.innerHTML = s1;
@@ -1194,7 +1194,7 @@ function sSessionVis() {
 
   function calcBenchScoreWhole(result) {
     var brackets = 10;
-    var xText = ["0-10", "10-20", "20-30", "30-40", "40-50", "50-60", "60-70", "70-80", "80-90", "90-100"];
+    var xText = ["0-10%", "10-20%", "20-30%", "30-40%", "40-50%", "50-60%", "60-70%", "70-80%", "80-90%", "90-100%"];
     var ranges = [[0, 10], [10, 20], [20, 30], [30, 40], [40, 50], [50, 60], [60, 70], [70, 80], [80, 90], [90,101]]; 
     var values = [0,0,0,0,0,0,0,0,0,0];
     var barColors = [,,,,,,,,,];
@@ -1494,7 +1494,7 @@ function sPublicEndorsement() {
         if (loadedConfig.simResults[i].billPass == true) {
           s3 = s3 + "&#x2611;<br>"; // checkmark
         } else {
-          s3 = s3 + "&#x2610;<br>"; // empty checkmark
+          s3 = s3 + "&#9746;<br>"; // empty checkmark
         }
       }
       s3 = s3 + "</p>";

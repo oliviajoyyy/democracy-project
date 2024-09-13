@@ -171,6 +171,7 @@ function setup() {
   if (enableHardware) {
   hardwareSetup();
   }
+  noCanvas();
   console.log("end of scene-mgr.js setup");
 }
 

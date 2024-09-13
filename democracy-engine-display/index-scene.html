@@ -2,24 +2,25 @@
 <html lang="en">
 
 <head>
-  <!-- <script src="p5/p5.js"></script> -->
+  <script src="p5/p5.js"></script>
+  <!-- <script src="p5/p5.sound.min.js"></script> -->
   <!-- <script src="slider/nouislider.min.js"></script>
   <script src="slider/nouislider.js"></script>
-  <script src="slider/wNumb.min.js"></script>
+  <script src="slider/wNumb.min.js"></script> -->
   <script src="p5/scene-manager.js"></script>
   <script src="p5/p5.webserial.js"></script>
   <script language="javascript" type="text/javascript" src="sketches/slider-scenes.js"></script>
   <script language="javascript" type="text/javascript" src="sketches/scene-mgr.js"></script>
-  <script language="javascript" type="text/javascript" src="models/engine.js"></script>
-  <script language="javascript" type="text/javascript" src="models/vote-visuals.js"></script>
-  <script language="javascript" type="text/javascript" src="models/slider-model.js"></script>
-  <script language="javascript" type="text/javascript" src="data-access/session-api.js"></script> -->
+  <!-- <script language="javascript" type="text/javascript" src="models/engine.js"></script>
+  <script language="javascript" type="text/javascript" src="models/vote-visuals.js"></script> -->
+  <script language="javascript" type="text/javascript" src="../democracy-engine-congressional-simulator/data-access/session-api.js"></script>
   <script language="javascript" type="text/javascript" src="color-config.js"></script>
   <!-- <script language="javascript" type="text/javascript" src="../color-config.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="stylesheet" type="text/css" href="../css/style.css">
-  <!-- <link rel="stylesheet" type="text/css" href="slider/nouislider.css">
+  <!-- <link rel="stylesheet" type="text/css" href="slider/nouislider.css"> -->
   <link rel="stylesheet" type="text/css" href="style/style.css">
-  <link rel="stylesheet" type="text/css" href="style/newSlider.css"> -->
+  <link rel="stylesheet" type="text/css" href="style/newSlider.css">
   <link href="https://fonts.googleapis.com/css2?family=Cardo:wght@700&display=swap" rel="stylesheet">
 
 
@@ -34,52 +35,43 @@
 </head>
 
 <body>
-  <!-- <header>
-    <ul class="topnav" id="myTopnav">
-      <li><a href="../index.html">THE FUTURE DEMOCRACIES LABORATORY
-        </a></li>
-      <li>
-        <a class="active" href="../democracy-engine-congressional-simulator/index.html">
-          SIMULATOR
-        </a>
-      </li>
-      <li>
-        <a href="../media.html">
-          MEDIA
-        </a>
-      </li>
-      <li>
-        <a href="../about.html">
-          ABOUT
-        </a>
-      </li>
-      <li>
-        <a href="../code.html">
-          CODE
-        </a>
-      </li>
-      <a href="javascript:void(0);" style="font-size:15px;" class="icon2" onclick="myFunction()">&#9776;</a>
-    </ul>
-  </header> -->
-
-
   <!-- <script class="sketch" src="sketches/nouislider.js"></script> -->
 
   <div id="page-container">
     <div id="content-wrap">
       <div id="main-header" class="body-header">
-        <h1>Automated Future Democracies Simulator</h1>
-        <h2>[Placeholder Page]</h2>
+        <!-- <h1>Automated Future Democracies Simulator </h1> -->
       </div>
       <div id="start-desc" class="body-text">
-        
-      </div>
+        <!-- <div id="session-list"></div> -->
+        <!-- <p>
+          The legislative apparatus of the current US government is represented in default mode, which will initially run through one legislative cycle. The user may configure alternative values in subsequent cycles in order to evaluate the effects of
+          systemic changes to the mechanism of governance.
 
+        </p> -->
+      </div>
+      <!-- <canvas id="chart-chambers"></canvas> -->
+      <div id="end-summary" class="body-text"></div>
+       <div id="main-btn-div" style="position: absolute; left: 50%; transform: translateX(-50%);"></div>
     </div>
   </div>
-    
+
+  
+  
+  
+  <div id="vote">
+    <h1 id="chart-title" >Session Histograms</h1>
+    <h2 id="chart-subtitle" ></h2>
+    <section id="charts">
+      <canvas id="chart"></canvas>
+      <!-- <canvas id="chart-parties"></canvas>
+      <canvas id="chart-members"></canvas>
+      <canvas id="chart-bench"></canvas> -->
+    </section>
   </div>
 
+  
+  </div>
 
 
 
