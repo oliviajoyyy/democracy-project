@@ -1707,6 +1707,7 @@ function sMembersFirstChamber() {
   var prevSliderVals = [];
   var changeRange = 10;
   var activeSlider = [0,0,0];
+  var slider1obj, slider2obj;
 
   this.setup = function () {
     startVals[0] = userPerHouseBody[0];
@@ -1767,6 +1768,12 @@ function sMembersFirstChamber() {
     if (enableHardware) {
       // 2 parties, 2 sliders
       if (userNumParties == 2) {
+        slider1obj = new SliderTracking(slider1.noUiSlider.get(), true); // slider 1 is initially active
+        slider1obj.setPrevVal(slider1.noUiSlider.get());
+
+        slider2obj = new SliderTracking(slider2.noUiSlider.get(), false); // slider 2 not active
+        // so don't set previous val yet
+
         //let s1 = map(arr[1], 10, 245, 0, maxSlider, true);
         //console.log("s1 in enter: " + s1);
         prevSliderVals[0] = startVals[0] * maxSlider;
@@ -1808,9 +1815,44 @@ function sMembersFirstChamber() {
       slider1.noUiSlider.set(s1);
 
     } else if (userNumParties == 2 && arr[1] && arr[2]) {
-      let s1 = map(arr[1], 10, 245, 0, maxSlider, true);
+      let s1 = map(arr[1], 10, 245, 0, maxSlider, true); // physical movement of sliders
       let s2 = map(arr[2], 10, 245, 0, maxSlider, true);
-      if (activeSlider[0] == 1) {
+
+      if (slider1obj.isActive()) {
+        // set slider 1 to hardware movement (s1) and make slider2 follow
+        slider1.noUiSlider.set(s1);
+        slider2.noUiSlider.set(userNumHouse - slider1.noUiSlider.get());
+
+        if (slider1obj.outsideThresh(slider1.noUiSlider.get())) {
+          slider1obj.setCurrentVal(slider1.noUiSlider.get());
+        } else { // slider1 within thresh, so slider 2 becomes active?
+
+        }
+      }
+
+      if (slider2obj.isActive()) {
+        // set slider 1 to hardware movement (s1) and make slider2 follow
+        slider2.noUiSlider.set(s1);
+        slider1.noUiSlider.set(userNumHouse - slider2.noUiSlider.get());
+
+        if (slider2obj.outsideThresh(slider2.noUiSlider.get())) {
+          slider2obj.setCurrentVal(slider2.noUiSlider.get());
+        }
+      }
+
+      // checking to switch from active to inactive?
+      if (slider1obj.getMillisLastActive() < slider2obj.getMillisLastActive()) {
+
+      }
+
+      /*
+      // prevSliderVals initially set in enter
+
+      if (activeSlider[0] == 1) { // active slider is 1 (physical slider movement by user)
+
+        // if s1 moves out of range of last time it was moved by user (or initial val on start), 
+        // set ui slider to s1 and update ui slider2 accordingly
+        // then update prev slider val for this one
         if (s1 > prevSliderVals[0]+changeRange || s1 < prevSliderVals[0]-changeRange) {
         slider1.noUiSlider.set(s1); // set slider based on hardware movement
         slider2.noUiSlider.set(userNumHouse - slider1.noUiSlider.get());
@@ -1818,11 +1860,11 @@ function sMembersFirstChamber() {
         prevSliderVals[0] = s1;
         //prevSliderVals[1] = s2;
         prevMillis1 = millis();
-        } else {
-          activeSlider = [0,1,0];
-          console.log("a changing active slider to 2");
-        }
-      } else if (activeSlider[1] == 1) {
+        } //else {
+        //   activeSlider = [0,1,0];
+        //   console.log("a changing active slider to 2");
+        // }
+      } else if (activeSlider[1] == 1) { // active slider is the second one, same logic as above but for slider2
         if (s2 > prevSliderVals[1]+changeRange || s2 < prevSliderVals[1]-changeRange) {
         slider2.noUiSlider.set(s2);
         slider1.noUiSlider.set(userNumHouse - slider2.noUiSlider.get());
@@ -1830,20 +1872,24 @@ function sMembersFirstChamber() {
         //prevSliderVals[0] = s1;
         prevSliderVals[1] = s2;
         prevMillis2 = millis();
-        } else {
-          activeSlider[1,0,0];
-          console.log("a changing active slider to 1");
-        }
+        } //else {
+        //   activeSlider[1,0,0];
+        //   console.log("a changing active slider to 1");
+        // }
       }
 
-      // let n = millis();
-      // if (n - prevMillis1 >= n - prevMillis2) {
-      //   activeSlider = [1,0,0];
-      //   console.log("changing active slider to 1");
-      // } else {
-      //   activeSlider = [0,1,0];
-      //   console.log("changing active slider to 2");
-      // }
+      // check if last movement
+      let n = millis();
+      if (n - prevMillis1 > n - prevMillis2) {
+        activeSlider = [1,0,0];
+        console.log("changing active slider to 1");
+      } else if (n - prevMillis1 < n - prevMillis2) {
+        activeSlider = [0,1,0];
+        console.log("changing active slider to 2");
+      } else {
+        activeSlider = [1,1,0];
+      }
+        */
 
       // if ((s1 > prevSliderVals[0]+changeRange || s1 < prevSliderVals[0]-changeRange) && activeSlider[0] == 1) {
       //   console.log("s1: " + s1);
@@ -1915,6 +1961,8 @@ function sMembersFirstChamber() {
       //   slider2.noUiSlider.on('slide', function(event) {
       //     slider1.noUiSlider.set(userNumHouse - numPartyB);
       //   });
+
+
     } else if (userNumParties == 3 && arr[1] && arr[2] && arr[3]) {
       let s1 = map(arr[1], 10, 245, 0, maxSlider, true);
       console.log("s1: " + s1);
@@ -2084,7 +2132,7 @@ function sMembersFirstChamber() {
       var numPartyB;
       var numPartyC;
 
-      // house
+      // chamber 1
       slider1.noUiSlider.on('update', function (values, handle) {
         numPartyA = values[0];
         userPerHouseBody[0] = values[0];
@@ -2124,9 +2172,10 @@ function sMembersFirstChamber() {
       if (userNumParties == 2) {
         // slider1.noUiSlider.set(s1);
         // slider2.noUiSlider.set(s2);
+        // these functions detect wether slider was moved through mouse clicks vs being affected by the other slider
         // when user slides the party A slider, update slider B
         slider1.noUiSlider.on('slide', function(event) {
-          slider2.noUiSlider.set((userNumHouse - numPartyA));
+          slider2.noUiSlider.set((userNumHouse - numPartyA)); // numPartyA can also be slider1.noUiSlider.get()
           console.log("minus value: " + (userNumHouse - numPartyA));
         });
 
@@ -2240,6 +2289,7 @@ function sMembersSecondChamber() {
     if (enableHardware) {
     checkHardwareInput();
     checkHardwareUpdateInput();
+    checkHardwareSliders();
     }
 
     console.log("Party A: " + userPerHouse2Body[0] + " Party B: " + userPerHouse2Body[1] + " Party C: " + userPerHouse2Body[2]);
@@ -2248,6 +2298,41 @@ function sMembersSecondChamber() {
       document.getElementById("update-btn").disabled = false;
     } else { // otherwise leave disabled
       document.getElementById("update-btn").disabled = true;
+    }
+  }
+  
+  function checkHardwareSliders() {
+    if (userNumParties == 1 && arr[1]) {
+      let s1 = map(arr[1], 10, 245, 0, maxSlider, true);
+      console.log("s1: " + s1);
+      slider1.noUiSlider.set(s1);
+
+    } else if (userNumParties == 2 && arr[1] && arr[2]) {
+      let s1 = map(arr[1], 10, 245, 0, maxSlider, true); // physical movement of sliders
+      let s2 = map(arr[2], 10, 245, 0, maxSlider, true);
+
+      console.log("s1: " + s1);
+      slider1.noUiSlider.set(s1);
+      
+      console.log("s2: " + s2);
+      //if (s2 != userNumHouse - slider1.noUiSlider.get()) {
+        slider2.noUiSlider.set(userNumHouse2 - slider1.noUiSlider.get());
+      //} else {
+        //slider2.noUiSlider.set(s2);
+      //}
+
+    } else if (userNumParties == 3 && arr[1] && arr[2] && arr[3]) {
+      let s1 = map(arr[1], 10, 245, 0, maxSlider, true);
+      console.log("s1: " + s1);
+      slider1.noUiSlider.set(s1);
+      
+      let s2 = map(arr[2], 10, 245, 0, maxSlider, true);
+      console.log("s2: " + s2);
+
+      let sliderBval = ceil((userNumHouse2 - slider1.noUiSlider.get()) / 2);
+          let sliderCval = (userNumHouse2 - slider1.noUiSlider.get()) - slider2.noUiSlider.get();
+          slider2.noUiSlider.set(sliderBval);
+          slider3.noUiSlider.set(sliderCval);
     }
   }
 
@@ -2542,6 +2627,7 @@ function sMembersThirdChamber() {
     if (enableHardware) {
     checkHardwareInput();
     checkHardwareUpdateInput();
+    checkHardwareSliders();
     }
 
     console.log("Party A: " + userPerSenateBody[0] + " Party B: " + userPerSenateBody[1] + " Party C: " + userPerSenateBody[2]);
@@ -2550,6 +2636,41 @@ function sMembersThirdChamber() {
       document.getElementById("update-btn").disabled = false;
     } else { // otherwise leave disabled
       document.getElementById("update-btn").disabled = true;
+    }
+  }
+
+  function checkHardwareSliders() {
+    if (userNumParties == 1 && arr[1]) {
+      let s1 = map(arr[1], 10, 245, 0, maxSlider, true);
+      console.log("s1: " + s1);
+      slider1.noUiSlider.set(s1);
+
+    } else if (userNumParties == 2 && arr[1] && arr[2]) {
+      let s1 = map(arr[1], 10, 245, 0, maxSlider, true); // physical movement of sliders
+      let s2 = map(arr[2], 10, 245, 0, maxSlider, true);
+
+      console.log("s1: " + s1);
+      slider1.noUiSlider.set(s1);
+      
+      console.log("s2: " + s2);
+      //if (s2 != userNumHouse - slider1.noUiSlider.get()) {
+        slider2.noUiSlider.set(userNumSenate - slider1.noUiSlider.get());
+      //} else {
+        //slider2.noUiSlider.set(s2);
+      //}
+
+    } else if (userNumParties == 3 && arr[1] && arr[2] && arr[3]) {
+      let s1 = map(arr[1], 10, 245, 0, maxSlider, true);
+      console.log("s1: " + s1);
+      slider1.noUiSlider.set(s1);
+      
+      let s2 = map(arr[2], 10, 245, 0, maxSlider, true);
+      console.log("s2: " + s2);
+
+      let sliderBval = ceil((userNumSenate - slider1.noUiSlider.get()) / 2);
+          let sliderCval = (userNumSenate - slider1.noUiSlider.get()) - slider2.noUiSlider.get();
+          slider2.noUiSlider.set(sliderBval);
+          slider3.noUiSlider.set(sliderCval);
     }
   }
 
@@ -2846,6 +2967,7 @@ function sMembersVP() {
     if (enableHardware) {
     checkHardwareInput();
     checkHardwareUpdateInput();
+    checkHardwareSliders();
     }
 
     console.log("Party A: " + userPerVPBody[0] + " Party B: " + userPerVPBody[1] + " Party C: " + userPerVPBody[2]);
@@ -2854,6 +2976,41 @@ function sMembersVP() {
       document.getElementById("update-btn").disabled = false;
     } else { // otherwise leave disabled
       document.getElementById("update-btn").disabled = true;
+    }
+  }
+
+  function checkHardwareSliders() {
+    if (userNumParties == 1 && arr[1]) {
+      let s1 = map(arr[1], 10, 245, 0, maxSlider, true);
+      console.log("s1: " + s1);
+      slider1.noUiSlider.set(s1);
+
+    } else if (userNumParties == 2 && arr[1] && arr[2]) {
+      let s1 = map(arr[1], 10, 245, 0, maxSlider, true); // physical movement of sliders
+      let s2 = map(arr[2], 10, 245, 0, maxSlider, true);
+
+      console.log("s1: " + s1);
+      slider1.noUiSlider.set(s1);
+      
+      console.log("s2: " + s2);
+      //if (s2 != userNumHouse - slider1.noUiSlider.get()) {
+        slider2.noUiSlider.set(userNumVP - slider1.noUiSlider.get());
+      //} else {
+        //slider2.noUiSlider.set(s2);
+      //}
+
+    } else if (userNumParties == 3 && arr[1] && arr[2] && arr[3]) {
+      let s1 = map(arr[1], 10, 245, 0, maxSlider, true);
+      console.log("s1: " + s1);
+      slider1.noUiSlider.set(s1);
+      
+      let s2 = map(arr[2], 10, 245, 0, maxSlider, true);
+      console.log("s2: " + s2);
+
+      let sliderBval = ceil((userNumVP - slider1.noUiSlider.get()) / 2);
+          let sliderCval = (userNumVP - slider1.noUiSlider.get()) - slider2.noUiSlider.get();
+          slider2.noUiSlider.set(sliderBval);
+          slider3.noUiSlider.set(sliderCval);
     }
   }
 
@@ -3150,6 +3307,7 @@ function sMembersPres() {
     if (enableHardware) {
     checkHardwareInput();
     checkHardwareUpdateInput();
+    checkHardwareSliders();
     }
 
     console.log("Party A: " + userPerPresBody[0] + " Party B: " + userPerPresBody[1] + " Party C: " + userPerPresBody[2]);
@@ -3158,6 +3316,41 @@ function sMembersPres() {
       document.getElementById("update-btn").disabled = false;
     } else { // otherwise leave disabled
       document.getElementById("update-btn").disabled = true;
+    }
+  }
+
+  function checkHardwareSliders() {
+    if (userNumParties == 1 && arr[1]) {
+      let s1 = map(arr[1], 10, 245, 0, maxSlider, true);
+      console.log("s1: " + s1);
+      slider1.noUiSlider.set(s1);
+
+    } else if (userNumParties == 2 && arr[1] && arr[2]) {
+      let s1 = map(arr[1], 10, 245, 0, maxSlider, true); // physical movement of sliders
+      let s2 = map(arr[2], 10, 245, 0, maxSlider, true);
+
+      console.log("s1: " + s1);
+      slider1.noUiSlider.set(s1);
+      
+      console.log("s2: " + s2);
+      //if (s2 != userNumHouse - slider1.noUiSlider.get()) {
+        slider2.noUiSlider.set(userNumPres - slider1.noUiSlider.get());
+      //} else {
+        //slider2.noUiSlider.set(s2);
+      //}
+
+    } else if (userNumParties == 3 && arr[1] && arr[2] && arr[3]) {
+      let s1 = map(arr[1], 10, 245, 0, maxSlider, true);
+      console.log("s1: " + s1);
+      slider1.noUiSlider.set(s1);
+      
+      let s2 = map(arr[2], 10, 245, 0, maxSlider, true);
+      console.log("s2: " + s2);
+
+      let sliderBval = ceil((userNumPres - slider1.noUiSlider.get()) / 2);
+          let sliderCval = (userNumPres - slider1.noUiSlider.get()) - slider2.noUiSlider.get();
+          slider2.noUiSlider.set(sliderBval);
+          slider3.noUiSlider.set(sliderCval);
     }
   }
 
