@@ -489,6 +489,9 @@ function sLoadSession() {
     }
     document.getElementById('next-pane-btn').innerHTML = 'Select &rarr;';
 
+    document.getElementById('prev-pane-btn').disabled = false;
+    document.getElementById('next-pane-btn').disabled = false;
+    document.getElementById('middle-btn').disabled = false;
     prevPaneBtn.mousePressed(clickedScrollUp);
     middleBtn.mousePressed(clickedScrollDown);
     nextPaneBtn.mousePressed(nextPane);
@@ -524,7 +527,11 @@ function sLoadSession() {
    */
   function checkHardwareBtnInput() {
     if (hLeftBtn == true) {
-      clickedScrollUp();
+      if (sessions && sessions.length == 0) {
+        previousPane();
+      } else {
+        clickedScrollUp();
+      }
       hLeftBtn = false;
     } 
     if (hMidBtn == true) {
@@ -577,9 +584,12 @@ function sLoadSession() {
       //console.log(result);
       if (result.length == 0) { // no sessions in db yet
         emptydb = true;
+        document.getElementById('prev-pane-btn').innerHTML = "&larr; Back";
+        prevPaneBtn.mousePressed(previousPane);
+        // document.getElementById('prev-pane-btn').disabled = true;
         document.getElementById('next-pane-btn').disabled = true;
         document.getElementById('middle-btn').disabled = true;
-        document.getElementById("top").innerHTML = "<h2>No Sessions in Database</h2>"
+        document.getElementById("top").innerHTML = "<h2>No Sessions Currently in Database</h2>"
       //+ "<div id='session-list'><p>There are no sessions saved to the database yet. Create a new session to save and retrieve it here.</p></div>";
       } else {
       // show sessions in order from last 10 
@@ -985,7 +995,7 @@ function sSessionVis() {
       var ranges = [1, 2, 3]; // 1, 2, 3
       var values = [0,0,0,];
       var barColors = [,,];
-      console.log(result);
+      // console.log(result);
       if (result.length == 0) {
         return null;
       }
@@ -1046,7 +1056,7 @@ function sSessionVis() {
         // max total members = 2500 (500 * 5 bodies c1-3 vp pres)
         var values = [0,0,0,0,0,0,0,0,0,0];
         var barColors = [,,,,,,,,,];
-        console.log(result);
+        // console.log(result);
         if (result.length == 0) {
           return null;
         }
@@ -1108,7 +1118,7 @@ function sSessionVis() {
     var ranges = [[0, 10], [10, 20], [20, 30], [30, 40], [40, 50], [50, 60], [60, 70], [70, 80], [80, 90], [90,101]]; 
     var values = [0,0,0,0,0,0,0,0,0,0];
     var barColors = [,,,,,,,,,];
-    console.log(result);
+    // console.log(result);
     if (result.length == 0) {
       return null;
     }

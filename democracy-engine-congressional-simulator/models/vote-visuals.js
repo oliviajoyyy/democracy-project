@@ -139,8 +139,8 @@ class VoteVisual {
       // Setup variables first time we pass through the first body
       if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
         this.test = 0;
-        print('VISUAL CLASS logic for house bodyCount = ' + this.bodyCount);
-        print(this.bodyCount);
+        // print('VISUAL CLASS logic for house bodyCount = ' + this.bodyCount);
+        // print(this.bodyCount);
         background(this.bColor);
 
         // Set number of voting memebers
@@ -161,7 +161,7 @@ class VoteVisual {
 
         //Figure out how big to draw the circles and how far to space them out
         this.skip = floor(.97 * (sqrt((this.offSet) * this.dHeight / this.numCon)));
-        print('Skip = ' + this.skip); //testing
+        // print('Skip = ' + this.skip); //testing
         this.x = this.skip / 2;
         this.y = this.skip / 2;
       }
@@ -195,8 +195,8 @@ class VoteVisual {
         //   this.bodyCount++;
         // } else {
         this.test = 0;
-        print('VISUAL CLASS bodyCount = ')
-        print(this.bodyCount);
+        // print('VISUAL CLASS bodyCount = ')
+        // print(this.bodyCount);
 
         ///Set number of voting memebers
         this.numCon = this.engine.numHouse2;
@@ -210,13 +210,13 @@ class VoteVisual {
 
         //Figure out how big to draw the circles and how far to space them out
         this.skip = floor(.97 * (sqrt(this.offSet * this.dHeight / this.numCon)));
-        print('Skip = ' + this.skip); //testing
+        // print('Skip = ' + this.skip); //testing
         this.x = this.skip / 2;
         this.y = this.skip / 2;
 
-        print('v Count = ' + this.count); //fortesting
-        print('v Count1 = ' + this.count1); //fortesting
-        print('v Count2 = ' + this.count2); //fortesting
+        // print('v Count = ' + this.count); //fortesting
+        // print('v Count1 = ' + this.count1); //fortesting
+        // print('v Count2 = ' + this.count2); //fortesting
         //}
       }
 
@@ -249,8 +249,8 @@ class VoteVisual {
         //   this.bodyCount++;
         // } else {
         this.test = 0;
-        print('VISUAL CLASS bodyCount = ')
-        print(this.bodyCount);
+        // print('VISUAL CLASS bodyCount = ')
+        // print(this.bodyCount);
 
         ///Set number of voting memebers
         this.numCon = this.engine.numSenate;
@@ -264,14 +264,14 @@ class VoteVisual {
 
         //Figure out how big to draw the circles and how far to space them out
         this.skip = floor(.97 * (sqrt(this.offSet * this.dHeight / this.numCon)));
-        console.log("con: " + this.numCon);
-        print('Skip = ' + this.skip); //testing
+        // console.log("con: " + this.numCon);
+        // print('Skip = ' + this.skip); //testing
         this.x = this.skip / 2;
         this.y = this.skip / 2;
 
-        print('v Count = ' + this.count); //fortesting
-        print('v Count1 = ' + this.count1); //fortesting
-        print('v Count2 = ' + this.count2); //fortesting
+        // print('v Count = ' + this.count); //fortesting
+        // print('v Count1 = ' + this.count1); //fortesting
+        // print('v Count2 = ' + this.count2); //fortesting
         //}
       }
 
@@ -303,8 +303,8 @@ class VoteVisual {
       // Setup variables first time we pass through a new body
       if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
         this.test = 0;
-        print('VISUAL CLASS bodyCount = ')
-        print(this.bodyCount);
+        // print('VISUAL CLASS bodyCount = ')
+        // print(this.bodyCount);
 
         ///Set number of voting memebers
         this.numCon = this.engine.numVP;
@@ -320,7 +320,7 @@ class VoteVisual {
           this.skip = floor(.97 * (sqrt(this.offSet * this.dHeight / this.numCon)));
         else
           this.skip = floor(.65 * (sqrt(this.offSet * this.dHeight / this.numCon)));
-        print('Skip = ' + this.skip); //testing
+        // print('Skip = ' + this.skip); //testing
         this.x = this.skip / 2;
         this.y = this.skip / 2;
       }
@@ -357,8 +357,8 @@ class VoteVisual {
       // Setup variables first time we pass through a new body
       if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
         this.test = 0;
-        print('VISUAL CLASS bodyCount = ')
-        print(this.bodyCount);
+        // print('VISUAL CLASS bodyCount = ')
+        // print(this.bodyCount);
 
         // Set number of voting memebers
         if (this.engine.numPres != 0) {
@@ -379,7 +379,7 @@ class VoteVisual {
           this.skip = floor(.97 * (sqrt(this.offSet * this.dHeight / this.numCon)));
         else
           this.skip = floor(.65 * (sqrt(this.offSet * this.dHeight / this.numCon)));
-        print('Skip = ' + this.skip); //testing
+        // print('Skip = ' + this.skip); //testing
         this.x = this.skip / 2;
         this.y = this.skip / 2;
       }
@@ -549,8 +549,8 @@ class VoteVisual {
       // Setup variables first time we pass through the first body
       if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
         this.test = 0;
-        print('VISUAL CLASS logic for house bodyCount = ' + this.bodyCount);
-        print(this.bodyCount);
+        // print('VISUAL CLASS logic for house bodyCount = ' + this.bodyCount);
+        // print(this.bodyCount);
         background(this.bColor);
 
         // Set number of voting memebers
@@ -571,7 +571,7 @@ class VoteVisual {
 
         //Figure out how big to draw the circles and how far to space them out
         this.skip = floor(.97 * (sqrt((this.offSet) * this.dHeight / this.numCon)));
-        print('Skip = ' + this.skip); //testing
+        // print('Skip = ' + this.skip); //testing
         this.x = this.skip / 2;
         this.y = this.skip / 2;
 
@@ -605,8 +605,8 @@ class VoteVisual {
         //   this.bodyCount++;
         // } else {
         this.test = 0;
-        print('VISUAL CLASS bodyCount = ')
-        print(this.bodyCount);
+        // print('VISUAL CLASS bodyCount = ')
+        // print(this.bodyCount);
 
         ///Set number of voting memebers
         this.numCon = this.engine.numHouse2;
@@ -620,13 +620,13 @@ class VoteVisual {
 
         //Figure out how big to draw the circles and how far to space them out
         this.skip = floor(.97 * (sqrt(this.offSet * this.dHeight / this.numCon)));
-        print('Skip = ' + this.skip); //testing
+        // print('Skip = ' + this.skip); //testing
         this.x = this.skip / 2;
         this.y = this.skip / 2;
 
-        print('v Count = ' + this.count); //fortesting
-        print('v Count1 = ' + this.count1); //fortesting
-        print('v Count2 = ' + this.count2); //fortesting
+        // print('v Count = ' + this.count); //fortesting
+        // print('v Count1 = ' + this.count1); //fortesting
+        // print('v Count2 = ' + this.count2); //fortesting
         //}
         if (!minimalConfig) {
           this.configLabel("CHAMBER 2");
@@ -662,8 +662,8 @@ class VoteVisual {
         //   this.bodyCount++;
         // } else {
         this.test = 0;
-        print('VISUAL CLASS bodyCount = ')
-        print(this.bodyCount);
+        // print('VISUAL CLASS bodyCount = ')
+        // print(this.bodyCount);
 
         ///Set number of voting memebers
         this.numCon = this.engine.numSenate;
@@ -677,14 +677,14 @@ class VoteVisual {
 
         //Figure out how big to draw the circles and how far to space them out
         this.skip = floor(.97 * (sqrt(this.offSet * this.dHeight / this.numCon)));
-        console.log("con: " + this.numCon);
-        print('Skip = ' + this.skip); //testing
+        // console.log("con: " + this.numCon);
+        // print('Skip = ' + this.skip); //testing
         this.x = this.skip / 2;
         this.y = this.skip / 2;
 
-        print('v Count = ' + this.count); //fortesting
-        print('v Count1 = ' + this.count1); //fortesting
-        print('v Count2 = ' + this.count2); //fortesting
+        // print('v Count = ' + this.count); //fortesting
+        // print('v Count1 = ' + this.count1); //fortesting
+        // print('v Count2 = ' + this.count2); //fortesting
         //}
         if (!minimalConfig) {
         this.configLabel("CHAMBER 3");
@@ -719,8 +719,8 @@ class VoteVisual {
       // Setup variables first time we pass through a new body
       if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
         this.test = 0;
-        print('VISUAL CLASS bodyCount = ')
-        print(this.bodyCount);
+        // print('VISUAL CLASS bodyCount = ')
+        // print(this.bodyCount);
 
         ///Set number of voting memebers
         this.numCon = this.engine.numVP;
@@ -736,7 +736,7 @@ class VoteVisual {
           this.skip = floor(.97 * (sqrt(this.offSet * this.dHeight / this.numCon)));
         else
           this.skip = floor(.65 * (sqrt(this.offSet * this.dHeight / this.numCon)));
-        print('Skip = ' + this.skip); //testing
+        // print('Skip = ' + this.skip); //testing
         this.x = this.skip / 2;
         this.y = this.skip / 2;
 
@@ -777,8 +777,8 @@ class VoteVisual {
       // Setup variables first time we pass through a new body
       if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
         this.test = 0;
-        print('VISUAL CLASS bodyCount = ')
-        print(this.bodyCount);
+        // print('VISUAL CLASS bodyCount = ')
+        // print(this.bodyCount);
 
         // Set number of voting memebers
         if (this.engine.numPres != 0) {
@@ -799,7 +799,7 @@ class VoteVisual {
           this.skip = floor(.97 * (sqrt(this.offSet * this.dHeight / this.numCon)));
         else
           this.skip = floor(.65 * (sqrt(this.offSet * this.dHeight / this.numCon)));
-        print('Skip = ' + this.skip); //testing
+        // print('Skip = ' + this.skip); //testing
         this.x = this.skip / 2;
         this.y = this.skip / 2;
 
@@ -951,8 +951,8 @@ class VoteVisual {
       // Setup variables first time we pass through the first body
       if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
         this.test = 0;
-        print('VISUAL CLASS logic for house bodyCount = ' + this.bodyCount);
-        print(this.bodyCount);
+        // print('VISUAL CLASS logic for house bodyCount = ' + this.bodyCount);
+        // print(this.bodyCount);
         background(this.bColor);
 
         // Set number of voting memebers
@@ -973,7 +973,7 @@ class VoteVisual {
 
         //Figure out how big to draw the circles and how far to space them out
         this.skip = floor(.97 * (sqrt((this.offSet) * this.dHeight / this.numCon)));
-        print('Skip = ' + this.skip); //testing
+        // print('Skip = ' + this.skip); //testing
         this.x = this.skip / 2;
         this.y = this.skip / 2;
       }
@@ -1003,8 +1003,8 @@ class VoteVisual {
         //   this.bodyCount++;
         // } else {
         this.test = 0;
-        print('VISUAL CLASS bodyCount = ')
-        print(this.bodyCount);
+        // print('VISUAL CLASS bodyCount = ')
+        // print(this.bodyCount);
 
         ///Set number of voting memebers
         this.numCon = this.engine.numHouse2;
@@ -1018,13 +1018,13 @@ class VoteVisual {
 
         //Figure out how big to draw the circles and how far to space them out
         this.skip = floor(.97 * (sqrt(this.offSet * this.dHeight / this.numCon)));
-        print('Skip = ' + this.skip); //testing
+        // print('Skip = ' + this.skip); //testing
         this.x = this.skip / 2;
         this.y = this.skip / 2;
 
-        print('v Count = ' + this.count); //fortesting
-        print('v Count1 = ' + this.count1); //fortesting
-        print('v Count2 = ' + this.count2); //fortesting
+        // print('v Count = ' + this.count); //fortesting
+        // print('v Count1 = ' + this.count1); //fortesting
+        // print('v Count2 = ' + this.count2); //fortesting
         //}
       }
 
@@ -1057,8 +1057,8 @@ class VoteVisual {
         //   this.bodyCount++;
         // } else {
         this.test = 0;
-        print('VISUAL CLASS bodyCount = ')
-        print(this.bodyCount);
+        // print('VISUAL CLASS bodyCount = ')
+        // print(this.bodyCount);
 
         ///Set number of voting memebers
         this.numCon = this.engine.numSenate;
@@ -1072,14 +1072,14 @@ class VoteVisual {
 
         //Figure out how big to draw the circles and how far to space them out
         this.skip = floor(.97 * (sqrt(this.offSet * this.dHeight / this.numCon)));
-        console.log("con: " + this.numCon);
-        print('Skip = ' + this.skip); //testing
+        // console.log("con: " + this.numCon);
+        // print('Skip = ' + this.skip); //testing
         this.x = this.skip / 2;
         this.y = this.skip / 2;
 
-        print('v Count = ' + this.count); //fortesting
-        print('v Count1 = ' + this.count1); //fortesting
-        print('v Count2 = ' + this.count2); //fortesting
+        // print('v Count = ' + this.count); //fortesting
+        // print('v Count1 = ' + this.count1); //fortesting
+        // print('v Count2 = ' + this.count2); //fortesting
         //}
       }
 
@@ -1111,8 +1111,8 @@ class VoteVisual {
       // Setup variables first time we pass through a new body
       if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
         this.test = 0;
-        print('VISUAL CLASS bodyCount = ')
-        print(this.bodyCount);
+        // print('VISUAL CLASS bodyCount = ')
+        // print(this.bodyCount);
 
         ///Set number of voting memebers
         this.numCon = this.engine.numVP;
@@ -1128,7 +1128,7 @@ class VoteVisual {
           this.skip = floor(.97 * (sqrt(this.offSet * this.dHeight / this.numCon)));
         else
           this.skip = floor(.65 * (sqrt(this.offSet * this.dHeight / this.numCon)));
-        print('Skip = ' + this.skip); //testing
+        // print('Skip = ' + this.skip); //testing
         this.x = this.skip / 2;
         this.y = this.skip / 2;
       }
@@ -1165,8 +1165,8 @@ class VoteVisual {
       // Setup variables first time we pass through a new body
       if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
         this.test = 0;
-        print('VISUAL CLASS bodyCount = ')
-        print(this.bodyCount);
+        // print('VISUAL CLASS bodyCount = ')
+        // print(this.bodyCount);
 
         // Set number of voting memebers
         if (this.engine.numPres != 0) {
@@ -1187,7 +1187,7 @@ class VoteVisual {
           this.skip = floor(.97 * (sqrt(this.offSet * this.dHeight / this.numCon)));
         else
           this.skip = floor(.65 * (sqrt(this.offSet * this.dHeight / this.numCon)));
-        print('Skip = ' + this.skip); //testing
+        // print('Skip = ' + this.skip); //testing
         this.x = this.skip / 2;
         this.y = this.skip / 2;
       }
@@ -1231,7 +1231,7 @@ class VoteVisual {
     imageMode(CENTER);
     image(this.loadingImage, 0, 0, 150, 150);
     //AB: small circle to cover rotating image after
-    console.log(this.numCon);
+    // console.log(this.numCon);
     if (this.count >= this.numCon - 2) {
       ellipse(0, 0, 160, 160);
     }
@@ -1263,7 +1263,7 @@ class VoteVisual {
    * resets counts when passing to new body
    */
   resetCount() {
-    print('Resetting count');
+    //print('Resetting count');
     this.count = 0;
     this.count1 = 0;
     this.count2 = 0;
@@ -1440,13 +1440,13 @@ class VoteVisual {
     if (this.bodyCount == 3 && this.engine.vpVote == false) {
       this.stopVoteBool = true;
       // this.stopVoteCount++; // used in the engine, not for drawing
-      console.log("stop vote logic 1"); // for testing
+      // console.log("stop vote logic 1"); // for testing
     }
     //if the vp votes and it's a NO, then bill dies
     else if (this.bodyCount > 3 && this.engine.vpVote == true && this.engine.bodyPass[3] === false) {
       this.stopVoteBool = true;
       // this.stopVoteCount++;
-      console.log("stop vote logic 2"); // for testing
+      // console.log("stop vote logic 2"); // for testing
     }
     //AB if the first or second body is not a pass,  bill dies thus preventing other bodies to vote
     //OC check that voting of the house or senate was already drawn to screen before checking bodyPass for it
@@ -1454,10 +1454,10 @@ class VoteVisual {
       || (this.bodyCount > 2 && this.engine.bodyPass[2] === false)) {
       this.stopVoteBool = true;
       // this.stopVoteCount++;
-      console.log("stop vote logic 3"); // for testing
+      // console.log("stop vote logic 3"); // for testing
     } else {
       this.stopVoteBool = false;
-      console.log("stop vote logic 4"); // for testing
+      // console.log("stop vote logic 4"); // for testing
     }
   }
 
@@ -1492,13 +1492,13 @@ class VoteVisual {
     //Adds one to the count of how many bodies have voted and enters into user input state (buttons) if the vote is done.
     if (this.bodyCount < this.engine.numBodies) {
       this.bodyCount++;
-      print("VISUAL CLASS new body count: " + this.bodyCount);
+      // print("VISUAL CLASS new body count: " + this.bodyCount);
     }
 
     if (this.bodyCount >= this.engine.numBodies) {
       //this.finalDisplayLogic();
       this.userInputState = true;
-      print('Final Stage');
+      // print('Final Stage');
     }
 
     this.endBody = 1;
@@ -1618,7 +1618,7 @@ class VoteVisual {
 
       // show text on screen
       if (i < engine.votingBodyCounts.length) {
-        print("i = " + i + " and current body label = " + currentBodyLabel);
+        // print("i = " + i + " and current body label = " + currentBodyLabel);
 
         if (currentBodyLabel == 'PRESIDENCY') {
           textSize(22);
@@ -1760,7 +1760,7 @@ class VoteVisual {
 
       // show text on screen
       if (i < engine.votingBodyCounts.length) {
-        print("i = " + i + " and current body label = " + currentBodyLabel);
+        // print("i = " + i + " and current body label = " + currentBodyLabel);
 
         if (currentBodyLabel == 'PRESIDENCY') {
           textSize(22);

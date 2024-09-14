@@ -404,7 +404,7 @@ function sSessionVis() {
         var barColors = [,,];
         var bHighlight = "#cccc9d";
         var bRest = "#e85ab4";
-        console.log(result);
+        // console.log(result);
         if (result.length == 0) {
           return null;
         }
@@ -417,8 +417,8 @@ function sSessionVis() {
               barColors[j] = barDark;
           }
         }
-        console.log("chamber ranges: " + ranges);
-        console.log("chamber values: " + values);
+        // console.log("chamber ranges: " + ranges);
+        // console.log("chamber values: " + values);
 
         displayHistogram(xText, values, "NUMBER OF CHAMBERS", document.getElementById("chart"), barColors);
     }
@@ -514,7 +514,7 @@ function sSessionVis() {
       var ranges = [1, 2, 3]; // 1, 2, 3
       var values = [0,0,0,];
       var barColors = [,,];
-      console.log(result);
+      // console.log(result);
       if (result.length == 0) {
         return null;
       }
@@ -527,8 +527,8 @@ function sSessionVis() {
             barColors[j] = barDark;
         }
       }
-      console.log("parties ranges: " + ranges);
-      console.log("parties values: " + values);
+      // console.log("parties ranges: " + ranges);
+      // console.log("parties values: " + values);
 
       displayHistogram(xText, values, "NUMBER OF PARTIES", document.getElementById("chart"), barColors);
   }
@@ -570,7 +570,7 @@ function sSessionVis() {
         // max total members = 2500 (500 * 5 bodies c1-3 vp pres)
         var values = [0,0,0,0,0,0,0,0,0,0];
         var barColors = [,,,,,,,,,];
-        console.log(result);
+        // console.log(result);
         if (result.length == 0) {
           return null;
         }
@@ -585,9 +585,9 @@ function sSessionVis() {
 
           }
         }
-        console.log("total voting ranges: " + ranges);
-        console.log("total voting values: " + values);
-        console.log("bar colors members: " + barColors);
+        // console.log("total voting ranges: " + ranges);
+        // console.log("total voting values: " + values);
+        // console.log("bar colors members: " + barColors);
 
         displayHistogram(xText, values, "TOTAL VOTING MEMBERS", document.getElementById("chart"), barColors);
     }
@@ -626,7 +626,7 @@ function sSessionVis() {
     var ranges = [[0, 10], [10, 20], [20, 30], [30, 40], [40, 50], [50, 60], [60, 70], [70, 80], [80, 90], [90,101]]; 
     var values = [0,0,0,0,0,0,0,0,0,0];
     var barColors = [,,,,,,,,,];
-    console.log(result);
+    // console.log(result);
     if (result.length == 0) {
       return null;
     }
@@ -640,9 +640,9 @@ function sSessionVis() {
           barColors[j] = barDark;
       }
     }
-    console.log("total voting ranges: " + ranges);
-    console.log("total voting values: " + values);
-    console.log("bar colors members: " + barColors);
+    // console.log("total voting ranges: " + ranges);
+    // console.log("total voting values: " + values);
+    // console.log("bar colors members: " + barColors);
 
     displayHistogram(xText, values, "BENCHMARK SCORE", document.getElementById("chart"), barColors);
 }

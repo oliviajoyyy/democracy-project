@@ -227,18 +227,18 @@ historicalActs;
       // Setup variables first time we pass through the first body
       if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
         this.test = 0;
-        print('bodyCount lc1 = ' + this.bodyCount);
-        print(this.bodyCount);
+        // print('bodyCount lc1 = ' + this.bodyCount);
+        // print(this.bodyCount);
         this.allVotes[this.ix] = []; // OC initialize empty array for votes in this body
         this.voteResults[this.ix] = "";
         this.decisionTxt = "";
 
         //maps stress index onto percentage effecting yay/nay vote.
         this.stressMap = map(this.stress, this.stressLow, this.stressHigh, 0, 2);
-        print('Voter Stress = ' + this.stressMap);
+        // print('Voter Stress = ' + this.stressMap);
 
         this.stressPlanetMap = map(this.stressPlanet, this.stressPlanetLow, this.stressPlanetHigh, 0, 2);
-        print('Planet Stress = ' + this.stressPlanetMap)
+        // print('Planet Stress = ' + this.stressPlanetMap)
 
         //create a stress offset that will effect congress' likelyhood of passing legislation to create change
         this.stressOffset = (this.stressPlanetMap + this.stressMap) / 2;
@@ -281,24 +281,24 @@ historicalActs;
       // Setup variables first time we pass through a new body
       if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
         this.test = 0;
-        print('bodyCount lc2 = ' + this.bodyCount);
-        print(this.bodyCount);
+        // print('bodyCount lc2 = ' + this.bodyCount);
+        // print(this.bodyCount);
         this.allVotes[this.ix] = [];
         this.voteResults[this.ix] = "";
 
         ///Set number of voting memebers
         this.numCon = this.numHouse2;
         this.bodyLabel = 'SENATE';
-        console.log("senate num con " + this.numCon);
+        // console.log("senate num con " + this.numCon);
 
         //Set Demographics for each body
         this.numDem = round(this.numCon * this.perDemHouse2);
         this.numRep = round(this.numCon * this.perRepHouse2);
         this.numWild = round(this.numCon * this.perIndHouse2);
 
-        print('Count lc2 = ' + this.count); //fortesting
-        print('Count1 = ' + this.count1); //fortesting
-        print('Count2 = ' + this.count2); //fortesting
+        // print('Count lc2 = ' + this.count); //fortesting
+        // print('Count1 = ' + this.count1); //fortesting
+        // print('Count2 = ' + this.count2); //fortesting
       }
 
     }
@@ -325,8 +325,8 @@ historicalActs;
       // Setup variables first time we pass through a new body
       if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
         this.test = 0;
-        print('bodyCount lc3 = ')
-        print(this.bodyCount);
+        // print('bodyCount lc3 = ')
+        // print(this.bodyCount);
         this.allVotes[this.ix] = [];
         this.voteResults[this.ix] = "";
 
@@ -339,16 +339,16 @@ historicalActs;
         this.numRep = round(this.numCon * this.perRepSenate);
         this.numWild = round(this.numCon * this.perIndSenate);
 
-        print('Count = ' + this.count); //fortesting
-        print('Count1 = ' + this.count1); //fortesting
-        print('Count2 = ' + this.count2); //fortesting
+        // print('Count = ' + this.count); //fortesting
+        // print('Count1 = ' + this.count1); //fortesting
+        // print('Count2 = ' + this.count2); //fortesting
       }
 
     }
 
     //AB logic for VP if Senate needs a tiebreaker
     if (this.bodyCount == 3) {
-      print("votingBodyCounts[0][0]= " + this.votingBodyCounts[0][0] + "votingBodyCounts[0][1] = " + this.votingBodyCounts[0][1]);
+      // print("votingBodyCounts[0][0]= " + this.votingBodyCounts[0][0] + "votingBodyCounts[0][1] = " + this.votingBodyCounts[0][1]);
       // print("votingBodyCounts[1][0]= " + this.votingBodyCounts[1][0] + "votingBodyCounts[1][1] = " + this.votingBodyCounts[1][1]);
 
       // if (votingBodyCounts[1][0] == votingBodyCounts[1][1] && vpVote == true) {
@@ -364,8 +364,8 @@ historicalActs;
       // Setup variables first time we pass through a new body
       if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
         this.test = 0;
-        print('bodyCount = ')
-        print(this.bodyCount);
+        // print('bodyCount = ')
+        // print(this.bodyCount);
         this.allVotes[this.ix] = [];
         this.voteResults[this.ix] = "";
 
@@ -391,8 +391,8 @@ historicalActs;
       // Setup variables first time we pass through a new body
       if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
         this.test = 0;
-        print('bodyCount = ')
-        print(this.bodyCount);
+        // print('bodyCount = ')
+        // print(this.bodyCount);
         this.allVotes[this.ix] = [];
         this.voteResults[this.ix] = "";
 
@@ -576,7 +576,7 @@ historicalActs;
    * resets counts when passing to new body
    */
   resetCount() {
-    print('Resetting count');
+    // print('Resetting count');
     this.count = 0;
     this.count1 = 0;
     this.count2 = 0;
@@ -697,7 +697,7 @@ historicalActs;
     //   this.voteResults[4] = null;
     // }
 
-    console.log("body pass: " + this.bodyPass);
+    // console.log("body pass: " + this.bodyPass);
 
     if (this.forUser) { // engine running for user configuration
 
@@ -723,11 +723,11 @@ historicalActs;
       } else if (this.yay == this.numCon/2 && (this.numLegislativeBodies == 3) && this.bodyCount == 2) { //AB logic if senate initiates tie breaker
         this.bodyPass[this.bodyCount] = true;
         this.vpVote = true;
-        console.log("lg 1");
+        // console.log("lg 1");
       } else if (this.yay == this.numCon/2 && (this.numLegislativeBodies == 2) && this.bodyCount == 1) {
           this.bodyPass[this.bodyCount] = true;
           this.vpVote = true;
-          console.log("lg 2");
+          // console.log("lg 2");
       } else if (this.yay == this.numCon/2 && (this.numLegislativeBodies == 1) && this.bodyCount == 0) {
           // OC tie breaker for 1 legislative body
           this.bodyPass[this.bodyCount] = true;
@@ -775,12 +775,12 @@ historicalActs;
     //Adds one to the count of how many bodies have voted and enters into user input state (buttons) if the vote is done.
     if (this.bodyCount < this.numBodies) {
       this.nextBody();
-      print("new body count: " + this.bodyCount);
+      // print("new body count: " + this.bodyCount);
     }
 
     if (this.bodyCount >= this.numBodies) {
       this.finalLogic();
-      print('Final Stage');
+      // print('Final Stage');
     }
 
     this.endBody = 1;
@@ -788,7 +788,7 @@ historicalActs;
 
   nextBody() {
     this.bodyCount++;
-    console.log("bodyCount: " + this.bodyCount);
+    // console.log("bodyCount: " + this.bodyCount);
   }
 
   /**
@@ -798,12 +798,12 @@ historicalActs;
   finalLogic() {
     let currentBodyLabel;
     let decisionText = "";
-    console.log("body pass: " + this.bodyPass);
+    // console.log("body pass: " + this.bodyPass);
     //this.bodyPass[0] = true; // for testing house true
     // this.bodyPass[1] = true; // for testing senate true
     // //this.superThreshIndex[1] = true;
     // this.stopVoteArr[1] = false; // make senate vote
-    console.log("body pass: " + this.bodyPass);
+    // console.log("body pass: " + this.bodyPass);
 
     if (this.bodyCount == this.numBodies) {
 
@@ -848,7 +848,7 @@ historicalActs;
 
           if (i < this.votingBodyCounts.length) {
 
-            print("i = " + i + " and current body label = " + currentBodyLabel);
+            // print("i = " + i + " and current body label = " + currentBodyLabel);
 
             if (currentBodyLabel == 'PRESIDENCY') {
 
@@ -935,7 +935,7 @@ historicalActs;
                 this.votingBodyCounts[i][1] = null;
               }
             }
-            console.log(this.voteResults);
+            // console.log(this.voteResults);
           }
 
           //regular pass
@@ -961,7 +961,7 @@ historicalActs;
         };
 
     }
-    console.log(this.votingBodyCounts); 
+    // console.log(this.votingBodyCounts); 
     // OC could save session to db here or outside of engine
     //this.finalDisplayBool = true; // signal to now display final text and buttons
   }
