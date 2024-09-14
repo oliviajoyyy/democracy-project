@@ -194,6 +194,12 @@ button[disabled] {
   overflow-x: hidden;
 }
 
+#start-desc #id-center {
+  text-align: center;
+  vertical-align: middle;
+  line-height: 50vh;
+}
+
 #end-summary {
   border-radius: 3px;
   display: none;
@@ -210,6 +216,15 @@ button[disabled] {
   top: 0px;
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+#end-summary h4 {
+  font-size: 1.5em !important;
+  text-align: center !important;
+  margin: 10px;
+  margin-left: 0px;
+  color: var(--text-color);
+  font-weight: normal;
 }
 
 #eval-page {

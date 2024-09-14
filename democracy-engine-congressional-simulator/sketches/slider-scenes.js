@@ -4552,7 +4552,7 @@ function sEndorse() {
     divApproval.id = 'approval-div';
 
     console.log("user config endorsement page");
-    document.getElementById("main-header").innerHTML = "<h1>Evaluation Page</h1>";
+    document.getElementById("main-header").innerHTML = "<h1>Session Evaluation</h1>";
     document.getElementById("start-desc").style.display = "none";
     document.getElementById("end-summary").style.display = "block";
     document.getElementById("end-summary").innerHTML = configJSON.text.evalDesc;
@@ -4586,7 +4586,7 @@ function sEndorse() {
     approvalBtn = createButton('Endorse');
     approvalBtn.id('approve-btn');
     approvalBtn.class('buttons');
-    //approvalBtn.parent(div3);
+    approvalBtn.parent(buttonDiv);
     approvalBtn.mousePressed(clickedApprove);
 
     summarySaveBtn = createButton('See Final Summary');
@@ -4633,19 +4633,29 @@ function sEndorse() {
 
   function clickedApprove() {
     ownerEndorse();
-    divApproval.innerHTML = "";
-    let s = "";
-      if (finalConfigObj.ownerEndorsement == 1) {
-        //document.getElementById("main-header").innerHTML = "<h1>Summary & Save</h1><h2>Session ID: " + sessionID + "</h2><h2>Approved!</h2>";
-        //s += "<h3 style='font-size: 14px; display: inline-block; vertical-align: top;'>User Approval of Configuration </h3><h3 style='font-size: 32px; display: inline-block; margin: 0; line-height: 1;'>&#x2611;</h3>";
-        s += "<img id='approval-check' src='./assets/check-mark-txt-col.svg' style='left:37%'>";
-      } else {
-        //document.getElementById("main-header").innerHTML = "<h1>Summary & Save</h1><h2>Session ID: " + sessionID + "</h2>";
-        //s += "<h3 style='font-size: 14px; display: inline-block; vertical-align: top;'>User Approval of Configuration </h3><h3 style='font-size: 32px; display: inline-block; margin: 0; line-height: 1;'>&#x2610;</h3>";
-        s  += "<h3></h3><div id='approval-check'></div>";
+    let s = "<h3>Benchmark Results</h3><p>" ;
+      for(let i=1; i<=MAX_SIM_RESULTS; i++) {
+        s = s + configs[configIX].simResults[i].actTitle + " ";
+        if (configs[configIX].simResults[i].billPass == true) {
+          s = s + "&#x2611;<br>"; // checkmark in box
+        } else {
+          s = s + "&#9746;<br>"; // x mark in box (for empty box use &#x2610;)
+        }
       }
-      divApproval.innerHTML += s;
-      approvalBtn.parent(divApproval);
+      s = s + "</p>";
+      s += "<h3>Endorsement</h3>";
+    //divApproval.innerHTML = "";
+    //let s = "";
+      if (finalConfigObj.ownerEndorsement == 1) {
+        s += "<p>System Endorsed By User: Yes</p>";
+        //s += "<img id='approval-check' src='./assets/check-mark-txt-col.svg' style='left:37%'>";
+      } else {
+        s += "<p>System Endorsed By User: No</p>";
+        //s  += "<h3></h3><div id='approval-check'></div>";
+      }
+      //divApproval.innerHTML += s;
+      //approvalBtn.parent(divApproval);
+      div3.innerHTML = s;
   }
 
   function clickedSummarySave() {
@@ -4709,6 +4719,9 @@ function sEndorse() {
       }
       s3 = s3 + "</p>";
 
+      s3 += "<h3>Endorsement</h3>";
+      s3 += "<p>System Endorsed By User: No</p>"; // always starts not endorsed, until user clicks ENDORSE btn
+
       //sApproval = sApproval + "<h3 style='font-size: 14px; display: inline-block; vertical-align: top;'>User Approval of Configuration </h3><h3 style='font-size: 32px; display: inline-block; margin: 0; line-height: 1;'>&#x2610;</h3>";
       sApproval = sApproval + "<h3></h3><div id='approval-check' style='float:none'></div>";
 
@@ -4717,12 +4730,12 @@ function sEndorse() {
       div3.innerHTML = s3;
       divApproval.innerHTML = sApproval;
       
-      document.getElementById('end-summary').appendChild(divApproval);
+      //document.getElementById('end-summary').appendChild(divApproval);
       document.getElementById('end-summary').appendChild(div1);
       document.getElementById('end-summary').appendChild(div2);
       document.getElementById('end-summary').appendChild(div3);
       
-      approvalBtn.parent(divApproval);
+      //approvalBtn.parent(divApproval);
   }
 
 }
@@ -4757,9 +4770,9 @@ function sSaveResults() {
     divApproval.id = 'approval-div2';
 
     console.log("user config final summary & save page");
-    document.getElementById("main-header").innerHTML = "<h1>Save Session</h1>";
+    document.getElementById("main-header").innerHTML = "<h1>Session Upload</h1>";
     document.getElementById("end-summary").style.display = "block";
-    document.getElementById("end-summary").innerHTML = "<h2>Session ID: " + sessionID + "</h2>" + configJSON.text.saveDesc;
+    document.getElementById("end-summary").innerHTML = "<h4>Session ID: " + sessionID + "</h4>" + configJSON.text.saveDesc;
     document.getElementById("pane-bkg").style.display = "none";
     document.getElementById("screen").style.display = "none";
     document.getElementById("page1").style.display = "none";
@@ -4888,17 +4901,18 @@ function sSaveResults() {
       }
       s3 = s3 + "</p>";
 
-
+      s3 = s3 + "</p>";
+      s3 += "<h3>Endorsement</h3>";
       if (finalConfigObj.ownerEndorsement == 1) {
-        //document.getElementById("main-header").innerHTML = "<h1>Summary & Save</h1><h2>Session ID: " + sessionID + "</h2><h2>Approved!</h2>";
-        //s += "<h3 style='font-size: 14px; display: inline-block; vertical-align: top;'>User Approval of Configuration </h3><h3 style='font-size: 32px; display: inline-block; margin: 0; line-height: 1;'>&#x2611;</h3>";
-        sApproval = "<h3>Endorsement</h3><img id='approval-check' src='./assets/check-mark-txt-col.svg' style='left:37%'>";
+        s3 += "<p>System Endorsed By User: Yes</p>";
+        //sApproval = "<h3>Endorsement</h3><img id='approval-check' src='./assets/check-mark-txt-col.svg' style='left:37%'>";
       } else {
-        //document.getElementById("main-header").innerHTML = "<h1>Summary & Save</h1><h2>Session ID: " + sessionID + "</h2>";
-        //s += "<h3 style='font-size: 14px; display: inline-block; vertical-align: top;'>User Approval of Configuration </h3><h3 style='font-size: 32px; display: inline-block; margin: 0; line-height: 1;'>&#x2610;</h3>";
-        sApproval = sApproval + "<h3>Endorsement</h3><div id='approval-check'></div>";
+        s3 += "<p>System Endorsed By User: No</p>";
+        //sApproval = sApproval + "<h3>Endorsement</h3><div id='approval-check'></div>";
       }
-
+      
+    //divApproval.innerHTML = "";
+    //let s = "";
       //sApproval = sApproval + "<h3 style='font-size: 14px; display: inline-block; vertical-align: top;'>User Approval of Configuration </h3><h3 style='font-size: 32px; display: inline-block; margin: 0; line-height: 1;'>&#x2610;</h3>";
       //sApproval = sApproval + "<h3>User Approval of Configuration</h3><div id='approval-check'></div>";
 
@@ -4928,8 +4942,8 @@ function sComplete() {
   this.enter = function () {
 
     console.log("save complete page");
-    document.getElementById("main-header").innerHTML = "<h1>Session Complete</h1>";
-    document.getElementById("start-desc").innerHTML = "<h2>Session ID: " + prevSessionID + "</h2>" + configJSON.text.saveCompleteDesc;
+    document.getElementById("main-header").innerHTML = "<h1>Session Uploaded</h1>";
+    document.getElementById("start-desc").innerHTML = "<h2 id='id-center'>Session ID: " + prevSessionID + "</h2>";
     document.getElementById("start-desc").style.display = "block";
     document.getElementById("top").style.display = "none";
     document.getElementById("pane-bkg").style.display = "none";
