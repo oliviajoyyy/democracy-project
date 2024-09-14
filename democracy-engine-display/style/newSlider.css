@@ -1,18 +1,18 @@
 :root {
-  --bkg-color: #e3e3e3; /* #012244; */ 
-  --header-footer-bkg: #7487a1; /* #3c1b36; */
+  --bkg-color: #1c2f47; /* #012244; */ 
+  --header-footer-bkg: #2b4361; /* #3c1b36; */
   /* OC note: set default bkg-color to same custom color from json to load more smoothly */
-  --text-color: white;
+  --text-color: #f5f5f5;
   --button: #012266;
   --scroll-bar: #012255;
   --scroll-bar-hover: #012266;
-  --pane-bkg: #ebe9da;
+  --pane-bkg: #2b4361;
   --pane-border: ##757575;
-  --slider-start: 60vh;
-  --slider-offset: 8vh;
-  --overlay: #ffffff;
-  --progress-val: #7d8cb3;
-  --progress-remainder: #b7bcc9;
+  --slider-start: 60px;
+  --slider-offset: 7vh;
+  --overlay: #1c2f47;
+  --progress-val: #cccccc;
+  --progress-remainder: #757575;
 }
 
 /* width */
