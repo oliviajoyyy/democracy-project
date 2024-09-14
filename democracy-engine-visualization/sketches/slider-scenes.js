@@ -7,11 +7,6 @@ function startUp() {
 
   this.setup = function () {
     textFont(helvFont);
-    // let dWidth = windowWidth * .8;
-    // let dHeight = windowHeight * .8;
-    // let canvas = createCanvas(dWidth, dHeight);
-    // let canvasDiv = document.getElementById('vote');
-    // canvas.parent(canvasDiv);
     background(bColor);
   }
 
@@ -101,11 +96,6 @@ function startSession() {
 
   this.setup = function () {
     textFont(helvFont);
-    // let dWidth = windowWidth * .8;
-    // let dHeight = windowHeight * .8;
-    // let canvas = createCanvas(dWidth, dHeight);
-    // let canvasDiv = document.getElementById('vote');
-    // canvas.parent(canvasDiv);
     background(bColor);
   }
 
@@ -120,6 +110,7 @@ function startSession() {
     document.getElementById("screen").style.display = "none";
     document.getElementById("start-desc").style.display = "block";
     document.getElementById("start-desc").innerHTML = configJSON.text.shortDescription;
+    document.getElementById("end-summary").innerHTML = "";
     document.getElementById("end-summary").style.display = "none";
     document.getElementById("top").style.display = "none";
     document.getElementById("page1").style.display = "none";
@@ -241,7 +232,6 @@ function hardwareTest() {
 
     // in setup, we can open ports we have used previously
     // without user interaction
-  
     let usedPorts = usedSerialPorts();
     console.log(usedPorts);
     if (usedPorts.length > 0) {
@@ -265,9 +255,12 @@ function hardwareTest() {
   function connectBtnClick() {
     if (!port.opened()) {
     //  port.open('Arduino', 57600);
-      port.open(115200);
+      //port.open(115200);
+      port.open(9600);
+      //testBtn.html('Disconnect Hardware');
     } else {
       port.close();
+      //testBtn.html('Connect to Hardware');
     }
   }
   
@@ -284,7 +277,7 @@ function hardwareTest() {
    // changes button label based on connection status
    if (port.opened()) {
   
-    testBtn.html('Disconnect');
+    testBtn.html('Disconnect Hardware');
     //  connectBtn.html('Disconnect');
    // reads in complete lines and prints them at the
    // bottom of the canvas
@@ -292,65 +285,34 @@ function hardwareTest() {
  
    //let arr = port.readBytes();   
    let arr = port.readBytes(14); 
- 
-   //console.log(arr);
-  //  fill(255);
-  //  textSize(20)
-  //  text(arr, 5, height-120);
- 
- 
-  //     fill(255,0,0);
-  //     ellipse(arr[1]*2,50,40,40); // slider1
- 
-  //     if (arr[6] == 200 ) {
-  //          fill(200);
-  //          triangle(150,200,200,150,200,250);
-  //          console.log("clicked left btn");
-  //     }
- 
-  //      if (arr[7] == 200 ) {
-  //      fill(200);
-  //      triangle(300,200,250,150,250,250);
-  //       }
- 
-  //       if (arr[8] == 200 ) {
-  //        fill(90);
-  //        rect(200,200,200,75);
-  //        fill(255);
-  //        textSize(30);
-  //        text("hide/show",215,225);
-  //       }
- 
-  //       if (arr[9] == 200 ) {
-  //        fill(90);
-  //        rect(200,250,200,75);
-  //        fill(255);
-  //        textSize(30);
-  //        text("Update",215,275);
-  //       }
-   
- 
-   //   fill(0,0,255);
-   //   ellipse(arr[2],150,40,40);
-   //   fill(200,255,0);
-   //   ellipse(arr[3],200,40,40);
-   //   fill(200,0,255);
-   //   ellipse(arr[4],250,40,40);
- 
- 
-   // }
- 
- 
+
    } else {
- 
     testBtn.html('Connect to Hardware');
     //  connectBtn.html('Connect to Hardware');
    }
+
+   if (enableHardware) {
+    checkHardwareInput();
+    checkHardwareBtnInput();
+  }
+}
+  /**
+   * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
+   */
+  function checkHardwareBtnInput() {
+    if (hLeftBtn == true) {
+      clickedBack();
+      hLeftBtn = false;
+    } 
+    if (hRightBtn == true) {
+      connectBtnClick();
+      hRightBtn = false;
+    }
   }
 
   function clickedBack() {
     removeBtns();
-    mgr.showScene(startSession);
+    mgr.showScene(startUp);
   }
 
   function clickedTest() {
@@ -373,11 +335,6 @@ function aboutProject() {
   
   this.setup = function () {
     textFont(helvFont);
-    // let dWidth = windowWidth * .8;
-    // let dHeight = windowHeight * .8;
-    // let canvas = createCanvas(dWidth, dHeight);
-    // let canvasDiv = document.getElementById('vote');
-    // canvas.parent(canvasDiv);
     background(bColor);
   }
 
@@ -449,11 +406,6 @@ function sLoadSession() {
   
   this.setup = function () {
     textFont(helvFont);
-    // dWidth = windowWidth * .8;
-    // dHeight = windowHeight * .8;
-    // let canvas = createCanvas(dWidth, dHeight);
-    // let canvasDiv = document.getElementById('vote');
-    // canvas.parent(canvasDiv);
     background(bColor);
   }
 
@@ -547,14 +499,14 @@ function sLoadSession() {
     if (sessions && selection.value()) { // set c to global var loadedSession
       var i = selection.value();
       sVal = i;
-      console.log("sel val: " + i);
+      //console.log("sel val: " + i);
       //console.log("sel val: " + selection.value());
       entireSessionObj = sessions[i];
       loadedConfig = sessions[i].finalConfig.config;
       finalConfigObj = sessions[i].finalConfig; // use for access to edorsements
       endorseVal = finalConfigObj.publicEndorsement; // current public endorsement val
       selectedSessionID = sessions[i].uniqueID; // session ID
-      console.log("session id: " + selectedSessionID);
+      //console.log("session id: " + selectedSessionID);
       setLoadedUserVars(loadedConfig);
       setEngineParams(engine);
       document.getElementById("end-summary").innerHTML = "";
@@ -616,28 +568,18 @@ function sLoadSession() {
     // document.getElementById("page1").style.display = "block";
     document.getElementById("top").style.display = "block";
     document.getElementById("top").innerHTML = "<h2>Last 10 Sessions</h2>"
-      //+ configJSON.text.selectSessionDesc
-      // + "<br><p>" + getSpaces(15) + "SESSION ID</p>"
-      // + getSpaces(12) + " CHAMBERS "
-      // + getSpaces(3) + " PARTIES "
-      // + getSpaces(4) + " TOTAL VOTING MEMBERS </p>";
 
     selection = createRadio("sessions"); // attatch to HTML
     selection.size(235);
 
     getSessions().then((result) => {
       sessions = result;
-      console.log(result);
+      //console.log(result);
       if (result.length == 0) { // no sessions in db yet
         emptydb = true;
         document.getElementById('next-pane-btn').disabled = true;
         document.getElementById('middle-btn').disabled = true;
         document.getElementById("top").innerHTML = "<h2>No Sessions in Database</h2>"
-      //+ configJSON.text.selectSessionDesc
-      // + "<br><p style='text-align:center'>&nbsp;&nbsp;&nbsp;&nbsp; SESSION ID "
-      // + getSpaces(12) + " CHAMBERS "
-      // + getSpaces(3) + " PARTIES "
-      // + getSpaces(4) + " TOTAL VOTING MEMBERS </p>" 
       //+ "<div id='session-list'><p>There are no sessions saved to the database yet. Create a new session to save and retrieve it here.</p></div>";
       } else {
       // show sessions in order from last 10 
@@ -649,7 +591,7 @@ function sLoadSession() {
       }
       let startIX = result.length-(numResults*showCount);
       let endIX = startIX+numResults;
-      console.log("loads startIX: " + startIX);
+      //console.log("loads startIX: " + startIX);
       if (result.length < numResults) { // number of records less than amt to show, so start at ix 0
         startIX = 0;
         endIX = result.length;
@@ -660,22 +602,16 @@ function sLoadSession() {
       } else {
         rest = false;
       }
-      console.log("loads startIX: " + startIX);
-      console.log("loads showCount: " + showCount);
-      // let newDiv = document.createElement('div');
-      // let newDiv2 = document.createElement('div');
-      // let newDiv3 = document.createElement('div');
-      // newDiv.id = 'info-list-1';
-      // newDiv2.id = 'info-list-2';
-      // newDiv3.id = 'info-list-3';
+      //console.log("loads startIX: " + startIX);
+      //console.log("loads showCount: " + showCount);
       let s = ""; //<p>CHAMBERS</p>";
       let s2 = "";
       let s3 = "";
       let s4 = "";
       for (let i=endIX-1; (i>=startIX); i--) {
-        console.log("i: " + i);
+        //console.log("i: " + i);
         let sObj = result[i].finalConfig.config;
-        console.log(sObj);
+        //console.log(sObj);
         let totalVoting = sObj.chamber1.totalMembers + sObj.chamber2.totalMembers + sObj.chamber3.totalMembers + sObj.vicePres.totalMembers + sObj.president.totalMembers;
         selection.option(result[i].uniqueID, i.toString());
         s += sObj.numLegislativeBodies + "<br>";
@@ -685,17 +621,11 @@ function sLoadSession() {
         
       }
       selection.selected((endIX-1).toString()); // selection.selected(startIX.toString());
-      console.log("selected val: " + selection.value());
-      // newDiv.innerHTML = s;
-      // newDiv2.innerHTML = s2;
-      // newDiv3.innerHTML = s3;
+      //console.log("selected val: " + selection.value());
       document.getElementById('info-list-1').innerHTML = s;
       document.getElementById('info-list-2').innerHTML = s2;
       document.getElementById('info-list-3').innerHTML = s3;
       document.getElementById('info-list-4').innerHTML = s4;
-      // document.getElementById('session-list').appendChild(newDiv);
-      // document.getElementById('top').appendChild(newDiv2);
-      // document.getElementById('top').appendChild(newDiv3);
       
     } // end else
     });
@@ -730,18 +660,6 @@ function sLoadSession() {
   function clickedNext() {
     removeBtns();
     nextPane();
-    // setLoadedUserVars(loadedConfig);
-    // // mgr.showScene(loadSessionS2);
-    // // engine.setDefaultParams();
-    // setEngineParams(engine); // set engine params to user vars, which were loaded
-    // // reset values for calculations
-    // engine.completeReset();
-    // visual.completeReset();
-    // userEdits = false;
-    // reconfigBool = true;
-
-    // engine.currentCongLogic(true); // uncomment if drawing to screen real time
-    // mgr.showScene(sBodies);
   }
 
   function clickedShowMore() {
@@ -752,9 +670,6 @@ function sLoadSession() {
 
   function removeBtns() {
     selection.remove();
-    // middleBtn.remove();
-    // prevPaneBtn.remove();
-    // nextPaneBtn.remove();
   }
 
   function inputTxt() {
@@ -789,12 +704,12 @@ function sLoadSession() {
       "<br>Members in Political Party B: " + Math.round(loadedConfig.president.partyB * loadedConfig.president.totalMembers) +
       "<br>Members in Political Party C: " + Math.round(loadedConfig.president.partyC * loadedConfig.president.totalMembers) + 
       "</p><h3>Likelihood of Yes Vote: </h3>" +
-      "<p>Political Party A: " + (loadedConfig.probabilityYesVote.partyA * 100) + "%" +
-      "<br>Political Party B: " + (loadedConfig.probabilityYesVote.partyB * 100) + "%"  +
-      "<br>Political Party C: " + (loadedConfig.probabilityYesVote.partyC * 100) + "%"  +
+      "<p>Political Party A: " + Math.round(loadedConfig.probabilityYesVote.partyA * 100) + "%" +
+      "<br>Political Party B: " + Math.round(loadedConfig.probabilityYesVote.partyB * 100) + "%"  +
+      "<br>Political Party C: " + Math.round(loadedConfig.probabilityYesVote.partyC * 100) + "%"  +
       "</p><h3>Percentage of votes required for approval of bill</h3>" +
-      "<p>Approval By Majority: " + (loadedConfig.percentMajority * 100) + "%"  +
-      "<br> Approval By Supermajority: " + (loadedConfig.percentSupermajority * 100) + "%</p>";
+      "<p>Approval By Majority: " + Math.round(loadedConfig.percentMajority * 100) + "%"  +
+      "<br> Approval By Supermajority: " + Math.round(loadedConfig.percentSupermajority * 100) + "%</p>";
       
       s3 = "<h3>Benchmark Results</h3><p>" ;
       for(let i=1; i<=MAX_SIM_RESULTS; i++) {
@@ -807,17 +722,20 @@ function sLoadSession() {
       }
       s3 = s3 + "</p>";
 
-      if (finalConfigObj.ownerEndorsement == 1) {
-      s3 += "<h3>Endorsement: Yes</h3>";
-      } else {
-        s3 += "<h3>Endorsement: No</h3>";
-      }
+      // if (finalConfigObj.ownerEndorsement == 1) {
+      // s3 += "<h3>Endorsement: Yes</h3>";
+      // } else {
+      //   s3 += "<h3>Endorsement: No</h3>";
+      // }
 
-      if (finalConfigObj.ownerEndorsement == 1) {
-        sApproval = "<h3>Creator Endorsement</h3><img id='approval-check' src='./assets/check-mark-txt-col.svg' style='left:37%'>";
-      } else {
-        sApproval  = "<h3>Creator Endorsement</h3><div id='approval-check'></div>";
-      }
+      s3 += "<h3>Endorsement</h3>";
+      s3 += "<p>Number of User Endorsements: " + (finalConfigObj.ownerEndorsement + finalConfigObj.publicEndorsement) + "</p>";
+
+      // if (finalConfigObj.ownerEndorsement == 1) {
+      //   sApproval = "<h3>Creator Endorsement</h3><img id='approval-check' src='./assets/check-mark-txt-col.svg' style='left:37%'>";
+      // } else {
+      //   sApproval  = "<h3>Creator Endorsement</h3><div id='approval-check'></div>";
+      // }
       //sApproval = sApproval + "<h3 style='font-size: 14px; display: inline-block; vertical-align: top;'>User Approval of Configuration </h3><h3 style='font-size: 32px; display: inline-block; margin: 0; line-height: 1;'>&#9746;</h3>";
       // sApproval = sApproval + "<h3>User Approval of Configuration</h3><div id='approval-check'></div>";
 
@@ -848,14 +766,6 @@ function sSessionVis() {
   
   this.setup = function () {
     textFont(helvFont);
-    // if (reconfigBool == true) {
-    //   visual.dWidth = windowWidth * .95;
-    //     visual.dHeight = (windowHeight * .9)-labelSpace;
-    //     canvas = createCanvas(visual.dWidth, windowHeight * .9);
-    //     let canvasDiv = document.getElementById('vote');
-    //     canvas.parent(canvasDiv);
-    //     reconfigBool = false;
-    //   }
   }
 
   this.enter = function () {
@@ -892,7 +802,7 @@ function sSessionVis() {
     document.getElementById("start-desc").innerHTML = "";
     document.getElementById("start-desc").style.display = "none";
     document.getElementById("chart-subtitle").innerHTML = "Session ID: " + selectedSessionID;
-    document.getElementById("top").innerHTML = "<h2>Session Histograms</h2>"; // + "<p>[paragraph here]</p>";
+    document.getElementById("top").innerHTML = "<h2>Future Democracies Laboratory Histograms</h2>"; // + "<p>[paragraph here]</p>";
     document.getElementById("end-summary").style.display = "none";
     
     //showSessionsList(); // get sessions fr db and display onscreen
@@ -960,7 +870,7 @@ function sSessionVis() {
         var barColors = [,,];
         var bHighlight = "#cccc9d";
         var bRest = "#e85ab4";
-        console.log(result);
+        //console.log(result);
         if (result.length == 0) {
           return null;
         }
@@ -978,8 +888,8 @@ function sSessionVis() {
             }
           }
         }
-        console.log("chamber ranges: " + ranges);
-        console.log("chamber values: " + values);
+        //console.log("chamber ranges: " + ranges);
+        //console.log("chamber values: " + values);
 
         displayHistogram(xText, values, "NUMBER OF CHAMBERS", document.getElementById("chart-chambers"), barColors);
     }
@@ -1093,8 +1003,8 @@ function sSessionVis() {
           }
         }
       }
-      console.log("parties ranges: " + ranges);
-      console.log("parties values: " + values);
+      //console.log("parties ranges: " + ranges);
+      //console.log("parties values: " + values);
 
       displayHistogram(xText, values, "NUMBER OF PARTIES", document.getElementById("chart-parties"), barColors);
   }
@@ -1157,9 +1067,9 @@ function sSessionVis() {
             }
           }
         }
-        console.log("total voting ranges: " + ranges);
-        console.log("total voting values: " + values);
-        console.log("bar colors members: " + barColors);
+        //console.log("total voting ranges: " + ranges);
+        //console.log("total voting values: " + values);
+        //console.log("bar colors members: " + barColors);
 
         displayHistogram(xText, values, "TOTAL VOTING MEMBERS", document.getElementById("chart-members"), barColors);
     }
@@ -1219,9 +1129,9 @@ function sSessionVis() {
         }
       }
     }
-    console.log("total voting ranges: " + ranges);
-    console.log("total voting values: " + values);
-    console.log("bar colors members: " + barColors);
+    // console.log("total voting ranges: " + ranges);
+    // console.log("total voting values: " + values);
+    // console.log("bar colors members: " + barColors);
 
     displayHistogram(xText, values, "BENCHMARK SCORE", document.getElementById("chart-bench"), barColors);
 }
@@ -1246,7 +1156,7 @@ function calcBenchScore(sObj) {
   this.draw = function () {
     // fill(255);
     // rect(width/2, height/2, 100, 100);
-    console.log("loaded: " + loadedConfig.chamber1.totalMembers);
+    //console.log("loaded: " + loadedConfig.chamber1.totalMembers);
 
     paneToggle();
     if (enableHardware) {
@@ -1307,6 +1217,7 @@ function calcBenchScore(sObj) {
 let paramChangedBool = false;
 var labelSpace = 30;
 var endorseVal;
+var allowEndorse = true;
 /**
  * C01 Load Session
  */
@@ -1318,9 +1229,8 @@ function sPublicEndorsement() {
   }
 
   this.enter = function () {
-    // gui = createGui();
-    // continueBtn = createButton("Continue", width/2, height/2);
     console.log("load sessions scene");
+    allowEndorse = true;
     document.getElementById('dot-p03').className = 'dot-active';
     s1 = "";
     s2 = "";
@@ -1335,7 +1245,6 @@ function sPublicEndorsement() {
     div3.id = 's-col-3';
     divApproval.id = 'approval-div2';
 
-    // newSession();
     paramChangedBool = true;
     showCount = 0;
 
@@ -1345,12 +1254,11 @@ function sPublicEndorsement() {
     document.getElementById("main-header").innerHTML = configJSON.text.titleVis;
     document.getElementById("start-desc").innerHTML = "";
     document.getElementById("start-desc").style.display = "none";
-    document.getElementById("top").innerHTML = "<h2>Endorsement</h2>" + "<p style='text-align:center'>Do you endorse this configuration of government?</p>"
+    document.getElementById("top").innerHTML = configJSON.text.pVisEndorsement;
     document.getElementById("end-summary").style.display = "block";
     
     inputTxt();
 
-    // document.getElementById("top").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "block";
@@ -1387,12 +1295,12 @@ function sPublicEndorsement() {
   }
 
   this.draw = function () {
-    if (document.getElementById('prev-pane-btn').disabled) {
-      showPanesBool = false;
-    }
+    // if (document.getElementById('prev-pane-btn').disabled) {
+    //   showPanesBool = false;
+    // }
     paneToggle();
     if (enableHardware) { // add check to prevent hardware from moving panes
-      if (document.getElementById('prev-pane-btn').disabled == false)
+      // if (document.getElementById('prev-pane-btn').disabled == false)
         checkHardwareInput();
         checkHardwareBtnInput();
     }
@@ -1407,7 +1315,7 @@ function sPublicEndorsement() {
       hMidBtn = false;
     }
     if (hRightBtn == true) {
-      clickedPublicEndorse();
+      clickedStartOver();
       hRightBtn = false;
     }
   }
@@ -1421,24 +1329,34 @@ function sPublicEndorsement() {
   var rest = false;
 
   function clickedPublicEndorse() {
+    // if (document.getElementById('middle-btn').disabled = true) {
+    //   return; // dont endorse if already clicked
+    // }
+    allowEndorse = false;
     showPanesBool = false;
     addPublicEndorsement();
     inputTxt();
-    document.getElementById('approval-public').className = 'public-approved';
+    //document.getElementById('approval-public').className = 'public-approved';
     document.getElementById('middle-btn').disabled = true;
-    document.getElementById('next-pane-btn').disabled = true;
+    // document.getElementById('next-pane-btn').disabled = true;
     document.getElementById('prev-pane-btn').disabled = true;
+    document.getElementById("top").innerHTML = "<h2>Endorsement</h2>" + "<p style='text-align:center'>Start over to view other sessions.</p>"
+
     // also need to disallow key press when prev/next buttons are disabled
     setTimeout(function() {
-      removeBtns();
-      mgr.showScene(startSession);
-      document.getElementById('approval-public').className = 'public-normal';
-    }, 25000); 
+      // if (mgr.isCurrent(sPublicEndorsement) && allowEndorse == false) {
+      // removeBtns();
+      // mgr.showScene(startSession);
+      // }
+      // document.getElementById('approval-public').className = 'public-normal';
+      showPanesBool = true;
+    }, 5000); // 15 seconds on this screen
   }
   
   function clickedStartOver() {
     removeBtns();
     // showPanesBool = false;
+    allowEndorse = true;
     mgr.showScene(startSession);
   }
 
@@ -1450,7 +1368,7 @@ function sPublicEndorsement() {
 
   function inputTxt() {
     document.getElementById("end-summary").innerHTML = "<h2>Session ID: " + selectedSessionID + "</h2>";
-    document.getElementById("end-summary").innerHTML += "<h2 id='approval-public' class='public-normal'>Total Endorsements: " + (endorseVal + finalConfigObj.ownerEndorsement) + "</h2>";
+    //document.getElementById("end-summary").innerHTML += "<h2 id='approval-public' class='public-normal'>Total Endorsements: " + (endorseVal + finalConfigObj.ownerEndorsement) + "</h2>";
 
     s1 = 
       "<h3>First Legislative Chamber</h3>" +
@@ -1481,12 +1399,12 @@ function sPublicEndorsement() {
       "<br>Members in Political Party B: " + Math.round(loadedConfig.president.partyB * loadedConfig.president.totalMembers) +
       "<br>Members in Political Party C: " + Math.round(loadedConfig.president.partyC * loadedConfig.president.totalMembers) + 
       "</p><h3>Likelihood of Yes Vote: </h3>" +
-      "<p>Political Party A: " + (loadedConfig.probabilityYesVote.partyA * 100) + "%" +
-      "<br>Political Party B: " + (loadedConfig.probabilityYesVote.partyB * 100) + "%"  +
-      "<br>Political Party C: " + (loadedConfig.probabilityYesVote.partyC * 100) + "%"  +
+      "<p>Political Party A: " + Math.round(loadedConfig.probabilityYesVote.partyA * 100) + "%" +
+      "<br>Political Party B: " + Math.round(loadedConfig.probabilityYesVote.partyB * 100) + "%"  +
+      "<br>Political Party C: " + Math.round(loadedConfig.probabilityYesVote.partyC * 100) + "%"  +
       "</p><h3>Percentage of votes required for approval of bill</h3>" +
-      "<p>Approval By Majority: " + (loadedConfig.percentMajority * 100) + "%"  +
-      "<br> Approval By Supermajority: " + (loadedConfig.percentSupermajority * 100) + "%</p>";
+      "<p>Approval By Majority: " + Math.round(loadedConfig.percentMajority * 100) + "%"  +
+      "<br> Approval By Supermajority: " + Math.round(loadedConfig.percentSupermajority * 100) + "%</p>";
       
       s3 = "<h3>Benchmark Results</h3><p>" ;
       for(let i=1; i<=MAX_SIM_RESULTS; i++) {
@@ -1499,11 +1417,14 @@ function sPublicEndorsement() {
       }
       s3 = s3 + "</p>";
 
-      if (finalConfigObj.ownerEndorsement == 1) {
-        sApproval = "<h3>Creator Endorsement</h3><img id='approval-check' src='./assets/check-mark-txt-col.svg' style='left:37%'>";
-      } else {
-        sApproval  = "<h3>Creator Endorsement</h3><div id='approval-check'></div>";
-      }
+      // if (finalConfigObj.ownerEndorsement == 1) {
+      //   sApproval = "<h3>Creator Endorsement</h3><img id='approval-check' src='./assets/check-mark-txt-col.svg' style='left:37%'>";
+      // } else {
+      //   sApproval  = "<h3>Creator Endorsement</h3><div id='approval-check'></div>";
+      // }
+
+      s3 += "<h3>Endorsement</h3>";
+      s3 += "<p>Number of User Endorsements: " + (endorseVal + finalConfigObj.ownerEndorsement) + "</p>";
 
       div1.innerHTML = s1;
       div2.innerHTML = s2;

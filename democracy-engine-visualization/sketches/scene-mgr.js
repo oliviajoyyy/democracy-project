@@ -1,14 +1,4 @@
 
-//V1 TO DO
-//Work on Diplay Text Design (transparen overlay)
-//Resize User input boxes
-//GUI for User input?
-
-//TO DO - These require a configuration of the Logic. A potential future project. The code will be made available via Github
-// Allow users to change the number of decision-making units:
-// Allow users to change the configuration and logical interdependencies of decision-making units:
-// see: https://docs.google.com/document/d/118letZLbFm9D3QhtOtrdhQvJU4OJxYWr6OiAuUlJTjA/edit?usp=sharing
-
 var mgr;
 var engine;
 var visual;
@@ -188,7 +178,6 @@ function hardwareSetup() {
 
   // in setup, we can open ports we have used previously
   // without user interaction
-
   let usedPorts = usedSerialPorts();
   console.log(usedPorts);
   if (usedPorts.length > 0) {
@@ -229,7 +218,7 @@ function checkHardwareInput() {
   }
   let arr = port.readBytes(14); 
 
-    // these scenes use the left, right, middle btns
+    // all hardware related to this scene
     if (mgr.isCurrent(sLoadSession)) {
       //let arr = port.readBytes(14); 
   
@@ -463,6 +452,23 @@ function checkHardwareInput() {
       }
       hardwareShow = false;
     }
+  } else if (mgr.isCurrent(hardwareTest)) {
+    if (arr[9] == 200) { // left btn
+      hardwareLeftBtn = true;
+    } else if (arr[9] == 0) {
+      if (hardwareLeftBtn == true) {
+        hLeftBtn = true;
+      }
+      hardwareLeftBtn = false;
+    }
+    if (arr[11] == 200) { // right btn
+      hardwareRightBtn = true;
+    } else if (arr[10] == 0) {
+      if (hardwareRightBtn == true) {
+        hRightBtn = true;
+      }
+      hardwareRightBtn = false;
+    }
   }
 
 }
@@ -489,7 +495,7 @@ function previousPane() {
   } else if (mgr.isCurrent(sSessionVis)) {
     document.getElementById('dot-p02').className = 'dot';
     mgr.showScene(sLoadSession);
-  } else if (mgr.isCurrent(sPublicEndorsement)) {
+  } else if (mgr.isCurrent(sPublicEndorsement) && allowEndorse) { // can go back if ensore is not yet clicked
     document.getElementById('dot-p03').className = 'dot';
     mgr.showScene(sSessionVis);
   }
