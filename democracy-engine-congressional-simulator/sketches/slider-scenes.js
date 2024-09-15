@@ -686,10 +686,11 @@ function loadSessionS1() {
       // console.log("sel val: " + selection.value());
       loadedConfig = sessions[i].finalConfig.config; // set to global var loadedConfig
       //console.log(loadedConfig);
-      if (enableHardware) {
+      
+    }
+    if (enableHardware) {
       checkHardwareInput();
       checkHardwareBtnInput();
-    }
     }
     
   }
@@ -711,7 +712,9 @@ function loadSessionS1() {
       hMidBtn = false;
     }
     if (hRightBtn == true) {
-      clickedNext();
+      if (sessions && sessions.length > 0) {
+        clickedNext();
+      }
       hRightBtn = false;
     }
     if (hCycle == true) {

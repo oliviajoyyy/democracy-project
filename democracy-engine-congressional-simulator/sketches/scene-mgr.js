@@ -253,8 +253,23 @@ function checkHardwareInput() {
     //let arr = port.readBytes(14); 
 
     if (arr[9] == 200) { // left btn
+      if (mgr.isCurrent(startSession)) {
+        document.getElementById('about-btn-a02').classList.add('btn-active');
+      } else if (mgr.isCurrent(loadSessionS1)) {
+        document.getElementById('back-btn-b02').classList.add('btn-active');
+      } else if (mgr.isCurrent(sEndorse)) {
+        document.getElementById('restart-btn-c03').classList.add('btn-active');
+      }
       hardwareLeftBtn = true;
+
     } else if (arr[9] == 0) {
+      if (mgr.isCurrent(startSession)) {
+        document.getElementById('about-btn-a02').classList.remove('btn-active');
+      } else if (mgr.isCurrent(loadSessionS1)) {
+        document.getElementById('back-btn-b02').classList.remove('btn-active');
+      } else if (mgr.isCurrent(sEndorse)) {
+        document.getElementById('restart-btn-c03').classList.remove('btn-active');
+      }
       if (hardwareLeftBtn == true) {
         hLeftBtn = true;
       }
@@ -262,21 +277,47 @@ function checkHardwareInput() {
     }
 
     if (arr[10] == 200) { // middle btn
+      if (mgr.isCurrent(startSession)) {
+        document.getElementById('load-session-btn-a02').classList.add('btn-active');
+      } else if (mgr.isCurrent(loadSessionS1)) {
+        document.getElementById('show-btn-b02').classList.add('btn-active');
+      } else if (mgr.isCurrent(sEndorse)) {
+        document.getElementById('approve-btn').classList.add('btn-active');
+      }
       hardwareMidBtn = true;
+
     } else if (arr[10] == 0) {
+      if (mgr.isCurrent(startSession)) {
+        document.getElementById('load-session-btn-a02').classList.remove('btn-active');
+      } else if (mgr.isCurrent(loadSessionS1)) {
+        document.getElementById('show-btn-b02').classList.remove('btn-active');
+      } else if (mgr.isCurrent(sEndorse)) {
+        document.getElementById('approve-btn').classList.remove('btn-active');
+      }
       if (hardwareMidBtn == true) {
         hMidBtn = true;
-        // document.getElementById('new-session-btn-a02').remove();
-        // document.getElementById('load-session-btn-a02').remove();
-        // document.getElementById('about-btn-a02').remove();
-        // mgr.showScene(loadSessionS1);
       }
       hardwareMidBtn = false;
     }
 
     if (arr[11] == 200) {
+      if (mgr.isCurrent(startSession)) {
+        document.getElementById('new-session-btn-a02').classList.add('btn-active');
+      } else if (mgr.isCurrent(loadSessionS1)) {
+        document.getElementById('next-btn-b02').classList.add('btn-active');
+      } else if (mgr.isCurrent(sEndorse)) {
+        document.getElementById('save-summary-btn-c03').classList.add('btn-active');
+      }
       hardwareRightBtn = true;
+
     } else if (arr[10] == 0) { // right btn
+      if (mgr.isCurrent(startSession)) {
+        document.getElementById('new-session-btn-a02').classList.remove('btn-active');
+      } else if (mgr.isCurrent(loadSessionS1)) {
+        document.getElementById('next-btn-b02').classList.remove('btn-active');
+      } else if (mgr.isCurrent(sEndorse)) {
+        document.getElementById('save-summary-btn-c03').classList.remove('btn-active');
+      }
       if (hardwareRightBtn == true) {
         hRightBtn = true;
       }
@@ -303,8 +344,19 @@ function checkHardwareInput() {
   if (mgr.isCurrent(aboutProject) || mgr.isCurrent(sComplete)) {
     //let arr = port.readBytes(14); 
     if (arr[10] == 200) { // middle btn
+      if (mgr.isCurrent(aboutProject)) {
+        document.getElementById('back-btn-a04').classList.add('btn-active');
+      } else if (mgr.isCurrent(sComplete)) {
+        document.getElementById('restart-btn-c05').classList.add('btn-active');
+      }
       hardwareMidBtn = true;
+
     } else if (arr[10] == 0) {
+      if (mgr.isCurrent(aboutProject)) {
+        document.getElementById('back-btn-a04').classList.remove('btn-active');
+      } else if (mgr.isCurrent(sComplete)) {
+        document.getElementById('restart-btn-c05').classList.remove('btn-active');
+      }
       if (hardwareMidBtn == true) {
         hMidBtn = true;
       }
@@ -316,8 +368,23 @@ function checkHardwareInput() {
   if (mgr.isCurrent(startUp) || mgr.isCurrent(newSessionScene) || mgr.isCurrent(sBenchmarkResults) || mgr.isCurrent(sSaveResults)) {
     //let arr = port.readBytes(14); 
     if (arr[9] == 200) { // left btn
+      if (mgr.isCurrent(newSessionScene)) {
+        document.getElementById('back-btn-b01').classList.add('btn-active');
+      } else if (mgr.isCurrent(sBenchmarkResults)) {
+        document.getElementById('restart-btn-c02').classList.add('btn-active');
+      } else if (mgr.isCurrent(sSaveResults)) {
+        document.getElementById('restart-btn-c04').classList.add('btn-active');
+      }
       hardwareLeftBtn = true;
+
     } else if (arr[9] == 0) {
+      if (mgr.isCurrent(newSessionScene)) {
+        document.getElementById('back-btn-b01').classList.remove('btn-active');
+      } else if (mgr.isCurrent(sBenchmarkResults)) {
+        document.getElementById('restart-btn-c02').classList.remove('btn-active');
+      } else if (mgr.isCurrent(sSaveResults)) {
+        document.getElementById('restart-btn-c04').classList.remove('btn-active');
+      }
       if (hardwareLeftBtn == true) {
         hLeftBtn = true;
       }
@@ -325,8 +392,23 @@ function checkHardwareInput() {
     }
 
     if (arr[11] == 200) { // right btn
+      if (mgr.isCurrent(newSessionScene)) {
+        document.getElementById('next-btn-b01').classList.add('btn-active');
+      } else if (mgr.isCurrent(sBenchmarkResults)) {
+        document.getElementById('to-eval-btn-c02').classList.add('btn-active');
+      } else if (mgr.isCurrent(sSaveResults)) {
+        document.getElementById('save-btn').classList.add('btn-active');
+      }
       hardwareRightBtn = true;
+
     } else if (arr[10] == 0) {
+      if (mgr.isCurrent(newSessionScene)) {
+        document.getElementById('next-btn-b01').classList.remove('btn-active');
+      } else if (mgr.isCurrent(sBenchmarkResults)) {
+        document.getElementById('to-eval-btn-c02').classList.remove('btn-active');
+      } else if (mgr.isCurrent(sSaveResults)) {
+        document.getElementById('save-btn').classList.remove('btn-active');
+      }
       if (hardwareRightBtn == true) {
         hRightBtn = true;
       }
@@ -362,7 +444,9 @@ function checkHardwareInput() {
     // left joystick or left button to go to prev pane
     if (arr[6] == 200 || arr[9] == 200) {
       hardwarePrevPane = true;
+      document.getElementById('prev-pane-btn').classList.add('btn-active');
     } else if (arr[6] == 0 || arr[9] == 0) {
+      document.getElementById('prev-pane-btn').classList.remove('btn-active');
       if (hardwarePrevPane == true) {
         previousPane();
       }
@@ -372,7 +456,13 @@ function checkHardwareInput() {
     // right joystick or right button to go to next pane
     if (arr[6] == 100 || arr[11] == 200) {
       hardwareNextPane = true;
+      if (!mgr.isCurrent(sBenchmarkPane) && document.getElementById('next-pane-btn')) {
+      document.getElementById('next-pane-btn').classList.add('btn-active');
+      }
     } else if (arr[6] == 0 || arr[11] == 0) {
+      if (!mgr.isCurrent(sBenchmarkPane) && document.getElementById('next-pane-btn')) {
+      document.getElementById('next-pane-btn').classList.remove('btn-active');
+      }
       if (hardwareNextPane == true) {
         nextPane();
       }
@@ -410,11 +500,21 @@ function checkHardwareInput() {
     // update button on joystick
     // there are functions in specific scenes that are called when this button is clicked (hardwareUpdate = true)
     if (arr[8] == 200 || arr[10] == 200) {
+      if (mgr.isCurrent(sVote) && document.getElementById('vote-btn')) {
+        document.getElementById('vote-btn').classList.add('btn-active');
+      } else if (document.getElementById('update-btn')) {
+        document.getElementById('update-btn').classList.add('btn-active');
+      }
       hardwareUpdate = true;
     } else if (arr[8] == 0 || arr[10] == 0) {
       // if (hardwareUpdate == true) {
       //   console.log("update button hardware clicked");
       // }
+      if (mgr.isCurrent(sVote) && document.getElementById('vote-btn')) {
+        document.getElementById('vote-btn').classList.remove('btn-active');
+      } else if (document.getElementById('update-btn')) {
+        document.getElementById('update-btn').classList.remove('btn-active');
+      }
       hardwareUpdate = false;
     }
 
@@ -447,8 +547,14 @@ function checkHardwareInput() {
     if (mgr.isCurrent(sBenchmarkPane)) {
       //let arr = port.readBytes(14); 
       if (arr[11] == 200) { // right btn
+        if (document.getElementById('benchmark-btn')) {
+          document.getElementById('benchmark-btn').classList.add('btn-active');
+        }
         hardwareRightBtn = true;
       } else if (arr[10] == 0) {
+        if (document.getElementById('benchmark-btn')) {
+          document.getElementById('benchmark-btn').classList.remove('btn-active');
+        }
         if (hardwareRightBtn == true) {
           hRightBtn = true;
         }

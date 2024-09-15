@@ -539,7 +539,9 @@ function sLoadSession() {
       hMidBtn = false;
     }
     if (hRightBtn == true) {
+      if (sessions && sessions.length > 0) {
       nextPane();
+      }
       hRightBtn = false;
     }
   }
@@ -1321,7 +1323,9 @@ function sPublicEndorsement() {
    */
   function checkHardwareBtnInput() {
     if (hMidBtn == true) {
-      clickedPublicEndorse();
+      if (allowEndorse) {
+        clickedPublicEndorse();
+      }
       hMidBtn = false;
     }
     if (hRightBtn == true) {

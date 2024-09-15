@@ -542,9 +542,10 @@ th {
 
 #chart {
   /* position: top left; */
-  width: 70vw !important;
+  width: 68vw !important;
   height: auto !important;
   margin: 2% 2%;
+  padding: 2%;
   /* margin-bottom: 4%; */
   /* float:left; */
 }

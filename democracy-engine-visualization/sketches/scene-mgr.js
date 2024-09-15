@@ -223,8 +223,10 @@ function checkHardwareInput() {
       //let arr = port.readBytes(14); 
   
       if (arr[9] == 200) { // left btn
+        document.getElementById('prev-pane-btn').classList.add('btn-active');
         hardwareLeftBtn = true;
       } else if (arr[9] == 0) {
+        document.getElementById('prev-pane-btn').classList.remove('btn-active');
         if (hardwareLeftBtn == true) {
           hLeftBtn = true;
         }
@@ -232,8 +234,10 @@ function checkHardwareInput() {
       }
   
       if (arr[10] == 200) { // middle btn
+        document.getElementById('middle-btn').classList.add('btn-active');
         hardwareMidBtn = true;
       } else if (arr[10] == 0) {
+        document.getElementById('middle-btn').classList.remove('btn-active');
         if (hardwareMidBtn == true) {
           hMidBtn = true;
           // document.getElementById('new-session-btn-a02').remove();
@@ -245,8 +249,10 @@ function checkHardwareInput() {
       }
   
       if (arr[11] == 200) {
+        document.getElementById('next-pane-btn').classList.add('btn-active');
         hardwareRightBtn = true;
       } else if (arr[10] == 0) { // right btn
+        document.getElementById('next-pane-btn').classList.remove('btn-active');
         if (hardwareRightBtn == true) {
           hRightBtn = true;
         }
@@ -265,8 +271,10 @@ function checkHardwareInput() {
 
     // right joystick or right button to go to next pane
     if (arr[6] == 100) {
+      document.getElementById('next-pane-btn').classList.add('btn-active');
       hardwareNextPane = true;
     } else if (arr[6] == 0) {
+      document.getElementById('next-pane-btn').classList.remove('btn-active');
       if (hardwareNextPane == true) {
         nextPane();
       }
@@ -302,8 +310,10 @@ function checkHardwareInput() {
   if (mgr.isCurrent(aboutProject)) {
     //let arr = port.readBytes(14); 
     if (arr[10] == 200) { // middle btn
+      document.getElementById('back-btn-a04').classList.add('btn-active');
       hardwareMidBtn = true;
     } else if (arr[10] == 0) {
+      document.getElementById('back-btn-a04').classList.remove('btn-active');
       if (hardwareMidBtn == true) {
         hMidBtn = true;
       }
@@ -315,8 +325,14 @@ function checkHardwareInput() {
   if (mgr.isCurrent(startUp) || mgr.isCurrent(startSession)) {
     //let arr = port.readBytes(14); 
     if (arr[9] == 200) { // left btn
+      if (mgr.isCurrent(startSession)) {
+        document.getElementById('about-btn-a02').classList.add('btn-active');
+      }
       hardwareLeftBtn = true;
     } else if (arr[9] == 0) {
+      if (mgr.isCurrent(startSession)) {
+        document.getElementById('about-btn-a02').classList.remove('btn-active');
+      }
       if (hardwareLeftBtn == true) {
         hLeftBtn = true;
       }
@@ -324,8 +340,14 @@ function checkHardwareInput() {
     }
 
     if (arr[11] == 200) { // right btn
+      if (mgr.isCurrent(startSession)) {
+        document.getElementById('load-session-btn-a02').classList.add('btn-active');
+      }
       hardwareRightBtn = true;
     } else if (arr[10] == 0) {
+      if (mgr.isCurrent(startSession)) {
+        document.getElementById('load-session-btn-a02').classList.remove('btn-active');
+      }
       if (hardwareRightBtn == true) {
         hRightBtn = true;
       }
@@ -340,8 +362,10 @@ function checkHardwareInput() {
 
     // left joystick or left button to go to prev pane
     if (arr[6] == 200 || arr[9] == 200) {
+      document.getElementById('prev-pane-btn').classList.add('btn-active');
       hardwarePrevPane = true;
     } else if (arr[6] == 0 || arr[9] == 0) {
+      document.getElementById('prev-pane-btn').classList.remove('btn-active');
       if (hardwarePrevPane == true) {
         previousPane();
       }
@@ -350,8 +374,10 @@ function checkHardwareInput() {
 
     // right joystick or right button to go to next pane
     if (arr[6] == 100 || arr[11] == 200) {
+      document.getElementById('next-pane-btn').classList.add('btn-active');
       hardwareNextPane = true;
     } else if (arr[6] == 0 || arr[11] == 0) {
+      document.getElementById('next-pane-btn').classList.remove('btn-active');
       if (hardwareNextPane == true) {
         nextPane();
       }
@@ -389,8 +415,10 @@ function checkHardwareInput() {
   if (mgr.isCurrent(sPublicEndorsement)) {
     // left joystick or left button to go back
     if (arr[6] == 200 || arr[9] == 200) {
+      document.getElementById('prev-pane-btn').classList.add('btn-active');
       hardwarePrevPane = true;
     } else if (arr[6] == 0 || arr[9] == 0) {
+      document.getElementById('prev-pane-btn').classList.remove('btn-active');
       if (hardwarePrevPane == true) {
         previousPane();
       }
@@ -399,8 +427,10 @@ function checkHardwareInput() {
 
     // right joystick
     if (arr[6] == 100) {
+      // document.getElementById('next-pane-btn').classList.add('btn-active');
       hardwareNextPane = true;
     } else if (arr[6] == 0) {
+      // document.getElementById('next-pane-btn').classList.remove('btn-active');
       if (hardwareNextPane == true) {
         nextPane();
       }
@@ -408,8 +438,10 @@ function checkHardwareInput() {
     }
 
     if (arr[11] == 200) { // right btn
+      document.getElementById('next-pane-btn').classList.add('btn-active');
       hardwareRightBtn = true;
     } else if (arr[10] == 0) {
+      document.getElementById('next-pane-btn').classList.remove('btn-active');
       if (hardwareRightBtn == true) {
         hRightBtn = true;
       }
@@ -417,8 +449,10 @@ function checkHardwareInput() {
     }
 
     if (arr[10] == 200) { // middle btn
+      document.getElementById('middle-btn').classList.add('btn-active');
       hardwareMidBtn = true;
     } else if (arr[10] == 0) {
+      document.getElementById('middle-btn').classList.remove('btn-active');
       if (hardwareMidBtn == true) {
         hMidBtn = true;
       }
@@ -477,7 +511,7 @@ function checkHardwareInput() {
  * Show next pane scene, control order
  */
 function nextPane() {
-  if (mgr.isCurrent(sLoadSession)) {
+  if (mgr.isCurrent(sLoadSession) && document.getElementById('next-pane-btn').disabled == false) {
     document.getElementById('dot-p01').className = 'dot'; // deactivate dot on pane before moving to next pane
     mgr.showScene(sSessionVis);
   } else if (mgr.isCurrent(sSessionVis)) {

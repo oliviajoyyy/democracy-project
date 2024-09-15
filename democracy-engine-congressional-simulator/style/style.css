@@ -167,6 +167,14 @@ button[disabled] {
   color: grey; /*darkslategray; darkgrey;  */
 }
 
+button.btn-active {
+  border: solid 2px var(--text-color) !important;
+}
+
+button:hover:enabled {
+  border: solid 2px var(--text-color) !important;
+}
+
 /* #next-pane-btn, #prev-pane-btn, #update-btn, #vote-btn {
   background: none;
   border: solid 1px var(--button);
@@ -540,7 +548,7 @@ table {
   border-collapse: collapse;
   border: 2px solid var(--text-color);
   background-color: var(--overlay);
-  margin-top: -35px;
+  margin-top: -50px;
 }
 
 th, td {
@@ -549,6 +557,7 @@ th, td {
   padding-left: 15px;
   padding-right: 15px;
   text-align: left;
+  font-size: 0.95em;
   /* width: 400px; */
 }
 

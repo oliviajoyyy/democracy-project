@@ -167,6 +167,15 @@ button[disabled] {
   color: grey; /*darkslategray; darkgrey;  */
 }
 
+button.btn-active {
+  border: solid 2px var(--text-color) !important;
+}
+
+button:hover:enabled {
+  border: solid 2px var(--text-color) !important;
+}
+
+
 #start-desc {
   border-radius: 3px;
   display: none;
