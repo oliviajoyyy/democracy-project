@@ -1,14 +1,4 @@
 
-//V1 TO DO
-//Work on Diplay Text Design (transparen overlay)
-//Resize User input boxes
-//GUI for User input?
-
-//TO DO - These require a configuration of the Logic. A potential future project. The code will be made available via Github
-// Allow users to change the number of decision-making units:
-// Allow users to change the configuration and logical interdependencies of decision-making units:
-// see: https://docs.google.com/document/d/118letZLbFm9D3QhtOtrdhQvJU4OJxYWr6OiAuUlJTjA/edit?usp=sharing
-
 var mgr;
 var engine;
 var visual;
@@ -81,8 +71,8 @@ var reconfigBool = true;
 var onePartyBool = false;
 
 // colors
-var bColor; // = "#012244";
-var pColor; // = "#3c1b36";
+var bColor;
+var pColor;
 var textColor;
 var colorOverlay;
 var rectColor;
@@ -116,6 +106,7 @@ var MAX_SIM_RESULTS = 12; // run simulation 12 times for the 12 benchmarking tes
 
 var showPanesBool = true;
 
+// for hardware
 var port;
 var connectBtn;
 var enableHardware = true; // true
@@ -124,7 +115,7 @@ function preload() {
   helvFont = loadFont('../democracy-engine-congressional-simulator/assets/font/HelveticaNeue-Regular.otf');
   loadingImage = loadImage('../democracy-engine-congressional-simulator/assets/gears-icon.png');
   enterImage = loadImage('../democracy-engine-congressional-simulator/assets/asraProgress.png');
-  checkImage = loadImage('../democracy-engine-congressional-simulator/assets/check-mark-bkg-col.svg'); // check with color of bkg for voting members
+  checkImage = loadImage('../democracy-engine-congressional-simulator/assets/check-mark-bkg-col.svg'); // check mark with color of bkg for voting members
   configJSON = loadJSON('../democracy-engine-congressional-simulator/config/config.json');
   
   console.log(configJSON);
@@ -185,7 +176,7 @@ function setup() {
   console.log("end of scene-mgr.js setup");
 }
 
-var arr; 
+var arr; // global reading from hardware
 function draw() {
   arr = port.readBytes(14);
   mgr.draw();
@@ -225,6 +216,8 @@ function hardwareSetup() {
   // sendBtn.position(500, 450);
   // sendBtn.mousePressed(sendBtnClick);
 }
+
+// vars for hardware controls 
 var arrPrev = 200;
 var movePanes = true;
 var hardwareHideShow = false;
@@ -241,6 +234,9 @@ var hardwareMidBtn = false;
 var hRightBtn = false;
 var hardwareRightBtn = false;
 
+/**
+ * Enables hardware controls for specific scenes
+ */
 function checkHardwareInput() {
   if (!port) {
     console.log("no port");
@@ -252,7 +248,8 @@ function checkHardwareInput() {
   if (mgr.isCurrent(startSession) || mgr.isCurrent(loadSessionS1) || mgr.isCurrent(sEndorse)) {
     //let arr = port.readBytes(14); 
 
-    if (arr[9] == 200) { // left btn
+    if (arr[9] == 200) { // left btn pressed down
+      // indicate button was clicked on UI
       if (mgr.isCurrent(startSession)) {
         document.getElementById('about-btn-a02').classList.add('btn-active');
       } else if (mgr.isCurrent(loadSessionS1)) {
@@ -262,7 +259,8 @@ function checkHardwareInput() {
       }
       hardwareLeftBtn = true;
 
-    } else if (arr[9] == 0) {
+    } else if (arr[9] == 0) { // left btn not pressed down
+      // return button indication back to normal
       if (mgr.isCurrent(startSession)) {
         document.getElementById('about-btn-a02').classList.remove('btn-active');
       } else if (mgr.isCurrent(loadSessionS1)) {
@@ -270,13 +268,15 @@ function checkHardwareInput() {
       } else if (mgr.isCurrent(sEndorse)) {
         document.getElementById('restart-btn-c03').classList.remove('btn-active');
       }
+
+      // after one click, allow it to do as its supposed to in the scene
       if (hardwareLeftBtn == true) {
-        hLeftBtn = true;
+        hLeftBtn = true; // indicates button was clicked once
       }
       hardwareLeftBtn = false;
     }
 
-    if (arr[10] == 200) { // middle btn
+    if (arr[10] == 200) { // middle btn pressed down
       if (mgr.isCurrent(startSession)) {
         document.getElementById('load-session-btn-a02').classList.add('btn-active');
       } else if (mgr.isCurrent(loadSessionS1)) {
@@ -286,7 +286,7 @@ function checkHardwareInput() {
       }
       hardwareMidBtn = true;
 
-    } else if (arr[10] == 0) {
+    } else if (arr[10] == 0) { // middle btn not pressed down
       if (mgr.isCurrent(startSession)) {
         document.getElementById('load-session-btn-a02').classList.remove('btn-active');
       } else if (mgr.isCurrent(loadSessionS1)) {
@@ -295,12 +295,12 @@ function checkHardwareInput() {
         document.getElementById('approve-btn').classList.remove('btn-active');
       }
       if (hardwareMidBtn == true) {
-        hMidBtn = true;
+        hMidBtn = true; // one button click 
       }
       hardwareMidBtn = false;
     }
 
-    if (arr[11] == 200) {
+    if (arr[11] == 200) { // right btn pressed down
       if (mgr.isCurrent(startSession)) {
         document.getElementById('new-session-btn-a02').classList.add('btn-active');
       } else if (mgr.isCurrent(loadSessionS1)) {
@@ -310,7 +310,7 @@ function checkHardwareInput() {
       }
       hardwareRightBtn = true;
 
-    } else if (arr[10] == 0) { // right btn
+    } else if (arr[10] == 0) { // right btn not pressed down
       if (mgr.isCurrent(startSession)) {
         document.getElementById('new-session-btn-a02').classList.remove('btn-active');
       } else if (mgr.isCurrent(loadSessionS1)) {
@@ -323,20 +323,6 @@ function checkHardwareInput() {
       }
       hardwareRightBtn = false;
     }
-
-    // // loadSessionS1 also uses middle button to cycle thru sessions
-    // if (mgr.isCurrent(loadSessionS1)) {
-    // // update button on joystick
-    // // there are functions in specific scenes that are called when this button is clicked (hardwareUpdate = true)
-    // if (arr[8] == 200) {
-    //   hardwareUpdate = true;
-    // } else if (arr[8] == 0) {
-    //   if (hardwareUpdate == true) {
-    //     hCycle = true;
-    //   }
-    //   hardwareUpdate = false;
-    // }
-    // }
 
   } else
 
@@ -414,20 +400,7 @@ function checkHardwareInput() {
       }
       hardwareRightBtn = false;
     }
-  } //else 
-
-  // these scenes use only the right button
-  // if (mgr.isCurrent(sBenchmarkPane)) {
-  //   let arr = port.readBytes(14); 
-  //   if (arr[11] == 200) { // right btn
-  //     hardwareRightBtn = true;
-  //   } else if (arr[10] == 0) {
-  //     if (hardwareRightBtn == true) {
-  //       hRightBtn = true;
-  //     }
-  //     hardwareRightBtn = false;
-  //   }
-  // }
+  } 
   
   // slider scenes
   if (mgr.isCurrent(sBodies) || mgr.isCurrent(sLegislative) || mgr.isCurrent(sParties) || mgr.isCurrent(sMembersFirstChamber) || 
@@ -435,11 +408,6 @@ function checkHardwareInput() {
   mgr.isCurrent(sBodyPass) || mgr.isCurrent(sYesVotes) || mgr.isCurrent(sVote) || mgr.isCurrent(sBenchmarkPane) ) {
     
     //let arr = port.readBytes(14); 
-
-    // if (arr[1]) {
-    // let s1 = round(map(arr[1], 10, 245, 1, 3, true));
-    // console.log("s1: " + s1);
-    // }
 
     // left joystick or left button to go to prev pane
     if (arr[6] == 200 || arr[9] == 200) {
@@ -476,9 +444,7 @@ function checkHardwareInput() {
       if (hardwareHide == true) {
         if (showPanesBool == true) {
           showPanesBool = false;
-        } //else {
-        //   showPanesBool = true;
-        // }
+        }
       }
       hardwareHide = false;
     }
@@ -490,9 +456,7 @@ function checkHardwareInput() {
       if (hardwareShow == true) {
         if (showPanesBool == false) {
           showPanesBool = true;
-        } //else {
-        //   showPanesBool = true;
-        // }
+        } 
       }
       hardwareShow = false;
     }
@@ -507,9 +471,7 @@ function checkHardwareInput() {
       }
       hardwareUpdate = true;
     } else if (arr[8] == 0 || arr[10] == 0) {
-      // if (hardwareUpdate == true) {
-      //   console.log("update button hardware clicked");
-      // }
+
       if (mgr.isCurrent(sVote) && document.getElementById('vote-btn')) {
         document.getElementById('vote-btn').classList.remove('btn-active');
       } else if (document.getElementById('update-btn')) {
@@ -517,32 +479,6 @@ function checkHardwareInput() {
       }
       hardwareUpdate = false;
     }
-
-  //   if (!mgr.isCurrent(sBenchmarkPane)) {
-  //   if (arr[9] == 200) { // left btn
-  //     hardwarePrevPane = true;
-  //   } else if (arr[9] == 0) {
-  //     if (hardwarePrevPane == true) {
-  //       previousPane();
-  //     }
-  //     hardwarePrevPane = false;
-  //   }
-
-  //   if (arr[10] == 200) { // middle btn
-  //     hardwareUpdate = true;
-  //   } else if (arr[10] == 0) {
-  //     hardwareUpdate = false;
-  //   }
-
-  //   if (arr[11] == 200) {
-  //     hardwareNextPane = true;
-  //   } else if (arr[10] == 0) { // right btn
-  //     if (hardwareNextPane == true) {
-  //       nextPane();
-  //     }
-  //     hardwareNextPane = false;
-  //   }
-  // }
 
     if (mgr.isCurrent(sBenchmarkPane)) {
       //let arr = port.readBytes(14); 
@@ -561,65 +497,16 @@ function checkHardwareInput() {
         hardwareRightBtn = false;
       }
     }
-    
-    // if (arr[7] == 200 && arrPrev != 200) {
-    //   arrPrev = 0;
-    //   nextPane();
-    // }
-
-    // //console.log("arr[6] = " + arr[6]);
-    // if (arr[6] == 200) {
-    //   hardwarePrevPane = true;
-    // } else if (arr[6] == 0) {
-    //   if (hardwarePrevPane == true) {
-    //     previousPane();
-    //   }
-    //   hardwarePrevPane = false;
-    // }
-
-    // //console.log("arr[7] = " + arr[7]);
-    // if (arr[7] == 200) {
-    //   hardwareNextPane = true;
-    // } else if (arr[7] == 0) {
-    //   if (hardwareNextPane == true) {
-    //     nextPane();
-    //   }
-    //   hardwareNextPane = false;
-    // }
-
-    // //console.log("arr[8] = " + arr[8]);
-    // if (arr[8] == 200) {
-    //   hardwareHideShow = true;
-    // } else if (arr[8] == 0) {
-    //   if (hardwareHideShow == true) {
-    //     if (showPanesBool == true) {
-    //       showPanesBool = false;
-    //     } else {
-    //       showPanesBool = true;
-    //     }
-    //   }
-    //   hardwareHideShow = false;
-    // }
-
-    // console.log("arr[10] = " + arr[10]);
-    // if (arr[10] == 200) {
-    //   hardwareUpdate = true;
-    // } else if (arr[10] == 0) {
-    //   // if (hardwareUpdate == true) {
-    //   //   console.log("update button hardware clicked");
-    //   // }
-    //   hardwareUpdate = false;
-    // }
   }
-
 }
 
 /**
- * Show next pane scene, control order
+ * Show next pane scene, to control order.
+ * De-activates indication on current dot on progress.
  */
 function nextPane() {
   if (mgr.isCurrent(sBodies)) {
-    document.getElementById('dot-p01').className = 'dot'; // deactivate dot on pane before moving to next pane
+    document.getElementById('dot-p01').className = 'dot'; // de-activate dot on pane before moving to next pane
     mgr.showScene(sLegislative);
   } else if (mgr.isCurrent(sLegislative)) {
     document.getElementById('dot-p02').className = 'dot';
@@ -661,7 +548,8 @@ function nextPane() {
 }
 
 /**
- * Show previous pane scene
+ * Show previous pane scene.
+ * De-activates current dot indication.
  */
 function previousPane() {
   if (mgr.isCurrent(sLegislative)) {
@@ -735,7 +623,7 @@ function setDefaultUserVars() {
   userPerHouse2Body[2] = govtConfig.chamber2.partyC / userNumHouse2;
 
   userNumSenate = govtConfig.chamber3.totalMembers;
-  if (userNumSenate == 0) {
+  if (userNumSenate == 0) { // if no members in chamber 3, set values to 0
     userPerSenateBody[0] = 0;
     userPerSenateBody[1] = 0;
     userPerSenateBody[2] = 0;
@@ -846,32 +734,37 @@ function setEngineParams(engine) {
 
   //supermajority Cutoff for override of presidential veto
   engine.superThresh = parseFloat(userSuperThresh) / 100.0;
-  console.log("superThresh: " + engine.superThresh);
+  // console.log("superThresh: " + engine.superThresh);
 
   //supermajority in a body
   engine.perPass = parseFloat(userBodyPass) / 100.0;
-  console.log("per pass: " + engine.perPass);
+  // console.log("per pass: " + engine.perPass);
 
   //Historical Likelihood of party affiliation & likelihood of 'yay' vote
   engine.repYaythresh = parseFloat(userRepYaythresh) / 100.0;
-  console.log("rep yay thresh: " + engine.repYaythresh);
+  // console.log("rep yay thresh: " + engine.repYaythresh);
   engine.demYaythresh = parseFloat(userDemYaythresh) / 100.0;
-  console.log("dem yay thresh: " + engine.demYaythresh);
+  // console.log("dem yay thresh: " + engine.demYaythresh);
   engine.indYaythresh = parseFloat(userIndYaythresh) / 100.0;
-  console.log("ind yay thresh: " + engine.indYaythresh);
+  // console.log("ind yay thresh: " + engine.indYaythresh);
 }
 
+/**
+ * Rounds a given number to the specified number decimal places
+ * @param {*} value - the value to tround
+ * @param {*} decimals - number of decimal places
+ * @returns the value rounded to the specified decimal places
+ */
 function roundNum(value, decimals) {
   return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
 }
 
-// //changes the text on the HTML body for final voting decision
-// function changeText(text) {
-//   document.getElementById("result").innerHTML = text;
-// }
+const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // for appended characters to session ID
 
-const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
+/**
+ * Generates the session ID.
+ * @returns the session ID as a string
+ */
 function getSessionID() {
   var curDate = new Date();
   var curTime = hour().toString().padStart(2, '0') + "_" + minute().toString().padStart(2, '0') + "_" + second().toString().padStart(2, '0');
@@ -880,7 +773,10 @@ function getSessionID() {
   return id;
 }
 
-// OC call when app first opened and at end of saveSession
+/**
+ * Creates a new session.
+ * Tracks history of last 10 configs, final config + benchmark results, and endorsements.
+ */
 function newSession() {
   // generate new session ID
   sessionID = getSessionID();
@@ -903,11 +799,14 @@ function newSession() {
   sessionObj = {
     "timestamp": getTimestamp(),
     "uniqueID": sessionID,
-    "configHistory": configs, // array of last 9 configurations
+    "configHistory": configs, // array of last 10 configurations
     "finalConfig": finalConfigObj
   }
 }
 
+/**
+ * Saves the session to the database and creates a new session.
+ */
 function saveSession() {
   sessionObj.finalConfig.config = configs[configs.length - 1]// set final configuration in the session object
   addSession(sessionObj); // add session document/record to the database
@@ -915,37 +814,36 @@ function saveSession() {
   newSession(); // create new session
 }
 
+/**
+ * Adds a new config and its result to the history by updating the global session object.
+ */
 // OC call after results are displayed to the screen
 // configIX and resultIX get updated as app is used
 function updateSession() {
-  //addResult(resultIX);
   addConfig();
   console.log("config added");
   addResult(configIX); // add result to this configuration
-  //addConfig();
-
   sessionObj.configHistory = configs;
-  //sessionObj.finalConfig = finalConfigObj;
-
-  // sessionObj = {
-  //   "uniqueID": sessionID,
-  //   "configHistory": configs,
-  //   "finalConfig": finalConfigObj
-  // }
-
   console.log(sessionObj);
   //configIX++;
 }
 
-// toggle for owner endorsement/approval
+/**
+ * Toggle the owner endorsement.
+ * 1 = endorsed, 0 = not endorsed
+ */
 function ownerEndorse() {
   if (finalConfigObj.ownerEndorsement == 0) {
-    finalConfigObj.ownerEndorsement = 1;
+    finalConfigObj.ownerEndorsement = 1; // endorsed
   } else {
-    finalConfigObj.ownerEndorsement = 0;
+    finalConfigObj.ownerEndorsement = 0; // not endorsed
   }
 }
 
+/**
+ * Generates the formatted timestamp.
+ * @returns the timestamp as a string
+ */
 function getTimestamp() {
   var curDate = new Date();
   var curTime = hour().toString().padStart(2, '0') + ":" + minute().toString().padStart(2, '0') + ":" + second().toString().padStart(2, '0');
@@ -953,9 +851,11 @@ function getTimestamp() {
   return timestamp;
 }
 
+/**
+ * Adds a configuration to the history of configs array
+ */
 function addConfig() {
   // create/add json object at this ix in the config array
-
     configs[configIX] = {
       timestamp: getTimestamp(),
       numLegislativeBodies: engine.numLegislativeBodies,
@@ -1007,15 +907,12 @@ function addConfig() {
 
       simResults: results // OC just set the resutls array, then call addResult afterward
 } 
-  
-
-  
-  //addResult(configIX);
 }
 
-// OC add json obj of the result to the result array for this configuration
+/**
+ * Adds json object of the result to the result array for this configuration
+ */
 function addResult(pConfigIX) {
-
   // let ran = floor(random(10)); // get an integer 0-9
   // var act = historicalActs[ran]; // get random act
   var aTitle;
@@ -1026,7 +923,6 @@ function addResult(pConfigIX) {
   }
 
   // for this configuration, add the result to the array
-
     results[resultIX] = {
 
       actTitle: aTitle,
@@ -1070,6 +966,10 @@ function addResult(pConfigIX) {
   
 }
 
+/**
+ * Retrieves all sessions from the database.
+ * @returns an array of all sessions saved in the database
+ */
 function getAllSessions() {
   var sessionsArr;
   getSessions().then((result) => {
@@ -1079,7 +979,11 @@ function getAllSessions() {
   return sessionsArr;
 }
 
+/**
+ * Allow keys to control moving between panes and toggling panes.
+ */
 function keyPressed() {
+  // RETURN key toggles panes
   if (keyCode == RETURN) {
     if (showPanesBool == false) {
       showPanesBool = true;
@@ -1088,14 +992,17 @@ function keyPressed() {
       showPanesBool = false;
     }
   } else if (key == '.' || key == '>') {//else if (keyCode == RIGHT_ARROW) {
-    nextPane();
+    nextPane(); // . or > moves to next pane
   } else if (key == ',' || key == '<') {//else if (keyCode == LEFT_ARROW) {
-    previousPane();
+    previousPane(); // , or < moves to previous pane
   }
   keyCode == null;
   key = '';
 }
 
+/**
+ * Toggles hiding and showing the pane.
+ */
 function paneToggle() {
   if (showPanesBool) {
     // if (mgr.isCurrent(SCENE));
@@ -1103,16 +1010,13 @@ function paneToggle() {
     document.getElementById("pane-bkg").style.display = "block"; 
     document.getElementById("button-div").style.display = "block";
     document.getElementById("top").style.display = "block";
-    document.getElementById("screen").style.display = "block"; // comment out if want only on first 3 panes
+    document.getElementById("screen").style.display = "block";
     if (mgr.isCurrent(sBodies)) {
       document.getElementById("page1").style.display = "block";
-      //document.getElementById("screen").style.display = "block"; // comment out if want on all panes
     } else if (mgr.isCurrent(sLegislative)) {
       document.getElementById("page2").style.display = "block";
-      //document.getElementById("screen").style.display = "block";
     } else if (mgr.isCurrent(sParties)) {
       document.getElementById("page3").style.display = "block";
-      //document.getElementById("screen").style.display = "block";
     } else if (mgr.isCurrent(sMembersFirstChamber)) {
       document.getElementById("page4").style.display = "block";
     } else if (mgr.isCurrent(sMembersSecondChamber)) {
@@ -1158,5 +1062,4 @@ function paneToggle() {
       document.getElementById("page13").style.display = "none";
       document.getElementById("slider-disp").style.display = "none";
   }
-
 }

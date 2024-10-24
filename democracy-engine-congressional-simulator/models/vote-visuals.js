@@ -1,7 +1,8 @@
 /**
- * file: vote-visual.js
  * This class is used for drawing the result of the democracy engine to the screen.
  * Rectangles represent each vote and text describes the final result.
+ * 
+ * File: vote-visuals.js
  */
 
 class VoteVisual {
@@ -31,7 +32,6 @@ class VoteVisual {
   //Determines size of circle & spacing
   skip; //taking the square root of the area of the drawing
   skip2;
-  // skipR; strange artifact from Rhonda
 
   //Location Circle is Drawn
   x;
@@ -65,7 +65,6 @@ class VoteVisual {
 
   tranVal = 255;
   labelSpace; // set in slide-scenes.js sBodies()
-  // let fadeOpac = 255;
   partyNum = 0;
   moveArrow = 0;
 
@@ -73,9 +72,9 @@ class VoteVisual {
 
   stopVoteBool = false;
 
-  numDem;
-  numRep;
-  numWild;
+  numDem; // Party A
+  numRep; // Party B
+  numWild; // Party C
 
   // for canvas
   dWidth;
@@ -90,6 +89,7 @@ class VoteVisual {
 
   /**
    * Sets loading image and background color properties
+   * 
    * @param {image} img - loading image bitmap
    * @param {image} img2 - check mark image
    * @param {color} bK - color for background
@@ -115,7 +115,8 @@ class VoteVisual {
   }
 
   /**
-   * Draws boxes to screen to visualize voting results
+   * Draws boxes to screen one by one for each chamber to visualize voting results.
+   * 
    * @param {DemocracyEngine} engineObj - the engine object to draw the votes for
    */
   displayVoting(engineObj) {
@@ -133,25 +134,24 @@ class VoteVisual {
 
     //print('VISUAL CLASS numBodies = ' + this.numBodies);
 
-    // Logic for House
+    // Logic for Chamber 1
     if (this.bodyCount == 0) {
 
       // Setup variables first time we pass through the first body
       if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
         this.test = 0;
-        // print('VISUAL CLASS logic for house bodyCount = ' + this.bodyCount);
-        // print(this.bodyCount);
+        // print('VISUAL CLASS bodyCount = ' + this.bodyCount);
         background(this.bColor);
 
         // Set number of voting memebers
         this.numCon = this.engine.numHouse;
-        this.bodyLabel = 'HOUSE OF REPRESENTATIVES';
+        this.bodyLabel = 'HOUSE OF REPRESENTATIVES'; // label for default config
 
         //Set Demographics for each body
-        // OC needed in this class to determine box transparency
-        this.numDem = round(this.numCon * this.engine.perDemHouse);
-        this.numRep = round(this.numCon * this.engine.perRepHouse);
-        this.numWild = round(this.numCon * this.engine.perIndHouse);
+        // OC needed in this class to determine box colors for different parties
+        this.numDem = round(this.numCon * this.engine.perDemHouse); // Party A
+        this.numRep = round(this.numCon * this.engine.perRepHouse); // Party B
+        this.numWild = round(this.numCon * this.engine.perIndHouse); // Party C
 
         // OC offset calculated differently between default and user config
         if (this.forUser)
@@ -167,19 +167,14 @@ class VoteVisual {
       }
     }
 
-    // if (this.numBodies == 3) { // house, vp, pres
-    //   this.bodyCount == 1;
-    // }
-
-    // OC skip bodyCount == 1 (senate) when only 1 legislative body
+    // OC skip chamber 2 and 3 when only 1 legislative body
     if (this.bodyCount == 1 && this.engine.numLegislativeBodies == 1) {
-      this.bodyCount += 2; // skip house2 and senate
-      //this.endBody = 1;
+      this.bodyCount += 2; // skip chambers 2-3
     } else if (this.bodyCount == 2 && this.engine.numLegislativeBodies == 2) {
-      this.bodyCount++; // skip chamber3
+      this.bodyCount++; // skip chamber3 when only 2 legislative bodies
     }
     
-    //Logic for House2
+    // Logic for Chamber 2
     if (this.bodyCount == 1) {
       strokeWeight(10);
       translate(this.offSet * this.bodyCount, 0);
@@ -191,16 +186,13 @@ class VoteVisual {
 
       // Setup variables first time we pass through a new body
       if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
-        // if (this.engine.numLegislativeBodies == 1) {
-        //   this.bodyCount++;
-        // } else {
+        
         this.test = 0;
         // print('VISUAL CLASS bodyCount = ')
-        // print(this.bodyCount);
 
         ///Set number of voting memebers
         this.numCon = this.engine.numHouse2;
-        this.bodyLabel = 'SENATE';
+        this.bodyLabel = 'SENATE'; // labeled for default config
 
         //Set Demographics for each body
         this.numDem = round(this.numCon * this.engine.perDemHouse2);
@@ -213,16 +205,11 @@ class VoteVisual {
         // print('Skip = ' + this.skip); //testing
         this.x = this.skip / 2;
         this.y = this.skip / 2;
-
-        // print('v Count = ' + this.count); //fortesting
-        // print('v Count1 = ' + this.count1); //fortesting
-        // print('v Count2 = ' + this.count2); //fortesting
-        //}
       }
 
     }
 
-    //Logic for Senate
+    // Logic for Chamber 3
     if (this.bodyCount == 2) {
       strokeWeight(10);
 
@@ -245,12 +232,9 @@ class VoteVisual {
 
       // Setup variables first time we pass through a new body
       if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
-        // if (this.engine.numLegislativeBodies == 1) {
-        //   this.bodyCount++;
-        // } else {
+
         this.test = 0;
         // print('VISUAL CLASS bodyCount = ')
-        // print(this.bodyCount);
 
         ///Set number of voting memebers
         this.numCon = this.engine.numSenate;
@@ -268,11 +252,6 @@ class VoteVisual {
         // print('Skip = ' + this.skip); //testing
         this.x = this.skip / 2;
         this.y = this.skip / 2;
-
-        // print('v Count = ' + this.count); //fortesting
-        // print('v Count1 = ' + this.count1); //fortesting
-        // print('v Count2 = ' + this.count2); //fortesting
-        //}
       }
 
     }
@@ -304,7 +283,6 @@ class VoteVisual {
       if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
         this.test = 0;
         // print('VISUAL CLASS bodyCount = ')
-        // print(this.bodyCount);
 
         ///Set number of voting memebers
         this.numCon = this.engine.numVP;
@@ -326,7 +304,7 @@ class VoteVisual {
       }
     }
 
-    //Logic for President
+    // Logic for President
     if (this.bodyCount == 4) {
       strokeWeight(10);
 
@@ -358,7 +336,6 @@ class VoteVisual {
       if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
         this.test = 0;
         // print('VISUAL CLASS bodyCount = ')
-        // print(this.bodyCount);
 
         // Set number of voting memebers
         if (this.engine.numPres != 0) {
@@ -392,8 +369,6 @@ class VoteVisual {
         this.rotLoadImage();
         this.testSize();
         this.count++;
-        // print('v Count = ' + this.count); //fortesting
-        // print('v Count1 = ' + this.count1); //fortesting
       }
 
     } else if (this.count >= this.numCon - 1) {
@@ -401,21 +376,25 @@ class VoteVisual {
       for (let i = 0; i < 3; i++) { // OC draws 3 boxes every draw loop, drawing performace improved
         this.bodyVote();
         this.count1++;
-        //print ('Count1 = ' + count1); //fortesting
-        //print ('skip * Y = ' + (yCountT * skip));
       }
 
     }
 
   }
 
+  /**
+   * Draws the bar graph for majority and supermajority percentages
+   * @param {*} leftX - x position left
+   * @param {*} rightX - x position right
+   * @param {*} gOffsetY - y position from top of screen
+   */
   percentageGraphs(leftX, rightX, gOffsetY) {
     push();
     let gWidth = rightX - leftX - 5; // graph width, make max space of remaining edge
     let gHeight = 300; // graph height
     //let gOffsetY = this.dHeight/4; // y offset for graph
     if (gOffsetY + gHeight > this.dHeight) {
-      gOffsetY = this.dHeight-gHeight- 5;
+      gOffsetY = this.dHeight-gHeight- 5; // prevent box from overflowing
     }
     let offY = 30;
     let gBarH = 15; // graph Bar height
@@ -440,7 +419,6 @@ class VoteVisual {
     text("MAJORITY", 10, 65, gWidth);
     text("SUPER MAJORITY", 10, 95, gWidth);
 
-    //if (paneNumber >= 9) {
     let bStart = 130; // x coord of bar
     let bMax = gWidth-bStart-50; // bar at 100%, leave space for number
     let mBar = map(parseInt(this.engine.perPass * 100), 0, 100, 0, bMax); // majority bar graph
@@ -449,14 +427,13 @@ class VoteVisual {
     fill(this.mColor);
     rect(bStart, 65, mBar, gBarH);
 
-    let smBar = map(parseInt(this.engine.superThresh * 100), 0, 100, 0, bMax); // majority bar graph
+    let smBar = map(parseInt(this.engine.superThresh * 100), 0, 100, 0, bMax); // super majority bar graph
     fill(this.tColor);
     textSize(numSz);
     text(parseInt(this.engine.superThresh * 100) + "%", bStart+smBar+5, 97);
     fill(this.smColor);
     rect(bStart, 95, smBar, gBarH);
     //console.log("smBar: " + smBar + " range: " + bStart + " to " + bMax);
-    //}
 
     translate(0, 140);
     textSize(titleSz);
@@ -465,16 +442,7 @@ class VoteVisual {
     fill(this.tColor);
     noStroke();
     text("PROBABILITY OF AFFIRMATIVE VOTE", 10, 10, gWidth);
-    // textSize(18);
-    // text("Party A", 10, 70, gWidth);
-    // if (this.engine.numParties >= 2) {
-    //   text("Party B", 10, 100, gWidth);
-    //   if (this.engine.numParties == 3) {
-    //     text("Party C", 10, 130, gWidth);
-    //   }
-    // }
     
-    //if (paneNumber >= 10) {
     bStart = 85; // x coord of bar
     bMax = gWidth-bStart-50; // bar at 100%, leave space for number
     let partyABar = map(parseInt(this.engine.demYaythresh * 100), 0, 100, 0, bMax); // majority bar graph
@@ -507,23 +475,23 @@ class VoteVisual {
         rect(bStart, 125, partyCBar, gBarH);
       }
     }
-    //}
 
     pop();
   }
 
   /**
-   * Displays configuration with blank boxes, graph of percentages on right side of screen,
+   * Immediately displays configuration with blank boxes (no votes) with chamber labels, 
+   * graph of percentages on right side of screen,
    * and labels above each chamber.
-   * If minimalConfig == true, it does not display the graph nor chamber labels.
-   * @param {*} engineObj 
-   * @param {*} minimalConfig 
+   * 
+   * @param {*} engineObj - engine object to display for
+   * @param {*} minimalConfig - bool, if true does not display the graph nor chamber labels.
    */
   displayImmediateBlank(engineObj, minimalConfig) {
     this.engine = engineObj;
     this.forUser = this.engine.forUser;
     var drawWidth = this.dWidth;
-    //if (paneNumber == 9) {
+
     if (!minimalConfig) {
       drawWidth = this.dWidth - (this.dWidth/5.5); // drawWidth is up to edge where pres box is drawn
       this.percentageGraphs(drawWidth, this.dWidth, this.dHeight/4);
@@ -540,22 +508,20 @@ class VoteVisual {
 
     //print('VISUAL CLASS numBodies = ' + this.numBodies);
 
-    // while(this.bodyCount < this.numBodies) {
     //for(let ix=0; ix < this.numBodies; ix++) {
 
-    // Logic for House
+    // Logic for Chamber 1
     if (this.bodyCount == 0) {
 
       // Setup variables first time we pass through the first body
       if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
         this.test = 0;
         // print('VISUAL CLASS logic for house bodyCount = ' + this.bodyCount);
-        // print(this.bodyCount);
         background(this.bColor);
 
         // Set number of voting memebers
         this.numCon = this.engine.numHouse;
-        this.bodyLabel = 'HOUSE OF REPRESENTATIVES';
+        this.bodyLabel = 'HOUSE OF REPRESENTATIVES'; // labeled for default
 
         //Set Demographics for each body
         // OC needed in this class to determine box transparency
@@ -581,15 +547,14 @@ class VoteVisual {
       }
     }
 
-    // OC skip bodyCount == 1 (senate) when only 1 legislative body
+    // OC skip chambers when not needed
     if (this.bodyCount == 1 && this.engine.numLegislativeBodies == 1) {
-      this.bodyCount += 2; // skip house2 and senate
-      //this.endBody = 1;
+      this.bodyCount += 2; // skip chambers 2-3
     } else if (this.bodyCount == 2 && this.engine.numLegislativeBodies == 2) {
-      this.bodyCount++; // skip house2
+      this.bodyCount++; // skip chamber 3
     }
 
-    //Logic for House2
+    // Logic for Chamber 2
     if (this.bodyCount == 1) {
       strokeWeight(10);
       translate(this.offSet * this.bodyCount, 0);
@@ -601,12 +566,9 @@ class VoteVisual {
 
       // Setup variables first time we pass through a new body
       if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
-        // if (this.engine.numLegislativeBodies == 1) {
-        //   this.bodyCount++;
-        // } else {
+
         this.test = 0;
         // print('VISUAL CLASS bodyCount = ')
-        // print(this.bodyCount);
 
         ///Set number of voting memebers
         this.numCon = this.engine.numHouse2;
@@ -617,17 +579,12 @@ class VoteVisual {
         this.numRep = round(this.numCon * this.engine.perRepHouse2);
         this.numWild = round(this.numCon * this.engine.perIndHouse2);
 
-
         //Figure out how big to draw the circles and how far to space them out
         this.skip = floor(.97 * (sqrt(this.offSet * this.dHeight / this.numCon)));
         // print('Skip = ' + this.skip); //testing
         this.x = this.skip / 2;
         this.y = this.skip / 2;
 
-        // print('v Count = ' + this.count); //fortesting
-        // print('v Count1 = ' + this.count1); //fortesting
-        // print('v Count2 = ' + this.count2); //fortesting
-        //}
         if (!minimalConfig) {
           this.configLabel("CHAMBER 2");
         }
@@ -635,15 +592,13 @@ class VoteVisual {
 
     }
 
-    //Logic for Senate
+    // Logic for Chamber 3
     if (this.bodyCount == 2) {
       strokeWeight(10);
 
       var translateVal = this.bodyCount;
       // OC move translation to left when only 1 legislaive body
       if (this.engine.numLegislativeBodies == 1) {
-      //   translateVal = this.bodyCount - 1;
-      // }
         translateVal = this.bodyCount - 2;
       } else if (this.engine.numLegislativeBodies == 2) {
         translateVal = this.bodyCount - 1;
@@ -658,12 +613,9 @@ class VoteVisual {
 
       // Setup variables first time we pass through a new body
       if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
-        // if (this.engine.numLegislativeBodies == 1) {
-        //   this.bodyCount++;
-        // } else {
+
         this.test = 0;
         // print('VISUAL CLASS bodyCount = ')
-        // print(this.bodyCount);
 
         ///Set number of voting memebers
         this.numCon = this.engine.numSenate;
@@ -677,15 +629,10 @@ class VoteVisual {
 
         //Figure out how big to draw the circles and how far to space them out
         this.skip = floor(.97 * (sqrt(this.offSet * this.dHeight / this.numCon)));
-        // console.log("con: " + this.numCon);
         // print('Skip = ' + this.skip); //testing
         this.x = this.skip / 2;
         this.y = this.skip / 2;
 
-        // print('v Count = ' + this.count); //fortesting
-        // print('v Count1 = ' + this.count1); //fortesting
-        // print('v Count2 = ' + this.count2); //fortesting
-        //}
         if (!minimalConfig) {
         this.configLabel("CHAMBER 3");
         }
@@ -702,8 +649,6 @@ class VoteVisual {
 
       // OC move translation to left when only 1 legislaive body
       if (this.engine.numLegislativeBodies == 1) {
-      //   translateVal = this.bodyCount - 1;
-      // }
         translateVal = this.bodyCount - 2;
       } else if (this.engine.numLegislativeBodies == 2) {
         translateVal = this.bodyCount - 1;
@@ -720,7 +665,6 @@ class VoteVisual {
       if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
         this.test = 0;
         // print('VISUAL CLASS bodyCount = ')
-        // print(this.bodyCount);
 
         ///Set number of voting memebers
         this.numCon = this.engine.numVP;
@@ -746,7 +690,7 @@ class VoteVisual {
       }
     }
 
-    //Logic for President
+    // Logic for President
     if (this.bodyCount == 4) {
       strokeWeight(10);
 
@@ -754,8 +698,6 @@ class VoteVisual {
 
       // OC move translation to left when only 1 legislaive body
       if (this.engine.numLegislativeBodies == 1) {
-      //   translateVal = this.bodyCount - 1;
-      // }
         translateVal = this.bodyCount - 2;
       } else if (this.engine.numLegislativeBodies == 2) {
         translateVal = this.bodyCount - 1;
@@ -811,20 +753,11 @@ class VoteVisual {
 
     for (let jx=0; jx < this.numCon; jx++) {
       if (this.count < this.numCon - 1 && this.count1 < 1) {
-
-        //for (let i = 0; i < 3; i++) { // OC loading image stays on screen for less time it used to
-          //this.rotLoadImage();
           this.testSize();
           this.count++;
-          // print('v Count = ' + this.count); //fortesting
-          // print('v Count1 = ' + this.count1); //fortesting
-        //}
-  
       } else if (this.count >= this.numCon - 1) {
-  
-        //for (let i = 0; i < 3; i++) { // OC draws 3 boxes every draw loop, drawing performace improved
-          //this.bodyVote();
-        // draw blank boxes, but shaded according to party
+
+        // draw blank boxes, with colors according to party
         // ---------------------------------------
         if (this.count1 < 1) {
           this.resetDraw();
@@ -837,7 +770,7 @@ class VoteVisual {
           var numRepOrWild;
           var rectColor;
 
-          if (this.forUser) // OC forUser: bool - true if engine is running for user config, false if running default config
+          if (this.forUser) 
             numRepOrWild = this.numRep;
           else
             numRepOrWild = this.numWild;
@@ -849,36 +782,31 @@ class VoteVisual {
           }
           this.diam = this.skip * .8;
 
-          //Democrat is Voting
+          // Party A is Voting
           if (this.countR < this.numDem) {
             // currentTransVal = this.tranVal - currentPartyNum * valAdjust; // party determines tranparency of rectangle
             rectColor = this.rColor;
           }
-          //Independent is Voting
+          // Party C is Voting
           else if (this.countR >= this.numDem && this.countR < this.numDem + numRepOrWild) {
             // currentPartyNum = this.partyNum + 1;
             // currentTransVal = this.tranVal - currentPartyNum * valAdjust;
             rectColor = this.rColor2;
           }
-          //Republican is Voting
+          // Party B is Voting
           else {
             // currentPartyNum = this.partyNum + 2;
             // currentTransVal = this.tranVal - currentPartyNum * valAdjust;
             rectColor = this.rColor3;
           }
 
-          // draw blank boxes with transparency according to parties
+          // draw blank boxes with color to indicate different parties
           rectMode(CENTER);
           // this.rColor.setAlpha(currentTransVal); // different shade for each voting party
           // stroke(this.rColor);
           stroke(rectColor)
           noFill();
           strokeWeight(3);
-
-          //console.log("here to draw rect");
-          // if (this.bodyCount  == 2) {
-          //   console.log("drawing box # " + jx + " for chamber 3");
-          // }
 
           if (this.engine.numPres == 0 && this.bodyCount == 4) { // if no pres, hide rectangle
             stroke(this.bColor); // hide rect
@@ -914,9 +842,12 @@ class VoteVisual {
           this.count1++;
       }
     }
- //}
   }
 
+  /**
+   * Adds text as label above chamber voting boxes
+   * @param {*} labelText - the name of the voting body
+   */
   configLabel(labelText) {
     push();
     textSize(22);
@@ -927,6 +858,10 @@ class VoteVisual {
     pop();
   }
 
+  /**
+   * Immediately displays the voting results for the given engine configuration
+   * @param {*} engineObj 
+   */
   displayImmediateVotes(engineObj) {
     this.engine = engineObj;
     this.forUser = this.engine.forUser;
@@ -942,7 +877,6 @@ class VoteVisual {
 
     //print('VISUAL CLASS numBodies = ' + this.numBodies);
 
-    // while(this.bodyCount < this.numBodies) {
     //for(let ix=0; ix < this.numBodies; ix++) {
 
     // Logic for House
@@ -952,7 +886,6 @@ class VoteVisual {
       if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
         this.test = 0;
         // print('VISUAL CLASS logic for house bodyCount = ' + this.bodyCount);
-        // print(this.bodyCount);
         background(this.bColor);
 
         // Set number of voting memebers
@@ -960,7 +893,7 @@ class VoteVisual {
         this.bodyLabel = 'HOUSE OF REPRESENTATIVES';
 
         //Set Demographics for each body
-        // OC needed in this class to determine box transparency
+        // OC needed in this class to determine box colors
         this.numDem = round(this.numCon * this.engine.perDemHouse);
         this.numRep = round(this.numCon * this.engine.perRepHouse);
         this.numWild = round(this.numCon * this.engine.perIndHouse);
@@ -979,15 +912,15 @@ class VoteVisual {
       }
     }
 
-    // OC skip bodyCount == 1 (senate) when only 1 legislative body
+    // OC skip chambers when not needed
     if (this.bodyCount == 1 && this.engine.numLegislativeBodies == 1) {
-      this.bodyCount += 2; // skip house2 and senate
+      this.bodyCount += 2; // skip chambers 2-3
       //this.endBody = 1;
     } else if (this.bodyCount == 2 && this.engine.numLegislativeBodies == 2) {
-      this.bodyCount++; // skip house2
+      this.bodyCount++; // skip chamber 3
     }
 
-    //Logic for House2
+    // Logic for Chamber 2
     if (this.bodyCount == 1) {
       strokeWeight(10);
       translate(this.offSet * this.bodyCount, 0);
@@ -999,12 +932,9 @@ class VoteVisual {
 
       // Setup variables first time we pass through a new body
       if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
-        // if (this.engine.numLegislativeBodies == 1) {
-        //   this.bodyCount++;
-        // } else {
+
         this.test = 0;
         // print('VISUAL CLASS bodyCount = ')
-        // print(this.bodyCount);
 
         ///Set number of voting memebers
         this.numCon = this.engine.numHouse2;
@@ -1021,24 +951,16 @@ class VoteVisual {
         // print('Skip = ' + this.skip); //testing
         this.x = this.skip / 2;
         this.y = this.skip / 2;
-
-        // print('v Count = ' + this.count); //fortesting
-        // print('v Count1 = ' + this.count1); //fortesting
-        // print('v Count2 = ' + this.count2); //fortesting
-        //}
       }
-
     }
 
-    //Logic for Senate
+    // Logic for Chamber 3
     if (this.bodyCount == 2) {
       strokeWeight(10);
 
       var translateVal = this.bodyCount;
       // OC move translation to left when only 1 legislaive body
       if (this.engine.numLegislativeBodies == 1) {
-      //   translateVal = this.bodyCount - 1;
-      // }
         translateVal = this.bodyCount - 2;
       } else if (this.engine.numLegislativeBodies == 2) {
         translateVal = this.bodyCount - 1;
@@ -1053,12 +975,8 @@ class VoteVisual {
 
       // Setup variables first time we pass through a new body
       if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
-        // if (this.engine.numLegislativeBodies == 1) {
-        //   this.bodyCount++;
-        // } else {
         this.test = 0;
         // print('VISUAL CLASS bodyCount = ')
-        // print(this.bodyCount);
 
         ///Set number of voting memebers
         this.numCon = this.engine.numSenate;
@@ -1076,11 +994,6 @@ class VoteVisual {
         // print('Skip = ' + this.skip); //testing
         this.x = this.skip / 2;
         this.y = this.skip / 2;
-
-        // print('v Count = ' + this.count); //fortesting
-        // print('v Count1 = ' + this.count1); //fortesting
-        // print('v Count2 = ' + this.count2); //fortesting
-        //}
       }
 
     }
@@ -1094,8 +1007,6 @@ class VoteVisual {
 
       // OC move translation to left when only 1 legislaive body
       if (this.engine.numLegislativeBodies == 1) {
-      //   translateVal = this.bodyCount - 1;
-      // }
         translateVal = this.bodyCount - 2;
       } else if (this.engine.numLegislativeBodies == 2) {
         translateVal = this.bodyCount - 1;
@@ -1112,7 +1023,6 @@ class VoteVisual {
       if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
         this.test = 0;
         // print('VISUAL CLASS bodyCount = ')
-        // print(this.bodyCount);
 
         ///Set number of voting memebers
         this.numCon = this.engine.numVP;
@@ -1134,7 +1044,7 @@ class VoteVisual {
       }
     }
 
-    //Logic for President
+    // Logic for President
     if (this.bodyCount == 4) {
       strokeWeight(10);
 
@@ -1142,8 +1052,6 @@ class VoteVisual {
 
       // OC move translation to left when only 1 legislaive body
       if (this.engine.numLegislativeBodies == 1) {
-      //   translateVal = this.bodyCount - 1;
-      // }
         translateVal = this.bodyCount - 2;
       } else if (this.engine.numLegislativeBodies == 2) {
         translateVal = this.bodyCount - 1;
@@ -1166,7 +1074,6 @@ class VoteVisual {
       if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
         this.test = 0;
         // print('VISUAL CLASS bodyCount = ')
-        // print(this.bodyCount);
 
         // Set number of voting memebers
         if (this.engine.numPres != 0) {
@@ -1195,25 +1102,17 @@ class VoteVisual {
 
     for (let jx=0; jx < this.numCon; jx++) {
       if (this.count < this.numCon - 1 && this.count1 < 1) {
-
-        //for (let i = 0; i < 3; i++) { // OC loading image stays on screen for less time it used to
-          //this.rotLoadImage();
           this.testSize();
           this.count++;
-          // print('v Count = ' + this.count); //fortesting
-          // print('v Count1 = ' + this.count1); //fortesting
-        //}
-  
       } else if (this.count >= this.numCon - 1) {
           this.bodyVote();
           this.count1++;
       }
     }
- //}
   }
 
   /**
-   * Rotates loading image on screen where chamber members show
+   * Rotates loading image on screen where chamber vote boxes will be
    */
   rotLoadImage() {
     this.rot += 0.5;
@@ -1260,7 +1159,7 @@ class VoteVisual {
   }
 
   /**
-   * resets counts when passing to new body
+   * Resets counts when passing to new body
    */
   resetCount() {
     //print('Resetting count');
@@ -1290,7 +1189,7 @@ class VoteVisual {
   }
 
   /**
-   * Shows result of the vote
+   * Controls drawing the result of the vote
    */
   bodyVote() {
     fill(map(this.count1, 0, this.numCon, 0, 255));
@@ -1310,7 +1209,9 @@ class VoteVisual {
   }
 
   /**
-   * Draws all votes as squares
+   * Draws squares to represent each member's vote.
+   * Check marks indicate 'yay' vote. X's indicate 'nay' vote.
+   * Outlined blank boxes indicate no votes required.
    */
   drawRect() {
     // let noVoteBool = false;
@@ -1320,7 +1221,7 @@ class VoteVisual {
     var rectColor;
 
     var numRepOrWild;
-    if (this.forUser) // OC forUser: bool - true if engine is running for user config, false if running default config
+    if (this.forUser) 
       numRepOrWild = this.numRep;
     else
       numRepOrWild = this.numWild;
@@ -1336,19 +1237,18 @@ class VoteVisual {
     // OC get the vote for this member (count1) of the body (bodyCount) from engine's calculation
     let vote = this.engine.allVotes[this.bodyCount][this.count1];
 
-
-    //Democrat is Voting
+    // Party A is Voting
     if (this.countR < this.numDem) {
       // currentTransVal = this.tranVal - currentPartyNum * valAdjust; // party determines tranparency of rectangle
       rectColor = this.rColor;
     }
-    //Independent is Voting
+    // Party C is Voting
     else if (this.countR >= this.numDem && this.countR < this.numDem + numRepOrWild) {
       // currentPartyNum = this.partyNum + 1;
       // currentTransVal = this.tranVal - currentPartyNum * valAdjust;
       rectColor = this.rColor2;
     }
-    //Republican is Voting
+    // Party B is Voting
     else {
       // currentPartyNum = this.partyNum + 2;
       // currentTransVal = this.tranVal - currentPartyNum * valAdjust;
@@ -1379,23 +1279,16 @@ class VoteVisual {
       //print('drawing VP square at' + this.x + " " + this.y);
     }
 
-    // if (bodyCount == 1) {
-    //   // simulate vp tiebreaker vote
-    //   yay = 50;
-    //   nay = 50;
-    // }
-
-    //creates a different shade for each voting party
+    // draws in a different shade for each voting party
     if (this.stopVoteBool == false) {
       noStroke();
       // this.rColor.setAlpha(currentTransVal);
       // fill(this.rColor);
       fill(rectColor);
-      //fill(255, currentTransVal);
     }
 
+    // hide rect when no pres
     if (this.engine.numPres == 0 && this.bodyCount == 4) {
-      // hide rect when no pres
       stroke(this.bColor);
       noFill();
       rect(this.x, this.y, this.diam, this.diam, this.diam / 8);
@@ -1403,7 +1296,7 @@ class VoteVisual {
       rect(this.x, this.y, this.diam, this.diam, this.diam / 8);
     }
 
-    //creates the x on squares that are "no votes"
+    // draws the X on squares that are "nay" votes
     if (vote == "nay" && this.stopVoteBool == false && !(this.bodyCount == 4 && this.engine.numPres == 0)) {
       fill(this.bColor);
       textSize(this.diam + 3);
@@ -1412,14 +1305,12 @@ class VoteVisual {
       text("x", this.x, this.y);
     }
 
-    //creates the x on squares that are "yay" votes
+    // draws check mark on squares that are "yay" votes
     if (vote == "yay" && this.stopVoteBool == false && !(this.bodyCount == 4 && this.engine.numPres == 0)) {
       let imgW = this.diam*0.8;
       let imgH = this.diam*0.9;
       image(this.checkImage, this.x-(imgW/2), this.y-(imgH/2), imgW, imgH);
     }
-
-
 
     if ((this.y += this.skip) >= this.dHeight - (this.skip / 2)) {
       this.y = this.skip / 2;
@@ -1429,7 +1320,6 @@ class VoteVisual {
       this.xCount++;
       //print('Y count = ' + yCount); // prints to consolde for testing
     }
-
   }
 
   /**
@@ -1439,44 +1329,32 @@ class VoteVisual {
     //AB if the vp vote is not needed, no vote is necessary
     if (this.bodyCount == 3 && this.engine.vpVote == false) {
       this.stopVoteBool = true;
-      // this.stopVoteCount++; // used in the engine, not for drawing
-      // console.log("stop vote logic 1"); // for testing
     }
     //if the vp votes and it's a NO, then bill dies
     else if (this.bodyCount > 3 && this.engine.vpVote == true && this.engine.bodyPass[3] === false) {
       this.stopVoteBool = true;
-      // this.stopVoteCount++;
-      // console.log("stop vote logic 2"); // for testing
     }
     //AB if the first or second body is not a pass,  bill dies thus preventing other bodies to vote
     //OC check that voting of the house or senate was already drawn to screen before checking bodyPass for it
     else if ((this.bodyCount >= 1 && this.engine.bodyPass[0] === false) || (this.bodyCount > 1 && this.engine.bodyPass[1] === false) 
       || (this.bodyCount > 2 && this.engine.bodyPass[2] === false)) {
       this.stopVoteBool = true;
-      // this.stopVoteCount++;
-      // console.log("stop vote logic 3"); // for testing
     } else {
       this.stopVoteBool = false;
-      // console.log("stop vote logic 4"); // for testing
     }
   }
 
   /**
-   * appearance of squares changes to outlines when no vote is required
+   * Appearance of squares changes to outlines when no vote is required
    */
   stopVoteChange(rectColor) {
     if (this.stopVoteBool == true) {
-      //this.rColor.setAlpha(100);
-      //stroke(this.rColor); //stroke(255, 100);
       stroke(rectColor);
       noFill();
       strokeWeight(3);
-      // stopVoteBool == false;
     } else {
-      // fill(this.bColor);
       stroke(rectColor);
       noStroke();
-
     }
   }
 
@@ -1484,11 +1362,6 @@ class VoteVisual {
    * Updates bodyCount and signals for user input state (buttons) to show on screen
    */
   resultLogic() {
-    // //padding & offsets for text display
-    // var votePadX = this.dWidth / 4;
-    // var votePadY = this.dHeight / 4;
-    // var voteOutcomePosY = this.votePadY * 3;
-
     //Adds one to the count of how many bodies have voted and enters into user input state (buttons) if the vote is done.
     if (this.bodyCount < this.engine.numBodies) {
       this.bodyCount++;
@@ -1516,18 +1389,16 @@ class VoteVisual {
     this.tranVal = 255;
     rectMode(CORNER);
 
-    //AB: removed this rect b/c it covers vp or president during logic
-    // rect(0, 0, offSet, dHeight);
-
     this.x = this.skip / 2;
     this.y = this.skip / 2;
-    // this.yay = 0;
-    // this.nay = 0;
     this.xCount = 1;
     this.yCount = 1;
     this.endBody = 0;
   }
 
+  /**
+   * Completely reset vars to draw for new configuration
+   */
   completeReset() {
     this.ix = 0;
     this.bodyCount = 0;
@@ -1540,6 +1411,7 @@ class VoteVisual {
 
   /**
    * Displays text on screen for results of the voting with the default configuration
+   * 
    * @param {DemocracyEngine} engine 
    * @param {Font} font 
    * @param {Color} colorOverlay
@@ -1555,11 +1427,7 @@ class VoteVisual {
     let dispW = (this.dWidth / columnAmount);
     let dispH = (this.dHeight / rowAmount);
 
-    // let dispX = 0 + padX;
-    // let dispY = 0 + padY;
-
     var resBColor = color(colorOverlay); // color(0, 0, 0); // result overlay
-    // let decisionText = "";
     //column 1 to be yay/nay votes
     //column 2 to be body votes
     textFont(font);
@@ -1574,44 +1442,28 @@ class VoteVisual {
     textStyle(NORMAL);
 
 
-    //NEED TO CHANGE LATER FOR MORE THAN 3 BODIES
     for (let i = 0; i < engine.numBodies; i++) {
       fill(this.tColor);
-
       // OC adjust placement of text based on total number of voting bodies
       var ip = i;
-      // if (engine.numLegislativeBodies == 1) 
-      //   ip = i - 2;//ip = i - 1;
-      // else if (engine.numLegislativeBodies == 2)
-      //   ip = i - 1;
-      // else
 
       if (i == 0) {
         currentBodyLabel = 'HOUSE';
       } else if (i == 1) {
         currentBodyLabel = 'SENATE';
-        // if (engine.numLegislativeBodies <= 2) {
-        //   continue;
-        // }
         if (engine.numLegislativeBodies == 1) { // only 1 legislative chamber
           continue; // OC skip results if only 1 legislative body
         }
-
       } else if (i == 2) {
         currentBodyLabel = 'CHAMBER 3';
         ip = i - 0.65;
-        // if (engine.numLegislativeBodies == 1) { // only 1 legislative chamber
-        //   continue; // OC skip results if only 1 legislative body
-        // }
         if (engine.numLegislativeBodies <= 2) {
             continue;
           }
-
       } else if (i == 3) {
         currentBodyLabel = 'VICE PRESIDENCY';
         ip = i - 0.2;
       } else if (i == 4) {
-        // print("I AM IN PRESIDENT b4 LOGIC");
         currentBodyLabel = 'PRESIDENCY';
         ip = i - 0.2;
       }
@@ -1668,13 +1520,13 @@ class VoteVisual {
           }
         }
       }
-      // changeText(engine.decisionTxt); // change final decision text at bottom of screen
     }
     this.displayContext(engine);
   }
 
   /**
    * Displays text on screen for results of the voting with the user's configuration
+   * 
    * @param {DemocracyEngine} engine 
    * @param {Font} font 
    */
@@ -1683,24 +1535,16 @@ class VoteVisual {
     let currentBodyLabel;
 
     let columnAmount = this.numBodies;
-    // let rowAmount = 4;
 
     let padY = 20;
     let padX = 20;
     let dispW = (this.dWidth / columnAmount);
     let dispH = this.dHeight;
 
-    // let dispX = 0 + padX;
-    // let dispY = 0 + padY;
-
     var resBColor = color(colorOverlay);
-    // let decisionText = "";
-    //column 1 to be yay/nay votes
-    //column 2 to be body votes
     textFont(font);
 
     textAlign(LEFT, TOP);
-    //fill(color("#faf4d3"));
     noStroke();
     rectMode(CORNER);
     resBColor.setAlpha(200);
@@ -1708,9 +1552,8 @@ class VoteVisual {
     rect(0, 0, this.dWidth, this.dHeight);
     textStyle(NORMAL);
 
-    //NEED TO CHANGE LATER FOR MORE THAN 3 BODIES
     for (let i = 0; i < engine.numBodies; i++) {
-      fill(this.tColor); //fill(255);
+      fill(this.tColor);
 
       // OC adjust placement of text based on total number of voting bodies
       var ip;
@@ -1723,33 +1566,24 @@ class VoteVisual {
 
       if (i == 0) {
         currentBodyLabel = 'CHAMBER 1';
+
       } else if (i == 1) {
         currentBodyLabel = 'CHAMBER 2';
-        // if (engine.numLegislativeBodies <= 2) {
-        //   continue; // OC skip if either 1 legislative body or only 2 
-        //   // OC for 2, it uses legislative chamber 3 as the senate rather than this one
-        // }
         if (engine.numLegislativeBodies == 1) { // only 1 legislative chamber
           continue; // OC skip results if only 1 legislative body
         }
-        
+
       } else if (i == 2) {
-        // if (engine.numLegislativeBodies == 2) {
-        //   currentBodyLabel = 'CHAMBER 2';
-        // } else {
           currentBodyLabel = 'CHAMBER 3';
-        //}
-        // if (engine.numLegislativeBodies == 1) { // only 1 legislative chamber
-        //   continue; // OC skip results if only 1 legislative body
-        // }
         if (engine.numLegislativeBodies <= 2) {
           continue; // OC skip if either 1 legislative body or only 2 
           // OC for 2, it uses legislative chamber 3 as the senate rather than this one
         }
+
       } else if (i == 3) {
         currentBodyLabel = 'VICE PRESIDENCY';
+
       } else if (i == 4) {
-        // print("I AM IN PRESIDENT b4 LOGIC");
         currentBodyLabel = 'PRESIDENCY';
         if (this.engine.numPres == 0) {
           textSize(22);
@@ -1814,6 +1648,8 @@ class VoteVisual {
         }
       }
     }
+
+    // draw large box to indicate overall result
     push();
     textAlign(LEFT, TOP);
     textSize(34);
@@ -1824,12 +1660,12 @@ class VoteVisual {
     let boxW = 300;
     let boxH = 300;
     rect(padX, height/2 + (padY*2), boxW, boxH, 10);
+
     if (engine.billPass == true) { // check mark if bill passed, empty box if not passed
       image(this.checkImage, padX+22, height/2 + (padY*2), boxW*0.85, boxH-10);
     } else {
       fill(this.bColor);
       textSize(boxW*1.5);
-      //textAlign(CENTER, CENTER);
       textAlign(CENTER, CENTER);
       textFont('Arial');
       text("x", padX+(boxW/2), height/2 + (padY*2) + (boxH/2));
@@ -1839,6 +1675,10 @@ class VoteVisual {
    //this.displayContext(engine);
   }
 
+  /**
+   * Displays text on screen about historical acts
+   * @param {*} engine 
+   */
   displayContext(engine) {
     var bills = engine.historicalActs; // array of 10 bills from govt configuration
     // if (engine.forUser) {

@@ -1,9 +1,11 @@
 /**
- * file: engine.js
  * This class models the decision-making logic of the Legislative branch of the US government.
  * It can run with the default configuration of the government,
  * or with those parameters adjusted by users.
+ * 
+ * File: engine.js
  */
+
 class DemocracyEngine {
 
   //******These Can be Changed by User*********
@@ -22,22 +24,6 @@ stressPlanetHigh = 10; //change this to the low stress masimum
 
 //Offset of combined stress levels that will increase likelyhood of yes vote on any given bill (state change)
 stressOffset;
-
-// Defaults based on 117 congress 2021-06-01
-
-// Senate (2021-2023)
-// Majority Party: Republican (48 seats)
-// Minority Party: Democrat (50 seats)
-// Other Parties: 2 Independents (both caucus with the Democrats)
-// Total Seats: 100
-// https://www.senate.gov/history/partydiv.htm
-
-// House
-// 211 Republicans
-// 220 Democrats
-// 0 Libertarian
-// 4 * Vacancies
-// https://pressgallery.house.gov/member-data/party-breakdown
 
 //Number voting members
 numHouse; // = 435
@@ -79,10 +65,9 @@ demYaythresh; // = 0.7;
 repYaythresh; // = 0.3;
 indYaythresh; // = 0.5;
 
-//How Many Voting Bodies (house, senate, president = 3) *see to DO at top of code
-numBodies; // = 4; // total number of voting bodies --> 5
+//How Many Voting Bodies
+numBodies; // total number of possible voting bodies = 5 (chambers 1-3, vp, pres)
 numLegislativeBodies; // number of legislative bodies (1-3)
-//defNumBody;//delete?
 
 numParties;
 
@@ -111,8 +96,6 @@ votingBodyCounts = []; // 2D array
 // [[chamber1 #yes, chamber1, #no], [chamber2 #yes, chamber2 #no], [vp #yes, #vp no], [pres #yes, pres #no]]
 superThreshIndex = [];
 
-//
-
 //The count variables are updated every time a vote is made
 count = 0;
 count1 = 0;
@@ -140,7 +123,7 @@ numRep;
 numWild;
 
 // OC forUser: bool - true if engine is running for user configuration, false if running for original config
-forUser;
+forUser; // for refactoring original code into one class
 
 // OC finalDisplayBool - will be set true when ready to display calcuation results outside of class
 // OC signal used to determine when finalDisplay() runs (finalDisplay funct is in the scenes)
@@ -161,6 +144,12 @@ allVotes = []; // OC 2D array keep track of "yay"/"nay" votes for each member of
 govtJSON;
 historicalActs;
 
+/**
+ * Sets the configuration of government
+ * 
+ * @param {*} govtJSON - json object of default govt config
+ * @param {*} historicalActs - array of json objects for acts
+ */
   constructor (govtJSON, historicalActs) {
     this.govtJSON = govtJSON;
     this.historicalActs = historicalActs;
@@ -168,6 +157,9 @@ historicalActs;
     this.setDefaultParams();
   }
 
+  /**
+   * Sets the configuration
+   */
   setDefaultParams() {
     this.numLegislativeBodies = this.govtJSON.numLegislativeBodies;
     this.numParties = this.govtJSON.numParties;
@@ -212,8 +204,8 @@ historicalActs;
   }
 
   /**
-   * Logic below is setup for user/origin congressional configuration
-   * @param {boolean} forUserBool - true for running logic for user configuration, false for running original configuration
+   * Setup and voting for the congressional configuration
+   * @param {boolean} forUserBool - true for running for user configuration, false for running original configuration
    */
   currentCongLogic(forUserBool) {
     this.forUser = forUserBool;
@@ -221,13 +213,12 @@ historicalActs;
     // OC loops through number of voting bodies
     for (this.ix=0; this.ix<this.numBodies; this.ix++) {
 
-    // Logic for House
+    // Logic for Chamber 1 (House in default config)
     if (this.bodyCount == 0) {
 
       // Setup variables first time we pass through the first body
       if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
         this.test = 0;
-        // print('bodyCount lc1 = ' + this.bodyCount);
         // print(this.bodyCount);
         this.allVotes[this.ix] = []; // OC initialize empty array for votes in this body
         this.voteResults[this.ix] = "";
@@ -245,33 +236,19 @@ historicalActs;
 
         // Set number of voting memebers
         this.numCon = this.numHouse;
-        this.bodyLabel = 'HOUSE OF REPRESENTATIVES';
+        this.bodyLabel = 'HOUSE OF REPRESENTATIVES'; // labeled for default govt
 
         //Set Demographics for each body
         this.numDem = round(this.numCon * this.perDemHouse);
         this.numRep = round(this.numCon * this.perRepHouse);
         this.numWild = round(this.numCon * this.perIndHouse);
       }
-      // if (this.numBodies == 3) { // house, vp, pres
-      //   this.bodyPass[this.bodyCount] = true;
-      // this.nextBody();
-      // continue;
-      // }
+
     }
 
     
-    //Logic for House 2
+    // Logic for Chamber 2 (Senate in default config)
     if (this.bodyCount == 1) {
-    //   if (!this.forUser) { // if original config, skip this part
-    //           // make house2 automatically pass
-    //   this.bodyPass[1] = true;
-    //   this.superThreshIndex[1] = true;
-    //   this.stopVoteArr[1] = false;
-    //   if (this.bodyCount == 1)
-    //     this.yay = this.numHouse2;
-    //   this.nextBody();
-    //   continue;
-    // }
 
       if (this.endBody == 1) {
         this.resetCount();
@@ -281,33 +258,28 @@ historicalActs;
       // Setup variables first time we pass through a new body
       if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
         this.test = 0;
-        // print('bodyCount lc2 = ' + this.bodyCount);
         // print(this.bodyCount);
         this.allVotes[this.ix] = [];
         this.voteResults[this.ix] = "";
 
         ///Set number of voting memebers
         this.numCon = this.numHouse2;
-        this.bodyLabel = 'SENATE';
-        // console.log("senate num con " + this.numCon);
+        this.bodyLabel = 'SENATE'; // labeled senate for default govt config
 
         //Set Demographics for each body
         this.numDem = round(this.numCon * this.perDemHouse2);
         this.numRep = round(this.numCon * this.perRepHouse2);
         this.numWild = round(this.numCon * this.perIndHouse2);
 
-        // print('Count lc2 = ' + this.count); //fortesting
-        // print('Count1 = ' + this.count1); //fortesting
-        // print('Count2 = ' + this.count2); //fortesting
       }
 
     }
 
 
-    //Logic for Senate
+    //Logic for Chamber 3
     if (this.bodyCount == 2) {
       if (!this.forUser) { // if original config, skip this part
-        // make senate automatically pass
+        // make automatically pass
         this.bodyPass[2] = true;
         this.superThreshIndex[2] = true;
         this.stopVoteArr[2] = false;
@@ -325,7 +297,6 @@ historicalActs;
       // Setup variables first time we pass through a new body
       if (this.count < 1 && this.count1 < 1 && this.count2 < 1) {
         this.test = 0;
-        // print('bodyCount lc3 = ')
         // print(this.bodyCount);
         this.allVotes[this.ix] = [];
         this.voteResults[this.ix] = "";
@@ -339,9 +310,6 @@ historicalActs;
         this.numRep = round(this.numCon * this.perRepSenate);
         this.numWild = round(this.numCon * this.perIndSenate);
 
-        // print('Count = ' + this.count); //fortesting
-        // print('Count1 = ' + this.count1); //fortesting
-        // print('Count2 = ' + this.count2); //fortesting
       }
 
     }
@@ -419,7 +387,7 @@ historicalActs;
       continue; // skip process of voting
     }
 
-    // OC loops through each member of each body
+    // OC loops through each member of each body for voting process
       for (this.jx = 0; this.jx < this.numCon; this.jx++) { 
         if (this.count < this.numCon - 1 && this.count1 < 1) {
           this.count++;
@@ -436,7 +404,7 @@ historicalActs;
 
   
   /**
-   * Start the body vote
+   * Start the voting for a legislative body
    */
   bodyVote() {
 
@@ -476,7 +444,7 @@ historicalActs;
 
     this.stopVoteChange();
 
-    //Democrat is Voting
+    // Democrat/Party A is Voting
     if (this.countR < this.numDem) {
 
       let vote = random(0, 1);
@@ -489,15 +457,15 @@ historicalActs;
       if (vote <= this.demYaythresh * this.stressOffset) {
         noVoteBool = false;
         this.yay++;
-        this.allVotes[this.ix][this.jx] = "yay";
+        this.allVotes[this.ix][this.jx] = "yay"; // track 'yay' votes
       } else {
         noVoteBool = true;
         this.nay++;
-        this.allVotes[this.ix][this.jx] = "nay";
+        this.allVotes[this.ix][this.jx] = "nay"; // track 'nay' votes
       }
 
     }
-    //Independent is Voting
+    // Independent/Party C is Voting
     else if (this.countR >= this.numDem && this.countR < this.numDem + numRepOrWild) {
 
       let vote = random(0, 1);
@@ -520,7 +488,7 @@ historicalActs;
       }
 
     }
-    //Republican is Voting
+    // Republican/Party B is Voting
     else {
 
       let vote = random(0, 1);
@@ -551,14 +519,7 @@ historicalActs;
 
     // AB
     // if (this.bodyCount == 1) { // for 2 legislative bodies
-    //   // simulate vp tiebreaker vote
-    //   this.yay = 50;
-    //   this.nay = 50;
-    // }
-
-    // OC dont use this
-    // OC simulate vp tiebreaker for 2 bodies, with logic for 3
-    // if (this.bodyCount == 2) { // bodyCount 2 is now senate
+    //   // simulate vp tiebreaker vote (when total members is 100)
     //   this.yay = 50;
     //   this.nay = 50;
     // }
@@ -573,7 +534,7 @@ historicalActs;
   }
 
   /**
-   * resets counts when passing to new body
+   * Resets counts when passing to new body
    */
   resetCount() {
     // print('Resetting count');
@@ -589,6 +550,9 @@ historicalActs;
     this.endBody = 0;
   }
 
+  /**
+   * Completely resets for new configuration and voting
+   */
   completeReset() {
     this.bodyCount = 0;
     this.bodyPass = [];
@@ -610,7 +574,7 @@ historicalActs;
   }
 
   /**
-   * track stop of votes
+   * Track stop of votes for each body
    */
   stopVoteChange() {
     if (this.stopVoteBool == true) {
@@ -685,18 +649,6 @@ historicalActs;
       this.voteResults[2] = null;
     }
 
-    // if (this.numPres == 0) {
-    //   this.bodyPass[4] = true;
-    //   //this.superThreshIndex[4] = true;
-    //   this.stopVoteArr[4] = false;
-    //   if (this.bodyCount == 4)
-    //     this.yay = this.numPres;
-    //   this.votingBodyCounts[4] = [];
-    //   this.votingBodyCounts[4][0] = null;
-    //   this.votingBodyCounts[4][1] = null;
-    //   this.voteResults[4] = null;
-    // }
-
     // console.log("body pass: " + this.bodyPass);
 
     if (this.forUser) { // engine running for user configuration
@@ -723,11 +675,9 @@ historicalActs;
       } else if (this.yay == this.numCon/2 && (this.numLegislativeBodies == 3) && this.bodyCount == 2) { //AB logic if senate initiates tie breaker
         this.bodyPass[this.bodyCount] = true;
         this.vpVote = true;
-        // console.log("lg 1");
       } else if (this.yay == this.numCon/2 && (this.numLegislativeBodies == 2) && this.bodyCount == 1) {
           this.bodyPass[this.bodyCount] = true;
           this.vpVote = true;
-          // console.log("lg 2");
       } else if (this.yay == this.numCon/2 && (this.numLegislativeBodies == 1) && this.bodyCount == 0) {
           // OC tie breaker for 1 legislative body
           this.bodyPass[this.bodyCount] = true;
@@ -759,7 +709,7 @@ historicalActs;
 
     }
     
-    // automatically make pres pass bill
+    // automatically make president pass bill if config has no presidents
     if (this.numPres == 0) {
       this.bodyPass[4] = true;
       //this.superThreshIndex[4] = true;
@@ -807,7 +757,6 @@ historicalActs;
 
     if (this.bodyCount == this.numBodies) {
 
-        //NEED TO CHANGE LATER FOR MORE THAN 3 BODIES
         for (let i = 0; i < this.numBodies; i++) {
           fill(255);
           if (i == 0) {
@@ -836,15 +785,11 @@ historicalActs;
           } else if (i == 3) {
             currentBodyLabel = 'VICE PRESIDENCY';
           } else if (i == 4) {
-            // print("I AM IN PRESIDENT b4 LOGIC");
             currentBodyLabel = 'PRESIDENCY';
             if (this.numPres == 0) {
               continue;
             }
           }
-
-          //yay and nay votes for each voting body
-          //y = the i*dispW
 
           if (i < this.votingBodyCounts.length) {
 
@@ -909,7 +854,7 @@ historicalActs;
                 this.votingBodyCounts[i][1] = null;
               }
 
-            } else { // senate & house
+            } else { // chambers 1-3
               if (this.stopVoteArr[i] == false) { // body votes
            
                 if (this.bodyPass[i] == true && this.superThreshIndex[i] == true) {
@@ -962,7 +907,6 @@ historicalActs;
 
     }
     // console.log(this.votingBodyCounts); 
-    // OC could save session to db here or outside of engine
     //this.finalDisplayBool = true; // signal to now display final text and buttons
   }
 
