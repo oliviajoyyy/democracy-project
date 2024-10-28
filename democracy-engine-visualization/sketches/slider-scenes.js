@@ -134,6 +134,17 @@ function startSession() {
     loadSessionBtn.class('buttons');
     loadSessionBtn.parent(buttonDiv);
     loadSessionBtn.mousePressed(clickedLoad);
+
+    // check for button from other scene
+    if (document.getElementById('back-btn-a04')) { // from about page
+      document.getElementById('back-btn-a04').remove();
+    }
+
+    // if coming from pane scene since inactive, deactive the progress dot
+    let activeDot = document.querySelectorAll(".dot-active");
+    if (activeDot.length > 0) { 
+      activeDot[0].className = 'dot'; // de-activate dot on pane
+    }
   }
 
   this.draw = function () {

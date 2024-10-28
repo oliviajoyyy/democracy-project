@@ -113,6 +113,10 @@ var port;
 var connectBtn;
 var enableHardware = true;
 
+// for time out
+var timeLastActive; // millis since last button clicked
+var timeOutAmt = 480000; // 1 minute = 60000 milliseconds, 8 minutes = 480000 ms
+
 function preload() {
   helvFont = loadFont('../democracy-engine-congressional-simulator/assets/font/HelveticaNeue-Regular.otf');
   loadingImage = loadImage('../democracy-engine-congressional-simulator/assets/gears-icon.png');
@@ -162,14 +166,23 @@ function setup() {
   hardwareSetup();
   }
   noCanvas();
+
+  timeLastActive = millis(); // initial activity starts
+
   console.log("end of scene-mgr.js setup");
 }
 
 function draw() {
   mgr.draw();
+
+  // constantly checks time since last active, goes back to start screen if determined to be inactive
+  if (!mgr.isCurrent(startSession) && !mgr.isCurrent(startUp) && !mgr.isCurrent(hardwareTest) && inactive()) {
+    mgr.showScene(startSession); // goes back to start page startSession
+  }
 }
 
 function mousePressed() {
+  lastActive();
   mgr.mousePressed();
 }
 
@@ -195,6 +208,30 @@ function hardwareSetup() {
   // let sendBtn = createButton('Blink Led');
   // sendBtn.position(500, 450);
   // sendBtn.mousePressed(sendBtnClick);
+}
+
+function lastActive() {
+  console.log('time last active before button click: ' + timeLastActive);
+
+  // set time of last activity (any hardware interaction)
+  timeLastActive = millis();
+  console.log('time last active now: ' + timeLastActive);
+}
+
+// return false if last active was less than timeout period
+// return true if last active was longer than timeout period
+function inactive() {
+  console.log('checking inactivity, time lastActive' + timeLastActive);
+  // check if time since last active is longer than timeOut period
+  if (millis() - timeLastActive >= timeOutAmt) {
+    console.log('true: millis since last active: ' + (millis() -timeLastActive));
+    // timeLastActive = millis();
+    
+    return true;
+    //mgr.showScene(startSession);
+    //console.log('moved to start scene');
+  }
+  return false;
 }
 
 
@@ -225,6 +262,7 @@ function checkHardwareInput() {
       if (arr[9] == 200) { // left btn
         document.getElementById('prev-pane-btn').classList.add('btn-active');
         hardwareLeftBtn = true;
+        lastActive(); // track time of last activity 
       } else if (arr[9] == 0) {
         document.getElementById('prev-pane-btn').classList.remove('btn-active');
         if (hardwareLeftBtn == true) {
@@ -236,6 +274,7 @@ function checkHardwareInput() {
       if (arr[10] == 200) { // middle btn
         document.getElementById('middle-btn').classList.add('btn-active');
         hardwareMidBtn = true;
+        lastActive(); // track time of last activity 
       } else if (arr[10] == 0) {
         document.getElementById('middle-btn').classList.remove('btn-active');
         if (hardwareMidBtn == true) {
@@ -251,6 +290,7 @@ function checkHardwareInput() {
       if (arr[11] == 200) {
         document.getElementById('next-pane-btn').classList.add('btn-active');
         hardwareRightBtn = true;
+        lastActive(); // track time of last activity 
       } else if (arr[10] == 0) { // right btn
         document.getElementById('next-pane-btn').classList.remove('btn-active');
         if (hardwareRightBtn == true) {
@@ -262,6 +302,7 @@ function checkHardwareInput() {
     // left joystick to go to prev pane
     if (arr[6] == 200) {
       hardwarePrevPane = true;
+      lastActive(); // track time of last activity 
     } else if (arr[6] == 0) {
       if (hardwarePrevPane == true) {
         previousPane();
@@ -284,6 +325,7 @@ function checkHardwareInput() {
     // joy up to hide pane when == 200 (can swap to joy down to hide - change to == 100 )
     if (arr[7] == 100) {
       hardwareHide = true;
+      lastActive(); // track time of last activity 
     } else if (arr[7] == 0) {
       if (hardwareHide == true) {
         if (showPanesBool == true) {
@@ -296,6 +338,7 @@ function checkHardwareInput() {
     // joy down to show pane when == 100 (can swap to joy up to show - change to == 200 )
     if (arr[7] == 200) {
       hardwareShow = true;
+      lastActive(); // track time of last activity 
     } else if (arr[7] == 0) {
       if (hardwareShow == true) {
         if (showPanesBool == false) {
@@ -312,6 +355,7 @@ function checkHardwareInput() {
     if (arr[10] == 200) { // middle btn
       document.getElementById('back-btn-a04').classList.add('btn-active');
       hardwareMidBtn = true;
+      lastActive(); // track time of last activity 
     } else if (arr[10] == 0) {
       document.getElementById('back-btn-a04').classList.remove('btn-active');
       if (hardwareMidBtn == true) {
@@ -329,6 +373,7 @@ function checkHardwareInput() {
         document.getElementById('about-btn-a02').classList.add('btn-active');
       }
       hardwareLeftBtn = true;
+      lastActive(); // track time of last activity 
     } else if (arr[9] == 0) {
       if (mgr.isCurrent(startSession)) {
         document.getElementById('about-btn-a02').classList.remove('btn-active');
@@ -344,6 +389,7 @@ function checkHardwareInput() {
         document.getElementById('load-session-btn-a02').classList.add('btn-active');
       }
       hardwareRightBtn = true;
+      lastActive(); // track time of last activity 
     } else if (arr[10] == 0) {
       if (mgr.isCurrent(startSession)) {
         document.getElementById('load-session-btn-a02').classList.remove('btn-active');
@@ -364,6 +410,7 @@ function checkHardwareInput() {
     if (arr[6] == 200 || arr[9] == 200) {
       document.getElementById('prev-pane-btn').classList.add('btn-active');
       hardwarePrevPane = true;
+      lastActive(); // track time of last activity 
     } else if (arr[6] == 0 || arr[9] == 0) {
       document.getElementById('prev-pane-btn').classList.remove('btn-active');
       if (hardwarePrevPane == true) {
@@ -376,6 +423,7 @@ function checkHardwareInput() {
     if (arr[6] == 100 || arr[11] == 200) {
       document.getElementById('next-pane-btn').classList.add('btn-active');
       hardwareNextPane = true;
+      lastActive(); // track time of last activity 
     } else if (arr[6] == 0 || arr[11] == 0) {
       document.getElementById('next-pane-btn').classList.remove('btn-active');
       if (hardwareNextPane == true) {
@@ -387,6 +435,7 @@ function checkHardwareInput() {
     // joy up to hide pane when == 200 (can swap to joy down to hide - change to == 100 )
     if (arr[7] == 100) {
       hardwareHide = true;
+      lastActive(); // track time of last activity 
     } else if (arr[7] == 0) {
       if (hardwareHide == true) {
         if (showPanesBool == true) {
@@ -401,6 +450,7 @@ function checkHardwareInput() {
     // joy down to show pane when == 100 (can swap to joy up to show - change to == 200 )
     if (arr[7] == 200) {
       hardwareShow = true;
+      lastActive(); // track time of last activity 
     } else if (arr[7] == 0) {
       if (hardwareShow == true) {
         if (showPanesBool == false) {
@@ -417,6 +467,7 @@ function checkHardwareInput() {
     if (arr[6] == 200 || arr[9] == 200) {
       document.getElementById('prev-pane-btn').classList.add('btn-active');
       hardwarePrevPane = true;
+      lastActive(); // track time of last activity 
     } else if (arr[6] == 0 || arr[9] == 0) {
       document.getElementById('prev-pane-btn').classList.remove('btn-active');
       if (hardwarePrevPane == true) {
@@ -440,6 +491,7 @@ function checkHardwareInput() {
     if (arr[11] == 200) { // right btn
       document.getElementById('next-pane-btn').classList.add('btn-active');
       hardwareRightBtn = true;
+      lastActive(); // track time of last activity 
     } else if (arr[10] == 0) {
       document.getElementById('next-pane-btn').classList.remove('btn-active');
       if (hardwareRightBtn == true) {
@@ -451,6 +503,7 @@ function checkHardwareInput() {
     if (arr[10] == 200) { // middle btn
       document.getElementById('middle-btn').classList.add('btn-active');
       hardwareMidBtn = true;
+      lastActive(); // track time of last activity 
     } else if (arr[10] == 0) {
       document.getElementById('middle-btn').classList.remove('btn-active');
       if (hardwareMidBtn == true) {
@@ -462,6 +515,7 @@ function checkHardwareInput() {
     // joy up to hide pane when == 200 (can swap to joy down to hide - change to == 100 )
     if (arr[7] == 100) {
       hardwareHide = true;
+      lastActive(); // track time of last activity 
     } else if (arr[7] == 0) {
       if (hardwareHide == true) {
         if (showPanesBool == true) {
@@ -476,6 +530,7 @@ function checkHardwareInput() {
     // joy down to show pane when == 100 (can swap to joy up to show - change to == 200 )
     if (arr[7] == 200) {
       hardwareShow = true;
+      lastActive(); // track time of last activity 
     } else if (arr[7] == 0) {
       if (hardwareShow == true) {
         if (showPanesBool == false) {
@@ -489,6 +544,7 @@ function checkHardwareInput() {
   } else if (mgr.isCurrent(hardwareTest)) {
     if (arr[9] == 200) { // left btn
       hardwareLeftBtn = true;
+      lastActive(); // track time of last activity 
     } else if (arr[9] == 0) {
       if (hardwareLeftBtn == true) {
         hLeftBtn = true;
@@ -497,6 +553,7 @@ function checkHardwareInput() {
     }
     if (arr[11] == 200) { // right btn
       hardwareRightBtn = true;
+      lastActive(); // track time of last activity 
     } else if (arr[10] == 0) {
       if (hardwareRightBtn == true) {
         hRightBtn = true;
