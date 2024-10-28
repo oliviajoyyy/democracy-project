@@ -231,27 +231,27 @@ function hardwareSetup() {
 }
 
 
-
+/**
+ * Tracks last activity time using millis()
+ */
 function lastActive() {
-  console.log('time last active before button click: ' + timeLastActive);
-
+  //console.log('time last active before button click: ' + timeLastActive);
   // set time of last activity (any hardware interaction)
   timeLastActive = millis();
-  console.log('time last active now: ' + timeLastActive);
+  //console.log('time last active now: ' + timeLastActive);
 }
 
-// return false if last active was less than timeout period
-// return true if last active was longer than timeout period
+/**
+ * Checks activity status
+ * @returns false if last active was less than timeout period, true if last active was longer than timeout period
+ */
 function inactive() {
   console.log('checking inactivity, time lastActive' + timeLastActive);
   // check if time since last active is longer than timeOut period
   if (millis() - timeLastActive >= timeOutAmt) {
-    console.log('true: millis since last active: ' + (millis() -timeLastActive));
+    //console.log('true: millis since last active: ' + (millis() -timeLastActive));
     // timeLastActive = millis();
-    
     return true;
-    //mgr.showScene(startSession);
-    //console.log('moved to start scene');
   }
   return false;
 }
@@ -275,6 +275,8 @@ var hardwareRightBtn = false;
 
 /**
  * Enables hardware controls for specific scenes
+ * Checks for button clicks and joystick movements for active buttons on each page.
+ * Tracks time last active when active buttons are clicked.
  */
 function checkHardwareInput() {
   if (!port) {

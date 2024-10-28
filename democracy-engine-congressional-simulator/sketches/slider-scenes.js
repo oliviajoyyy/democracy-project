@@ -180,21 +180,21 @@ function startSession() {
       document.getElementById('back-btn-b02').remove();
       document.getElementById('show-btn-b02').remove();
       document.getElementById('next-btn-b02').remove();
-    } else if (document.getElementById('vote-btn')) {
+    } else if (document.getElementById('vote-btn')) { // from run vote page
       document.getElementById('vote-btn').remove();
-    } else if (document.getElementById('benchmark-btn')) {
+    } else if (document.getElementById('benchmark-btn')) { // from run benchmark page
       document.getElementById('benchmark-btn').remove();
-    } else if (document.getElementById('restart-btn-c02')) {
+    } else if (document.getElementById('restart-btn-c02')) { // from benchmark results page
       document.getElementById('restart-btn-c02').remove();
       document.getElementById('to-eval-btn-c02').remove();
-    } else if (document.getElementById('restart-btn-c03')) {
+    } else if (document.getElementById('restart-btn-c03')) { // from endorsement page
       document.getElementById('restart-btn-c03').remove();
       document.getElementById('approve-btn').remove();
       document.getElementById('save-summary-btn-c03').remove();
-    } else if (document.getElementById('restart-btn-c04')) {
+    } else if (document.getElementById('restart-btn-c04')) { // from summary/save page
       document.getElementById('restart-btn-c04').remove();
       document.getElementById('save-btn').remove();
-    } else if (document.getElementById('restart-btn-c05')) {
+    } else if (document.getElementById('restart-btn-c05')) { // from save complete page
       document.getElementById('restart-btn-c05').remove();
     }
 
