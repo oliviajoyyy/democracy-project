@@ -114,7 +114,7 @@ function startSession() {
   }
 
   this.enter = function () {
-    console.log("start up scene");
+    console.log("start & description scene");
     background(bColor);
     document.body.style.backgroundColor = bColor;
 
@@ -122,6 +122,8 @@ function startSession() {
     document.getElementById("main-header").innerHTML = configJSON.text.title;
     document.getElementById("main-btn-div").style.display = "block";
     document.getElementById("screen").style.display = "none";
+    document.getElementById("pane-bkg").style.display = "none";
+    document.getElementById("end-summary").style.display = "none";
     document.getElementById("start-desc").style.display = "block";
     document.getElementById("start-desc").innerHTML = configJSON.text.shortDescription;
     document.getElementById("top").style.display = "none";
@@ -142,6 +144,12 @@ function startSession() {
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
 
+    // if coming from pane scene since inactive, deactive the progress dot
+    let activeDot = document.querySelectorAll(".dot-active");
+    if (activeDot.length > 0) { 
+      activeDot[0].className = 'dot'; // de-activate dot on pane
+    }
+
     let buttonDiv = document.getElementById('main-btn-div');
 
     aboutBtn = createButton('About the Project');
@@ -161,6 +169,34 @@ function startSession() {
     newSessionBtn.class('buttons');
     newSessionBtn.parent(buttonDiv);
     newSessionBtn.mousePressed(clickedNew);
+
+    // check for buttons from other scenes
+    if (document.getElementById('back-btn-a04')) { // from about page
+      document.getElementById('back-btn-a04').remove();
+    } else if (document.getElementById('back-btn-b01')) { // from start new session page
+      document.getElementById('back-btn-b01').remove();
+      document.getElementById('next-btn-b01').remove();
+    } else if (document.getElementById('next-btn-b02')) { // from load session page
+      document.getElementById('back-btn-b02').remove();
+      document.getElementById('show-btn-b02').remove();
+      document.getElementById('next-btn-b02').remove();
+    } else if (document.getElementById('vote-btn')) {
+      document.getElementById('vote-btn').remove();
+    } else if (document.getElementById('benchmark-btn')) {
+      document.getElementById('benchmark-btn').remove();
+    } else if (document.getElementById('restart-btn-c02')) {
+      document.getElementById('restart-btn-c02').remove();
+      document.getElementById('to-eval-btn-c02').remove();
+    } else if (document.getElementById('restart-btn-c03')) {
+      document.getElementById('restart-btn-c03').remove();
+      document.getElementById('approve-btn').remove();
+      document.getElementById('save-summary-btn-c03').remove();
+    } else if (document.getElementById('restart-btn-c04')) {
+      document.getElementById('restart-btn-c04').remove();
+      document.getElementById('save-btn').remove();
+    } else if (document.getElementById('restart-btn-c05')) {
+      document.getElementById('restart-btn-c05').remove();
+    }
 
   }
 
@@ -231,7 +267,7 @@ function hardwareTest() {
   }
 
   this.enter = function () {
-    console.log("start up scene");
+    console.log("hardware test scene");
     document.getElementById("page-container").style.display = "block";
     document.getElementById("main-header").innerHTML = "<h1>Hardware & DB Test </h1>";
     document.getElementById("main-btn-div").style.display = "block";
@@ -433,7 +469,7 @@ function newSessionScene() {
   }
 
   this.enter = function () {
-    console.log("start up scene");
+    console.log("new session scene");
 
     newSession();
     paramChangedBool = true;
@@ -508,7 +544,7 @@ function newSessionScene() {
   function clickedNext() {
     removeBtns();
     engine.setDefaultParams(); // set engine params to json govt config vals
-    // setDefaultUserVars();
+    setDefaultUserVars();
     // setEngineParams(engine);
     // reset values for calculations
     engine.completeReset();
@@ -553,7 +589,7 @@ function loadSessionS1() {
   }
 
   this.enter = function () {
-    console.log("start up scene");
+    console.log("load session scene");
     newSession();
     paramChangedBool = true;
     showCount = 0;
@@ -880,8 +916,8 @@ function sBodies() {
       prevPaneBtn.id('prev-pane-btn');
       prevPaneBtn.class('buttons');
       prevPaneBtn.parent(buttonDiv);
-      prevPaneBtn.mousePressed(previousPane);
     }
+    prevPaneBtn.mousePressed(previousPane);
 
     if (!document.getElementById('update-btn')) {
       updateBtn = createButton('Update &#9737;');
@@ -891,13 +927,14 @@ function sBodies() {
     }
     updateBtn.mousePressed(clickedUpdate);
 
-    if (!document.getElementById('next-pane-btn')) {
-      nextPaneBtn = createButton('Next &rarr;');
-      nextPaneBtn.id('next-pane-btn');
-      nextPaneBtn.class('buttons');
-      nextPaneBtn.parent(buttonDiv);
-      nextPaneBtn.mousePressed(nextPane);
+    if (document.getElementById('next-pane-btn')) {
+      nextPaneBtn.remove();
     }
+    nextPaneBtn = createButton('Next &rarr;');
+    nextPaneBtn.id('next-pane-btn');
+    nextPaneBtn.class('buttons');
+    nextPaneBtn.parent(buttonDiv);
+    nextPaneBtn.mousePressed(nextPane);
 
     document.getElementById('prev-pane-btn').disabled = true;
   }
