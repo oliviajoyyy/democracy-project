@@ -92,7 +92,7 @@ function startUp() {
  * Main start up scene for public view
  */
 function startSession() {
-  let newSessionBtn, loadSessionBtn, aboutBtn;
+  let loadSessionBtn, aboutBtn;
 
   this.setup = function () {
     textFont(helvFont);
@@ -194,14 +194,8 @@ function startSession() {
 function hardwareTest() {
   let backBtn, testBtn;
   //let port;
-  let connectBtn;
   this.setup = function () {
     textFont(helvFont);
-    // let dWidth = windowWidth * .8;
-    // let dHeight = windowHeight * .8;
-    // let canvas = createCanvas(dWidth, dHeight);
-    // let canvasDiv = document.getElementById('vote');
-    // canvas.parent(canvasDiv);
     background(bColor);
 
   }
@@ -249,18 +243,8 @@ function hardwareTest() {
       port.open(usedPorts[0],9600);
   
     }
-  
-    // any other ports can be opened via a dialog after
-    // user interaction (see connectBtnClick below)
-  
-    // connectBtn = createButton('Connect to Arduino');
-    // connectBtn.position(80, 450);
-    // connectBtn.mousePressed(connectBtnClick);
+
     testBtn.mousePressed(connectBtnClick);
-  
-    // let sendBtn = createButton('Blink Led');
-    // sendBtn.position(500, 450);
-    // sendBtn.mousePressed(sendBtnClick);
   }
 
   function connectBtnClick() {
@@ -279,27 +263,13 @@ function hardwareTest() {
     port.write("Hello from p5.js\n");
   }
 
-  this.draw = function () {
-      // this makes received text scroll up
-   //background(0);
-   //copy(0, 0, width, height, 0, -1, width, height);
- 
-   
+  this.draw = function () {   
    // changes button label based on connection status
    if (port.opened()) {
-  
     testBtn.html('Disconnect Hardware');
-    //  connectBtn.html('Disconnect');
-   // reads in complete lines and prints them at the
-   // bottom of the canvas
- 
- 
-   //let arr = port.readBytes();   
-   let arr = port.readBytes(14); 
-
+    let arr = port.readBytes(14); 
    } else {
     testBtn.html('Connect to Hardware');
-    //  connectBtn.html('Connect to Hardware');
    }
 
    if (enableHardware) {
@@ -334,7 +304,6 @@ function hardwareTest() {
   function removeBtns() {
     backBtn.remove();
     testBtn.remove();
-    // connectBtn.remove();
   }
 }
 
@@ -421,8 +390,6 @@ function sLoadSession() {
   }
 
   this.enter = function () {
-    // gui = createGui();
-    // continueBtn = createButton("Continue", width/2, height/2);
     console.log("load sessions scene");
     document.getElementById('dot-p01').className = 'dot-active';
     s1 = "";
@@ -438,7 +405,6 @@ function sLoadSession() {
     div3.id = 's-col-3';
     divApproval.id = 'approval-div2';
 
-    // newSession();
     paramChangedBool = true;
     showCount = 0;
 
@@ -454,9 +420,7 @@ function sLoadSession() {
       selection.remove();
     }
     showSessionsList(); // get sessions fr db and display onscreen
-    //inputTxt();
 
-    // document.getElementById("top").style.display = "none";
     document.getElementById("page1").style.display = "block";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
@@ -465,8 +429,6 @@ function sLoadSession() {
     document.getElementById("sim-info").style.display = "none";
 
     document.getElementById("main-btn-div").style.display = "none";
-    // let buttonDiv = document.getElementById('main-btn-div');
-
 
     if (!document.getElementById('prev-pane-btn')) {
     prevPaneBtn = createButton('&larr; Back');
@@ -522,7 +484,6 @@ function sLoadSession() {
       selectedSessionID = sessions[i].uniqueID; // session ID
       //console.log("session id: " + selectedSessionID);
       setLoadedUserVars(loadedConfig);
-      setEngineParams(engine);
       document.getElementById("end-summary").innerHTML = "";
       inputTxt();
     }
@@ -585,7 +546,6 @@ function sLoadSession() {
     
     document.getElementById("page-container").style.display = "block";
     document.getElementById("main-header").innerHTML = configJSON.text.titleVis;
-    // document.getElementById("page1").style.display = "block";
     document.getElementById("top").style.display = "block";
     document.getElementById("top").innerHTML = "<h2>Last 10 Sessions</h2>"
 
@@ -603,7 +563,6 @@ function sLoadSession() {
         document.getElementById('next-pane-btn').disabled = true;
         document.getElementById('middle-btn').disabled = true;
         document.getElementById("top").innerHTML = "<h2>No Sessions Currently in Database</h2>"
-      //+ "<div id='session-list'><p>There are no sessions saved to the database yet. Create a new session to save and retrieve it here.</p></div>";
       } else {
       // show sessions in order from last 10 
       // -- OC written like this so that startIX can move backward to show next prev 10 when triggered (btn press?)
@@ -652,7 +611,6 @@ function sLoadSession() {
       
     } // end else
     });
-    //document.getElementById("top").innerHTML += "<div id='session-list'></div>";
     selection.parent("session-list"); // put options in div with border
     selection.class('radio-sel');
     
@@ -745,22 +703,8 @@ function sLoadSession() {
       }
       s3 = s3 + "</p>";
 
-      // if (finalConfigObj.ownerEndorsement == 1) {
-      // s3 += "<h3>Endorsement: Yes</h3>";
-      // } else {
-      //   s3 += "<h3>Endorsement: No</h3>";
-      // }
-
       s3 += "<h3>Endorsement</h3>";
       s3 += "<p>Number of User Endorsements: " + (finalConfigObj.ownerEndorsement + finalConfigObj.publicEndorsement) + "</p>";
-
-      // if (finalConfigObj.ownerEndorsement == 1) {
-      //   sApproval = "<h3>Creator Endorsement</h3><img id='approval-check' src='./assets/check-mark-txt-col.svg' style='left:37%'>";
-      // } else {
-      //   sApproval  = "<h3>Creator Endorsement</h3><div id='approval-check'></div>";
-      // }
-      //sApproval = sApproval + "<h3 style='font-size: 14px; display: inline-block; vertical-align: top;'>User Approval of Configuration </h3><h3 style='font-size: 32px; display: inline-block; margin: 0; line-height: 1;'>&#9746;</h3>";
-      // sApproval = sApproval + "<h3>User Approval of Configuration</h3><div id='approval-check'></div>";
 
       div1.innerHTML = s1;
       div2.innerHTML = s2;
@@ -770,8 +714,6 @@ function sLoadSession() {
       document.getElementById('end-summary').appendChild(div1);
       document.getElementById('end-summary').appendChild(div2);
       document.getElementById('end-summary').appendChild(div3);
-      //div3.appendChild(divApproval);
-      // approvalBtn.parent(divApproval);
     }
 }
 
@@ -780,38 +722,15 @@ function sLoadSession() {
  */
 function sSessionVis() {
   let selection;
-  let sessions;
-  let numResults = 10; // number of results shown on screen
-  let showCount;
-  let dWidth;
-  let dHeight;
-  let s1, s2, s3, sApproval, div1, div2, div3, divApproval;
   
   this.setup = function () {
     textFont(helvFont);
   }
 
   this.enter = function () {
-    // gui = createGui();
-    // continueBtn = createButton("Continue", width/2, height/2);
     console.log("session vis scene");
     document.getElementById('dot-p02').className = 'dot-active';
-    // s1 = "";
-    // s2 = "";
-    // s3 = "";
-    // sApproval = "";
-    // div1 = document.createElement('div');
-    // div2 = document.createElement('div');
-    // div3 = document.createElement('div');
-    // divApproval = document.createElement('div');
-    // div1.id = 's-col-1';
-    // div2.id = 's-col-2';
-    // div3.id = 's-col-3';
-    // divApproval.id = 'approval-div2';
 
-    // // newSession();
-    // paramChangedBool = true;
-    // showCount = 0;
     showPanesBool = false;
     setTimeout(function () {
       if (mgr.isCurrent(sSessionVis)) {
@@ -827,16 +746,12 @@ function sSessionVis() {
     document.getElementById("chart-subtitle").innerHTML = "Session ID: " + selectedSessionID;
     document.getElementById("top").innerHTML = "<h2>Future Democracies Laboratory Histograms</h2>"; // + "<p>[paragraph here]</p>";
     document.getElementById("end-summary").style.display = "none";
-    
-    //showSessionsList(); // get sessions fr db and display onscreen
-    //inputTxt();
 
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "block";
     document.getElementById("page3").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("main-btn-div").style.display = "none";
-    // let buttonDiv = document.getElementById('main-btn-div');
 
     document.getElementById('prev-pane-btn').disabled = false;
     document.getElementById('prev-pane-btn').innerHTML = '&larr; Back';
@@ -882,7 +797,7 @@ function sSessionVis() {
     });
   }
 
-    /**
+  /**
    * Calculate values for each bracket in the #chambers histogram
    */
     function calcChambers(result) {
@@ -973,31 +888,6 @@ function sSessionVis() {
           }
         });
     }
-  
-  // /**
-  //  * Calculate values for each bracket in the #chambers histogram
-  //  */
-  // function calcChambers() {
-  //   getSessions().then((result) => {
-  //     var brackets = 3;
-  //     var ranges = [1, 2, 3]; // 1, 2, 3
-  //     var values = [0,0,0,];
-  //     console.log(result);
-  //     if (result.length == 0) {
-  //       return null;
-  //     }
-  //     for (let i=0; i<result.length; i++) {
-  //       let sObj = result[i].finalConfig.config;
-  //       for (let j=0; j<ranges.length; j++) {
-  //         if (sObj.numLegislativeBodies == ranges[j]) {
-  //           values[j]++;
-  //         }
-  //       }
-  //     }
-  //     console.log("chamber ranges: " + ranges);
-  //     console.log("chamber values: " + values);
-  //   });
-  // }
 
    /**
    * Calculate values for each bracket in the #parties histogram
@@ -1032,32 +922,7 @@ function sSessionVis() {
       displayHistogram(xText, values, "NUMBER OF PARTIES", document.getElementById("chart-parties"), barColors);
   }
 
-  //  /**
-  //  * Calculate values for each bracket in the #parties histogram
-  //  */
-  //  function calcParties() {
-  //   getSessions().then((result) => {
-  //     var brackets = 3;
-  //     var ranges = [1, 2, 3]; // 1, 2, 3
-  //     var values = [0,0,0,];
-  //     console.log(result);
-  //     if (result.length == 0) {
-  //       return null;
-  //     }
-  //     for (let i=0; i<result.length; i++) {
-  //       let sObj = result[i].finalConfig.config;
-  //       for (let j=0; j<ranges.length; j++) {
-  //         if (sObj.numParties == ranges[j]) {
-  //           values[j]++;
-  //         }
-  //       }
-  //     }
-  //     console.log("parties ranges: " + ranges);
-  //     console.log("parties values: " + values);
-  //   });
-  // }
-
-     /**
+  /**
    * Calculate values for each bracket in the #total members histogram
    */
      function calcTotalMembers(result) {
@@ -1096,34 +961,6 @@ function sSessionVis() {
 
         displayHistogram(xText, values, "TOTAL VOTING MEMBERS", document.getElementById("chart-members"), barColors);
     }
-
-  //  /**
-  //  * Calculate values for each bracket in the #total members histogram
-  //  */
-  //  function calcTotalMembers() {
-  //   getSessions().then((result) => {
-  //     var brackets = 10;
-  //     var ranges = [[2, 250], [250, 500], [500, 750], [750, 1000], [1000, 1250], [1250, 1500], [1500, 1750], [1750, 2000], [2000, 2250], [2250,2501]]; 
-  //     // min total members = 2 (1 chamber w 1 member, 1 vp, 0 pres)
-  //     // max total members = 2500 (500 * 5 bodies c1-3 vp pres)
-  //     var values = [0,0,0,0,0,0,0,0,0,0];
-  //     console.log(result);
-  //     if (result.length == 0) {
-  //       return null;
-  //     }
-  //     for (let i=0; i<result.length; i++) {
-  //       let sObj = result[i].finalConfig.config;
-  //       let totalVoting = sObj.chamber1.totalMembers + sObj.chamber2.totalMembers + sObj.chamber3.totalMembers + sObj.vicePres.totalMembers + sObj.president.totalMembers;
-  //       for (let j=0; j<ranges.length; j++) {
-  //         if (totalVoting >= ranges[j][0] && totalVoting < ranges[j][1]) {
-  //           values[j]++;
-  //         }
-  //       }
-  //     }
-  //     console.log("total voting ranges: " + ranges);
-  //     console.log("total voting values: " + values);
-  //   });
-  // }
 
   function calcBenchScoreWhole(result) {
     var brackets = 10;
@@ -1177,24 +1014,11 @@ function calcBenchScore(sObj) {
 }
 
   this.draw = function () {
-    // fill(255);
-    // rect(width/2, height/2, 100, 100);
-    //console.log("loaded: " + loadedConfig.chamber1.totalMembers);
-
     paneToggle();
     if (enableHardware) {
     checkHardwareInput();
     }
   }
-
-  function getSpaces(x) {
-    let s = "";
-    for (i=0; i<x; i++) {
-      s += "\u00A0";
-    }
-    return s;
-  }
-
 
   function calcBenchScore(sObj) {
     var totalBills = sObj.simResults.length-1; // -1 bc holds a test simulation
@@ -1354,14 +1178,10 @@ function sPublicEndorsement() {
   var rest = false;
 
   function clickedPublicEndorse() {
-    // if (document.getElementById('middle-btn').disabled = true) {
-    //   return; // dont endorse if already clicked
-    // }
     allowEndorse = false;
     showPanesBool = false;
     addPublicEndorsement();
     inputTxt();
-    //document.getElementById('approval-public').className = 'public-approved';
     document.getElementById('middle-btn').disabled = true;
     // document.getElementById('next-pane-btn').disabled = true;
     document.getElementById('prev-pane-btn').disabled = true;
@@ -1369,11 +1189,6 @@ function sPublicEndorsement() {
 
     // also need to disallow key press when prev/next buttons are disabled
     setTimeout(function() {
-      // if (mgr.isCurrent(sPublicEndorsement) && allowEndorse == false) {
-      // removeBtns();
-      // mgr.showScene(startSession);
-      // }
-      // document.getElementById('approval-public').className = 'public-normal';
       showPanesBool = true;
     }, 5000); // 15 seconds on this screen
   }
@@ -1393,7 +1208,6 @@ function sPublicEndorsement() {
 
   function inputTxt() {
     document.getElementById("end-summary").innerHTML = "<h2>Session ID: " + selectedSessionID + "</h2>";
-    //document.getElementById("end-summary").innerHTML += "<h2 id='approval-public' class='public-normal'>Total Endorsements: " + (endorseVal + finalConfigObj.ownerEndorsement) + "</h2>";
 
     s1 = 
       "<h3>First Legislative Chamber</h3>" +
@@ -1442,12 +1256,6 @@ function sPublicEndorsement() {
       }
       s3 = s3 + "</p>";
 
-      // if (finalConfigObj.ownerEndorsement == 1) {
-      //   sApproval = "<h3>Creator Endorsement</h3><img id='approval-check' src='./assets/check-mark-txt-col.svg' style='left:37%'>";
-      // } else {
-      //   sApproval  = "<h3>Creator Endorsement</h3><div id='approval-check'></div>";
-      // }
-
       s3 += "<h3>Endorsement</h3>";
       s3 += "<p>Number of User Endorsements: " + (endorseVal + finalConfigObj.ownerEndorsement) + "</p>";
 
@@ -1459,7 +1267,5 @@ function sPublicEndorsement() {
       document.getElementById('end-summary').appendChild(div1);
       document.getElementById('end-summary').appendChild(div2);
       document.getElementById('end-summary').appendChild(div3);
-      //div3.appendChild(divApproval);
-      // approvalBtn.parent(divApproval);
     }
 }
