@@ -19,6 +19,16 @@ var colorConfig;
 var port;
 var connectBtn;
 var enableHardware = true;
+var hardwareHide = false;
+var hardwareShow = false;
+var hardwareNextPane = false;
+var hardwarePrevPane = false;
+var hLeftBtn = false;
+var hardwareLeftBtn = false;
+var hMidBtn = false;
+var hardwareMidBtn = false;
+var hRightBtn = false;
+var hardwareRightBtn = false;
 
 function preload() {
   helvFont = loadFont('../democracy-engine-congressional-simulator/assets/font/HelveticaNeue-Regular.otf');
@@ -61,6 +71,10 @@ function mousePressed() {
   mgr.mousePressed();
 }
 
+function roundNum(value, decimals) {
+  return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
+}
+
 function hardwareSetup() {
   port = createSerial();
 
@@ -72,16 +86,7 @@ function hardwareSetup() {
   }
 }
 
-var hardwareHide = false;
-var hardwareShow = false;
-var hardwareNextPane = false;
-var hardwarePrevPane = false;
-var hLeftBtn = false;
-var hardwareLeftBtn = false;
-var hMidBtn = false;
-var hardwareMidBtn = false;
-var hRightBtn = false;
-var hardwareRightBtn = false;
+
 
 function checkHardwareInput() {
   if (!port) {

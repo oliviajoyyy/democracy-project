@@ -1,6 +1,7 @@
 
 /**
  * A01 Start Up
+ * For future dev - modify startup scenes for chart display if going to have info screens about the chart display
  */
 function startUp() {
   let continueBtn, testBtn;
