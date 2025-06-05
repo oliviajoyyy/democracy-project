@@ -63,9 +63,20 @@ var MAX_SIM_RESULTS = 12; // run simulation 12 times for the 12 benchmarking tes
 
 var showPanesBool = true;
 
+// hardware tracking
 var port;
 // var connectBtn;
 var enableHardware = true;
+var hardwareHide = false;
+var hardwareShow = false;
+var hardwareNextPane = false;
+var hardwarePrevPane = false;
+var hLeftBtn = false;
+var hardwareLeftBtn = false;
+var hMidBtn = false;
+var hardwareMidBtn = false;
+var hRightBtn = false;
+var hardwareRightBtn = false;
 
 // for time out
 var timeLastActive; // millis since last button clicked
@@ -168,21 +179,6 @@ function inactive() {
   }
   return false;
 }
-
-
-var hardwareHideShow = false;
-var hardwareHide = false;
-var hardwareShow = false;
-var hardwareNextPane = false;
-var hardwarePrevPane = false;
-var hardwareUpdate = false;
-var hCycle = false;
-var hLeftBtn = false;
-var hardwareLeftBtn = false;
-var hMidBtn = false;
-var hardwareMidBtn = false;
-var hRightBtn = false;
-var hardwareRightBtn = false;
 
 /**
  * Checks for button clicks and joystick movements for active buttons on each page.
@@ -612,15 +608,6 @@ function setLoadedUserVars(lConfig) {
 
 function roundNum(value, decimals) {
   return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
-}
-
-function getAllSessions() {
-  var sessionsArr;
-  getSessions().then((result) => {
-    console.log(result);
-    sessionsArr = result;
-  });
-  return sessionsArr;
 }
 
 function keyPressed() {
