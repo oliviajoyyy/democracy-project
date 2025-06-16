@@ -549,7 +549,6 @@ function newSessionScene() {
     // reset values for calculations
     engine.completeReset();
     visual.completeReset();
-    userEdits = false;
     reconfigBool = true;
 
     engine.currentCongLogic(true); // uncomment if drawing to screen real time
@@ -819,7 +818,6 @@ function loadSessionS1() {
     // reset values for calculations
     engine.completeReset();
     visual.completeReset();
-    userEdits = false;
     reconfigBool = true;
 
     engine.currentCongLogic(true); // uncomment if drawing to screen real time
@@ -1016,12 +1014,10 @@ function sBodies() {
       userPerPresBody = [1, 0, 0];
     }
     
-    setEngineParams(engine);
-
     // reset values for calculations
-    //engine.completeReset();
+    setEngineParams(engine);
+    // reset visuals - this is the first scene
     visual.completeReset();
-    userEdits = false;
   }
 
     function createSlider() {
@@ -1200,12 +1196,10 @@ function sLegislative() {
   function clickedUpdate() {
     document.getElementById("update-btn").disabled = true; // disable after clicking it
 
+    // set values for calculations
     setEngineParams(engine);
-    // reset values for calculations
-    //engine.completeReset();
+    // reset visuals
     visual.completeReset();
-    userEdits = false;
-    //reconfigBool = true;
   }
 
   // OC display sliders based on number of legislative bodies chosen on previous page
@@ -1534,12 +1528,11 @@ function checkHardwareUpdateInput() {
         }
       }
     }
-    setEngineParams(engine);
 
-    // reset values for calculations
-    //engine.completeReset();
+    // set values for calculations
+    setEngineParams(engine);
+    // reset visuals
     visual.completeReset();
-    userEdits = false;
   }
 
     function createSlider() {
@@ -1590,7 +1583,7 @@ function checkHardwareUpdateInput() {
           userPerVPBody = [];
           userPerVPBody = [1.0, 0.0, 0.0];
           userNumParties = parseInt(userNumParties);
-          onePartyBool = true;
+          // onePartyBool = true;
 
           userNumHouse = parseInt(userNumHouse);
           userNumHouse2 = parseInt(userNumHouse2)
@@ -1799,11 +1792,10 @@ function sMembersFirstChamber() {
   function clickedUpdate() {
     document.getElementById("update-btn").disabled = true; // disable after clicking it
 
-    setEngineParams(engine);
     // reset values for calculations
-    //engine.completeReset();
+    setEngineParams(engine);
+    // set visuals
     visual.completeReset();
-    userEdits = false;
   }
 
   /**
@@ -2144,12 +2136,11 @@ function sMembersSecondChamber() {
 
   function clickedUpdate() {
     document.getElementById("update-btn").disabled = true; // disable after clicking it
-
-    setEngineParams(engine);
+    
     // reset values for calculations
-    //engine.completeReset();
+    setEngineParams(engine);
+    // set visuals
     visual.completeReset();
-    userEdits = false;
   }
 
   function checkNumBodies() { // displays number of sliders according to number of parties
@@ -2482,11 +2473,10 @@ function sMembersThirdChamber() {
   function clickedUpdate() {
     document.getElementById("update-btn").disabled = true; // disable after clicking it
 
-    setEngineParams(engine);
     // reset values for calculations
-    //engine.completeReset();
+    setEngineParams(engine);
+    // set visuals
     visual.completeReset();
-    userEdits = false;
   }
 
   function checkNumBodies() { // displays number of sliders according to number of parties
@@ -2821,12 +2811,10 @@ function sMembersVP() {
   function clickedUpdate() {
     document.getElementById("update-btn").disabled = true; // disable after clicking it
 
-    setEngineParams(engine);
     // reset values for calculations
-    //engine.completeReset();
+    setEngineParams(engine);
+    // set visuals
     visual.completeReset();
-    userEdits = false;
-    //reconfigBool = true;
   }
 
   function checkNumBodies() { // displays number of sliders according to number of parties
@@ -3160,12 +3148,10 @@ function sMembersPres() {
   function clickedUpdate() {
     document.getElementById("update-btn").disabled = true; // disable after clicking it
 
-    setEngineParams(engine);
     // reset values for calculations
-    //engine.completeReset();
+    setEngineParams(engine);
+    // set visuals
     visual.completeReset();
-    userEdits = false;
-    //reconfigBool = true;
   }
 
   function checkNumBodies() { // displays number of sliders according to number of parties
@@ -3461,11 +3447,11 @@ function sBodyPass() {
 
   function clickedUpdate() {
     document.getElementById("update-btn").disabled = true; // disable after clicking it
-    setEngineParams(engine);
+
     // reset values for calculations
-    //engine.completeReset();
+    setEngineParams(engine);
+    // set visuals
     visual.completeReset();
-    userEdits = false;
   }
 
     // NOui slider slides
@@ -3655,12 +3641,11 @@ function sYesVotes() {
 
   function clickedUpdate() {
     document.getElementById("update-btn").disabled = true; // disable after clicking it
-    setEngineParams(engine);
+    
     // reset values for calculations
-    //engine.completeReset();
+    setEngineParams(engine);
+    // set visuals
     visual.completeReset();
-    userEdits = false;
-    //reconfigBool = true;
   }
 
   function checkParties() {
@@ -3897,10 +3882,8 @@ function sVote() {
 
     // set new parameters to show updated configuration when entering scene
     setEngineParams(engine);
-    // reset values for calculations
-    //engine.completeReset();
+    // set visuals
     visual.completeReset();
-    userEdits = false;
     reconfigBool = true;
   }
 
@@ -3987,7 +3970,6 @@ function sVote() {
     // reset values for calculations and drawings
     engine.completeReset();
     visual.completeReset();
-    userEdits = false;
     reconfigBool = true;
     
     engine.currentCongLogic(true); // get results for this configuration
@@ -4065,7 +4047,7 @@ function sBenchmarkPane() {
     benchmarkBtn.mousePressed(clickedBenchmark);
 
     visual.completeReset();
-    userEdits = false;
+    // userEdits = false;
     reconfigBool = true;
 
     background(bColor);
@@ -4094,7 +4076,6 @@ function sBenchmarkPane() {
       setEngineParams(engine); // set new parameters
       // reset values for calculations and drawings
       engine.completeReset();
-      userEdits = false;
       reconfigBool = true;
       engine.currentCongLogic(true); // get results for this configuration
       updateSession(); // save this config and resutls of running this configuration
@@ -4196,7 +4177,7 @@ function sBenchmarkResults() {
     summaryBtn.mousePressed(clickedSummary);
     
     visual.completeReset();
-    userEdits = false;
+    // userEdits = false;
     reconfigBool = true;
     background(bColor);
     document.body.style.backgroundColor = bColor;

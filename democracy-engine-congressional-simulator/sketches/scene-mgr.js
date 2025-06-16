@@ -4,16 +4,7 @@ var engine;
 var visual;
 var buttonDiv;
 
-//fortesting
-let senateResult;
-let houseResult;
-let presidentResult;
-
 // text display
-let mainText;
-let headerText;
-let subHeaderText;
-let simInfoText;
 let userOutputText;
 
 //loaded assets
@@ -21,14 +12,6 @@ var helvFont;
 var loadingImage;
 var enterImage;
 var checkImage;
-
-let nextButton;
-var buttonRC, buttonRes, dispBtn, recalBtn, buttonDef, emailBtn;
-
-var userPaddingX = 20;
-var userInputY = 20;
-var userInputX = 20;
-
 
 //user input variables
 var userNumLegislative; // number of legislative bodies (1-3)
@@ -49,12 +32,6 @@ var userNumVP;
 var userPerVPBody = [];
 
 var userNumParties;
-var userNumHouseRan;
-var userNumHouse2Ran;
-var userNumSenateRan;
-var userNumPresRan;
-var userNumVPRan;
-var userNumHouseConn;
 
 var userBodyPass;
 var userSuperThresh;
@@ -62,13 +39,9 @@ var userSuperThresh;
 var userRepYaythresh;
 var userDemYaythresh;
 var userIndYaythresh;
-var prevUserNumParties;
 var userEditCount = 0;
 
-//user inputs are enabled
-var userEdits = false;
 var reconfigBool = true;
-var onePartyBool = false;
 
 // colors
 var bColor;
@@ -96,7 +69,7 @@ var finalConfigObj = {
   config: finalConfig, // the 10th config of the history
   ownerEndorsement: 0,
   publicEndorsement: 0 };
-var sessionID = "ID" + userEditCount;
+var sessionID;
 
 // to keep track of array indicies
 var configIX = 0;
@@ -647,7 +620,6 @@ function previousPane() {
       // reset values for calculations and drawings
       //engine.completeReset();
       visual.completeReset();
-      userEdits = false;
       reconfigBool = true;
     }
     mgr.showScene(sYesVotes);
