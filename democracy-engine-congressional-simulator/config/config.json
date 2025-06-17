@@ -2,7 +2,10 @@
 
     "softwareVersion": "v2",
 
-    "mode": "kiosk",
+    "versionOptions": [
+        "web v1.0",
+        "ICA kiosk v1.0"
+    ],
 
     "credentials": {
         "db": {
