@@ -28,6 +28,11 @@ const Session = require("../models/session-model"); // the file for the session 
 const run = async() => {
 mongoose.connect(mongoDB); // connect to the database
 console.log("connected to DB");
+
+// Session.updateMany({}, { $set: { version: 'ICA kiosk v1.0' } })
+//   .then(result => console.log('All documents updated:', result))
+//   .catch(err => console.error('Error updating documents:', err));
+
 }
 run().catch((err) => console.error(err));
 

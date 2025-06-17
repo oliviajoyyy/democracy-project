@@ -61,6 +61,7 @@ var colorConfig;
 var historicalActs; // array of 10 bills
 var loadedConfig;
 
+// db values
 var sessionObj; // session obj holds array of json configurations, which holds array of json results
 var configs = []; // array of json govt config attempts (up to 10)
 var results = []; // array of (10) json results (updated for each new config)
@@ -70,6 +71,7 @@ var finalConfigObj = {
   ownerEndorsement: 0,
   publicEndorsement: 0 };
 var sessionID;
+var versionVal; // options in config.json file (first in array is web v1.0): "web v1.0", "ICA kiosk v1.0",  ... 
 
 // to keep track of array indicies
 var configIX = 0;
@@ -104,8 +106,11 @@ function setup() {
   var kioskFlag = sessionStorage.getItem('kioskFlag');
   if (kioskFlag == 'true') {
     enableHardware = true;
+    // TODO - set versionVal to field selected on kiosk version start page
   } else {
     enableHardware = false;
+    versionVal = configJSON.versionOptions[0]; // [0] is web v1.0
+    console.log("version val: " + versionVal);
   }
 
   govtConfig = configJSON.defaultConfig;
@@ -839,6 +844,7 @@ function newSession() {
   sessionObj = {
     "timestamp": getTimestamp(),
     "uniqueID": sessionID,
+    "version": versionVal, // version: "ICA kiosk v1.0" or "web v1.0", etc...
     "configHistory": configs, // array of last 10 configurations
     "finalConfig": finalConfigObj
   }

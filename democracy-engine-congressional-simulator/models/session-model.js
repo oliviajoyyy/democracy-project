@@ -10,6 +10,8 @@ const SessionSchema = new Schema({
 
     uniqueID: String,
 
+    version: String,
+
     // user configuration properties
     configHistory: [ConfigSchema],
 
