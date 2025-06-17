@@ -82,7 +82,9 @@ var showPanesBool = true;
 // for hardware
 var port;
 var connectBtn;
-var enableHardware = true; // true
+
+// TODO - determine how flag is changed
+var enableHardware = false; // flag for kiosk version or web version
 
 // for time out
 var timeLastActive; // millis since last button clicked
@@ -123,9 +125,11 @@ function setup() {
 
   noStroke();
   mgr = new SceneManager();
-  mgr.addScene(startUp);
+  if (enableHardware) {
+    mgr.addScene(startUp);
+    mgr.addScene(hardwareTest);
+  }
   mgr.addScene(startSession);
-  mgr.addScene(hardwareTest);
   mgr.addScene(aboutProject);
   mgr.addScene(newSessionScene);
   mgr.addScene(loadSessionS1);
@@ -158,17 +162,21 @@ function setup() {
 
 var arr; // global reading from hardware
 function draw() {
-  arr = port.readBytes(14);
+  if (enableHardware) {
+    arr = port.readBytes(14);
+  }
+  
   mgr.draw();
 
+  // for kiosk versions only (checks flag enableHardware)
   // constantly checks time since last active, goes back to start screen if determined to be inactive
-  if (!mgr.isCurrent(startSession) && !mgr.isCurrent(startUp) && !mgr.isCurrent(hardwareTest) && inactive()) {
+  if (enableHardware && !mgr.isCurrent(startSession) && !mgr.isCurrent(startUp) && !mgr.isCurrent(hardwareTest) && inactive()) {
     mgr.showScene(startSession); // goes back to start page startSession
   }
 }
 
 function mousePressed() {
-  lastActive();
+  //lastActive(); // enables timeout for mouse clicks
   mgr.mousePressed();
 }
 
