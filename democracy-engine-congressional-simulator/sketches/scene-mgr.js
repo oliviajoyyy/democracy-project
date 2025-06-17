@@ -82,9 +82,7 @@ var showPanesBool = true;
 // for hardware
 var port;
 var connectBtn;
-
-// TODO - determine how flag is changed
-var enableHardware = false; // flag for kiosk version or web version
+var enableHardware = false; // kiosk flag (set in democracy-engine-kiosk/kiosk-setup.js) sets to true
 
 // for time out
 var timeLastActive; // millis since last button clicked
@@ -102,8 +100,14 @@ function preload() {
 
 
 function setup() {
-  // createCanvas(windowWidth*.8, windowHeight*.8);
-  // rectMode(CENTER);
+  // check kiosk flag to enable hardware if 'true'
+  var kioskFlag = sessionStorage.getItem('kioskFlag');
+  if (kioskFlag == 'true') {
+    enableHardware = true;
+  } else {
+    enableHardware = false;
+  }
+
   govtConfig = configJSON.defaultConfig;
   colorConfig = configJSON.cssParams;
   historicalActs = configJSON.historicalActs
