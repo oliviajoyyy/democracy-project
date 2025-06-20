@@ -65,8 +65,8 @@ var showPanesBool = true;
 
 // hardware tracking
 var port;
-// var connectBtn;
-var enableHardware = true;
+var enableHardware = false; // kiosk flag (set in democracy-engine-kiosk/kiosk-setup.js) sets to true
+
 var hardwareHide = false;
 var hardwareShow = false;
 var hardwareNextPane = false;
@@ -89,6 +89,14 @@ function preload() {
 }
 
 function setup() {
+  // check kiosk flag to enable hardware if 'true'
+  var kioskFlag = sessionStorage.getItem('kioskFlag');
+  if (kioskFlag == 'true') {
+    enableHardware = true;
+  } else {
+    enableHardware = false;
+  }
+  
   govtConfig = configJSON.defaultConfig;
   colorConfig = configJSON.cssParams;
   historicalActs = configJSON.historicalActs
@@ -108,9 +116,11 @@ function setup() {
 
   noStroke();
   mgr = new SceneManager();
-  mgr.addScene(startUp);
+  if (enableHardware) {
+    mgr.addScene(startUp);
+    mgr.addScene(hardwareTest);
+  }
   mgr.addScene(startSession);
-  mgr.addScene(hardwareTest);
   mgr.addScene(aboutProject);
   mgr.addScene(sLoadSession);
   mgr.addScene(sSessionVis);
@@ -130,14 +140,15 @@ function setup() {
 function draw() {
   mgr.draw();
 
+  // only kiosk versions (enableHardware) have a timeout
   // constantly checks time since last active, goes back to start screen if determined to be inactive
-  if (!mgr.isCurrent(startSession) && !mgr.isCurrent(startUp) && !mgr.isCurrent(hardwareTest) && inactive()) {
+  if (enableHardware && !mgr.isCurrent(startSession) && !mgr.isCurrent(startUp) && !mgr.isCurrent(hardwareTest) && inactive()) {
     mgr.showScene(startSession); // goes back to start page startSession
   }
 }
 
 function mousePressed() {
-  lastActive();
+  //lastActive(); // enables timeout for mouse clicks
   mgr.mousePressed();
 }
 
