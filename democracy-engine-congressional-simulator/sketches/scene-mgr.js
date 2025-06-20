@@ -103,15 +103,17 @@ function preload() {
 
 function setup() {
   // check kiosk flag to enable hardware if 'true'
+  // and set versioning to be saved with each session
   var kioskFlag = sessionStorage.getItem('kioskFlag');
   if (kioskFlag == 'true') {
     enableHardware = true;
-    // TODO - set versionVal to field selected on kiosk version start page
+    // set versionVal to field selected from kiosk version dropdown
+    versionVal = sessionStorage.getItem('kioskVersion');
   } else {
     enableHardware = false;
     versionVal = configJSON.versionOptions[0]; // [0] is web v1.0
-    console.log("version val: " + versionVal);
   }
+  console.log("version val: " + versionVal);
 
   govtConfig = configJSON.defaultConfig;
   colorConfig = configJSON.cssParams;

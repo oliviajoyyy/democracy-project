@@ -3,22 +3,26 @@
  Sets up flag for kiosk version, otherwise flag is defaulted to web version
  */
 
-sessionStorage.setItem('kioskFlag', 'true');
+// sessionStorage.setItem('kioskFlag', 'true');
 
 fetch('../democracy-engine-congressional-simulator/config/config.json')
   .then(response => response.json())
   .then(configJSON => {
+
+    // html form
+    var versionForm = document.getElementById('version-selection');
+
     // get version options array from json file
     var vOptions = configJSON.versionOptions;
     vOptions.shift(); // remove first element, which should always be "web v1.0"
     console.log(vOptions)
 
-    // create dropdown and populate with verison options
+    // create dropdown
     const versionSelection = document.createElement('select');
     versionSelection.id = "versionDropdown";
     versionSelection.name = "versionDropdown";
 
-    // placeholder
+    // placeholder option - 'Select kiosk version'
     const p = document.createElement('option');
     p.value = '';
     p.textContent = 'Select kiosk version';
@@ -26,6 +30,7 @@ fetch('../democracy-engine-congressional-simulator/config/config.json')
     p.selected = true;
     versionSelection.appendChild(p);
 
+    // populate with verison options from config array
     vOptions.forEach(ver => {
         const opt = document.createElement('option');
         opt.value = ver;
@@ -33,10 +38,9 @@ fetch('../democracy-engine-congressional-simulator/config/config.json')
         versionSelection.appendChild(opt);
     });
 
-    document.getElementById('version-selection').appendChild(versionSelection);
+    versionForm.appendChild(versionSelection);
 
-    // TODO - put in onClick or form submission for clicking START
-    // store selected version in sessionStorage
+    // store selected version in sessionStorage when changed
     versionSelection.addEventListener('change', function () {
         var selected = this.value;
         if (selected == '' || selected == undefined) {
@@ -48,6 +52,43 @@ fetch('../democracy-engine-congressional-simulator/config/config.json')
 
   })
   .catch(error => console.error('Error loading JSON:', error));
+
+
+  function startSimulator() {
+    // get dropdown selection
+    var versionSelection = document.getElementById("versionDropdown");
+    console.log("selected val: " + versionSelection.value);
+    var selected = versionSelection.value;
+
+    // check selection
+    if (selected == '' || selected == undefined) {
+      alert("Please select a kiosk version.");
+      return;
+    } else {
+      // set kiosk version in session storage and redirect to simulator
+      sessionStorage.setItem('kioskFlag', 'true');
+      sessionStorage.setItem('kioskVersion', selected);
+      window.location.replace("/democracy-engine-congressional-simulator/index-scene.html");
+    }
+  }
+
+  function startVis() {
+      // get dropdown selection
+      var versionSelection = document.getElementById("versionDropdown");
+      console.log("selected val: " + versionSelection.value);
+      var selected = versionSelection.value;
+  
+      // check selection
+      if (selected == '' || selected == undefined) {
+        alert("Please select a kiosk version.");
+        return;
+      } else {
+        // set kiosk version in session storage and redirect to vis desk
+        sessionStorage.setItem('kioskFlag', 'true');
+        sessionStorage.setItem('kioskVersion', selected);
+        window.location.replace("/democracy-engine-visualization/index-scene.html");
+      }
+  }
 
 
 
