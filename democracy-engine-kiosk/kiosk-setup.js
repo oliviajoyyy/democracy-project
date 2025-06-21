@@ -40,15 +40,15 @@ fetch('../democracy-engine-congressional-simulator/config/config.json')
 
     versionForm.appendChild(versionSelection);
 
-    // store selected version in sessionStorage when changed
-    versionSelection.addEventListener('change', function () {
-        var selected = this.value;
-        if (selected == '' || selected == undefined) {
-            console.log("none selected");
-        }
-        sessionStorage.setItem('kioskVersion', selected);
-        console.log("selected val: " + selected);
-    });
+    // // store selected version in sessionStorage when changed
+    // versionSelection.addEventListener('change', function () {
+    //     var selected = this.value;
+    //     if (selected == '' || selected == undefined) {
+    //         console.log("none selected");
+    //     }
+    //     sessionStorage.setItem('kioskVersion', selected);
+    //     console.log("selected val: " + selected);
+    // });
 
   })
   .catch(error => console.error('Error loading JSON:', error));
