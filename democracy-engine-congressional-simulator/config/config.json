@@ -152,16 +152,6 @@
 
     ],
 
-    "mediaAssetPaths": {
-        "bkgImg1": "url('../assets/gridandfloorplan-light.svg')",
-        "bkgImg2": "url('../assets/2gearslight.svg')",
-        "numberLineIcon": "url('../assets/numberline.svg')",
-        "simulatorIcon": "url('../assets/simulator-icon.svg')",
-        "mediaIcon": "url('../assets/media-icon.svg')",
-        "aboutIcon": "url('../assets/about-icon.svg')",
-        "codeIcon": "url('../assets/code-icon.svg')"
-    }, 
-
     "cssParams": {
         "background": "#1c2f47",
         "headerFooterBkg": "#2b4361",
