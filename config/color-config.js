@@ -1,6 +1,6 @@
 // fetch('/democracy-engine-congressional-simulator/config/config.json') // path works locally
-fetch('democracy-engine-congressional-simulator/config/config.json') // path works on server
-// fetch('config/config.json')
+// fetch('config/config.json') // path works on server
+fetch('../config/config.json')
     .then(response => response.json())
     .then(data => {
         document.documentElement.style.setProperty('--bkg-color', data.cssParams.background);
@@ -21,13 +21,6 @@ fetch('democracy-engine-congressional-simulator/config/config.json') // path wor
         document.documentElement.style.setProperty('--progress-val', data.cssParams.progressVal);
         document.documentElement.style.setProperty('--progress-remainder', data.cssParams.progressRemainder);
 
-        document.documentElement.style.setProperty('--bkg-img-1', data.mediaAssetPaths.bkgImg1);
-        document.documentElement.style.setProperty('--bkg-img-2', data.mediaAssetPaths.bkgImg2);
-        document.documentElement.style.setProperty('--numberline-icon', data.mediaAssetPaths.numberLineIcon);
-        document.documentElement.style.setProperty('--simulator-icon', data.mediaAssetPaths.simulatorIcon);
-        document.documentElement.style.setProperty('--media-icon', data.mediaAssetPaths.mediaIcon);
-        document.documentElement.style.setProperty('--about-icon', data.mediaAssetPaths.aboutIcon);
-        document.documentElement.style.setProperty('--code-icon', data.mediaAssetPaths.codeIcon);
     })
     .catch(error => console.error('Error loading color config', error));
 

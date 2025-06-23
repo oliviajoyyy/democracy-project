@@ -32,7 +32,7 @@ var hardwareRightBtn = false;
 
 function preload() {
   helvFont = loadFont('../democracy-engine-congressional-simulator/assets/font/HelveticaNeue-Regular.otf');
-  configJSON = loadJSON('../../democracy-engine-congressional-simulator/config/config.json');
+  configJSON = loadJSON('../config/config.json');
   console.log(configJSON);
 }
 

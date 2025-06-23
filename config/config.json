@@ -2,11 +2,14 @@
 
     "softwareVersion": "v2",
 
-    "mode": "kiosk",
+    "versionOptions": [
+        "web v1.0",
+        "ICA kiosk v1.0"
+    ],
 
     "credentials": {
         "db": {
-            "url": "mongodb+srv://Cluster70600:W3FEU0d0aXZe@cluster70600.stuctmh.mongodb.net/db?retryWrites=true&w=majority&appName=Cluster70600"
+            "url": "mongodb://demConfigDesk:democracyProj_sim2024@cha-cweb-dma2.sjsu.edu:27017/democracy-project"
         }
     },
 
@@ -149,22 +152,12 @@
 
     ],
 
-    "mediaAssetPaths": {
-        "bkgImg1": "url('../assets/gridandfloorplan-light.svg')",
-        "bkgImg2": "url('../assets/2gearslight.svg')",
-        "numberLineIcon": "url('../assets/numberline.svg')",
-        "simulatorIcon": "url('../assets/simulator-icon.svg')",
-        "mediaIcon": "url('../assets/media-icon.svg')",
-        "aboutIcon": "url('../assets/about-icon.svg')",
-        "codeIcon": "url('../assets/code-icon.svg')"
-    }, 
-
     "cssParams": {
         "background": "#1c2f47",
         "headerFooterBkg": "#2b4361",
         "text": "#f5f5f5",
         "button": "#8c80a8",
-        "sliderHandle": "#998f77",
+        "sliderHandle": "#8c80a8",
         "activeNav": "#bfaf8a",
         "link": "#bfaf8a",
         "linkHover": "#c47cb7",
@@ -172,6 +165,7 @@
         "rectColor": "#bfaf8a",
         "rectColor2": "#a4d7e0",
         "rectColor3": "#8abd8b",
+        "barDark": "#5f8b94",
         "majorityBar": "#bf8a98",
         "supermajorityBar": "#c4b2ed",
         "paneBkg": "#2b4361",
@@ -202,9 +196,11 @@
         "p11desc2": "<p>If the system is behaving as anticipated, press the 'Next' button. If you want to adjust parameters, press 'Back'.</p>",
         "p12desc": "<p>Use this benchmark test to assess the performance of your governmental configuration in real-world conditions. The emulator will run ten times, voting on ten historically important bills that significantly changed the political status quo. The benchmark test will show how the bills might have fared given the system you have modeled. </p>",
         "benchResultsDesc": "<p>Review the following benchmark results to assess whether your governmental system meets your standards. If so, approve the model on the next page and save it for others to assess and modify.</p>",
-        "evalDesc": "<h2>This is the form of government you designed.<br>Do you endorse this?</h2>",
-        "saveDesc": "<p style='text-align:center'>Please record your session ID.<br>You can add your modifications to the database for further modification by others.</p>",
-        "saveCompleteDesc": "<p style='text-align:center'>Please record your session ID to retrieve it later.</p>"
+        "evalDesc": "<p>Review the governmental configuration you have designed and the benchmark results below. If you approve of this configuration, press the endorsement button before proceeding to the final summary.</p>",
+        "saveDesc": "<p>Record this code to return to your session in the future. The configuration you have created will also be available to other users for review and modification.</p>",
+        "saveCompleteDesc": "<p style='text-align:center'>Please record your session ID to retrieve it later.</p>",
+        "titleVis": "<h1>Future Democracies Laboratory Database</h1>",
+        "pVisEndorsement": "<h2>Endorsement</h2><p style='text-align:center'>Review the governmental configuration and the benchmark results. If you approve of this configuration, press the endorsement button before starting over.</p>"
     }
     
 }

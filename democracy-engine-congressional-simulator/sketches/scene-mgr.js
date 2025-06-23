@@ -95,7 +95,7 @@ function preload() {
   loadingImage = loadImage('../democracy-engine-congressional-simulator/assets/gears-icon.png');
   enterImage = loadImage('../democracy-engine-congressional-simulator/assets/asraProgress.png');
   checkImage = loadImage('../democracy-engine-congressional-simulator/assets/check-mark-bkg-col.svg'); // check mark with color of bkg for voting members
-  configJSON = loadJSON('../democracy-engine-congressional-simulator/config/config.json');
+  configJSON = loadJSON('../config/config.json');
   
   console.log(configJSON);
 }
