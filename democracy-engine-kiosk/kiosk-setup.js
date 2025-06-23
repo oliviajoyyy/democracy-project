@@ -14,7 +14,7 @@ fetch('../config/config.json')
 
     // get version options array from json file
     var vOptions = configJSON.versionOptions;
-    vOptions.shift(); // remove first element, which should always be "web v1.0"
+    vOptions = vOptions.filter(item => !item.includes("web")); // remove web options
     console.log(vOptions)
 
     // create dropdown
