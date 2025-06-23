@@ -10,7 +10,6 @@ let userOutputText;
 //loaded assets
 var helvFont;
 var loadingImage;
-var enterImage;
 var checkImage;
 
 //user input variables
@@ -91,9 +90,8 @@ var timeLastActive; // millis since last button clicked
 var timeOutAmt = 480000; // 1 minute = 60000 milliseconds, 8 minutes = 480000 ms
 
 function preload() {
-  helvFont = loadFont('../democracy-engine-congressional-simulator/assets/font/HelveticaNeue-Regular.otf');
+  helvFont = loadFont('../assets/font/HelveticaNeue-Regular.otf');
   loadingImage = loadImage('../democracy-engine-congressional-simulator/assets/gears-icon.png');
-  enterImage = loadImage('../democracy-engine-congressional-simulator/assets/asraProgress.png');
   checkImage = loadImage('../democracy-engine-congressional-simulator/assets/check-mark-bkg-col.svg'); // check mark with color of bkg for voting members
   configJSON = loadJSON('../config/config.json');
   

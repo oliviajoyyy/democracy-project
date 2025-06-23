@@ -31,7 +31,7 @@ var hRightBtn = false;
 var hardwareRightBtn = false;
 
 function preload() {
-  helvFont = loadFont('../democracy-engine-congressional-simulator/assets/font/HelveticaNeue-Regular.otf');
+  helvFont = loadFont('../assets/font/HelveticaNeue-Regular.otf');
   configJSON = loadJSON('../config/config.json');
   console.log(configJSON);
 }
