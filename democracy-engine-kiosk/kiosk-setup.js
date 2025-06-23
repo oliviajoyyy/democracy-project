@@ -5,7 +5,7 @@
 
 // sessionStorage.setItem('kioskFlag', 'true');
 
-fetch('../democracy-engine-congressional-simulator/config/config.json')
+fetch('../config/config.json')
   .then(response => response.json())
   .then(configJSON => {
 
