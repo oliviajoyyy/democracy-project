@@ -84,7 +84,7 @@ var timeOutAmt = 480000; // 1 minute = 60000 milliseconds, 8 minutes = 480000 ms
 
 function preload() {
   helvFont = loadFont('../democracy-engine-congressional-simulator/assets/font/HelveticaNeue-Regular.otf');
-  configJSON = loadJSON('../../democracy-engine-congressional-simulator/config/config.json');
+  configJSON = loadJSON('../config/config.json');
   console.log(configJSON);
 }
 
