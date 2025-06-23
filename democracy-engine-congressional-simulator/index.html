@@ -8,14 +8,21 @@
   <script src="slider/nouislider.js"></script>
   <script src="slider/wNumb.min.js"></script>
   <script src="p5/scene-manager.js"></script>
+  <script src="p5/p5.webserial.js"></script>
+  <script language="javascript" type="text/javascript" src="sketches/slider-scenes.js"></script>
+  <script language="javascript" type="text/javascript" src="sketches/scene-mgr.js"></script>
+  <script language="javascript" type="text/javascript" src="models/engine.js"></script>
+  <script language="javascript" type="text/javascript" src="models/vote-visuals.js"></script>
+  <script language="javascript" type="text/javascript" src="models/slider-model.js"></script>
+  <script language="javascript" type="text/javascript" src="data-access/session-api.js"></script>
   <script language="javascript" type="text/javascript" src="color-config.js"></script>
   <!-- <script language="javascript" type="text/javascript" src="../color-config.js"></script> -->
-  <link rel="icon" type="image/png" href="./assets/gears-icon.png">
-  <link rel="stylesheet" type="text/css" href="slider/nouislider.css">
-  <link rel="stylesheet" type="text/css" href="style/newSlider.css">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,200;0,300;0,400;1,200;1,300;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="../css/style.css">
+  <link rel="stylesheet" type="text/css" href="slider/nouislider.css">
+  <link rel="stylesheet" type="text/css" href="style/style.css">
+  <link rel="stylesheet" type="text/css" href="style/newSlider.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cardo:wght@700&display=swap" rel="stylesheet">
+
 
   <meta charset="utf-8">
 
@@ -28,80 +35,193 @@
 </head>
 
 <body>
-  <header>
+  <!-- <header>
     <ul class="topnav" id="myTopnav">
       <li><a href="../index.html">THE FUTURE DEMOCRACIES LABORATORY
-        <div class="icon" id="numberline-icon"></div>
-          <!-- <img class="icon" src="../assets/numberline.svg" style="padding-top: 10px;" /> -->
         </a></li>
       <li>
         <a class="active" href="../democracy-engine-congressional-simulator/index.html">
           SIMULATOR
-          <div class="icon" id="simulator-icon"></div>
-          <!-- <img class="icon" src="../assets/simulator-icon.svg" /> -->
         </a>
       </li>
       <li>
         <a href="../media.html">
           MEDIA
-          <div class="icon" id="media-icon"></div>
-          <!-- <img class="icon" src="../assets/media-icon.svg" /> -->
         </a>
       </li>
       <li>
         <a href="../about.html">
           ABOUT
-          <div class="icon" id="about-icon"></div>
-          <!-- <img class="icon" src="../assets/about-icon.svg" /> -->
         </a>
       </li>
       <li>
         <a href="../code.html">
           CODE
-          <div class="icon" id="code-icon"></div>
-          <!-- <img class="icon" src="../assets/code-icon.svg" /> -->
         </a>
       </li>
-      <!--RH Add from drop-down menu-->
       <a href="javascript:void(0);" style="font-size:15px;" class="icon2" onclick="myFunction()">&#9776;</a>
-      <!--end RH Add from drop-down menu-->
     </ul>
-  </header>
+  </header> -->
 
+
+  <!-- <script class="sketch" src="sketches/nouislider.js"></script> -->
 
   <div id="page-container">
     <div id="content-wrap">
-      <div class="body-header">
-        <h1>Automated Future Democracies Simulator </h1>
+      <div id="main-header" class="body-header">
+        <!-- <h1>Automated Future Democracies Simulator </h1> -->
       </div>
-      <div class="body-text">
-        <p>
-          The legislative apparatus of the current US government is represented in default mode, which will initially run through one legislative cycle. The user may configure alternative values in subsequent cycles in order to evaluate the effects of
-          systemic changes to the mechanism of governance.
+      <div id="start-desc" class="body-text">
 
+      </div>
+      
+      <div id="end-summary" class="body-text"></div>
+       <div id="main-btn-div" style="position: absolute; left: 50%; transform: translateX(-50%);"></div>
+    </div>
+  </div>
+
+  
+  
+  
+  <div id="vote"></div>
+  <div id="slider-pages">
+
+    <div id="screen"></div>
+    <div class="pane-bkg" id="pane-bkg">
+
+      <div id="top"></div>
+       
+    <div id="page1"> <!-- NUMBEAR OF LEGISLATAIVE BODIES -->
+
+      <div class="first-slider" id="slider01">
+        <p id="slider-text-1">
         </p>
-        <div id="enter">
-          <!-- <a href = "index-scene.html"><img src = "/democracy-engine-congressional-simulator/assets/asraProgress.png"></a> -->
-          <a href="index-scene.html"><h2>START</h2></a>
-        </div>
       </div>
 
-      <!-- <div id="vote"></div> -->
-      <!-- <div id="slider"></div>
-        <div id="slider-value"></div> -->
 
     </div>
 
-    <footer>
-      <ul>
-        <li><a href="https://www.sjsu.edu/humanitiesandarts/" target="_blank">SAN JOSÉ STATE UNIVERSITY</a></li>
-        <li><a href="https://cadre.sjsu.edu/" target="_blank">CADRE CENTER FOR NEW MEDIA</a></li>
-      </ul>
+    <div id="page2"> <!-- NUMBER OF VOTING MEMBERS PER CHAMBER-->
 
-      <!-- <p id="result"></p> -->
-    </footer>
+      <div id="s1-p2"></div>
+      <div id="s2-p2"></div>
+      <div id="s3-p2"></div>
+      <div id="s4-p2"></div>
+      <div id="s5-p2"></div>
 
+    </div>
+
+    <div id="page3"> <!-- NUMBER OF POLITICAL PARTIES-->
+      <div class="first-slider" id="slider5"></div>
+    </div>
+
+    <div id="page4"> <!-- NUMBER OF VOTING MEMBERS FOR FIRST CHAMBER -->
+      <div id="s1-p3"></div>
+      <div id="s2-p3"></div>
+      <div id="s3-p3"></div>
+      <div class="total" id="total"></div>
+      
+    </div>
+
+    <div id="page5"> <!-- NUMBER OF VOTING MEMBERS FOR SECOND CHAMBER -->
+      <div id="s1-p4"></div>
+      <div id="s2-p4"></div>
+      <div id="s3-p4"></div>
+      <div class="total" id="total2"></div>
+      
+    </div>
+
+    <div id="page6"> <!-- NUMBER OF VOTING MEMBERS FOR THIRD CHAMBER -->
+      <div id="s1-p5"></div>
+      <div id="s2-p5"></div>
+      <div id="s3-p5"></div>
+      <div class="total" id="total3"></div>
+      
+    </div>
+
+    <div id="page7"> <!-- NUMBER OF VOTING MEMBERS FOR VICE PRESIDENCY -->
+      <div id="s1-p6"></div>
+      <div id="s2-p6"></div>
+      <div id="s3-p6"></div>
+      <div class="total" id="total-vp"></div>
+      
+    </div>
+
+    <div id="page8"> <!-- NUMBER OF VOTING MEMBERS FOR PRESIDENCY -->
+      <div id="s1-p7"></div>
+      <div id="s2-p7"></div>
+      <div id="s3-p7"></div>
+      <div class="total" id="total-pres"></div>
+    </div>
+
+    <div id="page9">
+      <div class="first-slider" id="slider10">
+        <p id="slider-text-1">MAJORITY <!--APPROVAL FOR MAJORITY-->
+        </p>
+      </div>
+      <!-- for each body -->
+
+
+      <div id="slider11">
+        <p id="slider-text-2">SUPERMAJORITY <!--APPROVAL FOR SUPERMAJORITY-->
+      </div>
+
+      </p>
+    </div>
+
+    <div id="page10">
+      <div class="first-slider" id="slider12">
+        <p id="slider-text-1">POLITICAL PARTY A
+        </p>
+      </div>
+
+      <div id="slider13">
+        <p id="slider-text-2">POLITICAL PARTY B
+        </p>
+      </div>
+
+      <div id="slider14">
+        <p id="slider-text-3">POLITICAL PARTY C
+      </div>
+
+      </p>
+    </div>
+
+    <div id="page11">
+      
+    </div>
+
+    <div id="page12">
+      <p id="benchResults"></p>
+    </div>
+    
+    <div id="button-div"></div>
+
+    <div id="progress-dots">
+      <span class="dot" id="dot-p01"></span>
+      <span class="dot" id="dot-p02"></span>
+      <span class="dot" id="dot-p03"></span>
+      <span class="dot" id="dot-p04"></span>
+      <span class="dot" id="dot-p05"></span>
+      <span class="dot" id="dot-p06"></span>
+      <span class="dot" id="dot-p07"></span>
+      <span class="dot" id="dot-p08"></span>
+      <span class="dot" id="dot-p09"></span>
+      <span class="dot" id="dot-p10"></span>
+    </div>
+
+  </div> <!-- end div for pane-bkg-->
+    <div id="page13">
+
+    </div>
+    
+    
   </div>
+    <div id="slider-disp"></div>
+
+    <div id="sim-info"></div>
+
+
 
   <!--RH Add from drop-down menu-->
   <script>
@@ -116,6 +236,13 @@
   </script>
   <!--RH Add from drop-down menu-->
 
+
+
+  <!-- <footer> -->
+    <p id="result"></p>
+    <!-- <div id="button-div">
+    </div> -->
+  <!-- </footer> -->
 </body>
 
 </html>

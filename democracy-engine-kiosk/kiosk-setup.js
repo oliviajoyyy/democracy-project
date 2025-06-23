@@ -68,7 +68,7 @@ fetch('../democracy-engine-congressional-simulator/config/config.json')
       // set kiosk version in session storage and redirect to simulator
       sessionStorage.setItem('kioskFlag', 'true');
       sessionStorage.setItem('kioskVersion', selected);
-      window.location.replace("../democracy-engine-congressional-simulator/index-scene.html");
+      window.location.replace("../democracy-engine-congressional-simulator/index.html");
     }
   }
 
@@ -86,7 +86,7 @@ fetch('../democracy-engine-congressional-simulator/config/config.json')
         // set kiosk version in session storage and redirect to vis desk
         sessionStorage.setItem('kioskFlag', 'true');
         sessionStorage.setItem('kioskVersion', selected);
-        window.location.replace("../democracy-engine-visualization/index-scene.html");
+        window.location.replace("../democracy-engine-visualization/index.html");
       }
   }
 
