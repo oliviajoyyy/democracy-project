@@ -1,17 +1,8 @@
 
-// set kiosk flag to false, and goes to simulator
-function startSimulator() {
+// set kiosk flag to false, and goes to web version url
+// note - web version is set in simulator when kiosk flag is false
+function startWeb(url) {
   // set kiosk version in session storage and redirect to simulator
   sessionStorage.setItem('kioskFlag', 'false');
-  window.location.replace("democracy-engine-congressional-simulator/index.html");
+  window.location.replace(url);
 }
-
-// set kiosk flag to false, and goes to visualization
-function startVis() {
-  sessionStorage.setItem('kioskFlag', 'false');
-  window.location.replace("democracy-engine-visualization/index.html");
-}
-
-
-
-
