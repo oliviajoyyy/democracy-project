@@ -1,6 +1,10 @@
 
 var mgr;
+
+// buttons
 var buttonDiv;
+var togglePaneDiv;
+var toggleBtn;
 
 //loaded assets
 var helvFont;
@@ -94,7 +98,16 @@ function setup() {
   if (kioskFlag == 'true') {
     enableHardware = true;
   } else {
+    // web version
     enableHardware = false;
+
+    // set up web toggle button
+    togglePaneDiv = document.getElementById('toggle-pane-div');
+    toggleBtn = createButton('Hide Pane');
+    toggleBtn.id('toggle-pane-btn');
+    toggleBtn.class('buttons');
+    toggleBtn.parent(togglePaneDiv);
+    toggleBtn.mousePressed(clickedToggle);
   }
   
   govtConfig = configJSON.defaultConfig;
@@ -108,8 +121,6 @@ function setup() {
   rectColor2 = colorConfig.rectColor2;
   rectColor3 = colorConfig.rectColor3;
   barDark = colorConfig.barDark;
-  // majorityBar = colorConfig.majorityBar;
-  // superBar = colorConfig.supermajorityBar;
   document.body.style.backgroundColor = bColor;
   setDefaultUserVars(); // set user vars to params from config file
   buttonDiv = document.getElementById('button-div');
@@ -638,8 +649,26 @@ function keyPressed() {
   key = '';
 }
 
+/**
+ * Button to toggle panes for web version
+ */
+function clickedToggle() {
+  if (!showPanesBool) {
+    showPanesBool = true;
+  } else {
+    showPanesBool = false;
+  }
+}
+
+/**
+ * Toggles hiding and showing the pane.
+ */
 function paneToggle() {
   if (showPanesBool) {
+    if (!enableHardware) { // web version
+        document.getElementById('toggle-pane-btn').textContent = "Hide Pane";
+    }
+
     // if (mgr.isCurrent(SCENE));
     // = "block" whichever html div page corresponds to that scene
     document.getElementById("pane-bkg").style.display = "block"; 
@@ -655,6 +684,10 @@ function paneToggle() {
     }
     
   } else {
+    if (!enableHardware) { // web version
+      document.getElementById('toggle-pane-btn').textContent = "Show Pane";
+    }
+
     // = "none" for all html div
       document.getElementById("screen").style.display = "none";
       document.getElementById("pane-bkg").style.display = "none";

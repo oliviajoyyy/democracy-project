@@ -1670,7 +1670,7 @@ class VoteVisual {
       textFont('Arial');
       text("x", padX+(boxW/2), height/2 + (padY*2) + (boxH/2));
     }
-    this.percentageGraphs((3/4) * width, width, (3/5)*height);
+    this.percentageGraphs((1/2) * width, (3/4)*width, (3/5)*height);
     pop();
    //this.displayContext(engine);
   }

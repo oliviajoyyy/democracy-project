@@ -2,10 +2,14 @@
 var mgr;
 var engine;
 var visual;
-var buttonDiv;
 
 // text display
 let userOutputText;
+
+// buttons
+var buttonDiv;
+var togglePaneDiv;
+var toggleBtn;
 
 //loaded assets
 var helvFont;
@@ -100,16 +104,24 @@ function preload() {
 
 
 function setup() {
-  // check kiosk flag to enable hardware if 'true'
-  // and set versioning to be saved with each session
+  // check kiosk flag to enable hardware if 'true' and set versioning to be saved with each session
   var kioskFlag = sessionStorage.getItem('kioskFlag');
   if (kioskFlag == 'true') {
+    // kiosk version - set versionVal to field selected from kiosk version dropdown
     enableHardware = true;
-    // set versionVal to field selected from kiosk version dropdown
     versionVal = sessionStorage.getItem('kioskVersion');
   } else {
+    // web version
     enableHardware = false;
-    versionVal = configJSON.versionOptions[0]; // [0] is web v1.0
+    versionVal = configJSON.versionOptions[0]; // [0] is web v1.0 (or test web v1.0)
+
+    // set up web toggle button
+    togglePaneDiv = document.getElementById('toggle-pane-div');
+    toggleBtn = createButton('Hide Pane');
+    toggleBtn.id('toggle-pane-btn');
+    toggleBtn.class('buttons');
+    toggleBtn.parent(togglePaneDiv);
+    toggleBtn.mousePressed(clickedToggle);
   }
   console.log("version val: " + versionVal);
 
@@ -126,7 +138,6 @@ function setup() {
   majorityBar = colorConfig.majorityBar;
   superBar = colorConfig.supermajorityBar;
   document.body.style.backgroundColor = bColor;
-  //document.header.style.backgroundColor = bColor;
   engine = new DemocracyEngine(govtConfig, historicalActs); // OC create engine object to run voting logic
   visual = new VoteVisual(loadingImage, checkImage, bColor, pColor, textColor, rectColor, rectColor2, rectColor3, majorityBar, superBar);
   setDefaultUserVars(); // set user vars to params from config file
@@ -1047,10 +1058,25 @@ function keyPressed() {
 }
 
 /**
+ * Button to toggle panes for web version
+ */
+function clickedToggle() {
+  if (!showPanesBool) {
+    showPanesBool = true;
+  } else {
+    showPanesBool = false;
+  }
+}
+
+/**
  * Toggles hiding and showing the pane.
  */
 function paneToggle() {
   if (showPanesBool) {
+    if (!enableHardware) { // web version
+        document.getElementById('toggle-pane-btn').textContent = "Hide Pane";
+    }
+
     // if (mgr.isCurrent(SCENE));
     // = "block" whichever html div page corresponds to that scene
     document.getElementById("pane-bkg").style.display = "block"; 
@@ -1081,13 +1107,18 @@ function paneToggle() {
       document.getElementById("page11").style.display = "block";
     } else if (mgr.isCurrent(sBenchmarkPane)) {
       document.getElementById("page12").style.display = "block";
-    } else if (mgr.isCurrent(sResults)) {
-      document.getElementById("pane-bkg").style.display = "none";
-      document.getElementById("page13").style.display = "block";
-      document.getElementById("slider-disp").style.display = "block";
     }
+    // } else if (mgr.isCurrent(sResults)) {
+    //   document.getElementById("pane-bkg").style.display = "none";
+    //   document.getElementById("page13").style.display = "block";
+    //   document.getElementById("slider-disp").style.display = "block";
+    // }
     
   } else {
+    if (!enableHardware) { // web version
+      document.getElementById('toggle-pane-btn').textContent = "Show Pane";
+    }
+    
     // = "none" for all html div
       document.getElementById("screen").style.display = "none";
       document.getElementById("pane-bkg").style.display = "none";

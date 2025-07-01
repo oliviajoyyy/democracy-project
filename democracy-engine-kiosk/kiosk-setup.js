@@ -57,7 +57,7 @@ fetch('../config/config.json')
       // set kiosk version in session storage and redirect to simulator
       sessionStorage.setItem('kioskFlag', 'true');
       sessionStorage.setItem('kioskVersion', selected);
-      window.location.replace(url);
+      window.location.href = url;
     }
   }
 

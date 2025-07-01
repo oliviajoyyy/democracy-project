@@ -144,6 +144,11 @@ function startSession() {
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
 
+    // set up hide/show btn for web version
+    if (!enableHardware) {
+      togglePaneDiv.style.display = "none";
+    }
+
     // if coming from pane scene since inactive, deactive the progress dot
     let activeDot = document.querySelectorAll(".dot-active");
     if (activeDot.length > 0) { 
@@ -899,6 +904,11 @@ function sBodies() {
     document.getElementById("page13").style.display = "none";
     document.getElementById("vote").style.display = "block";
     document.getElementById("slider-disp").style.display = "none";
+
+    // set up hide/show btn for web version
+    if (!enableHardware) {
+      togglePaneDiv.style.display = "block";
+    }
 
     document.body.style.backgroundColor = bColor;
 
@@ -3948,7 +3958,7 @@ function sVote() {
   
   function clickedVote() {
       visual.dWidth = windowWidth * .95;
-      visual.dHeight = windowHeight * .9;
+      visual.dHeight = windowHeight * .85;
     document.getElementById("vote-btn").disabled = true; // disable vote button after clicked
     showPanesBool = false; // make pane disappear so user can see voting in full view
 
@@ -4161,6 +4171,11 @@ function sBenchmarkResults() {
     document.getElementById("sim-info").style.display = "none";
     document.getElementById("screen").style.display = "none"; // OC to have solid bkg
     //document.getElementById("screen").style.display = "block"; // OC to show config in bkg
+
+    // set up hide/show btn for web version
+    if (!enableHardware) {
+      togglePaneDiv.style.display = "none";
+    }
 
     let buttonDiv = document.getElementById('main-btn-div');
 

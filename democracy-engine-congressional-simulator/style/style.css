@@ -304,6 +304,14 @@ button:hover:enabled {
   display: block;
 }
 
+#toggle-pane-div {
+  position: fixed;
+  z-index: 99;
+  bottom: 35px;
+  right: 2%;
+  display: none;
+}
+
 #benchResults {
   border-radius: 3px;
   width: 90vw;

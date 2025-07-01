@@ -122,6 +122,11 @@ function startSession() {
     document.getElementById("sim-info").style.display = "none";
     document.getElementById("pane-bkg").style.display = "none";
 
+    // set up hide/show btn for web version
+    if (!enableHardware) {
+      togglePaneDiv.style.display = "none";
+    }
+
     let buttonDiv = document.getElementById('main-btn-div');
 
     aboutBtn = createButton('About the Project');
@@ -417,6 +422,11 @@ function sLoadSession() {
     document.getElementById("start-desc").style.display = "none";
     document.getElementById("end-summary").style.display = "block";
     
+    // set up hide/show btn for web version
+    if (!enableHardware) {
+      togglePaneDiv.style.display = "block";
+    }
+
     if(selection) {
       selection.remove();
     }

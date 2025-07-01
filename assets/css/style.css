@@ -7,13 +7,6 @@
   --link: #88b6eb;
   --link-hover: #c47cb7;
 
-  --bkg-img-1: url("../assets/gridandfloorplan-light.svg");
-  --bkg-img-2: url("../assets/2gearslight.svg");
-  --numberline-icon: url("../assets/numberline.svg");
-  --simulator-icon: url("../assets/simulator-icon.svg");
-  --media-icon: url("../assets/media-icon.svg");
-  --about-icon: url("../assets/about-icon.svg");
-  --code-icon: url("../assets/code-icon.svg");
 }
 
 * {

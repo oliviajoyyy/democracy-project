@@ -4,5 +4,5 @@
 function startWeb(url) {
   // set kiosk version in session storage and redirect to simulator
   sessionStorage.setItem('kioskFlag', 'false');
-  window.location.replace(url);
+  window.location.href = url;
 }
