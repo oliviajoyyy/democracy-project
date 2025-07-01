@@ -574,7 +574,7 @@ function newSessionScene() {
  * Allows users to select a session to start their configuration with.
  */
 function loadSessionS1() {
-  let upBtn, downBtn, nextBtn;
+  let sLoadBtn1, sLoadBtn2, nextBtn;
   let selection;
   let sessions;
   let numResults = 10; // number of results shown on screen
@@ -622,19 +622,28 @@ function loadSessionS1() {
     document.getElementById("main-btn-div").style.display = "block";
     let buttonDiv = document.getElementById('main-btn-div');
 
-    upBtn = createButton('Scroll Up');
-    upBtn.id('back-btn-b02');
-    upBtn.class('buttons');
-    upBtn.parent(buttonDiv);
-    upBtn.mousePressed(clickedScrollUp);
-    // backBtn.mousePressed(clickedBack);
+    if (enableHardware) { // kiosk version
+      sLoadBtn1 = createButton('Scroll Up');
+      sLoadBtn1.mousePressed(clickedScrollUp);
+    } else { // web version
+      sLoadBtn1 = createButton('Start Over');
+      sLoadBtn1.mousePressed(clickedBack);
+    }
+    sLoadBtn1.id('back-btn-b02');
+    sLoadBtn1.class('buttons');
+    sLoadBtn1.parent(buttonDiv);
 
-    downBtn = createButton('Scroll Down');
-    downBtn.id('show-btn-b02');
-    downBtn.class('buttons');
-    downBtn.parent(buttonDiv);
-    downBtn.mousePressed(clickedScrollDown);
-    //showMoreBtn.mousePressed(clickedShowMore);
+    if (enableHardware) { // kiosk version
+      sLoadBtn2 = createButton('Scroll Down');
+      sLoadBtn2.mousePressed(clickedScrollDown);
+    } else { // web version
+      sLoadBtn2 = createButton('Show More');
+      sLoadBtn2.mousePressed(clickedShowMore);
+    }
+    sLoadBtn2.id('show-btn-b02');
+    sLoadBtn2.class('buttons');
+    sLoadBtn2.parent(buttonDiv);
+
 
     nextBtn = createButton('Select');
     nextBtn.id('next-btn-b02');
@@ -711,7 +720,10 @@ function loadSessionS1() {
   }
 
   var rest = false;
-  // display list of latest 10 sessions saved
+  /**
+   * Display list of latest 10 sessions saved
+   * Running this function again will show the next 10 latest sessions
+   */
   function showSessionsList() {
     var emptydb = false;
     document.getElementById("page-container").style.display = "block";
@@ -730,7 +742,7 @@ function loadSessionS1() {
         emptydb = true;
         // document.getElementById('back-btn-b02').disabled = true;
         document.getElementById('back-btn-b02').innerHTML = "Back";
-        upBtn.mousePressed(clickedBack);
+        sLoadBtn1.mousePressed(clickedBack);
         document.getElementById('next-btn-b02').disabled = true;
         document.getElementById('show-btn-b02').disabled = true;
         document.getElementById("start-desc").innerHTML = "<h2>Select Session</h2>"
@@ -837,8 +849,8 @@ function loadSessionS1() {
   function removeBtns() {
     selection.remove();
     //showMoreBtn.remove();
-    downBtn.remove();
-    upBtn.remove();
+    sLoadBtn2.remove();
+    sLoadBtn1.remove();
     nextBtn.remove();
   }
 }
