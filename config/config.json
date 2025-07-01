@@ -175,7 +175,8 @@
         "sliderStart": "60px",
         "sliderOffset": "7vh",
         "progressVal": "#cccccc",
-        "progressRemainder": "#757575"
+        "progressRemainder": "#757575",
+        "accentColor": "#ffdf87"
     },
 
     "text": {

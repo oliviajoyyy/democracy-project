@@ -4379,13 +4379,13 @@ function sEndorse() {
         }
       }
       s = s + "</p>";
-      s += "<h3>Endorsement</h3>";
+      s += "<h3 class='endorsement-txt'>Endorsement</h3>";
 
       
       if (finalConfigObj.ownerEndorsement == 1) {
-        s += "<p>System Endorsed By User: Yes</p>";
+        s += "<p>System Endorsed By User: <span class='endorsement-txt'>Yes</span></p>";
       } else {
-        s += "<p>System Endorsed By User: No</p>";
+        s += "<p>System Endorsed By User: <span class='endorsement-txt'>No</span></p>";
       }
 
       div3.innerHTML = s;
@@ -4452,8 +4452,8 @@ function sEndorse() {
       }
       s3 = s3 + "</p>";
 
-      s3 += "<h3>Endorsement</h3>";
-      s3 += "<p>System Endorsed By User: No</p>"; // always starts not endorsed, until user clicks ENDORSE btn
+      s3 += "<h3 class='endorsement-txt'>Endorsement</h3>";
+      s3 += "<p>System Endorsed By User: <span class='endorsement-txt'>No</span></p>"; // always starts not endorsed, until user clicks ENDORSE btn
 
       sApproval = sApproval + "<h3></h3><div id='approval-check' style='float:none'></div>";
 

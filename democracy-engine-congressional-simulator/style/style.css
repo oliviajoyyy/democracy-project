@@ -6,6 +6,7 @@
   --button: #8c80a8;
   --link-hover: #c47cb7;
   --overlay: #1c2f47;
+  --accent-color: #bfaf8a;
 }
 
 body {
@@ -522,6 +523,11 @@ p {
   text-align: center !important;
   margin: 10px;
   margin-left: 0px;
+}
+
+.endorsement-txt {
+  color: var(--accent-color);
+  font-weight: bold;
 }
 
 #approval-check {

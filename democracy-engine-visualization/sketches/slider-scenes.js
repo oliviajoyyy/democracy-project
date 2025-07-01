@@ -714,8 +714,8 @@ function sLoadSession() {
       }
       s3 = s3 + "</p>";
 
-      s3 += "<h3>Endorsement</h3>";
-      s3 += "<p>Number of User Endorsements: " + (finalConfigObj.ownerEndorsement + finalConfigObj.publicEndorsement) + "</p>";
+      s3 += "<h3 class='endorsement-txt'>Endorsement</h3>";
+      s3 += "<p>Number of User Endorsements: <span class='endorsement-txt'>" + (finalConfigObj.ownerEndorsement + finalConfigObj.publicEndorsement) + "</span></p>";
 
       div1.innerHTML = s1;
       div2.innerHTML = s2;
@@ -1267,8 +1267,8 @@ function sPublicEndorsement() {
       }
       s3 = s3 + "</p>";
 
-      s3 += "<h3>Endorsement</h3>";
-      s3 += "<p>Number of User Endorsements: " + (endorseVal + finalConfigObj.ownerEndorsement) + "</p>";
+      s3 += "<h3 class='endorsement-txt'>Endorsement</h3>";
+      s3 += "<p>Number of User Endorsements: <span class='endorsement-txt'>" + (endorseVal + finalConfigObj.ownerEndorsement) + "</span></p>";
 
       div1.innerHTML = s1;
       div2.innerHTML = s2;

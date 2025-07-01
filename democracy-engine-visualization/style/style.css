@@ -483,6 +483,11 @@ p {
   padding: 1px;
 }
 
+.endorsement-txt {
+  color: var(--accent-color);
+  font-weight: bold;
+}
+
 #approval-public {
   width: 50%;
   left: 25%;

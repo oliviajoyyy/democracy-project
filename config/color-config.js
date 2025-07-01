@@ -20,6 +20,7 @@ fetch('../config/config.json')
         document.documentElement.style.setProperty('--overlay', data.cssParams.textOverlay);
         document.documentElement.style.setProperty('--progress-val', data.cssParams.progressVal);
         document.documentElement.style.setProperty('--progress-remainder', data.cssParams.progressRemainder);
+        document.documentElement.style.setProperty('--accent-color', data.cssParams.accentColor);
 
     })
     .catch(error => console.error('Error loading color config', error));
