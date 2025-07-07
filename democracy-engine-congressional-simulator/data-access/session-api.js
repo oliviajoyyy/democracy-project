@@ -31,6 +31,39 @@ async function getSessions() {
     }
 }
 
+// get newest nDocuments session records from database, skipping skipAmt records
+async function getLimitedSessions(skipAmt, nDocuments) {
+    try {
+        const response = await fetch(`http://localhost:3000/sessions-limited?skipAmt=${skipAmt}&nDocuments=${nDocuments}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        const sessions = await response.json();
+        return sessions;
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+// get total count of documents in the collection
+async function getTotalCount() {
+    try {
+        const response = await fetch('http://localhost:3000/sessions-count', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        const totalCount = await response.json();
+        return totalCount;
+    } catch (e) {
+        console.error(e);
+    }
+}
 
 // update session for a field based on the id
 async function updateSessionField(sID, updatedField) {

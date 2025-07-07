@@ -104,6 +104,7 @@ function preload() {
 
 
 function setup() {
+  document.getElementById("main-page").style.display = "none";
   // check kiosk flag to enable hardware if 'true' and set versioning to be saved with each session
   var kioskFlag = sessionStorage.getItem('kioskFlag');
   if (kioskFlag == 'true') {
@@ -266,7 +267,7 @@ var hardwareShow = false;
 var hardwareNextPane = false;
 var hardwarePrevPane = false;
 var hardwareUpdate = false;
-var hCycle = false;
+var hCycle = false; // not used?
 var hLeftBtn = false;
 var hardwareLeftBtn = false;
 var hMidBtn = false;

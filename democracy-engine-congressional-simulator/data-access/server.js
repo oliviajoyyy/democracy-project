@@ -25,6 +25,21 @@ app.get('/sessions', async (req, res) => {
     res.json(sessions);
 });
 
+// get newest 10 documents in Sessions collection
+app.get('/sessions-limited', async (req, res) => {
+    const { skipAmt, nDocuments } = req.query;
+    const sessions = await Session.find({}).sort({_id:-1}).skip(skipAmt).limit(nDocuments);
+    console.log(sessions);
+    res.json(sessions);
+});
+
+// total count of documents in the collection
+app.get('/sessions-count', async (req, res) => {
+    const totalCount = await Session.countDocuments({});
+    console.log(totalCount);
+    res.json(totalCount);
+});
+
 // save the data object to the db
 app.post('/sessions', cors(), async (req, res, next) => {
     const session = new Session(req.body);

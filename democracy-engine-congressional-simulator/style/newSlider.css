@@ -263,7 +263,7 @@
   padding-left: 20px;
 }
 
-#slider-disp p, #start-desc p {
+#slider-disp p, #start-desc p, #load-session-pg p, #main-page p {
   color: var(--text-color); 
   /* padding-left: 50px; */
   font-size: 1.4em;

@@ -185,7 +185,7 @@ button:hover:enabled {
   color: grey;
 } */
 
-#start-desc {
+#start-desc, #load-session-pg, #main-page {
   border-radius: 3px;
   display: none;
   width: 90%;
@@ -559,13 +559,48 @@ p {
 
 table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   border: 2px solid var(--text-color);
   background-color: var(--overlay);
-  margin-top: -50px;
+  color: var(--text-color);
+  font-weight: normal;
+  border-radius: 7px;
 }
 
-th, td {
+#sessions-list table {
+  text-align: center;
+}
+
+.tbl-row-selected {
+  color: var(--accent-color);
+  font-weight: bold;
+}
+
+#sessions-list th {
+  font-size: 1.25em;
+  font-weight: normal;
+  border-bottom: 2px solid var(--text-color);
+}
+
+#sessions-list th, #sessions-list td {
+  border-top: 1px solid var(--text-color);
+  border-left: 1px solid var(--text-color);
+  padding: 7px 5px;
+}
+
+#sessions-list th:first-child, #sessions-list td:first-child {
+  text-align: right;
+  border-right: none;
+  padding-right: 15px;
+}
+
+#sessions-list th:nth-child(2), #sessions-list td:nth-child(2) {
+  text-align: left;
+  border-left: none;
+}
+
+#act-list th, #act-list td {
   border: 1px solid var(--text-color);
   padding: 2px;
   padding-left: 15px;
@@ -575,7 +610,7 @@ th, td {
   /* width: 400px; */
 }
 
-th {
+#act-list th {
   font-size: 20px;
   border-bottom: 2px solid var(--text-color);
 }

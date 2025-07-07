@@ -120,12 +120,22 @@ function startSession() {
 
     document.getElementById("page-container").style.display = "block";
     document.getElementById("main-header").innerHTML = configJSON.text.title;
+    document.getElementById("main-subheader").textContent = "";
+
+    let paragraphs = configJSON.text.shortDescription.map((text) => {
+      let p = document.createElement('p');
+      p.textContent = text;
+      return p;
+    });
+    document.getElementById("main-paragraphs").replaceChildren(...paragraphs);
+
+    document.getElementById("main-page").style.display = "block";
+    document.getElementById("start-desc").style.display = "none";
+
     document.getElementById("main-btn-div").style.display = "block";
     document.getElementById("screen").style.display = "none";
     document.getElementById("pane-bkg").style.display = "none";
     document.getElementById("end-summary").style.display = "none";
-    document.getElementById("start-desc").style.display = "block";
-    document.getElementById("start-desc").innerHTML = configJSON.text.shortDescription;
     document.getElementById("top").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
@@ -575,13 +585,14 @@ function newSessionScene() {
  */
 function loadSessionS1() {
   let sLoadBtn1, sLoadBtn2, nextBtn;
-  let selection;
-  let sessions;
-  let numResults = 10; // number of results shown on screen
-  let showCount;
+  let sessions; // array of sessions fetched from db
+  let documentsShown = 10; // number of session records shown on screen
+  var skipAmt; // number of session records to skip, updated when buttons clicked
   let dWidth;
   let dHeight;
-  
+  let sessionsDiv; // div holds table or p stating there is none in db, appended to main-page
+  let sessionsTable // html table element
+
   this.setup = function () {
     textFont(helvFont);
     dWidth = windowWidth * .8;
@@ -596,11 +607,19 @@ function loadSessionS1() {
     console.log("load session scene");
     newSession();
     paramChangedBool = true;
-    showCount = 0;
+    skipAmt = 0; // add number of documentsShown each time show more button is clicked
 
     document.getElementById("page-container").style.display = "block";
     document.getElementById("main-header").innerHTML = configJSON.text.title;
-    document.getElementById("start-desc").style.display = "block";
+    document.getElementById("main-subheader").textContent = "Select Session";
+    let paragraphs = configJSON.text.selectSessionDesc.map((text) => {
+      let p = document.createElement('p');
+      p.textContent = text;
+      return p;
+    });
+    document.getElementById("main-paragraphs").replaceChildren(...paragraphs);
+    document.getElementById("main-page").style.display = "block";
+    document.getElementById("start-desc").style.display = "none";
     document.getElementById("top").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
@@ -622,6 +641,7 @@ function loadSessionS1() {
     document.getElementById("main-btn-div").style.display = "block";
     let buttonDiv = document.getElementById('main-btn-div');
 
+    // set up either show more or scroll buttons
     if (enableHardware) { // kiosk version
       sLoadBtn1 = createButton('Scroll Up');
       sLoadBtn1.mousePressed(clickedScrollUp);
@@ -637,30 +657,30 @@ function loadSessionS1() {
       sLoadBtn2 = createButton('Scroll Down');
       sLoadBtn2.mousePressed(clickedScrollDown);
     } else { // web version
-      sLoadBtn2 = createButton('Show More');
+      sLoadBtn2 = createButton('Show Next ' + documentsShown);
       sLoadBtn2.mousePressed(clickedShowMore);
     }
     sLoadBtn2.id('show-btn-b02');
     sLoadBtn2.class('buttons');
     sLoadBtn2.parent(buttonDiv);
 
-
     nextBtn = createButton('Select');
     nextBtn.id('next-btn-b02');
     nextBtn.class('buttons');
     nextBtn.parent(buttonDiv);
     nextBtn.mousePressed(clickedNext);
+
+    // create sessions div
+    sessionsDiv = document.createElement('div');
+    sessionsDiv.id = 'sessions-list';
+    // sessionsDiv.className = 'body-text';
+
     showSessionsList(); // get sessions fr db and display onscreen
   }
 
-  let sVal = 0;
   this.draw = function () {
-    if (sessions && selection.value()) { 
-      var i = selection.value();
-      sVal = i;
-      // console.log("sel val: " + selection.value());
-      loadedConfig = sessions[i].finalConfig.config; // set to global var loadedConfig
-      //console.log(loadedConfig);
+    if (sessions && sessions.length > 0) {
+      highlightRow(); // highlights
     }
     if (enableHardware) {
       checkHardwareInput();
@@ -669,7 +689,118 @@ function loadSessionS1() {
   }
 
   /**
+   * Display list of latest 10 sessions saved
+   * Running this function again will show the next 10 latest sessions
+   */
+  function showSessionsList() {
+    var emptydb = false;
+
+    // Web version - Start Over button if at the beginning of sessions list, else button is Show Previous
+    // Changing btn to start over prevents skipAmt from going below 0
+    if (!enableHardware && skipAmt == 0) {
+      document.getElementById('back-btn-b02').innerHTML = "Start Over";
+      sLoadBtn1.mousePressed(clickedBack);
+    } else if (!enableHardware) {
+      document.getElementById('back-btn-b02').innerHTML = "Previous " + documentsShown;
+      sLoadBtn1.mousePressed(clickedShowPrev);
+    }
+
+    getTotalCount().then((totalCount) => {
+      console.log("total count: " + totalCount);
+      console.log("in get total count - skipAmt: " + skipAmt);
+
+      // if skipAmt goes over total count or below 0, adjust accordingly
+      // note - not needed if diabling btns (it prevents this)
+      //if (skipAmt >= totalCount) {
+      //  skipAmt = totalCount - documentsShown;
+      //} else 
+      // if (skipAmt < 0) {
+      //   skipAmt = 0;
+      // }
+
+      console.log("skipAmt before if smt: " + skipAmt);
+
+      // Disable Show Next btn if skipAmt would go over totalCount next time it is clicked
+      if (skipAmt + documentsShown >= totalCount) {
+        document.getElementById('show-btn-b02').disabled = true;
+      } else {
+        document.getElementById('show-btn-b02').disabled = false;
+      }
+
+      if (totalCount == 0) { // no sessions in db yet
+        emptydb = true;
+        // set back button
+        document.getElementById('back-btn-b02').innerHTML = "Back";
+        sLoadBtn1.mousePressed(clickedBack);
+
+        // disable btn 2 and next (select) button
+        document.getElementById('show-btn-b02').disabled = true;
+        document.getElementById('next-btn-b02').disabled = true;
+
+        // text about no sessions saved yet
+        let p = document.createElement('p');
+        p.textContent = configJSON.text.selectSessionNoneDB;
+        sessionsDiv.replaceChildren(p); // replace table with paragraph
+        document.getElementById('main-page').appendChild(sessionsDiv);
+
+      } else {
+      // get session data
+      getLimitedSessions(skipAmt, documentsShown).then((result) => {
+      sessions = result;
+      // console.log(result);
+
+      // set up table for showing sessions
+      sessionsTable = document.createElement('table');
+
+      let tblHead = document.createElement('thead');
+      let tblBody = document.createElement('tbody');
+      sessionsTable.append(tblHead, tblBody);
+
+      let hRow = document.createElement('tr');
+      let tblHeaders = Array.from({length: 5}, () => document.createElement('th'));
+      tblHeaders[0].textContent = "";
+      tblHeaders[1].textContent = "Session ID";
+      tblHeaders[2].textContent = "Chambers";
+      tblHeaders[3].textContent = "Parties";
+      tblHeaders[4].textContent = "Total Voting Members";
+      hRow.append(...tblHeaders);
+      tblHead.appendChild(hRow);
+      sessionsTable.appendChild(tblHead);
+
+      for (let i = 0; i < result.length; i++) {
+        let sObj = result[i].finalConfig.config;
+        let totalVoting = sObj.chamber1.totalMembers + sObj.chamber2.totalMembers + sObj.chamber3.totalMembers + sObj.vicePres.totalMembers + sObj.president.totalMembers;
+
+        // set up each row with radio btn, sessionID, numLegislativeBodies, numParties, totalVoting
+        let tRow = document.createElement('tr');
+        let tData = Array.from({length: 5}, () => document.createElement('td'));
+        let radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = "sessions-radio";
+        radio.value = i; // value is index position
+        if (i == 0) { radio.checked = true }; // set first one as selected
+        tData[0].appendChild(radio);
+        tData[1].textContent = result[i].uniqueID;
+        tData[2].textContent = sObj.numLegislativeBodies;
+        tData[3].textContent = sObj.numParties;
+        tData[4].textContent = totalVoting;
+        tRow.append(...tData);
+        tblBody.appendChild(tRow);
+        sessionsTable.appendChild(tblBody);
+      }
+
+      sessionsDiv.replaceChildren(sessionsTable)
+      document.getElementById('main-page').appendChild(sessionsDiv);      
+
+    }); // end else
+    }
+    })
+
+  }
+
+  /**
    * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
+   * ensures users allowed to go back when no sessions in db
    */
   function checkHardwareBtnInput() {
     if (hLeftBtn == true) {
@@ -692,133 +823,31 @@ function loadSessionS1() {
       }
       hRightBtn = false;
     }
-    if (hCycle == true) {
-      clickedSession();
-      hCycle = false;
-    }
+
   }
 
   // move selection up the list
   function clickedScrollUp() {
-    sVal++;
-    selection.selected(sVal.toString());
+    let currentSelected = getSelectedRadioValue(); // current selected val
+    let toSelect = parseInt(currentSelected) - 1;
+    // decrement ix to select next radio above, otherwise keeps selection at first option if ix is already 0
+    if (currentSelected > 0) {
+      let radio = document.querySelector(`input[name="sessions-radio"][value="${toSelect}"]`);
+      if (radio) { radio.checked = true; }
+    }
+    // console.log("current selection: " + getSelectedRadioValue());
   }
 
   // move selection down the list
   function clickedScrollDown() {
-    sVal--;
-    selection.selected(sVal.toString());
-  }
-
-  let choice = 0;
-  function clickedSession(sVal) {
-    if (sVal != 0) { 
-      choice = sVal;
+    let currentSelected = getSelectedRadioValue(); // current selected val
+    let toSelect = parseInt(currentSelected) + 1;
+    // increment ix to select next radio below, otherwise keeps selection at last option
+    if (currentSelected < documentsShown) {
+      let radio = document.querySelector(`input[name="sessions-radio"][value="${toSelect}"]`);
+      if (radio) { radio.checked = true; }
     }
-    choice = (choice + 1) % numResults;
-    selection.selected(choice.toString());
-  }
-
-  var rest = false;
-  /**
-   * Display list of latest 10 sessions saved
-   * Running this function again will show the next 10 latest sessions
-   */
-  function showSessionsList() {
-    var emptydb = false;
-    document.getElementById("page-container").style.display = "block";
-    document.getElementById("main-header").innerHTML = configJSON.text.title;
-    document.getElementById("start-desc").style.display = "block";
-    document.getElementById("start-desc").innerHTML = "<h2>Select Session</h2>"
-      + configJSON.text.selectSessionDesc
-
-    selection = createRadio("sessions"); // attatch to HTML
-    selection.size(230); // pixel width of radio line
-
-    getSessions().then((result) => {
-      sessions = result;
-      // console.log(result);
-      if (result.length == 0) { // no sessions in db yet
-        emptydb = true;
-        // document.getElementById('back-btn-b02').disabled = true;
-        document.getElementById('back-btn-b02').innerHTML = "Back";
-        sLoadBtn1.mousePressed(clickedBack);
-        document.getElementById('next-btn-b02').disabled = true;
-        document.getElementById('show-btn-b02').disabled = true;
-        document.getElementById("start-desc").innerHTML = "<h2>Select Session</h2>"
-      + configJSON.text.selectSessionDesc
-      + "<div id='session-list'><p>There are no sessions saved to the database yet. Create a new session to save and retrieve it here.</p></div>";
-      } else {
-      // show sessions in order from last 10 
-      // OC written like this so that startIX can move backward to show next prev 10 when triggered (btn press?)
-      if (rest) {
-        showCount = 1;
-      } else {
-        showCount++;
-      }
-      let startIX = result.length-(numResults*showCount);
-      let endIX = startIX+numResults;
-
-      if (result.length < numResults) { // number of records less than amt to show, so start at ix 0
-        startIX = 0;
-        endIX = result.length;
-      } else if (startIX < 0) { // reached beginning, so show from beginning
-        startIX = 0;
-        endIX = startIX+numResults;
-        rest = true;
-      } else {
-        rest = false;
-      }
-
-      // create divs for info about the sessions
-      let newDiv = document.createElement('div');
-      let newDiv2 = document.createElement('div');
-      let newDiv3 = document.createElement('div');
-      newDiv.id = 'info-list-1';
-      newDiv2.id = 'info-list-2';
-      newDiv3.id = 'info-list-3';
-      let s = "";
-      let s2 = "";
-      let s3 = "";
-      for (let i=endIX-1; (i>=startIX); i--) {
-        let sObj = result[i].finalConfig.config;
-        let totalVoting = sObj.chamber1.totalMembers + sObj.chamber2.totalMembers + sObj.chamber3.totalMembers + sObj.vicePres.totalMembers + sObj.president.totalMembers;
-        selection.option(result[i].uniqueID, i.toString());
-        s = s + sObj.numLegislativeBodies + "<br>";
-        s2 = s2 + sObj.numParties + "<br>";
-        s3 = s3 + totalVoting + "<br>";
-      }
-      selection.selected((endIX-1).toString());
-      // console.log("selected val: " + selection.value());
-      newDiv.innerHTML = s;
-      newDiv2.innerHTML = s2;
-      newDiv3.innerHTML = s3;
-
-      document.getElementById('start-desc').appendChild(newDiv);
-      document.getElementById('start-desc').appendChild(newDiv2);
-      document.getElementById('start-desc').appendChild(newDiv3);
-    } // end else
-    });
-
-    // create html for labeling the info 
-    let spanWrap = document.createElement('span');
-    spanWrap.className = 'session-labels';
-      let span1 = document.createElement('span');
-      span1.innerHTML = "SESSION ID";
-      let span2 = document.createElement('span');
-      span2.innerHTML = "CHAMBERS";
-      let span3 = document.createElement('span');
-      span3.innerHTML = "PARTIES";
-      let span4 = document.createElement('span');
-      span4.innerHTML = "TOTAL VOTING MEMBERS";
-      spanWrap.appendChild(span1);
-      spanWrap.appendChild(span2);
-      spanWrap.appendChild(span3);
-      spanWrap.appendChild(span4);
-      document.getElementById('start-desc').appendChild(spanWrap);
-    document.getElementById("start-desc").innerHTML += "<div id='session-list'></div>";
-    selection.parent("session-list"); // put options in div with border
-    selection.class('radio-sel');
+    // console.log("current selection: " + getSelectedRadioValue());
   }
 
   function clickedBack() {
@@ -827,11 +856,13 @@ function loadSessionS1() {
   }
 
   function clickedNext() {
-    removeBtns();
+    if (sessions) {
+      loadedConfig = sessions[getSelectedRadioValue()].finalConfig.config;
+    }
     setLoadedUserVars(loadedConfig);
-    // mgr.showScene(loadSessionS2);
-    // engine.setDefaultParams();
     setEngineParams(engine); // set engine params to user vars, which were loaded
+
+    removeBtns();
     // reset values for calculations
     engine.completeReset();
     visual.completeReset();
@@ -841,14 +872,38 @@ function loadSessionS1() {
     mgr.showScene(sBodies);
   }
 
+  function getSelectedRadioValue() {
+    let selected = document.querySelector('input[name="sessions-radio"]:checked');
+    if (selected) {
+      return selected.value; // the index in the sessions array
+    }
+  }
+
+  function highlightRow() {
+    let selected = document.querySelector('input[name="sessions-radio"]:checked');
+    let rows = sessionsTable.getElementsByTagName('tr');
+    for (const row of rows) {
+      row.classList.remove("tbl-row-selected");
+    }
+    if (selected) {
+      let selectedRow = selected.closest('tr');
+      selectedRow.classList.add("tbl-row-selected")
+    }
+  }
+
   function clickedShowMore() {
-    selection.remove();
+    skipAmt += documentsShown;
+    showSessionsList();
+  }
+
+  function clickedShowPrev() {
+    skipAmt -= documentsShown;
     showSessionsList();
   }
 
   function removeBtns() {
-    selection.remove();
-    //showMoreBtn.remove();
+    // remove div that holds table (or paragraph stating none in db)
+    document.getElementById('main-page').removeChild(sessionsDiv);
     sLoadBtn2.remove();
     sLoadBtn1.remove();
     nextBtn.remove();
