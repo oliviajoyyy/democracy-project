@@ -123,7 +123,11 @@
 }
 
 
-#page1, #page2, #page3, #page4, #page5, #page6, #page7, #page8 #page9, #page10, #page11, #page12, #pane-bkg {
+/* #page1, #page2, #page3, #page4, #page5, #page6, #page7, #page8 #page9, #page10, #page11, #page12, #pane-bkg {
+  display: none;
+} */
+
+.start-display-none {
   display: none;
 }
 
@@ -289,7 +293,7 @@
     border: 1mm solid var(--pane-border);
 }
 
-#top {
+#pane-text {
   font-family: "Work Sans","Helvetica Neue", Helvetica, Arial, sans-serif;
   font-style: normal;
   font-variant: normal;
@@ -304,14 +308,14 @@
   z-index: 100;
 }
 
-#top h2 {
+#pane-text h2 {
   font-size: 1.5em;
   font-weight: 500;
   color: var(--text-color); 
   margin-bottom: 0;
 }
 
-#top p {
+#pane-text p {
   margin-top: 20px;
 }
 

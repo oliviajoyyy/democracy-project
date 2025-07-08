@@ -23,26 +23,7 @@ function startUp() {
 
     // set display of html elements for this scene
     document.getElementById("page-container").style.display = "block";
-    document.getElementById("main-header").innerHTML = configJSON.text.title;
-    document.getElementById("main-btn-div").style.display = "block";
-    document.getElementById("start-desc").style.display = "none";
-    document.getElementById("top").style.display = "none";
-    document.getElementById("page1").style.display = "none";
-    document.getElementById("page2").style.display = "none";
-    document.getElementById("page3").style.display = "none";
-    document.getElementById("page4").style.display = "none";
-    document.getElementById("page5").style.display = "none";
-    document.getElementById("page6").style.display = "none";
-    document.getElementById("page7").style.display = "none";
-    document.getElementById("page8").style.display = "none";
-    document.getElementById("page9").style.display = "none";
-    document.getElementById("page10").style.display = "none";
-    document.getElementById("page11").style.display = "none";
-    document.getElementById("page12").style.display = "none";
-    document.getElementById("page13").style.display = "none";
-    document.getElementById("vote").style.display = "none";
-    document.getElementById("slider-disp").style.display = "none";
-    document.getElementById("sim-info").style.display = "none";
+    document.getElementById("main-header").textContent = configJSON.text.title;
 
     let buttonDiv = document.getElementById('main-btn-div');
 
@@ -119,40 +100,16 @@ function startSession() {
     document.body.style.backgroundColor = bColor;
 
     document.getElementById("page-container").style.display = "block";
-    document.getElementById("main-header").innerHTML = configJSON.text.title;
-    document.getElementById("main-subheader").textContent = "";
+    document.getElementById("main-header").textContent = configJSON.text.title;
 
+    document.getElementById("main-subheader").textContent = "";
     let paragraphs = configJSON.text.shortDescription.map((text) => {
       let p = document.createElement('p');
       p.textContent = text;
       return p;
     });
     document.getElementById("main-paragraphs").replaceChildren(...paragraphs);
-
     document.getElementById("main-page").style.display = "block";
-    document.getElementById("start-desc").style.display = "none";
-
-    document.getElementById("main-btn-div").style.display = "block";
-    document.getElementById("screen").style.display = "none";
-    document.getElementById("pane-bkg").style.display = "none";
-    document.getElementById("end-summary").style.display = "none";
-    document.getElementById("top").style.display = "none";
-    document.getElementById("page1").style.display = "none";
-    document.getElementById("page2").style.display = "none";
-    document.getElementById("page3").style.display = "none";
-    document.getElementById("page4").style.display = "none";
-    document.getElementById("page5").style.display = "none";
-    document.getElementById("page6").style.display = "none";
-    document.getElementById("page7").style.display = "none";
-    document.getElementById("page8").style.display = "none";
-    document.getElementById("page9").style.display = "none";
-    document.getElementById("page10").style.display = "none";
-    document.getElementById("page11").style.display = "none";
-    document.getElementById("page12").style.display = "none";
-    document.getElementById("page13").style.display = "none";
-    document.getElementById("vote").style.display = "none";
-    document.getElementById("slider-disp").style.display = "none";
-    document.getElementById("sim-info").style.display = "none";
 
     // set up hide/show btn for web version
     if (!enableHardware) {
@@ -284,26 +241,7 @@ function hardwareTest() {
   this.enter = function () {
     console.log("hardware test scene");
     document.getElementById("page-container").style.display = "block";
-    document.getElementById("main-header").innerHTML = "<h1>Hardware & DB Test </h1>";
-    document.getElementById("main-btn-div").style.display = "block";
-    document.getElementById("start-desc").style.display = "none";
-    document.getElementById("top").style.display = "none";
-    document.getElementById("page1").style.display = "none";
-    document.getElementById("page2").style.display = "none";
-    document.getElementById("page3").style.display = "none";
-    document.getElementById("page4").style.display = "none";
-    document.getElementById("page5").style.display = "none";
-    document.getElementById("page6").style.display = "none";
-    document.getElementById("page7").style.display = "none";
-    document.getElementById("page8").style.display = "none";
-    document.getElementById("page9").style.display = "none";
-    document.getElementById("page10").style.display = "none";
-    document.getElementById("page11").style.display = "none";
-    document.getElementById("page12").style.display = "none";
-    document.getElementById("page13").style.display = "none";
-    document.getElementById("vote").style.display = "none";
-    document.getElementById("slider-disp").style.display = "none";
-    document.getElementById("sim-info").style.display = "none";
+    document.getElementById("main-header").textContent = "Hardware & DB Test";
 
     let buttonDiv = document.getElementById('main-btn-div');
 
@@ -407,28 +345,16 @@ function aboutProject() {
     console.log("about project scene");
 
     document.getElementById("page-container").style.display = "block";
-    document.getElementById("main-header").innerHTML = configJSON.text.title;
-    document.getElementById("main-btn-div").style.display = "block";
-    document.getElementById("start-desc").style.display = "block";
-    // add description from config.json to html
-    document.getElementById("start-desc").innerHTML = configJSON.text.detailedDescription;
-    document.getElementById("top").style.display = "none";
-    document.getElementById("page1").style.display = "none";
-    document.getElementById("page2").style.display = "none";
-    document.getElementById("page3").style.display = "none";
-    document.getElementById("page4").style.display = "none";
-    document.getElementById("page5").style.display = "none";
-    document.getElementById("page6").style.display = "none";
-    document.getElementById("page7").style.display = "none";
-    document.getElementById("page8").style.display = "none";
-    document.getElementById("page9").style.display = "none";
-    document.getElementById("page10").style.display = "none";
-    document.getElementById("page11").style.display = "none";
-    document.getElementById("page12").style.display = "none";
-    document.getElementById("page13").style.display = "none";
-    document.getElementById("vote").style.display = "none";
-    document.getElementById("slider-disp").style.display = "none";
-    document.getElementById("sim-info").style.display = "none";
+    document.getElementById("main-header").textContent = configJSON.text.title;
+
+    document.getElementById("main-subheader").textContent = "";
+    let paragraphs = configJSON.text.detailedDescription.map((text) => {
+      let p = document.createElement('p');
+      p.textContent = text;
+      return p;
+    });
+    document.getElementById("main-paragraphs").replaceChildren(...paragraphs);
+    document.getElementById("main-page").style.display = "block";    
 
     let buttonDiv = document.getElementById('main-btn-div');
 
@@ -490,29 +416,15 @@ function newSessionScene() {
     paramChangedBool = true;
 
     document.getElementById("page-container").style.display = "block";
-    document.getElementById("main-header").innerHTML = configJSON.text.title;
-    document.getElementById("main-btn-div").style.display = "block";
-
-    document.getElementById("start-desc").style.display = "block";
-    document.getElementById("start-desc").innerHTML = "<h2>New Session</h2>" + configJSON.text.newSessionDesc;
-
-    document.getElementById("top").style.display = "none";
-    document.getElementById("page1").style.display = "none";
-    document.getElementById("page2").style.display = "none";
-    document.getElementById("page3").style.display = "none";
-    document.getElementById("page4").style.display = "none";
-    document.getElementById("page5").style.display = "none";
-    document.getElementById("page6").style.display = "none";
-    document.getElementById("page7").style.display = "none";
-    document.getElementById("page8").style.display = "none";
-    document.getElementById("page9").style.display = "none";
-    document.getElementById("page10").style.display = "none";
-    document.getElementById("page11").style.display = "none";
-    document.getElementById("page12").style.display = "none";
-    document.getElementById("page13").style.display = "none";
-    document.getElementById("vote").style.display = "none";
-    document.getElementById("slider-disp").style.display = "none";
-    document.getElementById("sim-info").style.display = "none";
+    document.getElementById("main-header").textContent = configJSON.text.title;
+    document.getElementById("main-subheader").textContent = "New Session";
+    let paragraphs = configJSON.text.newSessionDesc.map((text) => {
+      let p = document.createElement('p');
+      p.textContent = text;
+      return p;
+    });
+    document.getElementById("main-paragraphs").replaceChildren(...paragraphs);
+    document.getElementById("main-page").style.display = "block";
 
     let buttonDiv = document.getElementById('main-btn-div');
 
@@ -574,6 +486,8 @@ function newSessionScene() {
   function removeBtns() {
     backBtn.remove();
     nextBtn.remove();
+    document.getElementById("page-container").style.display = "none";
+    document.getElementById("main-page").style.display = "none";
   }
 }
 
@@ -610,7 +524,8 @@ function loadSessionS1() {
     skipAmt = 0; // add number of documentsShown each time show more button is clicked
 
     document.getElementById("page-container").style.display = "block";
-    document.getElementById("main-header").innerHTML = configJSON.text.title;
+    document.getElementById("main-header").textContent = configJSON.text.title;
+
     document.getElementById("main-subheader").textContent = "Select Session";
     let paragraphs = configJSON.text.selectSessionDesc.map((text) => {
       let p = document.createElement('p');
@@ -619,26 +534,6 @@ function loadSessionS1() {
     });
     document.getElementById("main-paragraphs").replaceChildren(...paragraphs);
     document.getElementById("main-page").style.display = "block";
-    document.getElementById("start-desc").style.display = "none";
-    document.getElementById("top").style.display = "none";
-    document.getElementById("page1").style.display = "none";
-    document.getElementById("page2").style.display = "none";
-    document.getElementById("page3").style.display = "none";
-    document.getElementById("page4").style.display = "none";
-    document.getElementById("page5").style.display = "none";
-    document.getElementById("page6").style.display = "none";
-    document.getElementById("page7").style.display = "none";
-    document.getElementById("page8").style.display = "none";
-    document.getElementById("page9").style.display = "none";
-    document.getElementById("page10").style.display = "none";
-    document.getElementById("page11").style.display = "none";
-    document.getElementById("page12").style.display = "none";
-    document.getElementById("page13").style.display = "none";
-    document.getElementById("vote").style.display = "block";
-    document.getElementById("slider-disp").style.display = "none";
-    document.getElementById("sim-info").style.display = "none";
-
-    document.getElementById("main-btn-div").style.display = "block";
     let buttonDiv = document.getElementById('main-btn-div');
 
     // set up either show more or scroll buttons
@@ -680,7 +575,7 @@ function loadSessionS1() {
 
   this.draw = function () {
     if (sessions && sessions.length > 0) {
-      highlightRow(); // highlights
+      indicateSelectedRow(); // makes text color of row change
     }
     if (enableHardware) {
       checkHardwareInput();
@@ -693,7 +588,6 @@ function loadSessionS1() {
    * Running this function again will show the next 10 latest sessions
    */
   function showSessionsList() {
-    var emptydb = false;
 
     // Web version - Start Over button if at the beginning of sessions list, else button is Show Previous
     // Changing btn to start over prevents skipAmt from going below 0
@@ -728,7 +622,6 @@ function loadSessionS1() {
       }
 
       if (totalCount == 0) { // no sessions in db yet
-        emptydb = true;
         // set back button
         document.getElementById('back-btn-b02').innerHTML = "Back";
         sLoadBtn1.mousePressed(clickedBack);
@@ -767,6 +660,7 @@ function loadSessionS1() {
       tblHead.appendChild(hRow);
       sessionsTable.appendChild(tblHead);
 
+      // add selection with data columns for each row of the table
       for (let i = 0; i < result.length; i++) {
         let sObj = result[i].finalConfig.config;
         let totalVoting = sObj.chamber1.totalMembers + sObj.chamber2.totalMembers + sObj.chamber3.totalMembers + sObj.vicePres.totalMembers + sObj.president.totalMembers;
@@ -786,11 +680,21 @@ function loadSessionS1() {
         tData[4].textContent = totalVoting;
         tRow.append(...tData);
         tblBody.appendChild(tRow);
-        sessionsTable.appendChild(tblBody);
+        
       }
+      sessionsTable.appendChild(tblBody);
+      sessionsDiv.replaceChildren(sessionsTable);
+      document.getElementById('main-page').appendChild(sessionsDiv);
 
-      sessionsDiv.replaceChildren(sessionsTable)
-      document.getElementById('main-page').appendChild(sessionsDiv);      
+      // make each row of table body clickable for radio selection
+      sessionsTable.addEventListener('click', function(event) {
+        let clickedRow = event.target.closest('tr');
+        if (clickedRow && clickedRow.parentNode.tagName === 'TBODY') {
+          let cell = clickedRow.querySelector('td');
+          let radio = cell.querySelector('input[name="sessions-radio"]');
+          if (radio) { radio.checked = true; }
+        }
+      })
 
     }); // end else
     }
@@ -879,7 +783,7 @@ function loadSessionS1() {
     }
   }
 
-  function highlightRow() {
+  function indicateSelectedRow() {
     let selected = document.querySelector('input[name="sessions-radio"]:checked');
     let rows = sessionsTable.getElementsByTagName('tr');
     for (const row of rows) {
@@ -902,11 +806,13 @@ function loadSessionS1() {
   }
 
   function removeBtns() {
-    // remove div that holds table (or paragraph stating none in db)
-    document.getElementById('main-page').removeChild(sessionsDiv);
     sLoadBtn2.remove();
     sLoadBtn1.remove();
     nextBtn.remove();
+    // remove div that holds table (or paragraph stating none in db)
+    document.getElementById('main-page').removeChild(sessionsDiv);
+    document.getElementById("page-container").style.display = "none";
+    document.getElementById("main-page").style.display = "none";
   }
 }
 
@@ -951,26 +857,13 @@ function sBodies() {
     }
 
     console.log("Pane 01");
-    document.getElementById('progress-dots').style.display = "flex";
-    checkNumChambers();
     document.getElementById('dot-p01').className = 'dot-active';
-    document.getElementById("page-container").style.display = "none";
+    document.getElementById('progress-dots').style.display = "flex";
+    document.getElementById("vote").style.display = "block"; // first pane scene - show govt configuration
+    document.getElementById("pane-header").textContent = configJSON.text.p01Config[0];
+    document.getElementById("pane-description").textContent = configJSON.text.p01Config[1];
+    checkNumChambers();
     showPanesBool = true;
-    document.getElementById("page1").style.display = "block";
-    document.getElementById("page2").style.display = "none";
-    document.getElementById("page3").style.display = "none";
-    document.getElementById("page4").style.display = "none";
-    document.getElementById("page5").style.display = "none";
-    document.getElementById("page6").style.display = "none";
-    document.getElementById("page7").style.display = "none";
-    document.getElementById("page8").style.display = "none";
-    document.getElementById("page9").style.display = "none";
-    document.getElementById("page10").style.display = "none";
-    document.getElementById("page11").style.display = "none";
-    document.getElementById("page12").style.display = "none";
-    document.getElementById("page13").style.display = "none";
-    document.getElementById("vote").style.display = "block";
-    document.getElementById("slider-disp").style.display = "none";
 
     // set up hide/show btn for web version
     if (!enableHardware) {
@@ -981,9 +874,6 @@ function sBodies() {
 
     slider1.noUiSlider.set(userNumLegislative);
     sliderVals();
-
-    document.getElementById("top").style.display = "block";
-    document.getElementById("top").innerHTML = "<h2>NUMBER OF CHAMBERS</h2>" + configJSON.text.p01desc;
 
     // create buttons in order
     if (!document.getElementById('prev-pane-btn')) {
@@ -1176,24 +1066,9 @@ function sLegislative() {
 
     console.log("Pane 02");
     document.getElementById('dot-p02').className = 'dot-active'; // activate dot on this pane
-    document.getElementById("top").style.display = "block";
-    document.getElementById("top").innerHTML = "<h2>NUMBER OF VOTING MEMBERS</h2>" + configJSON.text.p02desc;
+    document.getElementById("pane-header").textContent = configJSON.text.p02Config[0];
+    document.getElementById("pane-description").textContent = configJSON.text.p02Config[1];
     showPanesBool = true;
-    document.getElementById("page1").style.display = "none";
-    document.getElementById("page2").style.display = "block";
-    document.getElementById("page3").style.display = "none";
-    document.getElementById("page4").style.display = "none";
-    document.getElementById("page5").style.display = "none";
-    document.getElementById("page6").style.display = "none";
-    document.getElementById("page7").style.display = "none";
-    document.getElementById("page8").style.display = "none";
-    document.getElementById("page9").style.display = "none";
-    document.getElementById("page10").style.display = "none";
-    document.getElementById("page11").style.display = "none";
-    document.getElementById("page12").style.display = "none";
-    document.getElementById("page13").style.display = "none";
-    document.getElementById("vote").style.display = "block";
-    document.getElementById("slider-disp").style.display = "none";
 
     checkNumBodies();
     sliders();
@@ -1508,24 +1383,9 @@ function sParties() {
     console.log("Pane 03");
     hardwareUpdate = false;
     document.getElementById('dot-p03').className = 'dot-active'; // activate dot on this pane
-    document.getElementById("top").style.display = "block";
-    document.getElementById("top").innerHTML = "<h2>NUMBER OF POLITICAL PARTIES</h2>" + configJSON.text.p03desc;
+    document.getElementById("pane-header").textContent = configJSON.text.p03Config[0];
+    document.getElementById("pane-description").textContent = configJSON.text.p03Config[1];
     showPanesBool = true;
-    document.getElementById("page1").style.display = "none";
-    document.getElementById("page2").style.display = "none";
-    document.getElementById("page3").style.display = "block";
-    document.getElementById("page4").style.display = "none";
-    document.getElementById("page5").style.display = "none";
-    document.getElementById("page6").style.display = "none";
-    document.getElementById("page7").style.display = "none";
-    document.getElementById("page8").style.display = "none";
-    document.getElementById("page9").style.display = "none";
-    document.getElementById("page10").style.display = "none";
-    document.getElementById("page11").style.display = "none";
-    document.getElementById("page12").style.display = "none";
-    document.getElementById("page13").style.display = "none";
-    document.getElementById("vote").style.display = "block";
-    document.getElementById("slider-disp").style.display = "none";
 
     slider5.noUiSlider.set(userNumParties);
     sliderVals();
@@ -1726,24 +1586,9 @@ function sMembersFirstChamber() {
       
     console.log("Pane 04: Chamber 1 Party Members");
     document.getElementById('dot-p04').className = 'dot-active'; // activate dot on this pane
-    document.getElementById("top").style.display = "block";
-    document.getElementById("top").innerHTML = "<h2>NUMBER OF VOTING MEMBERS FOR FIRST CHAMBER</h2>" + configJSON.text.p04desc;
+    document.getElementById("pane-header").textContent = configJSON.text.p04Config[0];
+    document.getElementById("pane-description").textContent = configJSON.text.p04Config[1];
     showPanesBool = true;
-    document.getElementById("page1").style.display = "none";
-    document.getElementById("page2").style.display = "none";
-    document.getElementById("page3").style.display = "none";
-    document.getElementById("page4").style.display = "block";
-    document.getElementById("page5").style.display = "none";
-    document.getElementById("page6").style.display = "none";
-    document.getElementById("page7").style.display = "none";
-    document.getElementById("page8").style.display = "none";
-    document.getElementById("page9").style.display = "none";
-    document.getElementById("page10").style.display = "none";
-    document.getElementById("page11").style.display = "none";
-    document.getElementById("page12").style.display = "none";
-    document.getElementById("page13").style.display = "none";
-    document.getElementById("vote").style.display = "block";
-    document.getElementById("slider-disp").style.display = "none";
 
     let totalTxt = "Total: " + maxSlider;
     document.getElementById("total").innerHTML = totalTxt;
@@ -2121,24 +1966,9 @@ function sMembersSecondChamber() {
 
     console.log("P05: Chamber 2 Party Members");
     document.getElementById('dot-p05').className = 'dot-active'; // activate dot on this pane
-    document.getElementById("top").style.display = "block";
-    document.getElementById("top").innerHTML = "<h2>NUMBER OF VOTING MEMBERS FOR SECOND CHAMBER</h2>" + configJSON.text.p05desc;
+    document.getElementById("pane-header").textContent = configJSON.text.p05Config[0];
+    document.getElementById("pane-description").textContent = configJSON.text.p05Config[1];
     showPanesBool = true;
-    document.getElementById("page1").style.display = "none";
-    document.getElementById("page2").style.display = "none";
-    document.getElementById("page3").style.display = "none";
-    document.getElementById("page4").style.display = "none";
-    document.getElementById("page5").style.display = "block";
-    document.getElementById("page6").style.display = "none";
-    document.getElementById("page7").style.display = "none";
-    document.getElementById("page8").style.display = "none";
-    document.getElementById("page9").style.display = "none";
-    document.getElementById("page10").style.display = "none";
-    document.getElementById("page11").style.display = "none";
-    document.getElementById("page12").style.display = "none";
-    document.getElementById("page13").style.display = "none";
-    document.getElementById("vote").style.display = "block";
-    document.getElementById("slider-disp").style.display = "none";
 
     let totalTxt = "Total: " + maxSlider;
     document.getElementById("total2").innerHTML = totalTxt;
@@ -2457,24 +2287,9 @@ function sMembersThirdChamber() {
 
     console.log("P06: Chamber 3 Voting Members");
     document.getElementById('dot-p06').className = 'dot-active'; // activate dot on this pane
-    document.getElementById("top").style.display = "block";
-    document.getElementById("top").innerHTML = "<h2>NUMBER OF VOTING MEMBERS FOR THIRD CHAMBER</h2>" + configJSON.text.p06desc;
+    document.getElementById("pane-header").textContent = configJSON.text.p06Config[0];
+    document.getElementById("pane-description").textContent = configJSON.text.p06Config[1];
     showPanesBool = true;
-    document.getElementById("page1").style.display = "none";
-    document.getElementById("page2").style.display = "none";
-    document.getElementById("page3").style.display = "none";
-    document.getElementById("page4").style.display = "none";
-    document.getElementById("page5").style.display = "none";
-    document.getElementById("page6").style.display = "block";
-    document.getElementById("page7").style.display = "none";
-    document.getElementById("page8").style.display = "none";
-    document.getElementById("page9").style.display = "none";
-    document.getElementById("page10").style.display = "none";
-    document.getElementById("page11").style.display = "none";
-    document.getElementById("page12").style.display = "none";
-    document.getElementById("page13").style.display = "none";
-    document.getElementById("vote").style.display = "block";
-    document.getElementById("slider-disp").style.display = "none";
 
     let totalTxt = "Total: " + maxSlider;
     document.getElementById("total3").innerHTML = totalTxt;
@@ -2795,24 +2610,9 @@ function sMembersVP() {
 
     console.log("P07: Voting Members in VP");
     document.getElementById('dot-p07').className = 'dot-active'; // activate dot on this pane
-    document.getElementById("top").style.display = "block";
-    document.getElementById("top").innerHTML = "<h2>NUMBER OF VOTING MEMBERS FOR VICE PRESIDENCY</h2>" + configJSON.text.p07desc;
+    document.getElementById("pane-header").textContent = configJSON.text.p07Config[0];
+    document.getElementById("pane-description").textContent = configJSON.text.p07Config[1];
     showPanesBool = true;
-    document.getElementById("page1").style.display = "none";
-    document.getElementById("page2").style.display = "none";
-    document.getElementById("page3").style.display = "none";
-    document.getElementById("page4").style.display = "none";
-    document.getElementById("page5").style.display = "none";
-    document.getElementById("page6").style.display = "none";
-    document.getElementById("page7").style.display = "block";
-    document.getElementById("page8").style.display = "none";
-    document.getElementById("page9").style.display = "none";
-    document.getElementById("page10").style.display = "none";
-    document.getElementById("page11").style.display = "none";
-    document.getElementById("page12").style.display = "none";
-    document.getElementById("page13").style.display = "none";
-    document.getElementById("vote").style.display = "block";
-    document.getElementById("slider-disp").style.display = "none";
 
     let totalTxt = "Total: " + maxSlider;
     document.getElementById("total-vp").innerHTML = totalTxt;
@@ -3132,24 +2932,9 @@ function sMembersPres() {
 
     console.log("P08: Voting Members in Pres");
     document.getElementById('dot-p08').className = 'dot-active'; // activate dot on this pane
-    document.getElementById("top").style.display = "block";
     showPanesBool = true;
-    document.getElementById("top").innerHTML = "<h2>NUMBER OF VOTING MEMBERS FOR PRESIDENCY</h2>" + configJSON.text.p08desc;
-    document.getElementById("page1").style.display = "none";
-    document.getElementById("page2").style.display = "none";
-    document.getElementById("page3").style.display = "none";
-    document.getElementById("page4").style.display = "none";
-    document.getElementById("page5").style.display = "none";
-    document.getElementById("page6").style.display = "none";
-    document.getElementById("page7").style.display = "none";
-    document.getElementById("page8").style.display = "block";
-    document.getElementById("page9").style.display = "none";
-    document.getElementById("page10").style.display = "none";
-    document.getElementById("page11").style.display = "none";
-    document.getElementById("page12").style.display = "none";
-    document.getElementById("page13").style.display = "none";
-    document.getElementById("vote").style.display = "block";
-    document.getElementById("slider-disp").style.display = "none";
+    document.getElementById("pane-header").textContent = configJSON.text.p08Config[0];
+    document.getElementById("pane-description").textContent = configJSON.text.p08Config[1];
 
     let totalTxt = "Total: " + maxSlider;
     document.getElementById("total-pres").innerHTML = totalTxt;
@@ -3462,23 +3247,9 @@ function sBodyPass() {
     currSuperThresh = parseFloat(userSuperThresh);
     console.log("P09: Majority & Supermajority");
     document.getElementById('dot-p09').className = 'dot-active'; // activate dot on this pane
-    document.getElementById("top").innerHTML = "<h2>PERCENT OF VOTES REQUIRED FOR APPROVAL PER CHAMBER<h2>" + configJSON.text.p09desc;
+    document.getElementById("pane-header").textContent = configJSON.text.p09Config[0];
+    document.getElementById("pane-description").textContent = configJSON.text.p09Config[1];
     showPanesBool = true;
-    document.getElementById("page1").style.display = "none";
-    document.getElementById("page2").style.display = "none";
-    document.getElementById("page3").style.display = "none";
-    document.getElementById("page4").style.display = "none";
-    document.getElementById("page5").style.display = "none";
-    document.getElementById("page6").style.display = "none";
-    document.getElementById("page7").style.display = "none";
-    document.getElementById("page8").style.display = "none";
-    document.getElementById("page9").style.display = "block";
-    document.getElementById("page10").style.display = "none";
-    document.getElementById("page11").style.display = "none";
-    document.getElementById("page12").style.display = "none";
-    document.getElementById("page13").style.display = "none";
-    document.getElementById("vote").style.display = "block";
-    document.getElementById("slider-disp").style.display = "none";
 
     slider10.noUiSlider.set(currPerPass); // set to last set value
     slider11.noUiSlider.set(currSuperThresh);
@@ -3625,23 +3396,9 @@ function sYesVotes() {
     console.log("P10: Affirmative Vote");
     document.getElementById('dot-p10').className = 'dot-active'; // activate dot on this pane
     document.getElementById('progress-dots').style.display = "flex";
-    document.getElementById("top").innerHTML = "<h2>PROBABILITY OF AN AFFIRMATIVE VOTE BY A PARTY MEMBER</h2>" + configJSON.text.p10desc;
+    document.getElementById("pane-header").textContent = configJSON.text.p10Config[0];
+    document.getElementById("pane-description").textContent = configJSON.text.p10Config[1];
     showPanesBool = true;
-    document.getElementById("page1").style.display = "none";
-    document.getElementById("page2").style.display = "none";
-    document.getElementById("page3").style.display = "none";
-    document.getElementById("page4").style.display = "none";
-    document.getElementById("page5").style.display = "none";
-    document.getElementById("page6").style.display = "none";
-    document.getElementById("page7").style.display = "none";
-    document.getElementById("page8").style.display = "none";
-    document.getElementById("page9").style.display = "none";
-    document.getElementById("page10").style.display = "block";
-    document.getElementById("page11").style.display = "none";
-    document.getElementById("page12").style.display = "none";
-    document.getElementById("page13").style.display = "none";
-    document.getElementById("vote").style.display = "block";
-    document.getElementById("slider-disp").style.display = "none";
     checkParties();
     slider12.noUiSlider.set(curDemYaythresh);
     slider13.noUiSlider.set(curRepYaythresh);
@@ -3867,24 +3624,9 @@ function sVote() {
   this.enter = function () {
     console.log("run bill page");
     document.getElementById('progress-dots').style.display = "none";
-    document.getElementById("top").innerHTML = "<h2>TEST VOTING</h2>" + configJSON.text.p11desc1;
+    document.getElementById("pane-header").textContent = configJSON.text.p11Config[0];
+    document.getElementById("pane-description").textContent = configJSON.text.p11Config[1];
     showPanesBool = true;
-    document.getElementById("page1").style.display = "none";
-    document.getElementById("page2").style.display = "none";
-    document.getElementById("page3").style.display = "none";
-    document.getElementById("page4").style.display = "none";
-    document.getElementById("page5").style.display = "none";
-    document.getElementById("page6").style.display = "none";
-    document.getElementById("page7").style.display = "none";
-    document.getElementById("page8").style.display = "none";
-    document.getElementById("page9").style.display = "none";
-    document.getElementById("page10").style.display = "none";
-    document.getElementById("page11").style.display = "block";
-    document.getElementById("page12").style.display = "none";
-    document.getElementById("page13").style.display = "none";
-    document.getElementById("vote").style.display = "block";
-    document.getElementById("slider-disp").style.display = "none";
-    document.getElementById("sim-info").style.display = "none";
 
     // OC TODO - move to sParties? or to each scene that sets party members for a chamber
     if (userNumParties == 2) {
@@ -3954,7 +3696,7 @@ function sVote() {
       visual.dHeight = windowHeight * .9;
       visualizeVote = true;
       visualizeImmediate = true;
-      document.getElementById("top").innerHTML = "<h2>TEST VOTINGs</h2>" + configJSON.text.p11desc2;
+      document.getElementById("pane-description").textContent = configJSON.text.p11Config[2];
     }
 
     // set new parameters to show updated configuration when entering scene
@@ -4004,7 +3746,7 @@ function sVote() {
       engine.bodyCount = engine.numBodies;
       visual.finalTextDisplayUser(engine, helvFont, colorOverlay, resultIX);
       setTimeout(function () {
-        document.getElementById("top").innerHTML = "<h2>TEST VOTING</h2>" + configJSON.text.p11desc2;
+        document.getElementById("pane-description").textContent = configJSON.text.p11Config[2];
         showPanesBool = true;
       }, 1500);
     }
@@ -4085,6 +3827,8 @@ function sVote() {
  */
 function sBenchmarkPane() {
   let benchmarkBtn;
+  let benchmarkDiv;
+  let benchmarkTable;
 
   this.setup = function () {
     userOutputText = document.getElementById('slider-disp');
@@ -4094,25 +3838,9 @@ function sBenchmarkPane() {
     visual.dWidth = windowWidth * .95;
     visual.dHeight = (windowHeight * .9)-labelSpace;
     console.log("run bill page");
-    document.getElementById("top").innerHTML = "<h2>RUN BENCHMARKING RESULTS</h2>" + configJSON.text.p12desc;
-    document.getElementById("top").style.display = "block";
+    document.getElementById("pane-header").textContent = configJSON.text.p12Config[0];
+    document.getElementById("pane-description").textContent = configJSON.text.p12Config[1];
     showPanesBool = true;
-    document.getElementById("page1").style.display = "none";
-    document.getElementById("page2").style.display = "none";
-    document.getElementById("page3").style.display = "none";
-    document.getElementById("page4").style.display = "none";
-    document.getElementById("page5").style.display = "none";
-    document.getElementById("page6").style.display = "none";
-    document.getElementById("page7").style.display = "none";
-    document.getElementById("page8").style.display = "none";
-    document.getElementById("page9").style.display = "none";
-    document.getElementById("page10").style.display = "none";
-    document.getElementById("page11").style.display = "none";
-    document.getElementById("page12").style.display = "block";
-    document.getElementById("page13").style.display = "none";
-    document.getElementById("vote").style.display = "block";
-    document.getElementById("slider-disp").style.display = "none";
-    document.getElementById("sim-info").style.display = "none";
 
     document.getElementById('vote-btn').remove();
     document.getElementById('next-pane-btn').remove();
@@ -4129,6 +3857,10 @@ function sBenchmarkPane() {
 
     background(bColor);
     document.body.style.backgroundColor = bColor;
+
+    // create results div
+    benchmarkDiv = document.createElement('div');
+    benchmarkDiv.id = 'benchmark-div';
   }
 
   this.draw = function () {
@@ -4165,28 +3897,46 @@ function sBenchmarkPane() {
     document.getElementById('prev-pane-btn').remove();
     benchmarkBtn.remove();
 
-    showPanesBool = false;
-    document.getElementById("start-desc").innerHTML = configJSON.text.benchResultsDesc;
-    document.getElementById("start-desc").style.display = "none";
-    benchmarkBtn.remove();
-    var benchResults = "";
+    // create table for next page (benchmark results page)
+    benchmarkTable = document.createElement('table');
+    benchmarkTable.id = "benchmark-table";
+    let tblHead = document.createElement('thead');
+    let tblBody = document.createElement('tbody');
+    benchmarkTable.append(tblHead, tblBody);
 
-    let newDiv = document.createElement('div');
-    newDiv.id = 'act-list';
-    let s = "<table id='benchRes'><colgroup><col id='tbl-c1'><col id='tbl-c2'></colgroup><thead><tr><th>ACT TITLE</th><th>BILL PASSED?</th></thead><tbody>";
-    // console.log("configIX before benchmarking: " + configIX);
+    let hRow = document.createElement('tr');
+    let tblHeaders = Array.from({length: 2}, () => document.createElement('th'));
+    tblHeaders[0].textContent = "Act Title";
+    tblHeaders[1].textContent = "Bill Passed?";
+    hRow.append(...tblHeaders);
+    tblHead.appendChild(hRow);
+    benchmarkTable.appendChild(tblHead);
+
+    // create empty table rows (to be filled in on next scene)
     for (let i=resultIX; i < MAX_SIM_RESULTS+1; i++) { // + 1 because the first was the test result
       engine.completeReset();
       engine.currentCongLogic(true);
       updateSession();
-      s = s + "<tr id='trow" + i + "'><td> " /*+ configs[configIX].simResults[resultIX].actTitle*/ + "</td>";
-      s = s + "<td>&nbsp;</td></tr>";
+      let tRow = document.createElement('tr');
+      tRow.id = 'trow' + i;
+      let tData = Array.from({length: 2}, () => document.createElement('td'));
+      tData[0].textContent = ""
+      tData[1].textContent = "";
+      tRow.append(...tData);
+      tblBody.appendChild(tRow);
       
       resultIX++;
     }
-    s = s + "</tbody></table>";
-    newDiv.innerHTML = s;
-    document.getElementById('start-desc').appendChild(newDiv);
+
+    benchmarkTable.appendChild(tblBody);
+    benchmarkDiv.replaceChildren(benchmarkTable)
+    document.getElementById('main-page').appendChild(benchmarkDiv);  
+
+    // this is the last pane - no longer show pane-bkg, top, vote
+    document.getElementById("pane-bkg").style.display = "none";
+    document.getElementById("pane-text").style.display = "none";
+    document.getElementById("screen").style.display = "none";
+    document.getElementById("vote").style.display = "none";
 
     mgr.showScene(sBenchmarkResults);
   }
@@ -4200,6 +3950,7 @@ function sBenchmarkPane() {
 function sBenchmarkResults() {
   let startOverBtn, summaryBtn;
   let resDelay, endGear; // time until results all displayed
+  let benchmarkDiv, benchmarkTable;
 
   this.setup = function () {
     userOutputText = document.getElementById('slider-disp');
@@ -4213,30 +3964,21 @@ function sBenchmarkResults() {
     console.log("benchmark results page");
     endGear = false;
     
+    benchmarkDiv = document.getElementById('benchmark-div');
+    benchmarkTable = document.getElementById('benchmark-table');
     document.getElementById("page-container").style.display = "block";
-    document.getElementById("pane-bkg").style.display = "none";
-    document.getElementById("start-desc").style.display = "block";
-    document.getElementById("main-header").innerHTML = "<h1>Benchmark Results</h1>";
-    document.getElementById("top").innerHTML = "";
-    document.getElementById("top").style.display = "none";
-    showPanesBool = true;
-    document.getElementById("page1").style.display = "none";
-    document.getElementById("page2").style.display = "none";
-    document.getElementById("page3").style.display = "none";
-    document.getElementById("page4").style.display = "none";
-    document.getElementById("page5").style.display = "none";
-    document.getElementById("page6").style.display = "none";
-    document.getElementById("page7").style.display = "none";
-    document.getElementById("page8").style.display = "none";
-    document.getElementById("page9").style.display = "none";
-    document.getElementById("page10").style.display = "none";
-    document.getElementById("page11").style.display = "none";
-    document.getElementById("page12").style.display = "block";
-    document.getElementById("page13").style.display = "none";
-    document.getElementById("vote").style.display = "block";
-    document.getElementById("slider-disp").style.display = "none";
-    document.getElementById("sim-info").style.display = "none";
-    document.getElementById("screen").style.display = "none"; // OC to have solid bkg
+    document.getElementById("main-header").textContent = "Benchmark Results";
+
+    document.getElementById("main-subheader").textContent = "";
+    let paragraphs = configJSON.text.benchResultsDesc.map((text) => {
+      let p = document.createElement('p');
+      p.textContent = text;
+      return p;
+    });
+    document.getElementById("main-paragraphs").replaceChildren(...paragraphs);
+    document.getElementById("main-page").style.display = "block";
+
+    // document.getElementById("screen").style.display = "none"; // OC to have solid bkg
     //document.getElementById("screen").style.display = "block"; // OC to show config in bkg
 
     // set up hide/show btn for web version
@@ -4264,7 +4006,7 @@ function sBenchmarkResults() {
     background(bColor);
     document.body.style.backgroundColor = bColor;
     
-    var tds = document.getElementById("benchRes").getElementsByTagName("td");
+    var tds = benchmarkTable.getElementsByTagName("td");
     var rIX = 1;
     for (let i=1; i<=tds.length; i+=2) {
       setTimeout(function () {
@@ -4321,6 +4063,7 @@ function sBenchmarkResults() {
   }
 
   function removeBtns() {
+    document.getElementById('main-page').removeChild(benchmarkDiv);
     startOverBtn.remove();
     summaryBtn.remove();
   }
@@ -4333,8 +4076,8 @@ function sBenchmarkResults() {
  */
 function sEndorse() {
   let startOverBtn, summarySaveBtn, approvalBtn;
-  let div1, div2, div3, divApproval;
-  let s1, s2, s3, sApproval;
+  let div1, div2, div3;
+  let s1, s2, s3;
 
   this.setup = function () {
   }
@@ -4344,39 +4087,18 @@ function sEndorse() {
     s1 = "";
     s2 = "";
     s3 = "";
-    sApproval = "";
     div1 = document.createElement('div');
     div2 = document.createElement('div');
     div3 = document.createElement('div');
-    divApproval = document.createElement('div');
     div1.id = 's-col-1';
     div2.id = 's-col-2';
     div3.id = 's-col-3';
-    divApproval.id = 'approval-div';
 
     console.log("user config endorsement page");
-    document.getElementById("main-header").innerHTML = "<h1>Session Evaluation</h1>";
-    document.getElementById("start-desc").style.display = "none";
+    document.getElementById("main-header").textContent = "Session Evaluation";
+    document.getElementById("main-page").style.display = "none";
     document.getElementById("end-summary").style.display = "block";
     document.getElementById("end-summary").innerHTML = configJSON.text.evalDesc;
-    document.getElementById("pane-bkg").style.display = "none";
-    document.getElementById("screen").style.display = "none";
-    document.getElementById("page1").style.display = "none";
-    document.getElementById("page2").style.display = "none";
-    document.getElementById("page3").style.display = "none";
-    document.getElementById("page4").style.display = "none";
-    document.getElementById("page5").style.display = "none";
-    document.getElementById("page6").style.display = "none";
-    document.getElementById("page7").style.display = "none";
-    document.getElementById("page8").style.display = "none";
-    document.getElementById("page9").style.display = "none";
-    document.getElementById("page10").style.display = "none";
-    document.getElementById("page11").style.display = "none";
-    document.getElementById("page12").style.display = "none";
-    document.getElementById("page13").style.display = "block";
-    document.getElementById("vote").style.display = "none";
-    document.getElementById("slider-disp").style.display = "none";
-    document.getElementById("sim-info").style.display = "none";
 
     let buttonDiv = document.getElementById('main-btn-div');
     
@@ -4522,12 +4244,9 @@ function sEndorse() {
       s3 += "<h3 class='endorsement-txt'>Endorsement</h3>";
       s3 += "<p>System Endorsed By User: <span class='endorsement-txt'>No</span></p>"; // always starts not endorsed, until user clicks ENDORSE btn
 
-      sApproval = sApproval + "<h3></h3><div id='approval-check' style='float:none'></div>";
-
       div1.innerHTML = s1;
       div2.innerHTML = s2;
       div3.innerHTML = s3;
-      divApproval.innerHTML = sApproval;
       
       document.getElementById('end-summary').appendChild(div1);
       document.getElementById('end-summary').appendChild(div2);
@@ -4543,8 +4262,8 @@ var prevSessionID;
  */
 function sSaveResults() {
   let saveBtn, startOverBtn;
-  let div1, div2, div3, divApproval;
-  let s1, s2, s3, sApproval;
+  let div1, div2, div3;
+  let s1, s2, s3;
 
   this.setup = function () {
   }
@@ -4554,38 +4273,17 @@ function sSaveResults() {
     s1 = "";
     s2 = "";
     s3 = "";
-    sApproval = "";
     div1 = document.createElement('div');
     div2 = document.createElement('div');
     div3 = document.createElement('div');
-    divApproval = document.createElement('div');
     div1.id = 's-col-1';
     div2.id = 's-col-2';
     div3.id = 's-col-3';
-    divApproval.id = 'approval-div2';
 
     console.log("user config final summary & save page");
-    document.getElementById("main-header").innerHTML = "<h1>Session Upload</h1>";
+    document.getElementById("main-header").textContent = "Session Upload";
     document.getElementById("end-summary").style.display = "block";
     document.getElementById("end-summary").innerHTML = "<h4>Session ID: " + sessionID + "</h4>" + configJSON.text.saveDesc;
-    document.getElementById("pane-bkg").style.display = "none";
-    document.getElementById("screen").style.display = "none";
-    document.getElementById("page1").style.display = "none";
-    document.getElementById("page2").style.display = "none";
-    document.getElementById("page3").style.display = "none";
-    document.getElementById("page4").style.display = "none";
-    document.getElementById("page5").style.display = "none";
-    document.getElementById("page6").style.display = "none";
-    document.getElementById("page7").style.display = "none";
-    document.getElementById("page8").style.display = "none";
-    document.getElementById("page9").style.display = "none";
-    document.getElementById("page10").style.display = "none";
-    document.getElementById("page11").style.display = "none";
-    document.getElementById("page12").style.display = "none";
-    document.getElementById("page13").style.display = "block";
-    document.getElementById("vote").style.display = "none";
-    document.getElementById("slider-disp").style.display = "none";
-    document.getElementById("sim-info").style.display = "none";
 
     let buttonDiv = document.getElementById('main-btn-div');
     
@@ -4707,7 +4405,6 @@ function sSaveResults() {
       div1.innerHTML = s1;
       div2.innerHTML = s2;
       div3.innerHTML = s3;
-      divApproval.innerHTML = sApproval;
       
       document.getElementById('end-summary').appendChild(div1);
       document.getElementById('end-summary').appendChild(div2);
@@ -4728,27 +4425,14 @@ function sComplete() {
   this.enter = function () {
 
     console.log("save complete page");
-    document.getElementById("main-header").innerHTML = "<h1>Session Uploaded</h1>";
-    document.getElementById("start-desc").innerHTML = "<h2 id='id-center'>Session ID: " + prevSessionID + "</h2>";
-    document.getElementById("start-desc").style.display = "block";
-    document.getElementById("top").style.display = "none";
-    document.getElementById("pane-bkg").style.display = "none";
-    document.getElementById("page1").style.display = "none";
-    document.getElementById("page2").style.display = "none";
-    document.getElementById("page3").style.display = "none";
-    document.getElementById("page4").style.display = "none";
-    document.getElementById("page5").style.display = "none";
-    document.getElementById("page6").style.display = "none";
-    document.getElementById("page7").style.display = "none";
-    document.getElementById("page8").style.display = "none";
-    document.getElementById("page9").style.display = "none";
-    document.getElementById("page10").style.display = "none";
-    document.getElementById("page11").style.display = "none";
-    document.getElementById("page12").style.display = "none";
-    document.getElementById("page13").style.display = "block";
-    document.getElementById("vote").style.display = "none";
-    document.getElementById("slider-disp").style.display = "none";
-    document.getElementById("sim-info").style.display = "none";
+    document.getElementById("main-header").textContent = "Session Uploaded";
+    
+    document.getElementById("main-subheader").textContent = "";
+    let h2 = document.createElement('h2');
+    h2.id = 'id-center';
+    h2.textContent = "Session ID: " + prevSessionID;
+    document.getElementById("main-paragraphs").replaceChildren(h2);
+    document.getElementById("main-page").style.display = "block";
 
     background(bColor);
     document.body.style.backgroundColor = bColor;

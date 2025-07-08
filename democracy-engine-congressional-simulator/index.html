@@ -30,17 +30,8 @@
 
   <div id="page-container">
     <div id="content-wrap">
-      <div id="main-header" class="body-header">
-        <!-- <h1>Automated Future Democracies Simulator </h1> -->
-      </div>
-      <div id="start-desc" class="body-text">
-
-      </div>
-
-      <!-- <div id="load-session-pg" class="body-text">
-        <h2>Select Session</h2>
-        <p id="select-session-desc"></p>
-      </div> -->
+      
+      <h1 id="main-header" class="body-header"></h1>
 
       <div id="main-page" class="body-text">
         <h2 id="main-subheader"></h2>
@@ -49,23 +40,29 @@
         </section>
       </div>
 
-      <div id="end-summary" class="body-text"></div>
+      <div id="end-summary" class="body-text start-display-none">
+      </div>
+
       <div id="main-btn-div" style="position: absolute; left: 50%; transform: translateX(-50%);"></div>
+
     </div>
   </div>
 
 
 
 
-  <div id="vote"></div>
+  <div id="vote" class="start-display-none"></div>
   <div id="slider-pages">
 
-    <div id="screen"></div>
-    <div class="pane-bkg" id="pane-bkg">
+    <div id="screen" class="start-display-none"></div>
+    <div id="pane-bkg" class="pane-bkg start-display-none" >
 
-      <div id="top"></div>
+      <div id="pane-text" class="start-display-none">
+        <h2 id="pane-header"></h2>
+        <p id="pane-description"></p>
+      </div>
 
-      <div id="page1"> <!-- NUMBEAR OF LEGISLATAIVE BODIES -->
+      <div id="page1" class="start-display-none"> <!-- NUMBEAR OF LEGISLATAIVE BODIES -->
 
         <div class="first-slider" id="slider01">
           <p id="slider-text-1">
@@ -75,7 +72,7 @@
 
       </div>
 
-      <div id="page2"> <!-- NUMBER OF VOTING MEMBERS PER CHAMBER-->
+      <div id="page2" class="start-display-none"> <!-- NUMBER OF VOTING MEMBERS PER CHAMBER-->
 
         <div id="s1-p2"></div>
         <div id="s2-p2"></div>
@@ -85,11 +82,11 @@
 
       </div>
 
-      <div id="page3"> <!-- NUMBER OF POLITICAL PARTIES-->
+      <div id="page3" class="start-display-none"> <!-- NUMBER OF POLITICAL PARTIES-->
         <div class="first-slider" id="slider5"></div>
       </div>
 
-      <div id="page4"> <!-- NUMBER OF VOTING MEMBERS FOR FIRST CHAMBER -->
+      <div id="page4" class="start-display-none"> <!-- NUMBER OF VOTING MEMBERS FOR FIRST CHAMBER -->
         <div id="s1-p3"></div>
         <div id="s2-p3"></div>
         <div id="s3-p3"></div>
@@ -97,7 +94,7 @@
 
       </div>
 
-      <div id="page5"> <!-- NUMBER OF VOTING MEMBERS FOR SECOND CHAMBER -->
+      <div id="page5" class="start-display-none"> <!-- NUMBER OF VOTING MEMBERS FOR SECOND CHAMBER -->
         <div id="s1-p4"></div>
         <div id="s2-p4"></div>
         <div id="s3-p4"></div>
@@ -105,7 +102,7 @@
 
       </div>
 
-      <div id="page6"> <!-- NUMBER OF VOTING MEMBERS FOR THIRD CHAMBER -->
+      <div id="page6" class="start-display-none"> <!-- NUMBER OF VOTING MEMBERS FOR THIRD CHAMBER -->
         <div id="s1-p5"></div>
         <div id="s2-p5"></div>
         <div id="s3-p5"></div>
@@ -113,7 +110,7 @@
 
       </div>
 
-      <div id="page7"> <!-- NUMBER OF VOTING MEMBERS FOR VICE PRESIDENCY -->
+      <div id="page7" class="start-display-none"> <!-- NUMBER OF VOTING MEMBERS FOR VICE PRESIDENCY -->
         <div id="s1-p6"></div>
         <div id="s2-p6"></div>
         <div id="s3-p6"></div>
@@ -121,14 +118,14 @@
 
       </div>
 
-      <div id="page8"> <!-- NUMBER OF VOTING MEMBERS FOR PRESIDENCY -->
+      <div id="page8" class="start-display-none"> <!-- NUMBER OF VOTING MEMBERS FOR PRESIDENCY -->
         <div id="s1-p7"></div>
         <div id="s2-p7"></div>
         <div id="s3-p7"></div>
         <div class="total" id="total-pres"></div>
       </div>
 
-      <div id="page9">
+      <div id="page9" class="start-display-none">
         <div class="first-slider" id="slider10">
           <p id="slider-text-1">MAJORITY <!--APPROVAL FOR MAJORITY-->
           </p>
@@ -143,7 +140,7 @@
         </p>
       </div>
 
-      <div id="page10">
+      <div id="page10" class="start-display-none">
         <div class="first-slider" id="slider12">
           <p id="slider-text-1">POLITICAL PARTY A
           </p>
@@ -159,14 +156,6 @@
         </div>
 
         </p>
-      </div>
-
-      <div id="page11">
-
-      </div>
-
-      <div id="page12">
-        <p id="benchResults"></p>
       </div>
 
       <div id="button-div"></div>
@@ -188,15 +177,8 @@
 
     <div id="toggle-pane-div"></div>
 
-    <div id="page13">
-
-    </div>
-
-
   </div>
-  <div id="slider-disp"></div>
-
-  <div id="sim-info"></div>
+  <div id="slider-disp" class="start-display-none"></div>
 
   <p id="result"></p>
 

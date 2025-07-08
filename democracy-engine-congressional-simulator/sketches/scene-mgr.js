@@ -565,40 +565,63 @@ function checkHardwareInput() {
 function nextPane() {
   if (mgr.isCurrent(sBodies)) {
     document.getElementById('dot-p01').className = 'dot'; // de-activate dot on pane before moving to next pane
+    document.getElementById("page1").style.display = "none";
+    document.getElementById("page2").style.display = "block";
     mgr.showScene(sLegislative);
   } else if (mgr.isCurrent(sLegislative)) {
     document.getElementById('dot-p02').className = 'dot';
+    document.getElementById("page2").style.display = "none";
+    document.getElementById("page3").style.display = "block";
     mgr.showScene(sParties);
   } else if (mgr.isCurrent(sParties)) {
     document.getElementById('dot-p03').className = 'dot';
+    document.getElementById("page3").style.display = "none";
+    document.getElementById("page4").style.display = "block";
     mgr.showScene(sMembersFirstChamber);
   } else if (mgr.isCurrent(sMembersFirstChamber) && userNumLegislative == 1) { 
     document.getElementById('dot-p04').className = 'dot';
+    document.getElementById("page4").style.display = "none";
+    document.getElementById("page7").style.display = "block"; // sMembersVP is page7
     mgr.showScene(sMembersVP);
   } else if (mgr.isCurrent(sMembersFirstChamber) && userNumLegislative >= 2) {
     document.getElementById('dot-p04').className = 'dot';
+    document.getElementById("page4").style.display = "none";
+    document.getElementById("page5").style.display = "block";
     mgr.showScene(sMembersSecondChamber);
   } else if (mgr.isCurrent(sMembersSecondChamber) && userNumLegislative == 3) {
     document.getElementById('dot-p05').className = 'dot';
+    document.getElementById("page5").style.display = "none";
+    document.getElementById("page6").style.display = "block";
     mgr.showScene(sMembersThirdChamber);
   } else if (mgr.isCurrent(sMembersSecondChamber) && userNumLegislative == 2) {
     document.getElementById('dot-p05').className = 'dot';
+    document.getElementById("page5").style.display = "none";
+    document.getElementById("page7").style.display = "block";
     mgr.showScene(sMembersVP);
   } else if (mgr.isCurrent(sMembersThirdChamber)) {
     document.getElementById('dot-p06').className = 'dot';
+    document.getElementById("page6").style.display = "none";
+    document.getElementById("page7").style.display = "block";
     mgr.showScene(sMembersVP);
   } else if (mgr.isCurrent(sMembersVP)) {
     document.getElementById('dot-p07').className = 'dot';
+    document.getElementById("page7").style.display = "none";
+    document.getElementById("page8").style.display = "block";
     mgr.showScene(sMembersPres);
-    document.getElementById('dot-p08').className = 'dot';
+    // document.getElementById('dot-p08').className = 'dot';
   } else if (mgr.isCurrent(sMembersPres)) {
     document.getElementById('dot-p08').className = 'dot';
+    document.getElementById("page8").style.display = "none";
+    document.getElementById("page9").style.display = "block";
     mgr.showScene(sBodyPass);
   } else if (mgr.isCurrent(sBodyPass)) {
     document.getElementById('dot-p09').className = 'dot';
+    document.getElementById("page9").style.display = "none";
+    document.getElementById("page10").style.display = "block";
     mgr.showScene(sYesVotes);
   } else if (mgr.isCurrent(sYesVotes)) {
     document.getElementById('dot-p10').className = 'dot';
+    document.getElementById("page10").style.display = "none";
     mgr.showScene(sVote);
   }  else if (mgr.isCurrent(sVote)) {
     mgr.showScene(sBenchmarkPane);
@@ -612,36 +635,58 @@ function nextPane() {
 function previousPane() {
   if (mgr.isCurrent(sLegislative)) {
     document.getElementById('dot-p02').className = 'dot'; // deactivate dot on pane before moving to next pane
+    document.getElementById("page2").style.display = "none";
+    document.getElementById("page1").style.display = "block";
     mgr.showScene(sBodies);
   } else if (mgr.isCurrent(sParties)) {
     document.getElementById('dot-p03').className = 'dot';
+    document.getElementById("page3").style.display = "none";
+    document.getElementById("page2").style.display = "block";
     mgr.showScene(sLegislative);
   } else if (mgr.isCurrent(sMembersFirstChamber)) {
     document.getElementById('dot-p04').className = 'dot';
+    document.getElementById("page4").style.display = "none";
+    document.getElementById("page3").style.display = "block";
     mgr.showScene(sParties);
   } else if (mgr.isCurrent(sMembersSecondChamber)) {
     document.getElementById('dot-p05').className = 'dot';
+    document.getElementById("page5").style.display = "none";
+    document.getElementById("page4").style.display = "block";
     mgr.showScene(sMembersFirstChamber);
   } else if (mgr.isCurrent(sMembersThirdChamber)) {
     document.getElementById('dot-p06').className = 'dot';
+    document.getElementById("page6").style.display = "none";
+    document.getElementById("page5").style.display = "block";
     mgr.showScene(sMembersSecondChamber);
   } else if (mgr.isCurrent(sMembersVP) && userNumLegislative == 1) {
     document.getElementById('dot-p07').className = 'dot';
+    document.getElementById("page7").style.display = "none";
+    document.getElementById("page4").style.display = "block";
     mgr.showScene(sMembersFirstChamber);
   } else if (mgr.isCurrent(sMembersVP) && userNumLegislative == 2) {
     document.getElementById('dot-p07').className = 'dot';
+    document.getElementById("page7").style.display = "none";
+    document.getElementById("page5").style.display = "block";
     mgr.showScene(sMembersSecondChamber);
   } else if (mgr.isCurrent(sMembersVP) && userNumLegislative == 3) {
     document.getElementById('dot-p07').className = 'dot';
+    document.getElementById("page7").style.display = "none";
+    document.getElementById("page6").style.display = "block";
     mgr.showScene(sMembersThirdChamber);
   } else if (mgr.isCurrent(sMembersPres)) {
     document.getElementById('dot-p08').className = 'dot';
+    document.getElementById("page8").style.display = "none";
+    document.getElementById("page7").style.display = "block";
     mgr.showScene(sMembersVP);
   } else if (mgr.isCurrent(sBodyPass)) {
     document.getElementById('dot-p09').className = 'dot';
+    document.getElementById("page9").style.display = "none";
+    document.getElementById("page8").style.display = "block";
     mgr.showScene(sMembersPres);
   } else if (mgr.isCurrent(sYesVotes)) {
     document.getElementById('dot-p10').className = 'dot';
+    document.getElementById("page10").style.display = "none";
+    document.getElementById("page9").style.display = "block";
     mgr.showScene(sBodyPass);
   } else if (mgr.isCurrent(sVote)) {
     if (visualizeVote) {
@@ -651,6 +696,7 @@ function previousPane() {
       visual.completeReset();
       reconfigBool = true;
     }
+    document.getElementById("page10").style.display = "block";
     mgr.showScene(sYesVotes);
   } else if (mgr.isCurrent(sBenchmarkPane)) {
     mgr.showScene(sVote);
@@ -1082,7 +1128,7 @@ function paneToggle() {
     // = "block" whichever html div page corresponds to that scene
     document.getElementById("pane-bkg").style.display = "block"; 
     document.getElementById("button-div").style.display = "block";
-    document.getElementById("top").style.display = "block";
+    document.getElementById("pane-text").style.display = "block";
     document.getElementById("screen").style.display = "block";
     if (mgr.isCurrent(sBodies)) {
       document.getElementById("page1").style.display = "block";
@@ -1104,16 +1150,7 @@ function paneToggle() {
       document.getElementById("page9").style.display = "block";
     } else if (mgr.isCurrent(sYesVotes)) {
       document.getElementById("page10").style.display = "block";
-    } else if (mgr.isCurrent(sVote)) {
-      document.getElementById("page11").style.display = "block";
-    } else if (mgr.isCurrent(sBenchmarkPane)) {
-      document.getElementById("page12").style.display = "block";
     }
-    // } else if (mgr.isCurrent(sResults)) {
-    //   document.getElementById("pane-bkg").style.display = "none";
-    //   document.getElementById("page13").style.display = "block";
-    //   document.getElementById("slider-disp").style.display = "block";
-    // }
     
   } else {
     if (!enableHardware) { // web version
@@ -1124,7 +1161,7 @@ function paneToggle() {
       document.getElementById("screen").style.display = "none";
       document.getElementById("pane-bkg").style.display = "none";
       document.getElementById("button-div").style.display = "none";
-      document.getElementById("top").style.display = "none";
+      document.getElementById("pane-text").style.display = "none";
       document.getElementById("page1").style.display = "none";
       document.getElementById("page2").style.display = "none";
       document.getElementById("page3").style.display = "none";
@@ -1135,9 +1172,6 @@ function paneToggle() {
       document.getElementById("page8").style.display = "none";
       document.getElementById("page9").style.display = "none";
       document.getElementById("page10").style.display = "none";
-      document.getElementById("page11").style.display = "none";
-      document.getElementById("page12").style.display = "none";
-      document.getElementById("page13").style.display = "none";
       document.getElementById("slider-disp").style.display = "none";
   }
 }
