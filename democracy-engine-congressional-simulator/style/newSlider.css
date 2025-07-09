@@ -327,6 +327,7 @@
   text-align: center;
   position: relative;
   font-size: 1.2em;
+  text-transform: uppercase;
   font-weight: 400;
   color: var(--text-color);
 }

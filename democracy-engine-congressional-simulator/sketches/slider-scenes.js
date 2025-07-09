@@ -23,7 +23,7 @@ function startUp() {
 
     // set display of html elements for this scene
     document.getElementById("page-container").style.display = "block";
-    document.getElementById("main-header").textContent = configJSON.text.title;
+    document.getElementById("main-header").textContent = configJSON.text.titleConfig;
 
     let buttonDiv = document.getElementById('main-btn-div');
 
@@ -100,10 +100,10 @@ function startSession() {
     document.body.style.backgroundColor = bColor;
 
     document.getElementById("page-container").style.display = "block";
-    document.getElementById("main-header").textContent = configJSON.text.title;
+    document.getElementById("main-header").textContent = configJSON.text.titleConfig;
 
-    document.getElementById("main-subheader").textContent = "";
-    let paragraphs = configJSON.text.shortDescription.map((text) => {
+    document.getElementById("main-subheader").textContent = configJSON.text.landingPage.h;
+    let paragraphs = configJSON.text.landingPage.p.map((text) => {
       let p = document.createElement('p');
       p.textContent = text;
       return p;
@@ -345,10 +345,10 @@ function aboutProject() {
     console.log("about project scene");
 
     document.getElementById("page-container").style.display = "block";
-    document.getElementById("main-header").textContent = configJSON.text.title;
+    document.getElementById("main-header").textContent = configJSON.text.titleConfig;
 
-    document.getElementById("main-subheader").textContent = "";
-    let paragraphs = configJSON.text.detailedDescription.map((text) => {
+    document.getElementById("main-subheader").textContent = configJSON.text.aboutPage.h;
+    let paragraphs = configJSON.text.aboutPage.p.map((text) => {
       let p = document.createElement('p');
       p.textContent = text;
       return p;
@@ -416,9 +416,9 @@ function newSessionScene() {
     paramChangedBool = true;
 
     document.getElementById("page-container").style.display = "block";
-    document.getElementById("main-header").textContent = configJSON.text.title;
-    document.getElementById("main-subheader").textContent = "New Session";
-    let paragraphs = configJSON.text.newSessionDesc.map((text) => {
+    document.getElementById("main-header").textContent = configJSON.text.titleConfig;
+    document.getElementById("main-subheader").textContent = configJSON.text.newSessionPage.h;
+    let paragraphs = configJSON.text.newSessionPage.p.map((text) => {
       let p = document.createElement('p');
       p.textContent = text;
       return p;
@@ -524,10 +524,10 @@ function loadSessionS1() {
     skipAmt = 0; // add number of documentsShown each time show more button is clicked
 
     document.getElementById("page-container").style.display = "block";
-    document.getElementById("main-header").textContent = configJSON.text.title;
+    document.getElementById("main-header").textContent = configJSON.text.titleConfig;
 
-    document.getElementById("main-subheader").textContent = "Select Session";
-    let paragraphs = configJSON.text.selectSessionDesc.map((text) => {
+    document.getElementById("main-subheader").textContent = configJSON.text.selectSessionPage.h;
+    let paragraphs = configJSON.text.selectSessionPage.p.map((text) => {
       let p = document.createElement('p');
       p.textContent = text;
       return p;
@@ -632,7 +632,7 @@ function loadSessionS1() {
 
         // text about no sessions saved yet
         let p = document.createElement('p');
-        p.textContent = configJSON.text.selectSessionNoneDB;
+        p.textContent = configJSON.text.selectSessionPage.pNoneDB;
         sessionsDiv.replaceChildren(p); // replace table with paragraph
         document.getElementById('main-page').appendChild(sessionsDiv);
 
@@ -860,8 +860,8 @@ function sBodies() {
     document.getElementById('dot-p01').className = 'dot-active';
     document.getElementById('progress-dots').style.display = "flex";
     document.getElementById("vote").style.display = "block"; // first pane scene - show govt configuration
-    document.getElementById("pane-header").textContent = configJSON.text.p01Config[0];
-    document.getElementById("pane-description").textContent = configJSON.text.p01Config[1];
+    document.getElementById("pane-header").textContent = configJSON.text.p01Config.h;
+    document.getElementById("pane-description").textContent = configJSON.text.p01Config.p;
     checkNumChambers();
     showPanesBool = true;
 
@@ -1066,8 +1066,8 @@ function sLegislative() {
 
     console.log("Pane 02");
     document.getElementById('dot-p02').className = 'dot-active'; // activate dot on this pane
-    document.getElementById("pane-header").textContent = configJSON.text.p02Config[0];
-    document.getElementById("pane-description").textContent = configJSON.text.p02Config[1];
+    document.getElementById("pane-header").textContent = configJSON.text.p02Config.h;
+    document.getElementById("pane-description").textContent = configJSON.text.p02Config.p;
     showPanesBool = true;
 
     checkNumBodies();
@@ -1383,8 +1383,8 @@ function sParties() {
     console.log("Pane 03");
     hardwareUpdate = false;
     document.getElementById('dot-p03').className = 'dot-active'; // activate dot on this pane
-    document.getElementById("pane-header").textContent = configJSON.text.p03Config[0];
-    document.getElementById("pane-description").textContent = configJSON.text.p03Config[1];
+    document.getElementById("pane-header").textContent = configJSON.text.p03Config.h;
+    document.getElementById("pane-description").textContent = configJSON.text.p03Config.p;
     showPanesBool = true;
 
     slider5.noUiSlider.set(userNumParties);
@@ -1586,12 +1586,12 @@ function sMembersFirstChamber() {
       
     console.log("Pane 04: Chamber 1 Party Members");
     document.getElementById('dot-p04').className = 'dot-active'; // activate dot on this pane
-    document.getElementById("pane-header").textContent = configJSON.text.p04Config[0];
-    document.getElementById("pane-description").textContent = configJSON.text.p04Config[1];
+    document.getElementById("pane-header").textContent = configJSON.text.p04Config.h;
+    document.getElementById("pane-description").textContent = configJSON.text.p04Config.p;
     showPanesBool = true;
 
     let totalTxt = "Total: " + maxSlider;
-    document.getElementById("total").innerHTML = totalTxt;
+    document.getElementById("total").textContent = totalTxt;
 
     checkNumBodies();
     sliders();
@@ -1966,12 +1966,12 @@ function sMembersSecondChamber() {
 
     console.log("P05: Chamber 2 Party Members");
     document.getElementById('dot-p05').className = 'dot-active'; // activate dot on this pane
-    document.getElementById("pane-header").textContent = configJSON.text.p05Config[0];
-    document.getElementById("pane-description").textContent = configJSON.text.p05Config[1];
+    document.getElementById("pane-header").textContent = configJSON.text.p05Config.h;
+    document.getElementById("pane-description").textContent = configJSON.text.p05Config.p;
     showPanesBool = true;
 
     let totalTxt = "Total: " + maxSlider;
-    document.getElementById("total2").innerHTML = totalTxt;
+    document.getElementById("total2").textContent = totalTxt;
 
     checkNumBodies();
     sliders();    
@@ -2287,12 +2287,12 @@ function sMembersThirdChamber() {
 
     console.log("P06: Chamber 3 Voting Members");
     document.getElementById('dot-p06').className = 'dot-active'; // activate dot on this pane
-    document.getElementById("pane-header").textContent = configJSON.text.p06Config[0];
-    document.getElementById("pane-description").textContent = configJSON.text.p06Config[1];
+    document.getElementById("pane-header").textContent = configJSON.text.p06Config.h;
+    document.getElementById("pane-description").textContent = configJSON.text.p06Config.p;
     showPanesBool = true;
 
     let totalTxt = "Total: " + maxSlider;
-    document.getElementById("total3").innerHTML = totalTxt;
+    document.getElementById("total3").textContent = totalTxt;
 
     checkNumBodies();
     sliders();
@@ -2610,12 +2610,12 @@ function sMembersVP() {
 
     console.log("P07: Voting Members in VP");
     document.getElementById('dot-p07').className = 'dot-active'; // activate dot on this pane
-    document.getElementById("pane-header").textContent = configJSON.text.p07Config[0];
-    document.getElementById("pane-description").textContent = configJSON.text.p07Config[1];
+    document.getElementById("pane-header").textContent = configJSON.text.p07Config.h;
+    document.getElementById("pane-description").textContent = configJSON.text.p07Config.p;
     showPanesBool = true;
 
     let totalTxt = "Total: " + maxSlider;
-    document.getElementById("total-vp").innerHTML = totalTxt;
+    document.getElementById("total-vp").textContent = totalTxt;
 
     checkNumBodies();
     sliders();
@@ -2933,11 +2933,11 @@ function sMembersPres() {
     console.log("P08: Voting Members in Pres");
     document.getElementById('dot-p08').className = 'dot-active'; // activate dot on this pane
     showPanesBool = true;
-    document.getElementById("pane-header").textContent = configJSON.text.p08Config[0];
-    document.getElementById("pane-description").textContent = configJSON.text.p08Config[1];
+    document.getElementById("pane-header").textContent = configJSON.text.p08Config.h;
+    document.getElementById("pane-description").textContent = configJSON.text.p08Config.p;
 
     let totalTxt = "Total: " + maxSlider;
-    document.getElementById("total-pres").innerHTML = totalTxt;
+    document.getElementById("total-pres").textContent = totalTxt;
 
     checkNumBodies();
     sliders();
@@ -3247,8 +3247,8 @@ function sBodyPass() {
     currSuperThresh = parseFloat(userSuperThresh);
     console.log("P09: Majority & Supermajority");
     document.getElementById('dot-p09').className = 'dot-active'; // activate dot on this pane
-    document.getElementById("pane-header").textContent = configJSON.text.p09Config[0];
-    document.getElementById("pane-description").textContent = configJSON.text.p09Config[1];
+    document.getElementById("pane-header").textContent = configJSON.text.p09Config.h;
+    document.getElementById("pane-description").textContent = configJSON.text.p09Config.p;
     showPanesBool = true;
 
     slider10.noUiSlider.set(currPerPass); // set to last set value
@@ -3396,8 +3396,8 @@ function sYesVotes() {
     console.log("P10: Affirmative Vote");
     document.getElementById('dot-p10').className = 'dot-active'; // activate dot on this pane
     document.getElementById('progress-dots').style.display = "flex";
-    document.getElementById("pane-header").textContent = configJSON.text.p10Config[0];
-    document.getElementById("pane-description").textContent = configJSON.text.p10Config[1];
+    document.getElementById("pane-header").textContent = configJSON.text.p10Config.h;
+    document.getElementById("pane-description").textContent = configJSON.text.p10Config.p;
     showPanesBool = true;
     checkParties();
     slider12.noUiSlider.set(curDemYaythresh);
@@ -3624,8 +3624,8 @@ function sVote() {
   this.enter = function () {
     console.log("run bill page");
     document.getElementById('progress-dots').style.display = "none";
-    document.getElementById("pane-header").textContent = configJSON.text.p11Config[0];
-    document.getElementById("pane-description").textContent = configJSON.text.p11Config[1];
+    document.getElementById("pane-header").textContent = configJSON.text.p11Config.h;
+    document.getElementById("pane-description").textContent = configJSON.text.p11Config.p;
     showPanesBool = true;
 
     // OC TODO - move to sParties? or to each scene that sets party members for a chamber
@@ -3696,7 +3696,7 @@ function sVote() {
       visual.dHeight = windowHeight * .9;
       visualizeVote = true;
       visualizeImmediate = true;
-      document.getElementById("pane-description").textContent = configJSON.text.p11Config[2];
+      document.getElementById("pane-description").textContent = configJSON.text.p11Config.pAfterVote;
     }
 
     // set new parameters to show updated configuration when entering scene
@@ -3746,7 +3746,7 @@ function sVote() {
       engine.bodyCount = engine.numBodies;
       visual.finalTextDisplayUser(engine, helvFont, colorOverlay, resultIX);
       setTimeout(function () {
-        document.getElementById("pane-description").textContent = configJSON.text.p11Config[2];
+        document.getElementById("pane-description").textContent = configJSON.text.p11Config.pAfterVote;
         showPanesBool = true;
       }, 1500);
     }
@@ -3838,8 +3838,8 @@ function sBenchmarkPane() {
     visual.dWidth = windowWidth * .95;
     visual.dHeight = (windowHeight * .9)-labelSpace;
     console.log("run bill page");
-    document.getElementById("pane-header").textContent = configJSON.text.p12Config[0];
-    document.getElementById("pane-description").textContent = configJSON.text.p12Config[1];
+    document.getElementById("pane-header").textContent = configJSON.text.p12Config.h;
+    document.getElementById("pane-description").textContent = configJSON.text.p12Config.p;
     showPanesBool = true;
 
     document.getElementById('vote-btn').remove();
@@ -3967,10 +3967,10 @@ function sBenchmarkResults() {
     benchmarkDiv = document.getElementById('benchmark-div');
     benchmarkTable = document.getElementById('benchmark-table');
     document.getElementById("page-container").style.display = "block";
-    document.getElementById("main-header").textContent = "Benchmark Results";
+    document.getElementById("main-header").textContent = configJSON.text.benchResultsPage.h;
 
     document.getElementById("main-subheader").textContent = "";
-    let paragraphs = configJSON.text.benchResultsDesc.map((text) => {
+    let paragraphs = configJSON.text.benchResultsPage.p.map((text) => {
       let p = document.createElement('p');
       p.textContent = text;
       return p;
@@ -4095,10 +4095,16 @@ function sEndorse() {
     div3.id = 's-col-3';
 
     console.log("user config endorsement page");
-    document.getElementById("main-header").textContent = "Session Evaluation";
+    document.getElementById("main-header").textContent = configJSON.text.endorsementPageConfig.h;
     document.getElementById("main-page").style.display = "none";
+    
+    let paragraphs = configJSON.text.endorsementPageConfig.p.map((text) => {
+      let p = document.createElement('p');
+      p.textContent = text;
+      return p;
+    });
+    document.getElementById("end-summary").replaceChildren(...paragraphs);
     document.getElementById("end-summary").style.display = "block";
-    document.getElementById("end-summary").innerHTML = configJSON.text.evalDesc;
 
     let buttonDiv = document.getElementById('main-btn-div');
     
@@ -4281,9 +4287,20 @@ function sSaveResults() {
     div3.id = 's-col-3';
 
     console.log("user config final summary & save page");
-    document.getElementById("main-header").textContent = "Session Upload";
+    document.getElementById("main-header").textContent = configJSON.text.saveSessionPage.h;
+
+    // show session ID
+    let h4 = document.createElement('h4');
+    h4.textContent = "Session ID: " + sessionID;
+    document.getElementById("end-summary").replaceChildren(h4);
+
+    let paragraphs = configJSON.text.saveSessionPage.p.map((text) => {
+      let p = document.createElement('p');
+      p.textContent = text;
+      return p;
+    });
+    document.getElementById("end-summary").append(...paragraphs);
     document.getElementById("end-summary").style.display = "block";
-    document.getElementById("end-summary").innerHTML = "<h4>Session ID: " + sessionID + "</h4>" + configJSON.text.saveDesc;
 
     let buttonDiv = document.getElementById('main-btn-div');
     
@@ -4425,7 +4442,7 @@ function sComplete() {
   this.enter = function () {
 
     console.log("save complete page");
-    document.getElementById("main-header").textContent = "Session Uploaded";
+    document.getElementById("main-header").textContent = configJSON.text.saveCompletePage.h;
     
     document.getElementById("main-subheader").textContent = "";
     let h2 = document.createElement('h2');

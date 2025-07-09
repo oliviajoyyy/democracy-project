@@ -180,80 +180,108 @@
     },
 
     "text": {
-        "title": "Automated Future Democracies Simulator",
-        "shortDescription": [
-            "The Future Democracies Laboratory is a transdisciplinary research center dedicated to the investigation of methodologies and technologies for collective decision-making. The laboratory hosts a platform for rapidly modeling and testing democratic systems.",
-            "This desk will give you control over parameters ranging from the number of legislative chambers to the percentage vote required for the legislature to override a presidential veto. After changing these parameters from the default (i.e., the current configuration of the United States federal government), you will be able to run simulated roll calls and see how the government would vote on legislation such as the Civil Rights Act, the Immigration and Nationality Act, and the Clean Air Act.",
-            "The Future Democracies Laboratory also hosts a repository of alternatives to the current government. After you have reconfigured the system, you will have the option of contributing your model to the laboratory's database for further testing and adjustment by other people."
-        ],
-        "detailedDescription": [
-            "The Future Democracies Laboratory is a transdisciplinary research center dedicated to the investigation of methodologies and technologies for collective decision-making. Directed by experimental philosopher Jonathon Keats, the laboratory is run in collaboration with San Jose State University under the direction of Professor Steve Durie",
-            "The laboratory hosts an open-source platform for rapidly modeling and testing democratic systems. The research platform is based on the Federal government of the United States, emulating the decision-making logic by which and legislation is processed. Parameters are adjustable, as is the governing structure. The system is also capable of testing alternative models with actual and hypothetical legislation. For the testing phase, elected officials are simulated with random number generators, where the probabilities of voting outcomes can be set according to the political status quo or anticipated demographics. Data collected through the legislative emulator and source code are freely available on request.",
-            "In addition to the legislative emulator, the Future Democracies Laboratory maintains a versatile experimental suite for researching and developing alternative voting metrics, as well as philosophical instruments to investigate the nature of governance. Experimental polling modules allow researchers to study decision-making inputs ranging from social media activity to physiological phenomena. Additional units monitor hormonal stress of other species, including animals and plants, allowing researchers to study ways in which nature might be enfranchised.",
-            "The Future Democracy Laboratory&rsquo;s research program is augmented by public outreach. Alternative decision-making models provide a basis for discussion and debate, as does the operating system itself. (Do weighted random number generators better represent the public interest than flesh-and-blood politicians? Might the emulator become the government?) Through a unique combination of speculation and provocation, researchers and the public at large are actively engaged in the democratic process of deciding the future of democracy."
-        ],
-        "newSessionDesc": [
-            "This session will present a simplified version of the current configuration of the federal government, showing the political makeup of the legislative and executive branches as of September 2024. Using the control panel sliders, you can modify nine different parameters. You can move backward and forward between parameters using the joystick. When you have come up with a system you would like to test, you will be able to access the legislative emulator."
-        ],
-        "selectSessionDesc": [
-            "Governmental configurations developed by previous participants can be accessed on this page. You can select a session below to review and modify. You can add your modifications to the database for further modification by others. The database is cumulative. Past configurations will not be overwritten."
-        ],
-        "selectSessionNoneDB": "There are no sessions saved to the database yet. Create a new session to save and retrieve it here.",
-        "p01Config": [
-            "Number of Chambers",
-            "There are currently two legislative bodies, the House of Representatives and the Senate. Use this slider to increase or decrease the number."
-        ],
-        "p02Config": [
-            "Number of Voting Members",
-            "There are currently 435 members of the House of Representatives, 100 senators, 1 vice president and one president. Use this slider to increase or decrease the number."
-        ],
-        "p03Config": [
-            "Number of Political Parties",
-            "There are currently two major political parties, the Democrats and the Republicans. Use this slider to increase or decrease the number of parties. You will be able to set the probability with which each party will support change to the political system on a future panel."
-        ],
-        "p04Config": [
-            "Number of Voting Members for First Chamber",
-            "Use this slider to change the proportion of members of representing each party in the first legislative chamber."
-        ],
-        "p05Config": [
-            "Number of Voting Members for Second Chamber",
-            "Use this slider to change the proportion of members of representing each party in the second legislative chamber."
-        ],
-        "p06Config": [
-            "Number of Voting Members for Third Chamber",
-            "Use this slider to change the proportion of members of representing each party in the third legislative chamber."
-        ],
-        "p07Config": [
-            "Number of Voting Members for Vice Presidency",
-            "If you have increased the number of vice presidents to more than one, use this slider to chance the proportion of members of representing each party in the vice presidency. The vice president(s) will only vote in case of a tie in a legislative chamber."
-        ],
-        "p08Config": [
-            "Number of Voting Members for Presidency",
-            "If you have increased the number of presidents to more than one, use this slider to chance the proportion of members of representing each party in the presidency. The president(s) can vote to veto legislation."
-        ],
-        "p09Config": [
-            "Percent of Votes Required For Approval Per Chamber",
-            "Currently a simple majority is required for a legislative chamber to approve a bill. Use this slider to increase or decrease the number the threshold for each chamber."
-        ],
-        "p10Config": [
-            "Probability Of An Affirmative Vote By A Party Member",
-            "The emulator uses a random number generator to simulate the response of each politician to any given bill. Use these sliders to set the probability that a member of a given party will elect to change the status quo by voting in favor of a bill."
-        ],
-        "p11Config": [
-            "Test Voting",
-            "The emulator provides an approximation of how the government might behave given the parameters you have selected. Press the 'Test Vote' button to observe your configuration in action and to see sample results of a vote on an unspecified bill.",
-            "If the system is behaving as anticipated, press the 'Next' button. If you want to adjust parameters, press 'Back'."
-        ],
-        "p12Config": [
-            "Run Benchmarking Results",
-            "Use this benchmark test to assess the performance of your governmental configuration in real-world conditions. The emulator will run ten times, voting on ten historically important bills that significantly changed the political status quo. The benchmark test will show how the bills might have fared given the system you have modeled."
-        ],
-        "benchResultsDesc": [
-            "Review the following benchmark results to assess whether your governmental system meets your standards. If so, approve the model on the next page and save it for others to assess and modify."
-        ],
-        "evalDesc": "<p>Review the governmental configuration you have designed and the benchmark results below. If you approve of this configuration, press the endorsement button before proceeding to the final summary.</p>",
-        "saveDesc": "<p>Record this code to return to your session in the future. The configuration you have created will also be available to other users for review and modification.</p>",
-        "saveCompleteDesc": "<p style='text-align:center'>Please record your session ID to retrieve it later.</p>",
+        "titleConfig": "Automated Future Democracies Simulator",
+        "landingPage": {
+            "h": "",
+            "p": [
+                "The Future Democracies Laboratory is a transdisciplinary research center dedicated to the investigation of methodologies and technologies for collective decision-making. The laboratory hosts a platform for rapidly modeling and testing democratic systems.",
+                "This desk will give you control over parameters ranging from the number of legislative chambers to the percentage vote required for the legislature to override a presidential veto. After changing these parameters from the default (i.e., the current configuration of the United States federal government), you will be able to run simulated roll calls and see how the government would vote on legislation such as the Civil Rights Act, the Immigration and Nationality Act, and the Clean Air Act.",
+                "The Future Democracies Laboratory also hosts a repository of alternatives to the current government. After you have reconfigured the system, you will have the option of contributing your model to the laboratory's database for further testing and adjustment by other people."
+            ]
+        },
+        "aboutPage": {
+            "h": "",
+            "p": [
+                "The Future Democracies Laboratory is a transdisciplinary research center dedicated to the investigation of methodologies and technologies for collective decision-making. Directed by experimental philosopher Jonathon Keats, the laboratory is run in collaboration with San Jose State University under the direction of Professor Steve Durie",
+                "The laboratory hosts an open-source platform for rapidly modeling and testing democratic systems. The research platform is based on the Federal government of the United States, emulating the decision-making logic by which and legislation is processed. Parameters are adjustable, as is the governing structure. The system is also capable of testing alternative models with actual and hypothetical legislation. For the testing phase, elected officials are simulated with random number generators, where the probabilities of voting outcomes can be set according to the political status quo or anticipated demographics. Data collected through the legislative emulator and source code are freely available on request.",
+                "In addition to the legislative emulator, the Future Democracies Laboratory maintains a versatile experimental suite for researching and developing alternative voting metrics, as well as philosophical instruments to investigate the nature of governance. Experimental polling modules allow researchers to study decision-making inputs ranging from social media activity to physiological phenomena. Additional units monitor hormonal stress of other species, including animals and plants, allowing researchers to study ways in which nature might be enfranchised.",
+                "The Future Democracy Laboratory&rsquo;s research program is augmented by public outreach. Alternative decision-making models provide a basis for discussion and debate, as does the operating system itself. (Do weighted random number generators better represent the public interest than flesh-and-blood politicians? Might the emulator become the government?) Through a unique combination of speculation and provocation, researchers and the public at large are actively engaged in the democratic process of deciding the future of democracy."
+            ]
+        },
+        "newSessionPage": {
+            "h": "New Session",
+            "p": [
+                "This session will present a simplified version of the current configuration of the federal government, showing the political makeup of the legislative and executive branches as of September 2024. Using the control panel sliders, you can modify nine different parameters. You can move backward and forward between parameters using the joystick. When you have come up with a system you would like to test, you will be able to access the legislative emulator."
+            ]
+        },
+        "selectSessionPage": {
+            "h": "Select Session",
+            "p": [
+                "Governmental configurations developed by previous participants can be accessed on this page. You can select a session below to review and modify. You can add your modifications to the database for further modification by others. The database is cumulative. Past configurations will not be overwritten."
+            ],
+            "pNoneDB": "There are no sessions saved to the database yet. Create a new session to save and retrieve it here."
+        },
+        "p01Config": {
+            "h": "Number of Chambers",
+            "p": "There are currently two legislative bodies, the House of Representatives and the Senate. Use this slider to increase or decrease the number."
+        },
+        "p02Config": {
+            "h": "Number of Voting Members",
+            "p": "There are currently 435 members of the House of Representatives, 100 senators, 1 vice president and one president. Use this slider to increase or decrease the number."
+        },
+        "p03Config": {
+            "h": "Number of Political Parties",
+            "p": "There are currently two major political parties, the Democrats and the Republicans. Use this slider to increase or decrease the number of parties. You will be able to set the probability with which each party will support change to the political system on a future panel."
+        },
+        "p04Config": {
+            "h": "Number of Voting Members for First Chamber",
+            "p": "Use this slider to change the proportion of members of representing each party in the first legislative chamber."
+        },
+        "p05Config": {
+            "h": "Number of Voting Members for Second Chamber",
+            "p": "Use this slider to change the proportion of members of representing each party in the second legislative chamber."
+        },
+        "p06Config": {
+            "h": "Number of Voting Members for Third Chamber",
+            "p": "Use this slider to change the proportion of members of representing each party in the third legislative chamber."
+        },
+        "p07Config": {
+            "h": "Number of Voting Members for Vice Presidency",
+            "p": "If you have increased the number of vice presidents to more than one, use this slider to chance the proportion of members of representing each party in the vice presidency. The vice president(s) will only vote in case of a tie in a legislative chamber."
+        },
+        "p08Config": {
+            "h": "Number of Voting Members for Presidency",
+            "p": "If you have increased the number of presidents to more than one, use this slider to chance the proportion of members of representing each party in the presidency. The president(s) can vote to veto legislation."
+        },
+        "p09Config": {
+            "h": "Percent of Votes Required For Approval Per Chamber",
+            "p": "Currently a simple majority is required for a legislative chamber to approve a bill. Use this slider to increase or decrease the number the threshold for each chamber."
+        },
+        "p10Config": {
+            "h": "Probability Of An Affirmative Vote By A Party Member",
+            "p": "The emulator uses a random number generator to simulate the response of each politician to any given bill. Use these sliders to set the probability that a member of a given party will elect to change the status quo by voting in favor of a bill."
+        },
+        "p11Config": {
+            "h": "Test Voting",
+            "p": "The emulator provides an approximation of how the government might behave given the parameters you have selected. Press the 'Test Vote' button to observe your configuration in action and to see sample results of a vote on an unspecified bill.",
+            "pAfterVote": "If the system is behaving as anticipated, press the 'Next' button. If you want to adjust parameters, press 'Back'."
+        },
+        "p12Config": {
+            "h": "Run Benchmarking Results",
+            "p": "Use this benchmark test to assess the performance of your governmental configuration in real-world conditions. The emulator will run ten times, voting on ten historically important bills that significantly changed the political status quo. The benchmark test will show how the bills might have fared given the system you have modeled."
+        },
+        "benchResultsPage": {
+            "h": "Benchmark Results",
+            "p": [
+                "Review the following benchmark results to assess whether your governmental system meets your standards. If so, approve the model on the next page and save it for others to assess and modify."
+            ]
+        },
+        "endorsementPageConfig": {
+            "h": "Session Evaluation",
+            "p": [
+                "Review the governmental configuration you have designed and the benchmark results below. If you approve of this configuration, press the endorsement button before proceeding to the final summary."
+            ]
+        },
+        "saveSessionPage": {
+            "h": "Session Upload",
+            "p": [
+                "Record this code to return to your session in the future. The configuration you have created will also be available to other users for review and modification."
+            ]
+        },
+        "saveCompletePage": {
+            "h": "Session Uploaded",
+            "p": []
+        },
         "titleVis": "<h1>Future Democracies Laboratory Database</h1>",
         "pVisEndorsement": "<h2>Endorsement</h2><p style='text-align:center'>Review the governmental configuration and the benchmark results. If you approve of this configuration, press the endorsement button before starting over.</p>"
     }

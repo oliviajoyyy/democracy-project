@@ -1172,6 +1172,5 @@ function paneToggle() {
       document.getElementById("page8").style.display = "none";
       document.getElementById("page9").style.display = "none";
       document.getElementById("page10").style.display = "none";
-      document.getElementById("slider-disp").style.display = "none";
   }
 }
