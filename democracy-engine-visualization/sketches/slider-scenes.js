@@ -429,7 +429,7 @@ function sLoadSession() {
     if (!document.getElementById('prev-pane-btn')) {
     // set up either show more or scroll buttons
     if (enableHardware) { // kiosk version
-      document.getElementById('prev-pane-btn').innerHTML = 'Scroll Up';
+      prevPaneBtn = createButton('Scroll Up');
       prevPaneBtn.mousePressed(clickedScrollUp);
     } else {
       prevPaneBtn = createButton('&larr; Back');

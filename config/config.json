@@ -171,11 +171,11 @@
         "majorityBar": "#bf8a98",
         "supermajorityBar": "#c4b2ed",
         "paneBkg": "#2b4361",
-        "paneBorder": "#757575",
+        "paneBorder": "#9790a6",
         "sliderStart": "60px",
         "sliderOffset": "7vh",
-        "progressVal": "#cccccc",
-        "progressRemainder": "#757575",
+        "progressVal": "#e3e3e3",
+        "progressRemainder": "#636f7d",
         "accentColor": "#ffdf87"
     },
 
