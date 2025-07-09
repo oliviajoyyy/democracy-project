@@ -282,8 +282,20 @@
             "h": "Session Uploaded",
             "p": []
         },
-        "titleVis": "<h1>Future Democracies Laboratory Database</h1>",
-        "pVisEndorsement": "<h2>Endorsement</h2><p style='text-align:center'>Review the governmental configuration and the benchmark results. If you approve of this configuration, press the endorsement button before starting over.</p>"
+        "titleVis": "Future Democracies Laboratory Database",
+        "pSavedSessionsVis": {
+            "h": "Saved Sessions",
+            "p": ""
+        },
+        "pSessionChartsVis": {
+            "h": "Future Democracies Laboratory Histograms",
+            "p": ""
+        },
+        "pEndorsementVis": {
+            "h": "Endorsement",
+            "p": "Review the governmental configuration and the benchmark results. If you approve of this configuration, press the endorsement button before starting over.",
+            "pAfterEndorse": "Start over to view other sessions."
+        }
     }
     
 }

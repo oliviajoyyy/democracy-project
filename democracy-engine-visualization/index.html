@@ -24,19 +24,30 @@
 
   <div id="page-container">
     <div id="content-wrap">
-      <div id="main-header" class="body-header">
+
+      <h1 id="main-header" class="body-header"></h1>
+
+      <div id="start-desc" class="body-text start-display-none">
       </div>
-      <div id="start-desc" class="body-text">
+
+      <div id="main-page" class="body-text">
+        <h2 id="main-subheader"></h2>
+        <section id="main-paragraphs">
+          <p id="main-paragraph"></p>
+        </section>
       </div>
-      <div id="end-summary" class="body-text"></div>
-       <div id="main-btn-div" style="position: absolute; left: 50%; transform: translateX(-50%);"></div>
+
+      <div id="end-summary" class="body-text start-display-none">
+      </div>
+
+      <div id="main-btn-div" style="position: absolute; left: 50%; transform: translateX(-50%);"></div>
     </div>
   </div>
 
   
   
   
-  <div id="vote">
+  <div id="vote" class="start-display-none">
     <h1 id="chart-title" >FUTURE DEMOCRACIES LABORATORY HISTOGRAMS</h1>
     <h2 id="chart-subtitle" ></h2>
     <section id="charts">
@@ -48,34 +59,23 @@
   </div>
   <div id="slider-pages">
 
-    <div id="screen"></div>
-    <div class="pane-bkg" id="pane-bkg">
+    <div id="screen" class="start-display-none"></div>
+    <div id="pane-bkg" class="pane-bkg start-display-none" >
       <!-- <h1 id="top"></h1> -->
-       <div id="top"></div>
-       
-    <div id="page1">
-      <br>
-      <span class="session-labels">
-      <span>SESSION ID</span>
-      <span>CHAMBERS</span>
-      <span>PARTIES</span>
-      <span>VOTING MEMBERS</span>
-      <span>BENCHMARK SCORE</span>
-      </span>
-      <br>
-      <div id="session-list">
-        <div id="info-list-1"></div>
-        <div id="info-list-2"></div>
-        <div id="info-list-3"></div>
-        <div id="info-list-4"></div>
+       <!-- <div id="top" class="start-display-none"></div> -->
+       <div id="pane-text" class="start-display-none">
+        <h2 id="pane-header"></h2>
+        <p id="pane-description"></p>
       </div>
+       
+    <div id="page1" class="start-display-none">
     </div>
 
-    <div id="page2"> 
+    <div id="page2" class="start-display-none"> 
 
     </div>
 
-    <div id="page3"> 
+    <div id="page3" class="start-display-none"> 
 
     </div>
 
@@ -92,11 +92,11 @@
   <div id="toggle-pane-div"></div>  
     
   </div>
-    <div id="slider-disp"></div>
+    <div id="slider-disp" class="start-display-none"></div>
 
-    <div id="sim-info"></div>
+    <div id="sim-info" class="start-display-none"></div>
 
-    <p id="result"></p>
+    <p id="result" class="start-display-none"></p>
 
 </body>
 

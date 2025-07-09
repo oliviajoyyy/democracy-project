@@ -21,7 +21,7 @@ function startUp() {
     document.getElementById("main-btn-div").style.display = "block";
     document.getElementById("start-desc").style.display = "none";
     document.getElementById("end-summary").style.display = "none";
-    document.getElementById("top").style.display = "none";
+    document.getElementById("pane-text").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
@@ -106,21 +106,18 @@ function startSession() {
     document.body.style.backgroundColor = bColor;
 
     document.getElementById("page-container").style.display = "block";
-    document.getElementById("main-header").innerHTML = configJSON.text.titleVis;
+    document.getElementById("main-header").textContent = configJSON.text.titleVis;
+
+    document.getElementById("main-subheader").textContent = configJSON.text.landingPage.h;
+    let paragraphs = configJSON.text.landingPage.p.map((text) => {
+      let p = document.createElement('p');
+      p.textContent = text;
+      return p;
+    });
+    document.getElementById("main-paragraphs").replaceChildren(...paragraphs);
+    document.getElementById("main-page").style.display = "block";
+
     document.getElementById("main-btn-div").style.display = "block";
-    document.getElementById("screen").style.display = "none";
-    document.getElementById("start-desc").style.display = "block";
-    document.getElementById("start-desc").innerHTML = configJSON.text.shortDescription;
-    document.getElementById("end-summary").innerHTML = "";
-    document.getElementById("end-summary").style.display = "none";
-    document.getElementById("top").style.display = "none";
-    document.getElementById("page1").style.display = "none";
-    document.getElementById("page2").style.display = "none";
-    document.getElementById("page3").style.display = "none";
-    document.getElementById("vote").style.display = "none";
-    document.getElementById("slider-disp").style.display = "none";
-    document.getElementById("sim-info").style.display = "none";
-    document.getElementById("pane-bkg").style.display = "none";
 
     // set up hide/show btn for web version
     if (!enableHardware) {
@@ -189,6 +186,9 @@ function startSession() {
   function removeBtns() {
     loadSessionBtn.remove();
     aboutBtn.remove();
+    document.getElementById("page-container").style.display = "none";
+    document.getElementById("main-page").style.display = "none";
+    document.getElementById("main-btn-div").style.display = "none";
   }
 }
 
@@ -213,7 +213,7 @@ function hardwareTest() {
     document.getElementById("main-btn-div").style.display = "block";
     document.getElementById("start-desc").style.display = "none";
     document.getElementById("end-summary").style.display = "none";
-    document.getElementById("top").style.display = "none";
+    document.getElementById("pane-text").style.display = "none";
     document.getElementById("page1").style.display = "none";
     document.getElementById("page2").style.display = "none";
     document.getElementById("page3").style.display = "none";
@@ -329,18 +329,17 @@ function aboutProject() {
 
     document.getElementById("page-container").style.display = "block";
     document.getElementById("main-header").innerHTML = configJSON.text.titleVis;
-    document.getElementById("main-btn-div").style.display = "block";
-    document.getElementById("start-desc").style.display = "block";
-    document.getElementById("end-summary").style.display = "none";
-    document.getElementById("start-desc").innerHTML = configJSON.text.detailedDescription;
-    document.getElementById("top").style.display = "none";
-    document.getElementById("page1").style.display = "none";
-    document.getElementById("page2").style.display = "none";
-    document.getElementById("page3").style.display = "none";
-    document.getElementById("vote").style.display = "none";
-    document.getElementById("slider-disp").style.display = "none";
-    document.getElementById("sim-info").style.display = "none";
 
+    document.getElementById("main-subheader").textContent = configJSON.text.aboutPage.h;
+    let paragraphs = configJSON.text.aboutPage.p.map((text) => {
+      let p = document.createElement('p');
+      p.textContent = text;
+      return p;
+    });
+    document.getElementById("main-paragraphs").replaceChildren(...paragraphs);
+    document.getElementById("main-page").style.display = "block";  
+
+    document.getElementById("main-btn-div").style.display = "block";
     let buttonDiv = document.getElementById('main-btn-div');
 
     backBtn = createButton('Back to Start Up');
@@ -382,12 +381,12 @@ let prevPaneBtn, middleBtn, nextPaneBtn;
  * C01 Load Session
  */
 function sLoadSession() {
-  let selection;
-  let sessions;
-  let numResults = 10; // number of sessions shown on screen
-  let showCount;
-  let dWidth;
-  let dHeight;
+  // let selection;
+  let sessions; // array of sessions fetched from db
+  let documentsShown = 5; // number of sessions shown on screen
+  var skipAmt; // number of session records to skip, updated when buttons clicked
+  let sessionsDiv;
+  let sessionsTable;
   let s1, s2, s3, sApproval, div1, div2, div3, divApproval;
   
   this.setup = function () {
@@ -412,59 +411,74 @@ function sLoadSession() {
     divApproval.id = 'approval-div2';
 
     paramChangedBool = true;
-    showCount = 0;
+    skipAmt = 0;
 
     showPanesBool = true;
+
+    // set up page display
     document.getElementById("page-container").style.display = "block";
-    document.getElementById("main-header").style.display = "block";
+    document.getElementById("end-summary").style.display = "block"; // main page display (behind pane)
+    document.getElementById("vote").style.display = "none";
     document.getElementById("main-header").innerHTML = configJSON.text.titleVis;
-    document.getElementById("start-desc").innerHTML = "";
-    document.getElementById("start-desc").style.display = "none";
-    document.getElementById("end-summary").style.display = "block";
     
     // set up hide/show btn for web version
     if (!enableHardware) {
       togglePaneDiv.style.display = "block";
     }
 
-    if(selection) {
-      selection.remove();
-    }
-    showSessionsList(); // get sessions fr db and display onscreen
-
-    document.getElementById("page1").style.display = "block";
-    document.getElementById("page2").style.display = "none";
-    document.getElementById("page3").style.display = "none";
-    document.getElementById("vote").style.display = "none";
-    document.getElementById("slider-disp").style.display = "none";
-    document.getElementById("sim-info").style.display = "none";
-
-    document.getElementById("main-btn-div").style.display = "none";
-
     if (!document.getElementById('prev-pane-btn')) {
-    prevPaneBtn = createButton('&larr; Back');
+    // set up either show more or scroll buttons
+    if (enableHardware) { // kiosk version
+      document.getElementById('prev-pane-btn').innerHTML = 'Scroll Up';
+      prevPaneBtn.mousePressed(clickedScrollUp);
+    } else {
+      prevPaneBtn = createButton('&larr; Back');
+      prevPaneBtn.mousePressed(previousPane);
+    }
     prevPaneBtn.id('prev-pane-btn');
     prevPaneBtn.class('buttons');
     prevPaneBtn.parent(buttonDiv);
     }
-    document.getElementById('prev-pane-btn').innerHTML = 'Scroll Up';
+
+    // set up either show more or scroll buttons
+    if (enableHardware) { // kiosk version
+      document.getElementById('prev-pane-btn').innerHTML = 'Scroll Up';
+      prevPaneBtn.mousePressed(clickedScrollUp);
+    } else {
+      document.getElementById('prev-pane-btn').innerHTML = 'Previous ' + documentsShown;
+      prevPaneBtn.mousePressed(clickedShowPrev);
+    }
+    
     //document.getElementById('prev-pane-btn').disabled = true;
 
     if (middleBtn) {
       middleBtn.remove();
     }
     if (!document.getElementById('middle-btn')) {
-    middleBtn = createButton('Scroll Down');
+      if (enableHardware) {
+        middleBtn = createButton('Scroll Down');
+        middleBtn.mousePressed(clickedScrollDown);
+      } else {
+        middleBtn = createButton('Show Next ' + documentsShown);
+        middleBtn.mousePressed(clickedShowMore);
+      }
     middleBtn.id('middle-btn');
     middleBtn.class('buttons');
     middleBtn.parent(buttonDiv);
     } else {
-      document.getElementById('middle-btn').innerHTML = 'Scroll Down';
+      if (enableHardware) {
+        document.getElementById('middle-btn').innerHTML = 'Scroll Down';
+        middleBtn.mousePressed(clickedScrollDown);
+      } else {
+        document.getElementById('middle-btn').innerHTML = 'Show Next ' + documentsShown;
+        middleBtn.mousePressed(clickedShowMore);
+      }
     }
 
     if (nextPaneBtn) {
       nextPaneBtn.remove();
     }
+
     if (!document.getElementById('next-pane-btn')) {
     nextPaneBtn = createButton('Select &rarr;');
     nextPaneBtn.id('next-pane-btn');
@@ -476,29 +490,33 @@ function sLoadSession() {
     document.getElementById('prev-pane-btn').disabled = false;
     document.getElementById('next-pane-btn').disabled = false;
     document.getElementById('middle-btn').disabled = false;
-    prevPaneBtn.mousePressed(clickedScrollUp);
-    middleBtn.mousePressed(clickedScrollDown);
+    // prevPaneBtn.mousePressed(clickedScrollUp);
+    // middleBtn.mousePressed(clickedScrollDown);
     nextPaneBtn.mousePressed(nextPane);
+
+    // create sessions div
+    sessionsDiv = document.createElement('div');
+    sessionsDiv.id = 'sessions-list';
+
+    showSessionsList(); // get sessions fr db and display onscreen
   }
 
-  let sVal = 0;
   this.draw = function () {
-    if (sessions && selection.value()) { // set c to global var loadedSession
-      var i = selection.value();
-      sVal = i;
-      //console.log("sel val: " + i);
-      //console.log("sel val: " + selection.value());
+    if (sessions && sessions.length > 0) {
+      // console.log("sessions: " + sessions);
+      indicateSelectedRow(); // makes text color of row change
+      let i = getSelectedRadioValue();
       entireSessionObj = sessions[i];
       loadedConfig = sessions[i].finalConfig.config;
       finalConfigObj = sessions[i].finalConfig; // use for access to edorsements
       endorseVal = finalConfigObj.publicEndorsement; // current public endorsement val
       selectedSessionID = sessions[i].uniqueID; // session ID
-      //console.log("session id: " + selectedSessionID);
       setLoadedUserVars(loadedConfig);
-      document.getElementById("end-summary").innerHTML = "";
       inputTxt();
     }
+
     paneToggle();
+
     if (enableHardware) {
       checkHardwareInput();
       checkHardwareBtnInput();
@@ -529,20 +547,6 @@ function sLoadSession() {
     }
   }
 
-  function clickedScrollUp() {
-    //if (sessions && (sVal+1)<sessions.length) {
-      sVal++;
-    //}      
-    selection.selected(sVal.toString());
-  }
-
-  function clickedScrollDown() {
-    //if (sessions && ((sVal-1)>=sessions.length-numResults || (sVal-1)>=0)) {
-      sVal--;
-    //} 
-    selection.selected(sVal.toString());
-  }
-
   function getSpaces(x) {
     let s = "";
     for (i=0; i<x; i++) {
@@ -552,78 +556,109 @@ function sLoadSession() {
   }
 
   var rest = false;
-  function showSessionsList() {
-    var emptydb = false;
-    
-    document.getElementById("page-container").style.display = "block";
-    document.getElementById("main-header").innerHTML = configJSON.text.titleVis;
-    document.getElementById("top").style.display = "block";
-    document.getElementById("top").innerHTML = "<h2>Last 10 Sessions</h2>"
+  function showSessionsList() {    
+    // document.getElementById("pane-text").style.display = "block";
+    document.getElementById("pane-header").textContent = configJSON.text.pSavedSessionsVis.h;
+    document.getElementById("pane-description").textContent = configJSON.text.pSavedSessionsVis.p;
 
-    selection = createRadio("sessions"); // attatch to HTML
-    selection.size(235);
+    // Web version - Start Over button if at the beginning of sessions list, else button is Show Previous
+    // Changing btn to start over prevents skipAmt from going below 0
+    if (!enableHardware && skipAmt == 0) {
+      document.getElementById('prev-pane-btn').innerHTML = "&larr; Back";
+      prevPaneBtn.mousePressed(previousPane);
+    } else if (!enableHardware) {
+      document.getElementById('prev-pane-btn').innerHTML = "Previous " + documentsShown;
+      prevPaneBtn.mousePressed(clickedShowPrev);
+    }
 
-    getSessions().then((result) => {
-      sessions = result;
-      //console.log(result);
-      if (result.length == 0) { // no sessions in db yet
-        emptydb = true;
-        document.getElementById('prev-pane-btn').innerHTML = "&larr; Back";
-        prevPaneBtn.mousePressed(previousPane);
-        // document.getElementById('prev-pane-btn').disabled = true;
-        document.getElementById('next-pane-btn').disabled = true;
+    getTotalCount().then((totalCount) => {
+      // Disable Show Next btn if skipAmt would go over totalCount next time it is clicked
+      if (skipAmt + documentsShown >= totalCount) {
         document.getElementById('middle-btn').disabled = true;
-        document.getElementById("top").innerHTML = "<h2>No Sessions Currently in Database</h2>"
       } else {
-      // show sessions in order from last 10 
-      // -- OC written like this so that startIX can move backward to show next prev 10 when triggered (btn press?)
-      if (rest) {
-        showCount = 1;
-      } else {
-        showCount++;
+        document.getElementById('middle-btn').disabled = false;
       }
-      let startIX = result.length-(numResults*showCount);
-      let endIX = startIX+numResults;
-      //console.log("loads startIX: " + startIX);
-      if (result.length < numResults) { // number of records less than amt to show, so start at ix 0
-        startIX = 0;
-        endIX = result.length;
-      } else if (startIX < 0) { // reached beginning, so show from beginning
-        startIX = 0;
-        endIX = startIX+numResults;
-        rest = true;
+
+      if (totalCount == 0) { // no sessions in db yet
+        // set back button
+        document.getElementById('prev-pane-btn').innerHTML = "Back";
+        prevPaneBtn.mousePressed(clickedBack);
+
+        // disable btn 2 and next (select) button
+        document.getElementById('middle-btn').disabled = true;
+        document.getElementById('next-pane-btn').disabled = true;
+
+        // text about no sessions saved yet
+        let p = document.createElement('p');
+        p.textContent = configJSON.text.selectSessionPage.pNoneDB;
+        sessionsDiv.replaceChildren(p); // replace table with paragraph
+        document.getElementById('page1').replaceChildren(sessionsDiv);
+
       } else {
-        rest = false;
-      }
-      //console.log("loads startIX: " + startIX);
-      //console.log("loads showCount: " + showCount);
-      let s = ""; //<p>CHAMBERS</p>";
-      let s2 = "";
-      let s3 = "";
-      let s4 = "";
-      for (let i=endIX-1; (i>=startIX); i--) {
-        //console.log("i: " + i);
+      // get session data
+      getLimitedSessions(skipAmt, documentsShown).then((result) => {
+      sessions = result;
+      // console.log(result);
+
+      // set up table for showing sessions
+      sessionsTable = document.createElement('table');
+
+      let tblHead = document.createElement('thead');
+      let tblBody = document.createElement('tbody');
+      sessionsTable.append(tblHead, tblBody);
+
+      let hRow = document.createElement('tr');
+      let tblHeaders = Array.from({length: 6}, () => document.createElement('th'));
+      tblHeaders[0].textContent = "";
+      tblHeaders[1].textContent = "Session ID";
+      tblHeaders[2].textContent = "Chambers";
+      tblHeaders[3].textContent = "Parties";
+      tblHeaders[4].textContent = "Voting Members";
+      tblHeaders[5].textContent = "Benchmark Score";
+      hRow.append(...tblHeaders);
+      tblHead.appendChild(hRow);
+      sessionsTable.appendChild(tblHead);
+
+      // add selection with data columns for each row of the table
+      for (let i = 0; i < result.length; i++) {
         let sObj = result[i].finalConfig.config;
-        //console.log(sObj);
         let totalVoting = sObj.chamber1.totalMembers + sObj.chamber2.totalMembers + sObj.chamber3.totalMembers + sObj.vicePres.totalMembers + sObj.president.totalMembers;
-        selection.option(result[i].uniqueID, i.toString());
-        s += sObj.numLegislativeBodies + "<br>";
-        s2 += sObj.numParties + "<br>";
-        s3 += totalVoting + "<br>";
-        s4 += calcBenchScore(sObj).toString() + "%<br>";
+
+        // set up each row with radio btn, sessionID, numLegislativeBodies, numParties, totalVoting
+        let tRow = document.createElement('tr');
+        let tData = Array.from({length: 6}, () => document.createElement('td'));
+        let radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = "sessions-radio";
+        radio.value = i; // value is index position
+        if (i == 0) { radio.checked = true }; // set first one as selected
+        tData[0].appendChild(radio);
+        tData[1].textContent = result[i].uniqueID;
+        tData[2].textContent = sObj.numLegislativeBodies;
+        tData[3].textContent = sObj.numParties;
+        tData[4].textContent = totalVoting;
+        tData[5].textContent = calcBenchScore(sObj).toString() + "%";
+        tRow.append(...tData);
+        tblBody.appendChild(tRow);
         
       }
-      selection.selected((endIX-1).toString()); // selection.selected(startIX.toString());
-      //console.log("selected val: " + selection.value());
-      document.getElementById('info-list-1').innerHTML = s;
-      document.getElementById('info-list-2').innerHTML = s2;
-      document.getElementById('info-list-3').innerHTML = s3;
-      document.getElementById('info-list-4').innerHTML = s4;
-      
-    } // end else
-    });
-    selection.parent("session-list"); // put options in div with border
-    selection.class('radio-sel');
+      sessionsTable.appendChild(tblBody);
+      sessionsDiv.replaceChildren(sessionsTable);
+      document.getElementById('page1').replaceChildren(sessionsDiv);
+
+      // make each row of table body clickable for radio selection
+      sessionsTable.addEventListener('click', function(event) {
+        let clickedRow = event.target.closest('tr');
+        if (clickedRow && clickedRow.parentNode.tagName === 'TBODY') {
+          let cell = clickedRow.querySelector('td');
+          let radio = cell.querySelector('input[name="sessions-radio"]');
+          if (radio) { radio.checked = true; }
+        }
+      })
+
+    }); // end else
+    }
+    })
     
   }
 
@@ -644,6 +679,46 @@ function sLoadSession() {
     return roundNum(percentagePassed, 2); // out of 100%
   }
 
+    function getSelectedRadioValue() {
+    let selected = document.querySelector('input[name="sessions-radio"]:checked');
+    // console.log("selected: " + selected);
+    if (selected) {
+      return selected.value; // the index in the sessions array
+    }
+  }
+
+  function indicateSelectedRow() {
+    let selected = document.querySelector('input[name="sessions-radio"]:checked');
+    let rows = sessionsTable.getElementsByTagName('tr');
+    for (const row of rows) {
+      row.classList.remove("tbl-row-selected");
+    }
+    if (selected) {
+      let selectedRow = selected.closest('tr');
+      selectedRow.classList.add("tbl-row-selected")
+    }
+  }
+
+    function clickedScrollUp() {
+    let currentSelected = getSelectedRadioValue(); // current selected val
+    let toSelect = parseInt(currentSelected) - 1;
+    // decrement ix to select next radio above, otherwise keeps selection at first option if ix is already 0
+    if (currentSelected > 0) {
+      let radio = document.querySelector(`input[name="sessions-radio"][value="${toSelect}"]`);
+      if (radio) { radio.checked = true; }
+    }
+  }
+
+  function clickedScrollDown() {
+    let currentSelected = getSelectedRadioValue(); // current selected val
+    let toSelect = parseInt(currentSelected) + 1;
+    // increment ix to select next radio below, otherwise keeps selection at last option
+    if (currentSelected < documentsShown) {
+      let radio = document.querySelector(`input[name="sessions-radio"][value="${toSelect}"]`);
+      if (radio) { radio.checked = true; }
+    }
+  }
+
   function clickedBack() {
     removeBtns();
     mgr.showScene(startSession);
@@ -655,13 +730,17 @@ function sLoadSession() {
   }
 
   function clickedShowMore() {
-    selection.remove();
-    //showCount++;
+    skipAmt += documentsShown;
+    showSessionsList();
+  }
+
+  function clickedShowPrev() {
+    skipAmt -= documentsShown;
     showSessionsList();
   }
 
   function removeBtns() {
-    selection.remove();
+    // selection.remove();
   }
 
   function inputTxt() {
@@ -749,20 +828,16 @@ function sSessionVis() {
       }
     }, 2500); // 2.5 seconds timeout to show pane
     //showPanesBool = true;
-    document.getElementById("page-container").style.display = "none";
-    document.getElementById("main-header").style.display = "block";
-    document.getElementById("main-header").innerHTML = configJSON.text.titleVis;
-    document.getElementById("start-desc").innerHTML = "";
-    document.getElementById("start-desc").style.display = "none";
-    document.getElementById("chart-subtitle").innerHTML = "Session ID: " + selectedSessionID;
-    document.getElementById("top").innerHTML = "<h2>Future Democracies Laboratory Histograms</h2>"; // + "<p>[paragraph here]</p>";
-    document.getElementById("end-summary").style.display = "none";
 
-    document.getElementById("page1").style.display = "none";
-    document.getElementById("page2").style.display = "block";
-    document.getElementById("page3").style.display = "none";
+    // set up page display
+    document.getElementById("page-container").style.display = "none";
+    document.getElementById("end-summary").style.display = "none";
     document.getElementById("vote").style.display = "block";
-    document.getElementById("main-btn-div").style.display = "none";
+    document.getElementById("main-header").innerHTML = configJSON.text.titleVis;
+
+    document.getElementById("chart-subtitle").innerHTML = "Session ID: " + selectedSessionID;
+    document.getElementById("pane-header").textContent = configJSON.text.pSessionChartsVis.h;
+    document.getElementById("pane-description").textContent = configJSON.text.pSessionChartsVis.p;
 
     document.getElementById('prev-pane-btn').disabled = false;
     document.getElementById('prev-pane-btn').innerHTML = '&larr; Back';
@@ -1108,12 +1183,12 @@ function sPublicEndorsement() {
 
     showPanesBool = true;
     document.getElementById("page-container").style.display = "block";
-    document.getElementById("main-header").style.display = "block";
-    document.getElementById("main-header").innerHTML = configJSON.text.titleVis;
-    document.getElementById("start-desc").innerHTML = "";
-    document.getElementById("start-desc").style.display = "none";
-    document.getElementById("top").innerHTML = configJSON.text.pVisEndorsement;
     document.getElementById("end-summary").style.display = "block";
+    document.getElementById("vote").style.display = "none";
+    document.getElementById("main-header").innerHTML = configJSON.text.titleVis;
+
+    document.getElementById("pane-header").textContent = configJSON.text.pEndorsementVis.h;
+    document.getElementById("pane-description").textContent = configJSON.text.pEndorsementVis.p;
     
     inputTxt();
 
@@ -1123,8 +1198,6 @@ function sPublicEndorsement() {
     document.getElementById("vote").style.display = "none";
     document.getElementById("slider-disp").style.display = "none";
     document.getElementById("sim-info").style.display = "none";
-
-    document.getElementById("main-btn-div").style.display = "none";
 
     if (!document.getElementById('middle-btn')) {
     middleBtn = createButton('Endorse');
@@ -1196,7 +1269,7 @@ function sPublicEndorsement() {
     document.getElementById('middle-btn').disabled = true;
     // document.getElementById('next-pane-btn').disabled = true;
     document.getElementById('prev-pane-btn').disabled = true;
-    document.getElementById("top").innerHTML = "<h2>Endorsement</h2>" + "<p style='text-align:center'>Start over to view other sessions.</p>"
+    document.getElementById("pane-description").textContent = configJSON.text.pEndorsementVis.pAfterEndorse;
 
     // also need to disallow key press when prev/next buttons are disabled
     setTimeout(function() {
@@ -1215,6 +1288,12 @@ function sPublicEndorsement() {
     middleBtn.remove();
     prevPaneBtn.remove();
     nextPaneBtn.remove();
+
+    // last pane - dont show pane items and summary
+    document.getElementById("end-summary").style.display = "none";
+    document.getElementById("pane-bkg").style.display = "none";
+    document.getElementById("pane-text").style.display = "none";
+    document.getElementById("screen").style.display = "none";
   }
 
   function inputTxt() {
