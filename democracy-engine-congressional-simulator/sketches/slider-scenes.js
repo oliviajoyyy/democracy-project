@@ -1009,8 +1009,6 @@ function sBodies() {
     }
 
     function sliderVals() {
-      //connecting values to html, each tab value is stored in an array
-      // var rangeSliderValueElement = document.getElementById('slider-value');
 
       slider1.noUiSlider.on('update', function (values, handle) {
         userNumLegislative = values[0];
@@ -1315,8 +1313,6 @@ function sLegislative() {
     }
 
     function sliderVals() {
-      //connecting values to html, each tab value is stored in an array
-      // var rangeSliderValueElement = document.getElementById('slider-value');
 
       // chamber 1
       slider1.noUiSlider.on('update', function (values, handle) {
@@ -1495,14 +1491,11 @@ function checkHardwareUpdateInput() {
 
     function sliderVals() {
       var toolTip = slider5.querySelectorAll('.noUi-tooltip');
-      var classes = ['c-1-color', 'c-2-color', 'c-3-color', 'c-4-color', 'c-5-color'];
+      // var classes = ['c-1-color', 'c-2-color', 'c-3-color', 'c-4-color', 'c-5-color'];
 
-      for (var i = 0; i < toolTip.length; i++) {
-        toolTip[i].classList.add(classes[i]);
-      }
-
-      //connecting values to html, each tab value is stored in an array
-      // var rangeSliderValueElement = document.getElementById('slider-value');
+      // for (var i = 0; i < toolTip.length; i++) {
+      //   toolTip[i].classList.add(classes[i]);
+      // }
 
       slider5.noUiSlider.on('update', function (values, handle) {
         userNumParties = values[0];
@@ -1835,8 +1828,7 @@ function sMembersFirstChamber() {
     }
 
     function sliderVals() {
-      //connecting values to html, each tab value is stored in an array
-      // var rangeSliderValueElement = document.getElementById('slider-value');
+
       userPerHouseBody = [];
       var numPerHouseBody = [];
       var housePercentage; // helper var
@@ -2160,8 +2152,7 @@ function sMembersSecondChamber() {
     }
 
     function sliderVals() {
-      //connecting values to html, each tab value is stored in an array
-      // var rangeSliderValueElement = document.getElementById('slider-value');
+
       userPerHouse2Body = [];
       var numPerHouse2Body = [];
       var house2Percentage; // helper var
@@ -2481,8 +2472,7 @@ function sMembersThirdChamber() {
     }
 
     function sliderVals() {
-      //connecting values to html, each tab value is stored in an array
-      // var rangeSliderValueElement = document.getElementById('slider-value');
+
       userPerSenateBody = [];
       var numPerSenateBody = [];
       var senatePercentage; // helper var
@@ -2804,8 +2794,7 @@ function sMembersVP() {
     }
 
     function sliderVals() {
-      //connecting values to html, each tab value is stored in an array
-      // var rangeSliderValueElement = document.getElementById('slider-value');
+
       userPerVPBody = [];
       var numPerVPBody = [];
       var vpPercentage; // helper var
@@ -3126,8 +3115,7 @@ function sMembersPres() {
     }
 
     function sliderVals() {
-      //connecting values to html, each tab value is stored in an array
-      // var rangeSliderValueElement = document.getElementById('slider-value');
+
       userPerPresBody = [];
       var numPerPresBody = [];
       var presPercentage; // helper var
@@ -3345,8 +3333,7 @@ function sBodyPass() {
 
 
     function sliderVals() {
-      //connecting values to html, each tab value is stored in an array
-      // var rangeSliderValueElement = document.getElementById('slider-value');
+
       userBodyPass = "";
       userSuperThresh = "";
 
@@ -3573,8 +3560,7 @@ function sYesVotes() {
     }
 
     function sliderVals() {
-      //connecting values to html, each tab value is stored in an array
-      // var rangeSliderValueElement = document.getElementById('slider-value');
+
       userDemYaythresh = "";
       userRepYaythresh = "";
       userIndYaythresh = "";
