@@ -514,17 +514,14 @@ function checkHardwareInput() {
 function nextPane() {
   if (mgr.isCurrent(sLoadSession) && document.getElementById('next-pane-btn').disabled == false) {
     document.getElementById('dot-p01').className = 'dot'; // deactivate dot on pane before moving to next pane
-    document.getElementById("page1").style.display = "none";
-    document.getElementById("page2").style.display = "block";
+    //document.getElementById("page1").style.display = "none";
+    document.getElementById("sessions-list").style.display = "none";
     mgr.showScene(sSessionVis);
 
   } else if (mgr.isCurrent(sSessionVis)) {
 
     document.getElementById('dot-p02').className = 'dot';
-    document.getElementById("page2").style.display = "none";
-    document.getElementById("vote").style.display = "none";
-    document.getElementById("page3").style.display = "block";
-    document.getElementById("page-container").style.display = "block";
+    document.getElementById("chart-page").style.display = "none";
     document.getElementById("end-summary").style.display = "block";
     mgr.showScene(sPublicEndorsement);
   }
@@ -537,7 +534,7 @@ function previousPane() {
   if (mgr.isCurrent(sLoadSession)) {
     // moving from pane to start page (by keyboard control or joystick - no ui btn so handle display here)
     showPanesBool = false;
-    document.getElementById("page1").style.display = "none";
+    document.getElementById("sessions-list").style.display = "none";
     document.getElementById("end-summary").style.display = "none";
     document.getElementById("pane-bkg").style.display = "none";
     document.getElementById("pane-text").style.display = "none";
@@ -546,14 +543,11 @@ function previousPane() {
 
   } else if (mgr.isCurrent(sSessionVis)) {
     document.getElementById('dot-p02').className = 'dot';
-    document.getElementById("page2").style.display = "none";
-    document.getElementById("page1").style.display = "block";
+    document.getElementById("sessions-list").style.display = "block";
     mgr.showScene(sLoadSession);
 
   } else if (mgr.isCurrent(sPublicEndorsement) && allowEndorse) { // can go back if endorse is not yet clicked
     document.getElementById('dot-p03').className = 'dot';
-    document.getElementById("page3").style.display = "none";
-    document.getElementById("page2").style.display = "block";
     mgr.showScene(sSessionVis);
   }
 }
@@ -692,33 +686,20 @@ function paneToggle() {
         document.getElementById('toggle-pane-btn').textContent = "Hide Pane";
     }
 
-    // if (mgr.isCurrent(SCENE));
-    // = "block" whichever html div page corresponds to that scene
     document.getElementById("pane-bkg").style.display = "block"; 
     document.getElementById("button-div").style.display = "block";
     document.getElementById("pane-text").style.display = "block";
     document.getElementById("screen").style.display = "block"; // comment out if want only on first 3 panes
-    if (mgr.isCurrent(sLoadSession)) {
-      document.getElementById("page1").style.display = "block";
-    } else if (mgr.isCurrent(sSessionVis)) {
-      document.getElementById("page2").style.display = "block";
-    } else if (mgr.isCurrent(sPublicEndorsement)) {
-      document.getElementById("page3").style.display = "block";
-    }
     
   } else {
     if (!enableHardware) { // web version
       document.getElementById('toggle-pane-btn').textContent = "Show Pane";
     }
 
-    // = "none" for all html div
       document.getElementById("screen").style.display = "none";
       document.getElementById("pane-bkg").style.display = "none";
       document.getElementById("button-div").style.display = "none";
       document.getElementById("pane-text").style.display = "none";
-      document.getElementById("page1").style.display = "none";
-      document.getElementById("page2").style.display = "none";
-      document.getElementById("page3").style.display = "none";
   }
 
 }

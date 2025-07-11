@@ -7,14 +7,13 @@
   <script src="../assets/p5/p5.webserial.js"></script>
   <script language="javascript" type="text/javascript" src="sketches/slider-scenes.js"></script>
   <script language="javascript" type="text/javascript" src="sketches/scene-mgr.js"></script>
-  <script language="javascript" type="text/javascript" src="../democracy-engine-congressional-simulator/data-access/session-api.js"></script>
+  <script language="javascript" type="text/javascript"
+    src="../democracy-engine-congressional-simulator/data-access/session-api.js"></script>
   <script language="javascript" type="text/javascript" src="../config/color-config.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
   <link rel="stylesheet" type="text/css" href="style/style.css">
-  <link rel="stylesheet" type="text/css" href="style/newSlider.css">
   <link href="https://fonts.googleapis.com/css2?family=Cardo:wght@700&display=swap" rel="stylesheet">
-
 
   <meta charset="utf-8">
 
@@ -27,9 +26,6 @@
 
       <h1 id="main-header" class="body-header"></h1>
 
-      <div id="start-desc" class="body-text start-display-none">
-      </div>
-
       <div id="main-page" class="body-text">
         <h2 id="main-subheader"></h2>
         <section id="main-paragraphs">
@@ -37,66 +33,48 @@
         </section>
       </div>
 
-      <div id="end-summary" class="body-text start-display-none">
+      <div id="end-summary" class="body-text start-display-none"></div>
+
+      <div id="chart-page" class="start-display-none">
+        <h2 id="chart-title"></h2>
+        <h2 id="chart-subtitle"></h2>
+        <section id="charts">
+          <canvas id="chart-chambers"></canvas>
+          <canvas id="chart-parties"></canvas>
+          <canvas id="chart-members"></canvas>
+          <canvas id="chart-bench"></canvas>
+        </section>
       </div>
 
       <div id="main-btn-div" style="position: absolute; left: 50%; transform: translateX(-50%);"></div>
     </div>
   </div>
 
-  
-  
-  
-  <div id="vote" class="start-display-none">
-    <h1 id="chart-title" >FUTURE DEMOCRACIES LABORATORY HISTOGRAMS</h1>
-    <h2 id="chart-subtitle" ></h2>
-    <section id="charts">
-      <canvas id="chart-chambers"></canvas>
-      <canvas id="chart-parties"></canvas>
-      <canvas id="chart-members"></canvas>
-      <canvas id="chart-bench"></canvas>
-    </section>
-  </div>
+
   <div id="slider-pages">
 
     <div id="screen" class="start-display-none"></div>
-    <div id="pane-bkg" class="pane-bkg start-display-none" >
-      <!-- <h1 id="top"></h1> -->
-       <!-- <div id="top" class="start-display-none"></div> -->
-       <div id="pane-text" class="start-display-none">
+
+    <div id="pane-bkg" class="pane-bkg start-display-none">
+      <div id="pane-text" class="start-display-none">
         <h2 id="pane-header"></h2>
         <p id="pane-description"></p>
+        <div id="sessions-list" class="start-display-none"></div>
       </div>
-       
-    <div id="page1" class="start-display-none">
-    </div>
 
-    <div id="page2" class="start-display-none"> 
+      <div id="button-div"></div>
 
-    </div>
+      <div id="progress-dots">
+        <span class="dot" id="dot-p01"></span>
+        <span class="dot" id="dot-p02"></span>
+        <span class="dot" id="dot-p03"></span>
+      </div>
 
-    <div id="page3" class="start-display-none"> 
+    </div> <!-- end div for pane-bkg-->
 
-    </div>
+    <div id="toggle-pane-div"></div>
 
-    <div id="button-div"></div>
-
-    <div id="progress-dots">
-      <span class="dot" id="dot-p01"></span>
-      <span class="dot" id="dot-p02"></span>
-      <span class="dot" id="dot-p03"></span>
-    </div>
-
-  </div> <!-- end div for pane-bkg-->
-
-  <div id="toggle-pane-div"></div>  
-    
   </div>
-    <div id="slider-disp" class="start-display-none"></div>
-
-    <div id="sim-info" class="start-display-none"></div>
-
-    <p id="result" class="start-display-none"></p>
 
 </body>
 

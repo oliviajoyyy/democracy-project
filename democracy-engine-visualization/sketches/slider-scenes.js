@@ -16,18 +16,11 @@ function startUp() {
     background(bColor);
     document.body.style.backgroundColor = bColor;
 
-    document.getElementById("page-container").style.display = "block";
-    document.getElementById("main-header").innerHTML = configJSON.text.titleVis;
+    document.getElementById("main-header").textContent = configJSON.text.titleVis;
     document.getElementById("main-btn-div").style.display = "block";
-    document.getElementById("start-desc").style.display = "none";
     document.getElementById("end-summary").style.display = "none";
     document.getElementById("pane-text").style.display = "none";
-    document.getElementById("page1").style.display = "none";
-    document.getElementById("page2").style.display = "none";
-    document.getElementById("page3").style.display = "none";
-    document.getElementById("vote").style.display = "none";
-    document.getElementById("slider-disp").style.display = "none";
-    document.getElementById("sim-info").style.display = "none";
+    document.getElementById("chart-page").style.display = "none";
 
     let buttonDiv = document.getElementById('main-btn-div');
 
@@ -105,7 +98,6 @@ function startSession() {
     background(bColor);
     document.body.style.backgroundColor = bColor;
 
-    document.getElementById("page-container").style.display = "block";
     document.getElementById("main-header").textContent = configJSON.text.titleVis;
 
     document.getElementById("main-subheader").textContent = configJSON.text.landingPage.h;
@@ -186,7 +178,6 @@ function startSession() {
   function removeBtns() {
     loadSessionBtn.remove();
     aboutBtn.remove();
-    document.getElementById("page-container").style.display = "none";
     document.getElementById("main-page").style.display = "none";
     document.getElementById("main-btn-div").style.display = "none";
   }
@@ -208,18 +199,11 @@ function hardwareTest() {
 
   this.enter = function () {
     console.log("start up scene");
-    document.getElementById("page-container").style.display = "block";
     document.getElementById("main-header").innerHTML = "<h1>Hardware & DB Test </h1>";
     document.getElementById("main-btn-div").style.display = "block";
-    document.getElementById("start-desc").style.display = "none";
     document.getElementById("end-summary").style.display = "none";
     document.getElementById("pane-text").style.display = "none";
-    document.getElementById("page1").style.display = "none";
-    document.getElementById("page2").style.display = "none";
-    document.getElementById("page3").style.display = "none";
-    document.getElementById("vote").style.display = "none";
-    document.getElementById("slider-disp").style.display = "none";
-    document.getElementById("sim-info").style.display = "none";
+    document.getElementById("chart-page").style.display = "none";
 
     let buttonDiv = document.getElementById('main-btn-div');
 
@@ -327,8 +311,7 @@ function aboutProject() {
   this.enter = function () {
     console.log("start up scene");
 
-    document.getElementById("page-container").style.display = "block";
-    document.getElementById("main-header").innerHTML = configJSON.text.titleVis;
+    document.getElementById("main-header").textContent = configJSON.text.titleVis;
 
     document.getElementById("main-subheader").textContent = configJSON.text.aboutPage.h;
     let paragraphs = configJSON.text.aboutPage.p.map((text) => {
@@ -387,7 +370,7 @@ function sLoadSession() {
   var skipAmt; // number of session records to skip, updated when buttons clicked
   let sessionsDiv;
   let sessionsTable;
-  let s1, s2, s3, sApproval, div1, div2, div3, divApproval;
+  let s1, s2, s3, div1, div2, div3;
   
   this.setup = function () {
     textFont(helvFont);
@@ -400,15 +383,12 @@ function sLoadSession() {
     s1 = "";
     s2 = "";
     s3 = "";
-    sApproval = "";
     div1 = document.createElement('div');
     div2 = document.createElement('div');
     div3 = document.createElement('div');
-    divApproval = document.createElement('div');
     div1.id = 's-col-1';
     div2.id = 's-col-2';
     div3.id = 's-col-3';
-    divApproval.id = 'approval-div2';
 
     paramChangedBool = true;
     skipAmt = 0;
@@ -416,10 +396,10 @@ function sLoadSession() {
     showPanesBool = true;
 
     // set up page display
-    document.getElementById("page-container").style.display = "block";
     document.getElementById("end-summary").style.display = "block"; // main page display (behind pane)
-    document.getElementById("vote").style.display = "none";
-    document.getElementById("main-header").innerHTML = configJSON.text.titleVis;
+    document.getElementById("sessions-list").style.display = "block";
+    document.getElementById("chart-page").style.display = "none";
+    document.getElementById("main-header").textContent = configJSON.text.titleVis;
     
     // set up hide/show btn for web version
     if (!enableHardware) {
@@ -495,8 +475,9 @@ function sLoadSession() {
     nextPaneBtn.mousePressed(nextPane);
 
     // create sessions div
-    sessionsDiv = document.createElement('div');
-    sessionsDiv.id = 'sessions-list';
+    //sessionsDiv = document.createElement('div');
+    //sessionsDiv.id = 'sessions-list';
+    sessionsDiv = document.getElementById('sessions-list');
 
     showSessionsList(); // get sessions fr db and display onscreen
   }
@@ -592,7 +573,7 @@ function sLoadSession() {
         let p = document.createElement('p');
         p.textContent = configJSON.text.selectSessionPage.pNoneDB;
         sessionsDiv.replaceChildren(p); // replace table with paragraph
-        document.getElementById('page1').replaceChildren(sessionsDiv);
+        //document.getElementById('page1').replaceChildren(sessionsDiv);
 
       } else {
       // get session data
@@ -644,7 +625,7 @@ function sLoadSession() {
       }
       sessionsTable.appendChild(tblBody);
       sessionsDiv.replaceChildren(sessionsTable);
-      document.getElementById('page1').replaceChildren(sessionsDiv);
+      //document.getElementById('page1').replaceChildren(sessionsDiv);
 
       // make each row of table body clickable for radio selection
       sessionsTable.addEventListener('click', function(event) {
@@ -793,13 +774,12 @@ function sLoadSession() {
       }
       s3 = s3 + "</p>";
 
-      s3 += "<h3 class='endorsement-txt'>Endorsement</h3>";
-      s3 += "<p>Number of User Endorsements: <span class='endorsement-txt'>" + (finalConfigObj.ownerEndorsement + finalConfigObj.publicEndorsement) + "</span></p>";
+      s3 += "<h3>Endorsement</h3>";
+      s3 += "<p>Number of User Endorsements: <span>" + (finalConfigObj.ownerEndorsement + finalConfigObj.publicEndorsement) + "</span></p>";
 
       div1.innerHTML = s1;
       div2.innerHTML = s2;
       div3.innerHTML = s3;
-      divApproval.innerHTML = sApproval;
       
       document.getElementById('end-summary').appendChild(div1);
       document.getElementById('end-summary').appendChild(div2);
@@ -830,10 +810,9 @@ function sSessionVis() {
     //showPanesBool = true;
 
     // set up page display
-    document.getElementById("page-container").style.display = "none";
     document.getElementById("end-summary").style.display = "none";
-    document.getElementById("vote").style.display = "block";
-    document.getElementById("main-header").innerHTML = configJSON.text.titleVis;
+    document.getElementById("chart-page").style.display = "block";
+    document.getElementById("main-header").textContent = configJSON.text.pSessionChartsVis.h;
 
     document.getElementById("chart-subtitle").innerHTML = "Session ID: " + selectedSessionID;
     document.getElementById("pane-header").textContent = configJSON.text.pSessionChartsVis.h;
@@ -1155,7 +1134,7 @@ var allowEndorse = true;
  * C01 Load Session
  */
 function sPublicEndorsement() {
-  let s1, s2, s3, sApproval, div1, div2, div3, divApproval;
+  let s1, s2, s3, div1, div2, div3;
   
   this.setup = function () {
     textFont(helvFont);
@@ -1168,36 +1147,26 @@ function sPublicEndorsement() {
     s1 = "";
     s2 = "";
     s3 = "";
-    sApproval = "";
     div1 = document.createElement('div');
     div2 = document.createElement('div');
     div3 = document.createElement('div');
-    divApproval = document.createElement('div');
     div1.id = 's-col-1';
     div2.id = 's-col-2';
     div3.id = 's-col-3';
-    divApproval.id = 'approval-div2';
 
     paramChangedBool = true;
     showCount = 0;
 
     showPanesBool = true;
-    document.getElementById("page-container").style.display = "block";
     document.getElementById("end-summary").style.display = "block";
-    document.getElementById("vote").style.display = "none";
-    document.getElementById("main-header").innerHTML = configJSON.text.titleVis;
+    document.getElementById("chart-page").style.display = "none";
+    // document.getElementById("main-header").style.display = "none";
+    document.getElementById("main-header").textContent = configJSON.text.titleVis;
 
     document.getElementById("pane-header").textContent = configJSON.text.pEndorsementVis.h;
     document.getElementById("pane-description").textContent = configJSON.text.pEndorsementVis.p;
     
     inputTxt();
-
-    document.getElementById("page1").style.display = "none";
-    document.getElementById("page2").style.display = "none";
-    document.getElementById("page3").style.display = "block";
-    document.getElementById("vote").style.display = "none";
-    document.getElementById("slider-disp").style.display = "none";
-    document.getElementById("sim-info").style.display = "none";
 
     if (!document.getElementById('middle-btn')) {
     middleBtn = createButton('Endorse');
@@ -1352,7 +1321,6 @@ function sPublicEndorsement() {
       div1.innerHTML = s1;
       div2.innerHTML = s2;
       div3.innerHTML = s3;
-      divApproval.innerHTML = sApproval;
       
       document.getElementById('end-summary').appendChild(div1);
       document.getElementById('end-summary').appendChild(div2);
