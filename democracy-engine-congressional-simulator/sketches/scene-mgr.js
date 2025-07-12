@@ -1106,6 +1106,12 @@ function keyPressed() {
     else {
       showPanesBool = false;
     }
+    
+    // resize canvas if window was resized
+    if (resizeCanvasBool && !mgr.isCurrent(sVote)) {
+      resizeVisuals();
+      resizeCanvasBool = false;
+    }
   } else if (key == '.' || key == '>') {//else if (keyCode == RIGHT_ARROW) {
     nextPane(); // . or > moves to next pane
   } else if (key == ',' || key == '<') {//else if (keyCode == LEFT_ARROW) {
@@ -1123,6 +1129,12 @@ function clickedToggle() {
     showPanesBool = true;
   } else {
     showPanesBool = false;
+  }
+
+  // resize canvas if window was resized
+  if (resizeCanvasBool && !mgr.isCurrent(sVote)) {
+      resizeVisuals();
+      resizeCanvasBool = false;
   }
 }
 
