@@ -3860,10 +3860,8 @@ function sBenchmarkPane() {
   }
 
   this.enter = function () {
-    if (resizeCanvasBool) {
-      resizeVisuals();
-      resizeCanvasBool = false;
-    }
+    resizeVisuals();
+    visual.completeReset();
 
     console.log("run bill page");
     document.getElementById("pane-header").textContent = configJSON.text.p12Config.h;
@@ -3878,8 +3876,6 @@ function sBenchmarkPane() {
     benchmarkBtn.class('buttons');
     benchmarkBtn.parent(buttonDiv);
     benchmarkBtn.mousePressed(clickedBenchmark);
-
-    visual.completeReset();
 
     // create results div
     benchmarkDiv = document.createElement('div');
