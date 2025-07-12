@@ -7,19 +7,11 @@ function startUp() {
   let continueBtn, testBtn;
 
   this.setup = function () {
-    textFont(helvFont);
-    let dWidth = windowWidth * .8;
-    let dHeight = windowHeight * .8;
-    let canvas = createCanvas(dWidth, dHeight);
-    let canvasDiv = document.getElementById('vote');
-    canvas.parent(canvasDiv);
-    background(bColor);
+
   }
 
   this.enter = function () {
     console.log("start up scene");
-    background(bColor);
-    document.body.style.backgroundColor = bColor;
 
     // set display of html elements for this scene
     document.getElementById("page-container").style.display = "block";
@@ -85,19 +77,10 @@ function startSession() {
   let newSessionBtn, loadSessionBtn, aboutBtn;
 
   this.setup = function () {
-    textFont(helvFont);
-    let dWidth = windowWidth * .8;
-    let dHeight = windowHeight * .8;
-    let canvas = createCanvas(dWidth, dHeight);
-    let canvasDiv = document.getElementById('vote');
-    canvas.parent(canvasDiv);
-    background(bColor);
   }
 
   this.enter = function () {
     console.log("start & description scene");
-    background(bColor);
-    document.body.style.backgroundColor = bColor;
 
     document.getElementById("page-container").style.display = "block";
     document.getElementById("main-header").textContent = configJSON.text.titleConfig;
@@ -229,13 +212,6 @@ function hardwareTest() {
   //let port;
   let connectBtn;
   this.setup = function () {
-    textFont(helvFont);
-    let dWidth = windowWidth * .8;
-    let dHeight = windowHeight * .8;
-    let canvas = createCanvas(dWidth, dHeight);
-    let canvasDiv = document.getElementById('vote');
-    canvas.parent(canvasDiv);
-    background(bColor);
   }
 
   this.enter = function () {
@@ -306,7 +282,6 @@ function hardwareTest() {
   }
 
   this.draw = function () {
-   background(0);
   }
 
   function clickedBack() {
@@ -332,13 +307,6 @@ function aboutProject() {
   let backBtn;
   
   this.setup = function () {
-    textFont(helvFont);
-    let dWidth = windowWidth * .8;
-    let dHeight = windowHeight * .8;
-    let canvas = createCanvas(dWidth, dHeight);
-    let canvasDiv = document.getElementById('vote');
-    canvas.parent(canvasDiv);
-    background(bColor);
   }
 
   this.enter = function () {
@@ -400,13 +368,6 @@ function newSessionScene() {
   let backBtn, nextBtn;
   
   this.setup = function () {
-    textFont(helvFont);
-    let dWidth = windowWidth * .8;
-    let dHeight = windowHeight * .8;
-    let canvas = createCanvas(dWidth, dHeight);
-    let canvasDiv = document.getElementById('vote');
-    canvas.parent(canvasDiv);
-    background(bColor);
   }
 
   this.enter = function () {
@@ -476,7 +437,7 @@ function newSessionScene() {
     // reset values for calculations
     engine.completeReset();
     visual.completeReset();
-    reconfigBool = true;
+    resizeCanvasBool = true;
 
     engine.currentCongLogic(true); // uncomment if drawing to screen real time
   
@@ -502,19 +463,10 @@ function loadSessionS1() {
   let sessions; // array of sessions fetched from db
   let documentsShown = 10; // number of session records shown on screen
   var skipAmt; // number of session records to skip, updated when buttons clicked
-  let dWidth;
-  let dHeight;
   let sessionsDiv; // div holds table or p stating there is none in db, appended to main-page
   let sessionsTable // html table element
 
   this.setup = function () {
-    textFont(helvFont);
-    dWidth = windowWidth * .8;
-    dHeight = windowHeight * .8;
-    let canvas = createCanvas(dWidth, dHeight);
-    let canvasDiv = document.getElementById('vote');
-    canvas.parent(canvasDiv);
-    background(bColor);
   }
 
   this.enter = function () {
@@ -770,7 +722,7 @@ function loadSessionS1() {
     // reset values for calculations
     engine.completeReset();
     visual.completeReset();
-    reconfigBool = true;
+    resizeCanvasBool = true;
 
     engine.currentCongLogic(true); // uncomment if drawing to screen real time
     mgr.showScene(sBodies);
@@ -828,33 +780,28 @@ function sBodies() {
   var slider1 = document.getElementById('slider01');  
 
   this.setup = function () {
-    textSize(15);
-    noStroke();
-    if (reconfigBool == true) { // set canvas size for drawing votes/config outline
-      // windowResized();
-      visual.dWidth = windowWidth * .95;
-      visual.dHeight = (windowHeight * .9)-labelSpace;
-      visual.labelSpace = labelSpace;
-      canvas = createCanvas(visual.dWidth, windowHeight * .9);
-      let canvasDiv = document.getElementById('vote');
-      canvas.parent(canvasDiv);
-      reconfigBool = false;
-    }
+    // set up canvas for the first time
+    console.log('reconfig bool: ' + resizeCanvasBool);
+    visual.dWidth = windowWidth;
+    visual.dHeight = windowHeight -labelSpace;
+    visual.labelSpace = labelSpace;
+    canvas = createCanvas(windowWidth, windowHeight);
+    let canvasDiv = document.getElementById('vote');
+    canvas.parent(canvasDiv);
+    resizeCanvasBool = false;
+
     createSlider();
     sliderVals();
   }
 
   this.enter = function () {
-    arrPrev = 0;
-    hardwareUpdate = false;
-    if (reconfigBool == true) {
-    visual.dWidth = windowWidth * .95; // larger space
-      visual.dHeight = (windowHeight * .9)-labelSpace;
-      canvas = createCanvas(visual.dWidth, windowHeight * .9);
-      let canvasDiv = document.getElementById('vote');
-      canvas.parent(canvasDiv);
-      reconfigBool = false;
+    // resize canvas when entering scene, if window was resized
+    if (resizeCanvasBool) {
+      resizeVisuals();
+      resizeCanvasBool = false;
     }
+
+    hardwareUpdate = false;
 
     console.log("Pane 01");
     document.getElementById('dot-p01').className = 'dot-active';
@@ -869,8 +816,6 @@ function sBodies() {
     if (!enableHardware) {
       togglePaneDiv.style.display = "block";
     }
-
-    document.body.style.backgroundColor = bColor;
 
     slider1.noUiSlider.set(userNumLegislative);
     sliderVals();
@@ -983,8 +928,13 @@ function sBodies() {
     
     // reset values for calculations
     setEngineParams(engine);
-    // reset visuals - this is the first scene
-    visual.completeReset();
+
+    if (resizeCanvasBool) {
+      resizeVisuals();
+      resizeCanvasBool = false;
+    } else {
+      visual.completeReset(); // always allow visuals to update
+    }
   }
 
     function createSlider() {
@@ -1042,6 +992,12 @@ function sLegislative() {
   }
 
   this.enter = function () {
+    // resize canvas when moving to this scene if window was resized
+    if (resizeCanvasBool) {
+      resizeVisuals();
+      resizeCanvasBool = false;
+    }
+
     hardwareUpdate = false;
     userNumLegislative = parseFloat(userNumLegislative);
 
@@ -1148,8 +1104,13 @@ function sLegislative() {
 
     // set values for calculations
     setEngineParams(engine);
-    // reset visuals
-    visual.completeReset();
+
+    if (resizeCanvasBool) {
+      resizeVisuals();
+      resizeCanvasBool = false;
+    } else {
+      visual.completeReset(); // reset visuals
+    }
   }
 
   // OC display sliders based on number of legislative bodies chosen on previous page
@@ -1215,7 +1176,6 @@ function sLegislative() {
   }
 
   function sliders() {
-    // console.log("user edits boool: " + userEdits);
     createSlider();
     sliderVals();
 
@@ -1368,14 +1328,19 @@ function sLegislative() {
  * User input page for number of parties, maximum of 3
  */
 function sParties() {
-  arrPrev = 200;
   var slider5 = document.getElementById('slider5');
 
   this.setup = function () {
     createSlider();
     sliderVals();
   }
+
   this.enter = function () {
+    if (resizeCanvasBool) {
+      resizeVisuals();
+      resizeCanvasBool = false;
+    }
+
     console.log("Pane 03");
     hardwareUpdate = false;
     document.getElementById('dot-p03').className = 'dot-active'; // activate dot on this pane
@@ -1464,8 +1429,14 @@ function checkHardwareUpdateInput() {
 
     // set values for calculations
     setEngineParams(engine);
-    // reset visuals
-    visual.completeReset();
+
+    if (resizeCanvasBool) {
+      resizeVisuals();
+      resizeCanvasBool = false;
+    } else {
+      // reset visuals
+      visual.completeReset();
+    }
   }
 
     function createSlider() {
@@ -1562,6 +1533,11 @@ function sMembersFirstChamber() {
   }
 
   this.enter = function () {
+    if (resizeCanvasBool) {
+      resizeVisuals();
+      resizeCanvasBool = false;
+    }
+
     // makes slider start vals always reflect total members
       maxSlider = parseInt(userNumHouse);
       startVals[0] = userPerHouseBody[0];
@@ -1709,8 +1685,13 @@ function sMembersFirstChamber() {
 
     // reset values for calculations
     setEngineParams(engine);
-    // set visuals
-    visual.completeReset();
+
+    if (resizeCanvasBool) {
+      resizeVisuals();
+      resizeCanvasBool = false;
+    } else {
+      visual.completeReset(); // set visuals
+    }
   }
 
   /**
@@ -1942,6 +1923,11 @@ function sMembersSecondChamber() {
   }
 
   this.enter = function () {
+    if (resizeCanvasBool) {
+      resizeVisuals();
+      resizeCanvasBool = false;
+    }
+
     maxSlider = parseInt(userNumHouse2);
     startVals[0] = userPerHouse2Body[0];
     startVals[1] = userPerHouse2Body[1];
@@ -2038,8 +2024,13 @@ function sMembersSecondChamber() {
     
     // reset values for calculations
     setEngineParams(engine);
-    // set visuals
-    visual.completeReset();
+
+    if (resizeCanvasBool) {
+      resizeVisuals();
+      resizeCanvasBool = false;
+    } else {
+      visual.completeReset(); // set visuals
+    }
   }
 
   function checkNumBodies() { // displays number of sliders according to number of parties
@@ -2262,6 +2253,11 @@ function sMembersThirdChamber() {
   }
 
   this.enter = function () {
+    if (resizeCanvasBool) {
+      resizeVisuals();
+      resizeCanvasBool = false;
+    }
+
     maxSlider = parseInt(userNumSenate);
     startVals[0] = userPerSenateBody[0];
     startVals[1] = userPerSenateBody[1];
@@ -2358,8 +2354,13 @@ function sMembersThirdChamber() {
 
     // reset values for calculations
     setEngineParams(engine);
-    // set visuals
-    visual.completeReset();
+
+    if (resizeCanvasBool) {
+      resizeVisuals();
+      resizeCanvasBool = false;
+    } else {
+      visual.completeReset(); // set visuals
+    }
   }
 
   function checkNumBodies() { // displays number of sliders according to number of parties
@@ -2584,6 +2585,11 @@ function sMembersVP() {
   }
 
   this.enter = function () {
+    if (resizeCanvasBool) {
+      resizeVisuals();
+      resizeCanvasBool = false;
+    }
+
     maxSlider = parseInt(userNumVP);
     startVals[0] = userPerVPBody[0];
     startVals[1] = userPerVPBody[1];
@@ -2680,8 +2686,13 @@ function sMembersVP() {
 
     // reset values for calculations
     setEngineParams(engine);
-    // set visuals
-    visual.completeReset();
+
+    if (resizeCanvasBool) {
+      resizeVisuals();
+      resizeCanvasBool = false;
+    } else {
+      visual.completeReset(); // set visuals
+    }
   }
 
   function checkNumBodies() { // displays number of sliders according to number of parties
@@ -2905,6 +2916,11 @@ function sMembersPres() {
   }
 
   this.enter = function () {
+    if (resizeCanvasBool) {
+      resizeVisuals();
+      resizeCanvasBool = false;
+    }
+
     maxSlider = parseInt(userNumPres);
     startVals[0] = userPerPresBody[0];
     startVals[1] = userPerPresBody[1];
@@ -3001,8 +3017,13 @@ function sMembersPres() {
 
     // reset values for calculations
     setEngineParams(engine);
-    // set visuals
-    visual.completeReset();
+
+    if (resizeCanvasBool) {
+      resizeVisuals();
+      resizeCanvasBool = false;
+    } else {
+      visual.completeReset(); // set visuals
+    }
   }
 
   function checkNumBodies() { // displays number of sliders according to number of parties
@@ -3224,13 +3245,18 @@ function sBodyPass() {
   var slider11 = document.getElementById('slider11');
 
   this.setup = function () {
-    textSize(15);
-    noStroke();
+    // textSize(15);
+    // noStroke();
     createSlider();
     sliderVals();
   }
 
   this.enter = function () {
+    if (resizeCanvasBool) {
+      resizeVisuals();
+      resizeCanvasBool = false;
+    }
+
     currPerPass = parseFloat(userBodyPass);
     currSuperThresh = parseFloat(userSuperThresh);
     console.log("P09: Majority & Supermajority");
@@ -3286,8 +3312,13 @@ function sBodyPass() {
 
     // reset values for calculations
     setEngineParams(engine);
-    // set visuals
-    visual.completeReset();
+
+    if (resizeCanvasBool) {
+      resizeVisuals();
+      resizeCanvasBool = false;
+    } else {
+      visual.completeReset(); // set visuals
+    }
   }
 
     // NOui slider slides
@@ -3371,11 +3402,11 @@ function sYesVotes() {
   }
 
   this.enter = function () {
-    if (reconfigBool == true) {
-      visual.dWidth = windowWidth * .95;
-        visual.dHeight = (windowHeight * .9)-labelSpace;
-        reconfigBool = false;
+    if (resizeCanvasBool) {
+      resizeVisuals();
+      resizeCanvasBool = false;
     }
+
     curDemYaythresh = parseFloat(userDemYaythresh);
     curRepYaythresh = parseFloat(userRepYaythresh);
     curIndYaythresh = parseFloat(userIndYaythresh);
@@ -3391,8 +3422,6 @@ function sYesVotes() {
     slider13.noUiSlider.set(curRepYaythresh);
     slider14.noUiSlider.set(curIndYaythresh);
     sliderVals();
-
-    document.body.style.backgroundColor = bColor;
 
     if (document.getElementById('vote-btn')) {
       document.getElementById('vote-btn').remove();
@@ -3465,8 +3494,13 @@ function sYesVotes() {
     
     // reset values for calculations
     setEngineParams(engine);
-    // set visuals
-    visual.completeReset();
+
+    if (resizeCanvasBool) {
+      resizeVisuals();
+      resizeCanvasBool = false;
+    } else {
+      visual.completeReset(); // set visuals
+    }
   }
 
   function checkParties() {
@@ -3602,12 +3636,16 @@ var visualizeImmediate;
 function sVote() {
   let voteBtn;
   this.setup = function () {
-    userOutputText = document.getElementById('slider-disp');
     visualizeVote = false;
     visualizeImmediate = false;
   }
 
   this.enter = function () {
+    if (resizeCanvasBool) {
+      resizeVisuals();
+      resizeCanvasBool = false;
+    }
+    
     console.log("run bill page");
     document.getElementById('progress-dots').style.display = "none";
     document.getElementById("pane-header").textContent = configJSON.text.p11Config.h;
@@ -3667,19 +3705,19 @@ function sVote() {
     
     // if any parameters changed, don't visualize the vote yet (display blank) & enable button
     if (paramChangedBool) {
-      visual.dWidth = windowWidth * .95;
-      visual.dHeight = (windowHeight * .9)-labelSpace;
+      // visual.dWidth = windowWidth * .95;
+      // visual.dHeight = (windowHeight * .9)-labelSpace;
       visualizeVote = false;
       document.getElementById("vote-btn").disabled = false;
     } else if (paramChangedBool == false && document.getElementById("vote-btn").disabled == false) {
       // otherwise if no params changed but vote button not yet clicked (enabled -> disabled == false), don't visualize (display blank)
-      visual.dWidth = windowWidth * .95;
-      visual.dHeight = (windowHeight * .9)-labelSpace;
+      // visual.dWidth = windowWidth * .95;
+      // visual.dHeight = (windowHeight * .9)-labelSpace;
       visualizeVote = false; 
     } else if (paramChangedBool == false && document.getElementById("vote-btn").disabled == true){
       // visualize vote immediately when no param changed & vote button already clicked (disabled == true) when scene is entered
-      visual.dWidth = windowWidth * .95;
-      visual.dHeight = windowHeight * .9;
+      // visual.dWidth = windowWidth * .95;
+      visual.dHeight = windowHeight; // full height
       visualizeVote = true;
       visualizeImmediate = true;
       document.getElementById("pane-description").textContent = configJSON.text.p11Config.pAfterVote;
@@ -3689,7 +3727,7 @@ function sVote() {
     setEngineParams(engine);
     // set visuals
     visual.completeReset();
-    reconfigBool = true;
+    // resizeCanvasBool = true;
   }
 
   this.draw = function () {
@@ -3700,7 +3738,6 @@ function sVote() {
       if (visual.userInputState) {
         setTimeout(function () {
           if (mgr.isCurrent(sVote)) {
-          document.body.style.backgroundColor = colorOverlay;
           engine.bodyCount = engine.numBodies;
           visual.finalTextDisplayUser(engine, helvFont, colorOverlay, resultIX);
           }
@@ -3728,11 +3765,10 @@ function sVote() {
   function finalDisplay() {
     setTimeout(function () {
       if (mgr.isCurrent(sVote)) {
-      document.body.style.backgroundColor = colorOverlay;
       engine.bodyCount = engine.numBodies;
       visual.finalTextDisplayUser(engine, helvFont, colorOverlay, resultIX);
+      document.getElementById("pane-description").textContent = configJSON.text.p11Config.pAfterVote;
       setTimeout(function () {
-        document.getElementById("pane-description").textContent = configJSON.text.p11Config.pAfterVote;
         showPanesBool = true;
       }, 1500);
     }
@@ -3752,8 +3788,15 @@ function sVote() {
   }
   
   function clickedVote() {
-      visual.dWidth = windowWidth * .95;
-      visual.dHeight = windowHeight * .85;
+    if (resizeCanvasBool) {
+      resizeVisuals();
+      visual.dHeight = windowHeight; // full height
+      resizeCanvasBool = false;
+    } else {
+      visual.dHeight = windowHeight; // full height
+      visual.completeReset();
+    }
+
     document.getElementById("vote-btn").disabled = true; // disable vote button after clicked
     showPanesBool = false; // make pane disappear so user can see voting in full view
 
@@ -3764,7 +3807,6 @@ function sVote() {
     results = []; // OC new results array since it is a new config
     resultIX = 0; // OC reset resultIX bc new configuration
     userEditCount++;
-    // console.log("user edit count: " + userEditCount);
 
     visualizeVote = true;
     visualizeImmediate = false;
@@ -3774,8 +3816,6 @@ function sVote() {
     
     // reset values for calculations and drawings
     engine.completeReset();
-    visual.completeReset();
-    reconfigBool = true;
     
     engine.currentCongLogic(true); // get results for this configuration
     updateSession(); // save this config and resutls of running this configuration
@@ -3817,12 +3857,14 @@ function sBenchmarkPane() {
   let benchmarkTable;
 
   this.setup = function () {
-    userOutputText = document.getElementById('slider-disp');
   }
 
   this.enter = function () {
-    visual.dWidth = windowWidth * .95;
-    visual.dHeight = (windowHeight * .9)-labelSpace;
+    if (resizeCanvasBool) {
+      resizeVisuals();
+      resizeCanvasBool = false;
+    }
+
     console.log("run bill page");
     document.getElementById("pane-header").textContent = configJSON.text.p12Config.h;
     document.getElementById("pane-description").textContent = configJSON.text.p12Config.p;
@@ -3838,11 +3880,6 @@ function sBenchmarkPane() {
     benchmarkBtn.mousePressed(clickedBenchmark);
 
     visual.completeReset();
-    // userEdits = false;
-    reconfigBool = true;
-
-    background(bColor);
-    document.body.style.backgroundColor = bColor;
 
     // create results div
     benchmarkDiv = document.createElement('div');
@@ -3871,7 +3908,7 @@ function sBenchmarkPane() {
       setEngineParams(engine); // set new parameters
       // reset values for calculations and drawings
       engine.completeReset();
-      reconfigBool = true;
+      resizeCanvasBool = true;
       engine.currentCongLogic(true); // get results for this configuration
       updateSession(); // save this config and resutls of running this configuration
       resultIX++;
@@ -3939,8 +3976,7 @@ function sBenchmarkResults() {
   let benchmarkDiv, benchmarkTable;
 
   this.setup = function () {
-    userOutputText = document.getElementById('slider-disp');
-    visualizeVote = false;
+    // visualizeVote = false;
     resDelay = 500;
   }
 
@@ -3987,10 +4023,7 @@ function sBenchmarkResults() {
     summaryBtn.mousePressed(clickedSummary);
     
     visual.completeReset();
-    // userEdits = false;
-    reconfigBool = true;
-    background(bColor);
-    document.body.style.backgroundColor = bColor;
+    resizeCanvasBool = true;
     
     var tds = benchmarkTable.getElementsByTagName("td");
     var rIX = 1;
@@ -4012,11 +4045,7 @@ function sBenchmarkResults() {
   }
 
   this.draw = function () {    
-        // if (endGear) {
-        //   background(bColor);
-        // } else {
-        //   visual.rotLoadImage2(endGear);
-        // }
+    // if (endGear) { background(bColor); } else { visual.rotLoadImage2(endGear); }
     if (enableHardware) {
       checkHardwareInput();
       checkHardwareBtnInput();
@@ -4113,9 +4142,6 @@ function sEndorse() {
     summarySaveBtn.mousePressed(clickedSummarySave);
 
     inputTxt();
-
-    background(bColor);
-    document.body.style.backgroundColor = bColor;
   }
 
   this.draw = function () {
@@ -4303,9 +4329,6 @@ function sSaveResults() {
     saveBtn.mousePressed(clickedSave);
 
     inputTxt();
-
-    background(bColor);
-    document.body.style.backgroundColor = bColor;
   }
 
   this.draw = function () {
@@ -4436,9 +4459,6 @@ function sComplete() {
     h2.textContent = "Session ID: " + prevSessionID;
     document.getElementById("main-paragraphs").replaceChildren(h2);
     document.getElementById("main-page").style.display = "block";
-
-    background(bColor);
-    document.body.style.backgroundColor = bColor;
 
     let buttonDiv = document.getElementById('main-btn-div');
 

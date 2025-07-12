@@ -3,9 +3,6 @@ var mgr;
 var engine;
 var visual;
 
-// text display
-let userOutputText;
-
 // buttons
 var buttonDiv;
 var togglePaneDiv;
@@ -44,7 +41,7 @@ var userDemYaythresh;
 var userIndYaythresh;
 var userEditCount = 0;
 
-var reconfigBool = true;
+var resizeCanvasBool = true;
 
 // colors
 var bColor;
@@ -138,7 +135,6 @@ function setup() {
   rectColor3 = colorConfig.rectColor3;
   majorityBar = colorConfig.majorityBar;
   superBar = colorConfig.supermajorityBar;
-  document.body.style.backgroundColor = bColor;
   engine = new DemocracyEngine(govtConfig, historicalActs); // OC create engine object to run voting logic
   visual = new VoteVisual(loadingImage, checkImage, bColor, pColor, textColor, rectColor, rectColor2, rectColor3, majorityBar, superBar);
   setDefaultUserVars(); // set user vars to params from config file
@@ -259,7 +255,6 @@ function inactive() {
 }
 
 // vars for hardware controls 
-var arrPrev = 200;
 var movePanes = true;
 var hardwareHideShow = false;
 var hardwareHide = false;
@@ -690,11 +685,10 @@ function previousPane() {
     mgr.showScene(sBodyPass);
   } else if (mgr.isCurrent(sVote)) {
     if (visualizeVote) {
-      background(bColor);
       // reset values for calculations and drawings
       //engine.completeReset();
       visual.completeReset();
-      reconfigBool = true;
+      resizeCanvasBool = true;
     }
     document.getElementById("page10").style.display = "block";
     mgr.showScene(sYesVotes);
@@ -703,10 +697,27 @@ function previousPane() {
   }
 }
 
-// might not work for fullscreen
+// when window is resized, resize canvas and redraw votes
 // function windowResized() {
-//   resizeCanvas(windowWidth*8, windowHeight*8);
+//   visual.dWidth = windowWidth;// * .95;
+//   visual.dHeight = (windowHeight) /* * .9)*/-labelSpace;
+//   visual.labelSpace = labelSpace;
+//   resizeCanvas(windowWidth, windowHeight);
+//   visual.completeReset();
+//   visual.displayImmediateBlank(engine, false);
 // }
+
+function windowResized() {
+  resizeCanvasBool = true;
+}
+
+function resizeVisuals() {
+  visual.dWidth = windowWidth;
+  visual.dHeight = windowHeight - labelSpace;
+  visual.labelSpace = labelSpace;
+  resizeCanvas(windowWidth, windowHeight);
+  visual.completeReset();
+}
 
 /**
  * Set user vars to default config of govt json
