@@ -1098,8 +1098,8 @@ function getAllSessions() {
  * Allow keys to control moving between panes and toggling panes.
  */
 function keyPressed() {
-  // RETURN key toggles panes
-  if (keyCode == RETURN) {
+  // SPACE BAR toggles panes
+  if (keyCode == 32) { // keyCode == RETURN
     if (showPanesBool == false) {
       showPanesBool = true;
     }
@@ -1117,6 +1117,7 @@ function keyPressed() {
   } else if (key == ',' || key == '<') {//else if (keyCode == LEFT_ARROW) {
     previousPane(); // , or < moves to previous pane
   }
+  mgr.keyPressed();
   keyCode == null;
   key = '';
 }

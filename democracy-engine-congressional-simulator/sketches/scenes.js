@@ -869,6 +869,12 @@ function sBodies() {
     }
   }
 
+  this.keyPressed = function () {
+    if (keyCode == RETURN && !document.getElementById("update-btn").disabled) {
+      clickedUpdate();
+    }
+  }
+
   function checkHardwareSliders() {
     if (arr[1]) {
       let s1 = map(arr[1], 0, 255, 1, 3, true);
@@ -1044,6 +1050,12 @@ function sLegislative() {
       document.getElementById("update-btn").disabled = false;
     } else { // otherwise leave disabled
       document.getElementById("update-btn").disabled = true;
+    }
+  }
+
+  this.keyPressed = function () {
+    if (keyCode == RETURN && !document.getElementById("update-btn").disabled) {
+      clickedUpdate();
     }
   }
 
@@ -1369,6 +1381,12 @@ function sParties() {
     }
   }
 
+  this.keyPressed = function () {
+    if (keyCode == RETURN && !document.getElementById("update-btn").disabled) {
+      clickedUpdate();
+    }
+  }
+
   function checkHardwareSliders() {
     if (arr[1]) {
       let s1 = map(arr[1], 10, 245, 1, 3, true);
@@ -1603,6 +1621,12 @@ function sMembersFirstChamber() {
       document.getElementById("update-btn").disabled = false;
     } else { // otherwise leave disabled
       document.getElementById("update-btn").disabled = true;
+    }
+  }
+
+  this.keyPressed = function () {
+    if (keyCode == RETURN && !document.getElementById("update-btn").disabled) {
+      clickedUpdate();
     }
   }
 
@@ -1973,6 +1997,12 @@ function sMembersSecondChamber() {
       document.getElementById("update-btn").disabled = true;
     }
   }
+
+  this.keyPressed = function () {
+    if (keyCode == RETURN && !document.getElementById("update-btn").disabled) {
+      clickedUpdate();
+    }
+  }
   
   function checkHardwareSliders() {
     if (userNumParties == 1 && arr[1]) {
@@ -2301,6 +2331,12 @@ function sMembersThirdChamber() {
       document.getElementById("update-btn").disabled = false;
     } else { // otherwise leave disabled
       document.getElementById("update-btn").disabled = true;
+    }
+  }
+
+  this.keyPressed = function () {
+    if (keyCode == RETURN && !document.getElementById("update-btn").disabled) {
+      clickedUpdate();
     }
   }
 
@@ -2636,6 +2672,12 @@ function sMembersVP() {
     }
   }
 
+  this.keyPressed = function () {
+    if (keyCode == RETURN && !document.getElementById("update-btn").disabled) {
+      clickedUpdate();
+    }
+  }
+
   function checkHardwareSliders() {
     if (userNumParties == 1 && arr[1]) {
       let s1 = map(arr[1], 10, 245, 0, maxSlider, true);
@@ -2964,6 +3006,12 @@ function sMembersPres() {
       document.getElementById("update-btn").disabled = false;
     } else { // otherwise leave disabled
       document.getElementById("update-btn").disabled = true;
+    }
+  }
+
+  this.keyPressed = function () {
+    if (keyCode == RETURN && !document.getElementById("update-btn").disabled) {
+      clickedUpdate();
     }
   }
 
@@ -3297,6 +3345,12 @@ function sBodyPass() {
     }
   }
 
+  this.keyPressed = function () {
+    if (keyCode == RETURN && !document.getElementById("update-btn").disabled) {
+      clickedUpdate();
+    }
+  }
+
   /**
    * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
    */
@@ -3458,7 +3512,12 @@ function sYesVotes() {
     } else { // otherwise leave disabled
       document.getElementById("update-btn").disabled = true;
     }
+  }
 
+  this.keyPressed = function () {
+    if (keyCode == RETURN && !document.getElementById("update-btn").disabled) {
+      clickedUpdate();
+    }
   }
 
   function checkHardwareSliders() {
