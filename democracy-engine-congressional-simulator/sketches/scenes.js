@@ -471,7 +471,7 @@ function newSessionScene() {
 function loadSessionS1() {
   let sLoadBtn1, sLoadBtn2, nextBtn;
   let sessions; // array of sessions fetched from db
-  let documentsShown = 10; // number of session records shown on screen
+  let documentsShown = 6; // number of session records shown on screen
   var skipAmt; // number of session records to skip, updated when buttons clicked
   let sessionsDiv; // div holds table or p stating there is none in db, appended to main-page
   let sessionsTable // html table element
@@ -4370,13 +4370,6 @@ function sEndorse() {
     divPercent.innerHTML = sPercent;
     divBench.innerHTML = sBench;
     divEndorse.innerHTML = sEndorse;
-    // div1.innerHTML = s1;
-    // div2.innerHTML = s2;
-    // div3.innerHTML = s3;
-      
-      // document.getElementById('end-summary').appendChild(div1);
-      // document.getElementById('end-summary').appendChild(div2);
-      // document.getElementById('end-summary').appendChild(div3);
   }
 }
 
@@ -4415,11 +4408,11 @@ function sSaveResults() {
 
     // remove highlight from endorsement
     let divEndorse = document.getElementById('s-endorsement')
-    let sEndorse = "<h4>Endorsement</h4>";
+    let sEndorse = "<h3 class='summary'>Endorsement</h3>";
     if (finalConfigObj.ownerEndorsement == 1) {
-      sEndorse += "<p>System Endorsed By User: Yes</p>";
+      sEndorse += "<p class='summary'>System Endorsed By User: Yes</p>";
     } else {
-      sEndorse += "<p>System Endorsed By User: No</p>";
+      sEndorse += "<p class='summary'>System Endorsed By User: No</p>";
     }
     divEndorse.innerHTML = sEndorse;
 
@@ -4437,7 +4430,6 @@ function sSaveResults() {
     saveBtn.parent(buttonDiv);
     saveBtn.mousePressed(clickedSave);
 
-    // inputTxt();
   }
 
   this.draw = function () {
@@ -4479,72 +4471,6 @@ function sSaveResults() {
     document.getElementById("end-summary").style.display = "none";
   }
 
-  function inputTxt() {
-
-    s1 = 
-      "<h3>First Legislative Chamber</h3>" +
-      "<p>Voting Members: " + userNumHouse +
-      "<br>Members in Political Party A: " + Math.round(userPerHouseBody[0] * userNumHouse) +
-      "<br>Members in Political Party B: " + Math.round(userPerHouseBody[1] * userNumHouse) +
-      "<br>Members in Political Party C: " + Math.round(userPerHouseBody[2] * userNumHouse) +
-      "</p><h3>Second Legislative Chamber</h3>" +
-      "<p>Voting Members: " + userNumHouse2 +
-      "<br>Members in Political Party A: " + Math.round(userPerHouse2Body[0] * userNumHouse2) +
-      "<br>Members in Political Party B: " + Math.round(userPerHouse2Body[1] * userNumHouse2) +
-      "<br>Members in Political Party C: " + Math.round(userPerHouse2Body[2] * userNumHouse2) +
-      "</p><h3>Third Legislative Chamber</h3>" +
-      "<p>Voting Members: " + userNumSenate +
-      "<br>Members in Political Party A: " + Math.round(userPerSenateBody[0] * userNumSenate) +
-      "<br>Members in Political Party B: " + Math.round(userPerSenateBody[1] * userNumSenate) +
-      "<br>Members in Political Party C: " + Math.round(userPerSenateBody[2] * userNumSenate) + "</p>";
-
-      s2 =
-      "<h3>Vice Presidency</h3>" +
-      "<p>Voting Members: " + userNumVP +
-      "<br>Members in Political Party A: " + Math.round(userPerPresBody[0] * userNumVP) +
-      "<br>Members in Political Party B: " + Math.round(userPerPresBody[1] * userNumVP) +
-      "<br>Members in Political Party C: " + Math.round(userPerPresBody[2] * userNumVP) +
-      "</p><h3>Presidency</h3>" +
-      "<p>Voting Members: " + userNumPres +
-      "<br>Members in Political Party A: " + Math.round(userPerVPBody[0] * userNumPres) +
-      "<br>Members in Political Party B: " + Math.round(userPerVPBody[1] * userNumPres) +
-      "<br>Members in Political Party C: " + Math.round(userPerVPBody[2] * userNumPres) +
-      "</p><h3>Likelihood of Yes Vote: </h3>" +
-      "<p>Political Party A: " + userDemYaythresh +
-      "<br>Political Party B: " + userRepYaythresh +
-      "<br>Political Party C: " + userIndYaythresh + "</p>" +
-      //s3 =
-      "<h3>Percentage of votes required <br>for approval of bill</h3>" +
-      "<p>Approval By Majority: " + userBodyPass +
-      "<br> Approval By Supermajority: " + userSuperThresh + "</p>";
-      
-      s3 = "<h3>Benchmark Results</h3><p>" ;
-      for(let i=1; i<=MAX_SIM_RESULTS; i++) {
-        s3 = s3 + configs[configIX].simResults[i].actTitle + " ";
-        if (configs[configIX].simResults[i].billPass == true) {
-          s3 = s3 + "&#x2611;<br>"; // checkmark
-        } else {
-          s3 = s3 + "&#9746;<br>"; // x mark in box (for empty box use &#x2610;)
-        }
-      }
-      s3 = s3 + "</p>";
-
-      s3 = s3 + "</p>";
-      s3 += "<h3>Endorsement</h3>";
-      if (finalConfigObj.ownerEndorsement == 1) {
-        s3 += "<p>System Endorsed By User: Yes</p>";
-      } else {
-        s3 += "<p>System Endorsed By User: No</p>";
-      }
-      
-      div1.innerHTML = s1;
-      div2.innerHTML = s2;
-      div3.innerHTML = s3;
-      
-      document.getElementById('end-summary').appendChild(div1);
-      document.getElementById('end-summary').appendChild(div2);
-      document.getElementById('end-summary').appendChild(div3);
-  }
 }
 
 /**

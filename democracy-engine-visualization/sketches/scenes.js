@@ -367,6 +367,8 @@ function sLoadSession() {
   let sessionsTable;
   let divCh1, divCh2, divCh3, divVP, divPres, divProb, divPercent, divBench, divEndorse;
   let s1, s2, s3, sVP, sPres, sProb, sPercent, sBench, sEndorse;
+  let prevRadioSelection;
+  let currentRadioSelection;
   
   this.setup = function () {
   }
@@ -482,8 +484,10 @@ function sLoadSession() {
   }
 
   this.draw = function () {
-    if (sessions && sessions.length > 0) {
-      // console.log("sessions: " + sessions);
+    currentRadioSelection = getSelectedRadioValue(); // always check current selection
+
+    // only change input text and set session object when radio selection is changed
+    if (currentRadioSelection != prevRadioSelection && sessions && sessions.length > 0) {
       indicateSelectedRow(); // makes text color of row change
       let i = getSelectedRadioValue();
       entireSessionObj = sessions[i];
@@ -535,7 +539,6 @@ function sLoadSession() {
     return s;
   }
 
-  var rest = false;
   function showSessionsList() {    
     // document.getElementById("pane-text").style.display = "block";
     document.getElementById("pane-header").textContent = configJSON.text.pSavedSessionsVis.h;
@@ -612,6 +615,8 @@ function sLoadSession() {
         radio.name = "sessions-radio";
         radio.value = i; // value is index position
         if (i == 0) { radio.checked = true }; // set first one as selected
+        prevRadioSelection = -1;
+        currentRadioSelection = 0;
         tData[0].appendChild(radio);
         tData[1].textContent = result[i].uniqueID;
         tData[2].textContent = sObj.numLegislativeBodies;
@@ -659,7 +664,7 @@ function sLoadSession() {
     return roundNum(percentagePassed, 2); // out of 100%
   }
 
-    function getSelectedRadioValue() {
+  function getSelectedRadioValue() {
     let selected = document.querySelector('input[name="sessions-radio"]:checked');
     // console.log("selected: " + selected);
     if (selected) {
@@ -679,7 +684,8 @@ function sLoadSession() {
     }
   }
 
-    function clickedScrollUp() {
+  function clickedScrollUp() {
+    prevRadioSelection = currentRadioSelection; // update previous selection
     let currentSelected = getSelectedRadioValue(); // current selected val
     let toSelect = parseInt(currentSelected) - 1;
     // decrement ix to select next radio above, otherwise keeps selection at first option if ix is already 0
@@ -690,6 +696,7 @@ function sLoadSession() {
   }
 
   function clickedScrollDown() {
+    prevRadioSelection = currentRadioSelection; // update previous selection
     let currentSelected = getSelectedRadioValue(); // current selected val
     let toSelect = parseInt(currentSelected) + 1;
     // increment ix to select next radio below, otherwise keeps selection at last option
@@ -724,7 +731,6 @@ function sLoadSession() {
   }
 
   function inputTxt() {
-    //document.getElementById("end-summary").innerHTML = "<h2>Session ID: " + selectedSessionID + "</h2>";
 
     let h2 = document.getElementById('save-id');
     h2.textContent = "Session ID: " + selectedSessionID;
@@ -1150,7 +1156,6 @@ var allowEndorse = true;
  * C01 Load Session
  */
 function sPublicEndorsement() {
-  // let s1, s2, s3, div1, div2, div3;
   
   this.setup = function () {
   }
@@ -1162,15 +1167,6 @@ function sPublicEndorsement() {
     console.log("load sessions scene");
     allowEndorse = true;
     document.getElementById('dot-p03').className = 'dot-active';
-    // s1 = "";
-    // s2 = "";
-    // s3 = "";
-    // div1 = document.createElement('div');
-    // div2 = document.createElement('div');
-    // div3 = document.createElement('div');
-    // div1.id = 's-col-1';
-    // div2.id = 's-col-2';
-    // div3.id = 's-col-3';
 
     paramChangedBool = true;
     showCount = 0;
@@ -1189,7 +1185,6 @@ function sPublicEndorsement() {
     let sEndorse = "<h4 class='endorsement-txt'>Endorsement</h4>" +
       "<p>Number of User Endorsements: <span class='endorsement-txt'>" + (endorseVal + finalConfigObj.ownerEndorsement) + "</span></p>";
     divEndorse.innerHTML = sEndorse;
-    // inputTxt();
 
     if (!document.getElementById('middle-btn')) {
     middleBtn = createButton('Endorse');
@@ -1251,13 +1246,11 @@ function sPublicEndorsement() {
     updateSessionField(selectedSessionID, updatedField);
   }
 
-  var rest = false;
-
   function clickedPublicEndorse() {
     allowEndorse = false;
     showPanesBool = false;
     addPublicEndorsement();
-    //inputTxt();
+
     // update endorsement number and highlight text
     let divEndorse = document.getElementById('s-endorsement')
     let sEndorse = "<h4 class='endorsement-txt'>Endorsement</h4>" +
@@ -1294,65 +1287,4 @@ function sPublicEndorsement() {
     document.getElementById("screen").style.display = "none";
   }
 
-  function inputTxt() {
-    document.getElementById("end-summary").innerHTML = "<h2>Session ID: " + selectedSessionID + "</h2>";
-
-    s1 = 
-      "<h3>First Legislative Chamber</h3>" +
-      "<p>Voting Members: " + loadedConfig.chamber1.totalMembers +
-      "<br>Members in Political Party A: " + Math.round(loadedConfig.chamber1.partyA * loadedConfig.chamber1.totalMembers) +
-      "<br>Members in Political Party B: " + Math.round(loadedConfig.chamber1.partyB * loadedConfig.chamber1.totalMembers) +
-      "<br>Members in Political Party C: " + Math.round(loadedConfig.chamber1.partyC * loadedConfig.chamber1.totalMembers) +
-      "</p><h3>Second Legislative Chamber</h3>" +
-      "<p>Voting Members: " + loadedConfig.chamber2.totalMembers +
-      "<br>Members in Political Party A: " + Math.round(loadedConfig.chamber2.partyA * loadedConfig.chamber2.totalMembers) +
-      "<br>Members in Political Party B: " + Math.round(loadedConfig.chamber2.partyB * loadedConfig.chamber2.totalMembers) +
-      "<br>Members in Political Party C: " + Math.round(loadedConfig.chamber2.partyC * loadedConfig.chamber2.totalMembers) +
-      "</p><h3>Third Legislative Chamber</h3>" +
-      "<p>Voting Members: " + loadedConfig.chamber3.totalMembers +
-      "<br>Members in Political Party A: " + Math.round(loadedConfig.chamber3.partyA * loadedConfig.chamber3.totalMembers) +
-      "<br>Members in Political Party B: " + Math.round(loadedConfig.chamber3.partyB * loadedConfig.chamber3.totalMembers) +
-      "<br>Members in Political Party C: " + Math.round(loadedConfig.chamber3.partyC * loadedConfig.chamber3.totalMembers) + "</p>";
-
-      s2 =
-      "<h3>Vice Presidency</h3>" +
-      "<p>Voting Members: " + loadedConfig.vicePres.totalMembers +
-      "<br>Members in Political Party A: " + Math.round(loadedConfig.vicePres.partyA * loadedConfig.vicePres.totalMembers) +
-      "<br>Members in Political Party B: " + Math.round(loadedConfig.vicePres.partyB * loadedConfig.vicePres.totalMembers) +
-      "<br>Members in Political Party C: " + Math.round(loadedConfig.vicePres.partyC * loadedConfig.vicePres.totalMembers) + 
-      "</p><h3>Presidency</h3>" +
-      "<p>Voting Members: " + loadedConfig.president.totalMembers +
-      "<br>Members in Political Party A: " + Math.round(loadedConfig.president.partyA * loadedConfig.president.totalMembers) +
-      "<br>Members in Political Party B: " + Math.round(loadedConfig.president.partyB * loadedConfig.president.totalMembers) +
-      "<br>Members in Political Party C: " + Math.round(loadedConfig.president.partyC * loadedConfig.president.totalMembers) + 
-      "</p><h3>Likelihood of Yes Vote: </h3>" +
-      "<p>Political Party A: " + Math.round(loadedConfig.probabilityYesVote.partyA * 100) + "%" +
-      "<br>Political Party B: " + Math.round(loadedConfig.probabilityYesVote.partyB * 100) + "%"  +
-      "<br>Political Party C: " + Math.round(loadedConfig.probabilityYesVote.partyC * 100) + "%"  +
-      "</p><h3>Percentage of votes required for approval of bill</h3>" +
-      "<p>Approval By Majority: " + Math.round(loadedConfig.percentMajority * 100) + "%"  +
-      "<br> Approval By Supermajority: " + Math.round(loadedConfig.percentSupermajority * 100) + "%</p>";
-      
-      s3 = "<h3>Benchmark Results</h3><p>" ;
-      for(let i=1; i<=MAX_SIM_RESULTS; i++) {
-        s3 = s3 + loadedConfig.simResults[i].actTitle + " ";
-        if (loadedConfig.simResults[i].billPass == true) {
-          s3 = s3 + "&#x2611;<br>"; // checkmark
-        } else {
-          s3 = s3 + "&#9746;<br>"; // empty checkmark
-        }
-      }
-      s3 = s3 + "</p>";
-
-      s3 += "<h3 class='endorsement-txt'>Endorsement</h3>";
-      s3 += "<p>Number of User Endorsements: <span class='endorsement-txt'>" + (endorseVal + finalConfigObj.ownerEndorsement) + "</span></p>";
-
-      div1.innerHTML = s1;
-      div2.innerHTML = s2;
-      div3.innerHTML = s3;
-      
-      document.getElementById('end-summary').appendChild(div1);
-      document.getElementById('end-summary').appendChild(div2);
-      document.getElementById('end-summary').appendChild(div3);
-    }
 }

@@ -11,21 +11,51 @@
   --progress-remainder: #757575;
 }
 
-/* #chart-page {
-  width: 100vw;
-  height: auto;
-  background-color: var(--bkg-color);
-} */
+/* ----------------------------------------------------------------- */
+/* PANE SCREEN */
+/* ----------------------------------------------------------------- */
 
 #screen {
   z-index: 99;
 }
+
+
+/* ----------------------------------------------------------------- */
+/* TABLE */
+/* ----------------------------------------------------------------- */
+
+#sessions-list th {
+  font-weight: normal;
+}
+
+table {
+  font-weight: 350;
+}
+
+/* ----------------------------------------------------------------- */
+/* ENDORSEMENT TEXT */
+/* ----------------------------------------------------------------- */
+
+#s-endorsement {
+  margin-top: -30px; /* move endorsement text up */
+}
+
+
+/* ----------------------------------------------------------------- */
+/* CHARTS */
+/* ----------------------------------------------------------------- */
 
 #charts {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
+
+/* #chart-page {
+  width: 100vw;
+  height: auto;
+  background-color: var(--bkg-color);
+} */
 
 #chart-chambers {
   width: 35% !important;
