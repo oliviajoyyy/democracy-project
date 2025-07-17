@@ -7,14 +7,11 @@ function startUp() {
   let continueBtn, testBtn;
 
   this.setup = function () {
-    textFont(helvFont);
-    background(bColor);
   }
 
   this.enter = function () {
+    paneScene = false;
     console.log("start up scene");
-    background(bColor);
-    document.body.style.backgroundColor = bColor;
 
     document.getElementById("main-header").textContent = configJSON.text.titleVis;
     document.getElementById("main-btn-div").style.display = "block";
@@ -89,17 +86,15 @@ function startSession() {
   let loadSessionBtn, aboutBtn;
 
   this.setup = function () {
-    textFont(helvFont);
-    background(bColor);
   }
 
   this.enter = function () {
+    paneScene = false;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     console.log("start up scene");
-    background(bColor);
-    document.body.style.backgroundColor = bColor;
 
     document.getElementById("main-header").textContent = configJSON.text.titleVis;
-
+    document.getElementById("main-subheader").style.display = "none";
     document.getElementById("main-subheader").textContent = configJSON.text.landingPage.h;
     let paragraphs = configJSON.text.landingPage.p.map((text) => {
       let p = document.createElement('p');
@@ -114,6 +109,7 @@ function startSession() {
     // set up hide/show btn for web version
     if (!enableHardware) {
       togglePaneDiv.style.display = "none";
+      infoBtnDiv.style.display = "none";
     }
 
     let buttonDiv = document.getElementById('main-btn-div');
@@ -192,12 +188,10 @@ function hardwareTest() {
   let backBtn, testBtn;
   //let port;
   this.setup = function () {
-    textFont(helvFont);
-    background(bColor);
-
   }
 
   this.enter = function () {
+    paneScene = false;
     console.log("start up scene");
     document.getElementById("main-header").innerHTML = "<h1>Hardware & DB Test </h1>";
     document.getElementById("main-btn-div").style.display = "block";
@@ -304,15 +298,16 @@ function aboutProject() {
   let backBtn;
   
   this.setup = function () {
-    textFont(helvFont);
-    background(bColor);
   }
 
   this.enter = function () {
+    paneScene = false;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
     console.log("start up scene");
 
     document.getElementById("main-header").textContent = configJSON.text.titleVis;
-
+    document.getElementById("main-subheader").style.display = "none";
     document.getElementById("main-subheader").textContent = configJSON.text.aboutPage.h;
     let paragraphs = configJSON.text.aboutPage.p.map((text) => {
       let p = document.createElement('p');
@@ -370,25 +365,28 @@ function sLoadSession() {
   var skipAmt; // number of session records to skip, updated when buttons clicked
   let sessionsDiv;
   let sessionsTable;
-  let s1, s2, s3, div1, div2, div3;
+  let divCh1, divCh2, divCh3, divVP, divPres, divProb, divPercent, divBench, divEndorse;
+  let s1, s2, s3, sVP, sPres, sProb, sPercent, sBench, sEndorse;
   
   this.setup = function () {
-    textFont(helvFont);
-    background(bColor);
   }
 
   this.enter = function () {
+    paneScene = true;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
     console.log("load sessions scene");
     document.getElementById('dot-p01').className = 'dot-active';
-    s1 = "";
-    s2 = "";
-    s3 = "";
-    div1 = document.createElement('div');
-    div2 = document.createElement('div');
-    div3 = document.createElement('div');
-    div1.id = 's-col-1';
-    div2.id = 's-col-2';
-    div3.id = 's-col-3';
+    
+    divCh1 = document.getElementById('s-ch1');
+    divCh2 = document.getElementById('s-ch2');
+    divCh3 = document.getElementById('s-ch3');
+    divVP = document.getElementById('s-vp');
+    divPres = document.getElementById('s-pres');
+    divProb = document.getElementById('s-probability');
+    divPercent = document.getElementById('s-percentage');
+    divBench = document.getElementById('s-benchmark');
+    divEndorse = document.getElementById('s-endorsement');
 
     paramChangedBool = true;
     skipAmt = 0;
@@ -404,6 +402,7 @@ function sLoadSession() {
     // set up hide/show btn for web version
     if (!enableHardware) {
       togglePaneDiv.style.display = "block";
+      infoBtnDiv.style.display = "block";
     }
 
     if (!document.getElementById('prev-pane-btn')) {
@@ -725,65 +724,80 @@ function sLoadSession() {
   }
 
   function inputTxt() {
-    document.getElementById("end-summary").innerHTML = "<h2>Session ID: " + selectedSessionID + "</h2>";
+    //document.getElementById("end-summary").innerHTML = "<h2>Session ID: " + selectedSessionID + "</h2>";
 
+    let h2 = document.getElementById('save-id');
+    h2.textContent = "Session ID: " + selectedSessionID;
+    
     s1 = 
       "<h3>First Legislative Chamber</h3>" +
       "<p>Voting Members: " + loadedConfig.chamber1.totalMembers +
       "<br>Members in Political Party A: " + Math.round(loadedConfig.chamber1.partyA * loadedConfig.chamber1.totalMembers) +
       "<br>Members in Political Party B: " + Math.round(loadedConfig.chamber1.partyB * loadedConfig.chamber1.totalMembers) +
       "<br>Members in Political Party C: " + Math.round(loadedConfig.chamber1.partyC * loadedConfig.chamber1.totalMembers) +
-      "</p><h3>Second Legislative Chamber</h3>" +
+      "</p>";
+      
+    s2 = "<h3>Second Legislative Chamber</h3>" +
       "<p>Voting Members: " + loadedConfig.chamber2.totalMembers +
       "<br>Members in Political Party A: " + Math.round(loadedConfig.chamber2.partyA * loadedConfig.chamber2.totalMembers) +
       "<br>Members in Political Party B: " + Math.round(loadedConfig.chamber2.partyB * loadedConfig.chamber2.totalMembers) +
       "<br>Members in Political Party C: " + Math.round(loadedConfig.chamber2.partyC * loadedConfig.chamber2.totalMembers) +
-      "</p><h3>Third Legislative Chamber</h3>" +
+      "</p>";
+      
+    s3 = "<h3>Third Legislative Chamber</h3>" +
       "<p>Voting Members: " + loadedConfig.chamber3.totalMembers +
       "<br>Members in Political Party A: " + Math.round(loadedConfig.chamber3.partyA * loadedConfig.chamber3.totalMembers) +
       "<br>Members in Political Party B: " + Math.round(loadedConfig.chamber3.partyB * loadedConfig.chamber3.totalMembers) +
-      "<br>Members in Political Party C: " + Math.round(loadedConfig.chamber3.partyC * loadedConfig.chamber3.totalMembers) + "</p>";
+      "<br>Members in Political Party C: " + Math.round(loadedConfig.chamber3.partyC * loadedConfig.chamber3.totalMembers) + 
+      "</p>";
 
-      s2 =
-      "<h3>Vice Presidency</h3>" +
+    sVP = "<h3>Vice Presidency</h3>" +
       "<p>Voting Members: " + loadedConfig.vicePres.totalMembers +
       "<br>Members in Political Party A: " + Math.round(loadedConfig.vicePres.partyA * loadedConfig.vicePres.totalMembers) +
       "<br>Members in Political Party B: " + Math.round(loadedConfig.vicePres.partyB * loadedConfig.vicePres.totalMembers) +
       "<br>Members in Political Party C: " + Math.round(loadedConfig.vicePres.partyC * loadedConfig.vicePres.totalMembers) + 
-      "</p><h3>Presidency</h3>" +
+      "</p>";
+      
+    sPres = "<h3>Presidency</h3>" +
       "<p>Voting Members: " + loadedConfig.president.totalMembers +
       "<br>Members in Political Party A: " + Math.round(loadedConfig.president.partyA * loadedConfig.president.totalMembers) +
       "<br>Members in Political Party B: " + Math.round(loadedConfig.president.partyB * loadedConfig.president.totalMembers) +
       "<br>Members in Political Party C: " + Math.round(loadedConfig.president.partyC * loadedConfig.president.totalMembers) + 
-      "</p><h3>Likelihood of Yes Vote: </h3>" +
+      "</p>";
+    
+    sProb = "<h3>Likelihood of Yes Vote: </h3>" +
       "<p>Political Party A: " + Math.round(loadedConfig.probabilityYesVote.partyA * 100) + "%" +
       "<br>Political Party B: " + Math.round(loadedConfig.probabilityYesVote.partyB * 100) + "%"  +
       "<br>Political Party C: " + Math.round(loadedConfig.probabilityYesVote.partyC * 100) + "%"  +
-      "</p><h3>Percentage of votes required for approval of bill</h3>" +
+      "</p>";
+    
+    sPercent = "<h3>Percentage of votes required for approval of bill</h3>" +
       "<p>Approval By Majority: " + Math.round(loadedConfig.percentMajority * 100) + "%"  +
       "<br> Approval By Supermajority: " + Math.round(loadedConfig.percentSupermajority * 100) + "%</p>";
       
-      s3 = "<h3>Benchmark Results</h3><p>" ;
+    sBench = "<h3>Benchmark Results</h3><p>" ;
       for(let i=1; i<=MAX_SIM_RESULTS; i++) {
-        s3 = s3 + loadedConfig.simResults[i].actTitle + " ";
+        sBench = sBench + loadedConfig.simResults[i].actTitle + " ";
         if (loadedConfig.simResults[i].billPass == true) {
-          s3 = s3 + "&#x2611;<br>"; // checkmark
+          sBench = sBench + "&#x2611;<br>"; // checkmark
         } else {
-          s3 = s3 + "&#9746;<br>"; // empty checkmark
+          sBench = sBench + "&#9746;<br>"; // empty checkmark
         }
       }
-      s3 = s3 + "</p>";
+    sBench = sBench + "</p>";
 
-      s3 += "<h3>Endorsement</h3>";
-      s3 += "<p>Number of User Endorsements: <span>" + (finalConfigObj.ownerEndorsement + finalConfigObj.publicEndorsement) + "</span></p>";
+    sEndorse = "<h3>Endorsement</h3>" +
+      "<p class='summary'>Number of User Endorsements: <span>" + (finalConfigObj.ownerEndorsement + finalConfigObj.publicEndorsement) + "</span></p>";
 
-      div1.innerHTML = s1;
-      div2.innerHTML = s2;
-      div3.innerHTML = s3;
-      
-      document.getElementById('end-summary').appendChild(div1);
-      document.getElementById('end-summary').appendChild(div2);
-      document.getElementById('end-summary').appendChild(div3);
+    divCh1.innerHTML = s1;
+    divCh2.innerHTML = s2;
+    divCh3.innerHTML = s3;
+    divVP.innerHTML = sVP;
+    divPres.innerHTML = sPres;
+    divProb.innerHTML = sProb;
+    divPercent.innerHTML = sPercent;
+    divBench.innerHTML = sBench;
+    divEndorse.innerHTML = sEndorse;
     }
 }
 
@@ -794,10 +808,12 @@ function sSessionVis() {
   let selection;
   
   this.setup = function () {
-    textFont(helvFont);
   }
 
   this.enter = function () {
+    paneScene = true;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
     console.log("session vis scene");
     document.getElementById('dot-p02').className = 'dot-active';
 
@@ -1134,25 +1150,27 @@ var allowEndorse = true;
  * C01 Load Session
  */
 function sPublicEndorsement() {
-  let s1, s2, s3, div1, div2, div3;
+  // let s1, s2, s3, div1, div2, div3;
   
   this.setup = function () {
-    textFont(helvFont);
   }
 
   this.enter = function () {
+    paneScene = true;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
     console.log("load sessions scene");
     allowEndorse = true;
     document.getElementById('dot-p03').className = 'dot-active';
-    s1 = "";
-    s2 = "";
-    s3 = "";
-    div1 = document.createElement('div');
-    div2 = document.createElement('div');
-    div3 = document.createElement('div');
-    div1.id = 's-col-1';
-    div2.id = 's-col-2';
-    div3.id = 's-col-3';
+    // s1 = "";
+    // s2 = "";
+    // s3 = "";
+    // div1 = document.createElement('div');
+    // div2 = document.createElement('div');
+    // div3 = document.createElement('div');
+    // div1.id = 's-col-1';
+    // div2.id = 's-col-2';
+    // div3.id = 's-col-3';
 
     paramChangedBool = true;
     showCount = 0;
@@ -1166,7 +1184,12 @@ function sPublicEndorsement() {
     document.getElementById("pane-header").textContent = configJSON.text.pEndorsementVis.h;
     document.getElementById("pane-description").textContent = configJSON.text.pEndorsementVis.p;
     
-    inputTxt();
+    // larger and highlighted endorsement
+    let divEndorse = document.getElementById('s-endorsement')
+    let sEndorse = "<h4 class='endorsement-txt'>Endorsement</h4>" +
+      "<p>Number of User Endorsements: <span class='endorsement-txt'>" + (endorseVal + finalConfigObj.ownerEndorsement) + "</span></p>";
+    divEndorse.innerHTML = sEndorse;
+    // inputTxt();
 
     if (!document.getElementById('middle-btn')) {
     middleBtn = createButton('Endorse');
@@ -1234,7 +1257,13 @@ function sPublicEndorsement() {
     allowEndorse = false;
     showPanesBool = false;
     addPublicEndorsement();
-    inputTxt();
+    //inputTxt();
+    // update endorsement number and highlight text
+    let divEndorse = document.getElementById('s-endorsement')
+    let sEndorse = "<h4 class='endorsement-txt'>Endorsement</h4>" +
+      "<p>Number of User Endorsements: <span class='endorsement-txt'>" + (endorseVal + finalConfigObj.ownerEndorsement) + "</span></p>";
+    divEndorse.innerHTML = sEndorse;
+
     document.getElementById('middle-btn').disabled = true;
     // document.getElementById('next-pane-btn').disabled = true;
     document.getElementById('prev-pane-btn').disabled = true;

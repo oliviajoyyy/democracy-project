@@ -12,6 +12,7 @@ function startUp() {
 
   this.enter = function () {
     console.log("start up scene");
+    paneScene = false;
 
     // set display of html elements for this scene
     document.getElementById("page-container").style.display = "block";
@@ -81,11 +82,13 @@ function startSession() {
 
   this.enter = function () {
     console.log("start & description scene");
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    paneScene = false;
 
     document.getElementById("page-container").style.display = "block";
     document.getElementById("main-header").textContent = configJSON.text.titleConfig;
+    document.getElementById("main-subheader").style.display = "none";
 
-    document.getElementById("main-subheader").textContent = configJSON.text.landingPage.h;
     let paragraphs = configJSON.text.landingPage.p.map((text) => {
       let p = document.createElement('p');
       p.textContent = text;
@@ -97,6 +100,7 @@ function startSession() {
     // set up hide/show btn for web version
     if (!enableHardware) {
       togglePaneDiv.style.display = "none";
+      infoBtnDiv.style.display = "none";
     }
 
     // if coming from pane scene since inactive, deactive the progress dot
@@ -216,6 +220,8 @@ function hardwareTest() {
 
   this.enter = function () {
     console.log("hardware test scene");
+    paneScene = false;
+
     document.getElementById("page-container").style.display = "block";
     document.getElementById("main-header").textContent = "Hardware & DB Test";
 
@@ -310,12 +316,14 @@ function aboutProject() {
   }
 
   this.enter = function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     console.log("about project scene");
+    paneScene = false;
 
     document.getElementById("page-container").style.display = "block";
     document.getElementById("main-header").textContent = configJSON.text.titleConfig;
+    document.getElementById("main-subheader").style.display = "none";
 
-    document.getElementById("main-subheader").textContent = configJSON.text.aboutPage.h;
     let paragraphs = configJSON.text.aboutPage.p.map((text) => {
       let p = document.createElement('p');
       p.textContent = text;
@@ -372,12 +380,14 @@ function newSessionScene() {
 
   this.enter = function () {
     console.log("new session scene");
+    paneScene = false;
 
     newSession();
     paramChangedBool = true;
 
     document.getElementById("page-container").style.display = "block";
     document.getElementById("main-header").textContent = configJSON.text.titleConfig;
+    document.getElementById("main-subheader").style.display = "block";
     document.getElementById("main-subheader").textContent = configJSON.text.newSessionPage.h;
     let paragraphs = configJSON.text.newSessionPage.p.map((text) => {
       let p = document.createElement('p');
@@ -470,14 +480,17 @@ function loadSessionS1() {
   }
 
   this.enter = function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     console.log("load session scene");
+    paneScene = false;
+
     newSession();
     paramChangedBool = true;
     skipAmt = 0; // add number of documentsShown each time show more button is clicked
 
     document.getElementById("page-container").style.display = "block";
     document.getElementById("main-header").textContent = configJSON.text.titleConfig;
-
+    document.getElementById("main-subheader").style.display = "block";
     document.getElementById("main-subheader").textContent = configJSON.text.selectSessionPage.h;
     let paragraphs = configJSON.text.selectSessionPage.p.map((text) => {
       let p = document.createElement('p');
@@ -780,21 +793,13 @@ function sBodies() {
   var slider1 = document.getElementById('slider01');  
 
   this.setup = function () {
-    // set up canvas for the first time
-    console.log('reconfig bool: ' + resizeCanvasBool);
-    visual.dWidth = windowWidth;
-    visual.dHeight = windowHeight -labelSpace;
-    visual.labelSpace = labelSpace;
-    canvas = createCanvas(windowWidth, windowHeight);
-    let canvasDiv = document.getElementById('vote');
-    canvas.parent(canvasDiv);
-    resizeCanvasBool = false;
-
     createSlider();
     sliderVals();
   }
 
   this.enter = function () {
+    paneScene = true;
+
     // resize canvas when entering scene, if window was resized
     if (resizeCanvasBool) {
       resizeVisuals();
@@ -815,6 +820,7 @@ function sBodies() {
     // set up hide/show btn for web version
     if (!enableHardware) {
       togglePaneDiv.style.display = "block";
+      infoBtnDiv.style.display = "block";
     }
 
     slider1.noUiSlider.set(userNumLegislative);
@@ -830,7 +836,10 @@ function sBodies() {
     prevPaneBtn.mousePressed(previousPane);
 
     if (!document.getElementById('update-btn')) {
-      updateBtn = createButton('Update &#9737;');
+      if (enableHardware) // circle icon on kiosk vers to indicate button on joytick
+        updateBtn = createButton('Update &#9737;');
+      else
+        updateBtn = createButton('Update');
       updateBtn.id('update-btn');
       updateBtn.class('buttons');
       updateBtn.parent(buttonDiv);
@@ -998,6 +1007,8 @@ function sLegislative() {
   }
 
   this.enter = function () {
+    paneScene = true;
+
     // resize canvas when moving to this scene if window was resized
     if (resizeCanvasBool) {
       resizeVisuals();
@@ -1348,6 +1359,8 @@ function sParties() {
   }
 
   this.enter = function () {
+    paneScene = true;
+
     if (resizeCanvasBool) {
       resizeVisuals();
       resizeCanvasBool = false;
@@ -1551,6 +1564,8 @@ function sMembersFirstChamber() {
   }
 
   this.enter = function () {
+    paneScene = true;
+
     if (resizeCanvasBool) {
       resizeVisuals();
       resizeCanvasBool = false;
@@ -1947,6 +1962,8 @@ function sMembersSecondChamber() {
   }
 
   this.enter = function () {
+    paneScene = true;
+
     if (resizeCanvasBool) {
       resizeVisuals();
       resizeCanvasBool = false;
@@ -2283,6 +2300,8 @@ function sMembersThirdChamber() {
   }
 
   this.enter = function () {
+    paneScene = true;
+
     if (resizeCanvasBool) {
       resizeVisuals();
       resizeCanvasBool = false;
@@ -2621,6 +2640,8 @@ function sMembersVP() {
   }
 
   this.enter = function () {
+    paneScene = true;
+
     if (resizeCanvasBool) {
       resizeVisuals();
       resizeCanvasBool = false;
@@ -2958,6 +2979,8 @@ function sMembersPres() {
   }
 
   this.enter = function () {
+    paneScene = true;
+
     if (resizeCanvasBool) {
       resizeVisuals();
       resizeCanvasBool = false;
@@ -3300,6 +3323,8 @@ function sBodyPass() {
   }
 
   this.enter = function () {
+    paneScene = true;
+
     if (resizeCanvasBool) {
       resizeVisuals();
       resizeCanvasBool = false;
@@ -3456,6 +3481,8 @@ function sYesVotes() {
   }
 
   this.enter = function () {
+    paneScene = true;
+
     if (resizeCanvasBool) {
       resizeVisuals();
       resizeCanvasBool = false;
@@ -3483,7 +3510,10 @@ function sYesVotes() {
 
     // OC to keep order of buttons
     if (!document.getElementById('update-btn')) {
-      updateBtn = createButton('Update &#9737;');
+      if (enableHardware)
+        updateBtn = createButton('Update &#9737;');
+      else
+        updateBtn = createButton('Update');
       updateBtn.id('update-btn');
       updateBtn.class('buttons');
       updateBtn.parent(buttonDiv);
@@ -3700,6 +3730,8 @@ function sVote() {
   }
 
   this.enter = function () {
+    paneScene = true;
+
     if (resizeCanvasBool) {
       resizeVisuals();
       resizeCanvasBool = false;
@@ -3742,7 +3774,10 @@ function sVote() {
     }
     
     if (!document.getElementById('vote-btn')) {
-      voteBtn = createButton('Run Test Vote &#9737;');
+      if (enableHardware) // circle icon on kiosk vers to indicate button on joytick
+        voteBtn = createButton('Run Test Vote &#9737;');
+      else
+        voteBtn = createButton('Run Test Vote');
       voteBtn.id('vote-btn');
       voteBtn.class('buttons');
       voteBtn.parent(buttonDiv);
@@ -3919,6 +3954,8 @@ function sBenchmarkPane() {
   }
 
   this.enter = function () {
+    paneScene = true;
+
     resizeVisuals();
     visual.completeReset();
 
@@ -4036,6 +4073,8 @@ function sBenchmarkResults() {
   }
 
   this.enter = function () {
+    paneScene = false;
+
     visual.dWidth = windowWidth * .95;
     visual.dHeight = windowHeight * .9;
     console.log("benchmark results page");
@@ -4045,7 +4084,7 @@ function sBenchmarkResults() {
     benchmarkTable = document.getElementById('benchmark-table');
     document.getElementById("page-container").style.display = "block";
     document.getElementById("main-header").textContent = configJSON.text.benchResultsPage.h;
-
+    document.getElementById("main-subheader").style.display = "none";
     document.getElementById("main-subheader").textContent = "";
     let paragraphs = configJSON.text.benchResultsPage.p.map((text) => {
       let p = document.createElement('p');
@@ -4061,6 +4100,7 @@ function sBenchmarkResults() {
     // set up hide/show btn for web version
     if (!enableHardware) {
       togglePaneDiv.style.display = "none";
+      infoBtnDiv.style.display = "none";
     }
 
     let buttonDiv = document.getElementById('main-btn-div');
@@ -4146,34 +4186,39 @@ function sBenchmarkResults() {
  */
 function sEndorse() {
   let startOverBtn, summarySaveBtn, approvalBtn;
-  let div1, div2, div3;
-  let s1, s2, s3;
+  let divCh1, divCh2, divCh3, divVP, divPres, divProb, divPercent, divBench, divEndorse;
+  let s1, s2, s3, sVP, sPres, sProb, sPercent, sBench, sEndorse;
 
   this.setup = function () {
   }
 
   this.enter = function () {
+    paneScene = false;
+
     prevSessionID = sessionID;
-    s1 = "";
-    s2 = "";
-    s3 = "";
-    div1 = document.createElement('div');
-    div2 = document.createElement('div');
-    div3 = document.createElement('div');
-    div1.id = 's-col-1';
-    div2.id = 's-col-2';
-    div3.id = 's-col-3';
+
+    divCh1 = document.getElementById('s-ch1');
+    divCh2 = document.getElementById('s-ch2');
+    divCh3 = document.getElementById('s-ch3');
+    divVP = document.getElementById('s-vp');
+    divPres = document.getElementById('s-pres');
+    divProb = document.getElementById('s-probability');
+    divPercent = document.getElementById('s-percentage');
+    divBench = document.getElementById('s-benchmark');
+    divEndorse = document.getElementById('s-endorsement');
 
     console.log("user config endorsement page");
     document.getElementById("main-header").textContent = configJSON.text.endorsementPageConfig.h;
     document.getElementById("main-page").style.display = "none";
+
+    document.getElementById("save-id").style.display = "none";
     
     let paragraphs = configJSON.text.endorsementPageConfig.p.map((text) => {
       let p = document.createElement('p');
       p.textContent = text;
       return p;
     });
-    document.getElementById("end-summary").replaceChildren(...paragraphs);
+    document.getElementById("summary-p").replaceChildren(...paragraphs);
     document.getElementById("end-summary").style.display = "block";
 
     let buttonDiv = document.getElementById('main-btn-div');
@@ -4231,26 +4276,15 @@ function sEndorse() {
 
   function clickedApprove() {
     ownerEndorse();
-    let s = "<h3>Benchmark Results</h3><p>" ;
-      for(let i=1; i<=MAX_SIM_RESULTS; i++) {
-        s = s + configs[configIX].simResults[i].actTitle + " ";
-        if (configs[configIX].simResults[i].billPass == true) {
-          s = s + "&#x2611;<br>"; // checkmark in box
-        } else {
-          s = s + "&#9746;<br>"; // x mark in box (for empty box use &#x2610;)
-        }
-      }
-      s = s + "</p>";
-      s += "<h3 class='endorsement-txt'>Endorsement</h3>";
+    let s = "<h4 class='endorsement-txt'>Endorsement</h4>";
 
-      
       if (finalConfigObj.ownerEndorsement == 1) {
         s += "<p>System Endorsed By User: <span class='endorsement-txt'>Yes</span></p>";
       } else {
         s += "<p>System Endorsed By User: <span class='endorsement-txt'>No</span></p>";
       }
 
-      div3.innerHTML = s;
+      divEndorse.innerHTML = s;
   }
 
   function clickedSummarySave() {
@@ -4266,64 +4300,83 @@ function sEndorse() {
   }
 
   function inputTxt() {
-
     s1 = 
       "<h3>First Legislative Chamber</h3>" +
       "<p>Voting Members: " + userNumHouse +
       "<br>Members in Political Party A: " + Math.round(userPerHouseBody[0] * userNumHouse) +
       "<br>Members in Political Party B: " + Math.round(userPerHouseBody[1] * userNumHouse) +
       "<br>Members in Political Party C: " + Math.round(userPerHouseBody[2] * userNumHouse) +
-      "</p><h3>Second Legislative Chamber</h3>" +
+      "</p>";
+      
+    s2 = "<h3>Second Legislative Chamber</h3>" +
       "<p>Voting Members: " + userNumHouse2 +
       "<br>Members in Political Party A: " + Math.round(userPerHouse2Body[0] * userNumHouse2) +
       "<br>Members in Political Party B: " + Math.round(userPerHouse2Body[1] * userNumHouse2) +
       "<br>Members in Political Party C: " + Math.round(userPerHouse2Body[2] * userNumHouse2) +
-      "</p><h3>Third Legislative Chamber</h3>" +
+      "</p>";
+    
+    s3 = "<h3>Third Legislative Chamber</h3>" +
       "<p>Voting Members: " + userNumSenate +
       "<br>Members in Political Party A: " + Math.round(userPerSenateBody[0] * userNumSenate) +
       "<br>Members in Political Party B: " + Math.round(userPerSenateBody[1] * userNumSenate) +
-      "<br>Members in Political Party C: " + Math.round(userPerSenateBody[2] * userNumSenate) + "</p>";
+      "<br>Members in Political Party C: " + Math.round(userPerSenateBody[2] * userNumSenate) + 
+      "</p>";
 
-      s2 =
-      "<h3>Vice Presidency</h3>" +
+    sVP = "<h3>Vice Presidency</h3>" +
       "<p>Voting Members: " + userNumVP +
       "<br>Members in Political Party A: " + Math.round(userPerPresBody[0] * userNumVP) +
       "<br>Members in Political Party B: " + Math.round(userPerPresBody[1] * userNumVP) +
       "<br>Members in Political Party C: " + Math.round(userPerPresBody[2] * userNumVP) +
-      "</p><h3>Presidency</h3>" +
+      "</p>";
+
+    sPres = "<h3>Presidency</h3>" +
       "<p>Voting Members: " + userNumPres +
       "<br>Members in Political Party A: " + Math.round(userPerVPBody[0] * userNumPres) +
       "<br>Members in Political Party B: " + Math.round(userPerVPBody[1] * userNumPres) +
       "<br>Members in Political Party C: " + Math.round(userPerVPBody[2] * userNumPres) +
-      "</p><h3>Likelihood of Yes Vote: </h3>" +
+      "</p>";
+    
+    sProb = "<h3>Likelihood of Yes Vote: </h3>" +
       "<p>Political Party A: " + userDemYaythresh +
       "<br>Political Party B: " + userRepYaythresh +
-      "<br>Political Party C: " + userIndYaythresh + "</p>" +
-      "<h3>Percentage of votes required <br>for approval of bill</h3>" +
+      "<br>Political Party C: " + userIndYaythresh + 
+      "</p>";
+
+    sPercent = "<h3>Percentage of votes required <br>for approval of bill</h3>" +
       "<p>Approval By Majority: " + userBodyPass +
-      "<br> Approval By Supermajority: " + userSuperThresh + "</p>";
+      "<br> Approval By Supermajority: " + userSuperThresh + 
+      "</p>";
       
-      s3 = "<h3>Benchmark Results</h3><p>" ;
+    sBench = "<h3>Benchmark Results</h3><p>" ;
       for(let i=1; i<=MAX_SIM_RESULTS; i++) {
-        s3 = s3 + configs[configIX].simResults[i].actTitle + " ";
+        sBench = sBench + configs[configIX].simResults[i].actTitle + " ";
         if (configs[configIX].simResults[i].billPass == true) {
-          s3 = s3 + "&#x2611;<br>"; // checkmark in box
+          sBench = sBench + "&#x2611;<br>"; // checkmark in box
         } else {
-          s3 = s3 + "&#9746;<br>"; // x mark in box (for empty box use &#x2610;)
+          sBench = sBench + "&#9746;<br>"; // x mark in box (for empty box use &#x2610;)
         }
       }
-      s3 = s3 + "</p>";
+      sBench = sBench + "</p>";
 
-      s3 += "<h3 class='endorsement-txt'>Endorsement</h3>";
-      s3 += "<p>System Endorsed By User: <span class='endorsement-txt'>No</span></p>"; // always starts not endorsed, until user clicks ENDORSE btn
+    sEndorse = "<h4 class='endorsement-txt'>Endorsement</h4>" + 
+      "<p>System Endorsed By User: <span class='endorsement-txt'>No</span></p>"; // always starts not endorsed, until user clicks ENDORSE btn
 
-      div1.innerHTML = s1;
-      div2.innerHTML = s2;
-      div3.innerHTML = s3;
+    divCh1.innerHTML = s1;
+    divCh2.innerHTML = s2;
+    divCh3.innerHTML = s3;
+    divVP.innerHTML = sVP;
+    divPres.innerHTML = sPres;
+    divProb.innerHTML = sProb;
+    divPercent.innerHTML = sPercent;
+    divBench.innerHTML = sBench;
+    divEndorse.innerHTML = sEndorse;
+    // div1.innerHTML = s1;
+    // div2.innerHTML = s2;
+    // div3.innerHTML = s3;
       
-      document.getElementById('end-summary').appendChild(div1);
-      document.getElementById('end-summary').appendChild(div2);
-      document.getElementById('end-summary').appendChild(div3);
+      // document.getElementById('end-summary').appendChild(div1);
+      // document.getElementById('end-summary').appendChild(div2);
+      // document.getElementById('end-summary').appendChild(div3);
   }
 }
 
@@ -4335,39 +4388,40 @@ var prevSessionID;
  */
 function sSaveResults() {
   let saveBtn, startOverBtn;
-  let div1, div2, div3;
-  let s1, s2, s3;
 
   this.setup = function () {
   }
 
   this.enter = function () {
+    paneScene = false;
+
     prevSessionID = sessionID;
-    s1 = "";
-    s2 = "";
-    s3 = "";
-    div1 = document.createElement('div');
-    div2 = document.createElement('div');
-    div3 = document.createElement('div');
-    div1.id = 's-col-1';
-    div2.id = 's-col-2';
-    div3.id = 's-col-3';
 
     console.log("user config final summary & save page");
     document.getElementById("main-header").textContent = configJSON.text.saveSessionPage.h;
 
     // show session ID
-    let h4 = document.createElement('h4');
+    let h4 = document.getElementById('save-id');
     h4.textContent = "Session ID: " + sessionID;
-    document.getElementById("end-summary").replaceChildren(h4);
+    document.getElementById("save-id").style.display = "block";
 
     let paragraphs = configJSON.text.saveSessionPage.p.map((text) => {
       let p = document.createElement('p');
       p.textContent = text;
       return p;
     });
-    document.getElementById("end-summary").append(...paragraphs);
+    document.getElementById("summary-p").replaceChildren(...paragraphs);
     document.getElementById("end-summary").style.display = "block";
+
+    // remove highlight from endorsement
+    let divEndorse = document.getElementById('s-endorsement')
+    let sEndorse = "<h4>Endorsement</h4>";
+    if (finalConfigObj.ownerEndorsement == 1) {
+      sEndorse += "<p>System Endorsed By User: Yes</p>";
+    } else {
+      sEndorse += "<p>System Endorsed By User: No</p>";
+    }
+    divEndorse.innerHTML = sEndorse;
 
     let buttonDiv = document.getElementById('main-btn-div');
     
@@ -4383,7 +4437,7 @@ function sSaveResults() {
     saveBtn.parent(buttonDiv);
     saveBtn.mousePressed(clickedSave);
 
-    inputTxt();
+    // inputTxt();
   }
 
   this.draw = function () {
@@ -4504,6 +4558,7 @@ function sComplete() {
   }
 
   this.enter = function () {
+    paneScene = false;
 
     console.log("save complete page");
     document.getElementById("main-header").textContent = configJSON.text.saveCompletePage.h;

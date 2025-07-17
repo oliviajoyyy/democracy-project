@@ -7,6 +7,8 @@ var visual;
 var buttonDiv;
 var togglePaneDiv;
 var toggleBtn;
+var infoBtnDiv;
+var infoBtn;
 
 //loaded assets
 var helvFont;
@@ -79,7 +81,10 @@ var resultIX = 0;
 var MAX_CONFIG_ATTEMPTS = 10; // 10th config is final config
 var MAX_SIM_RESULTS = 12; // run simulation 12 times for the 12 benchmarking tests
 
+// booleans for panes
 var showPanesBool = true;
+var showInfoPaneBool = false;
+var paneScene = false;
 
 // for hardware
 var port;
@@ -120,6 +125,14 @@ function setup() {
     toggleBtn.class('buttons');
     toggleBtn.parent(togglePaneDiv);
     toggleBtn.mousePressed(clickedToggle);
+
+    // set up web info button
+    infoBtnDiv = document.getElementById('info-btn-div');
+    infoBtn = createButton('?');
+    infoBtn.id('info-btn');
+    infoBtn.class('buttons');
+    infoBtn.parent(infoBtnDiv);
+    infoBtn.mousePressed(clickedInfo);
   }
   console.log("version val: " + versionVal);
 
@@ -173,6 +186,16 @@ function setup() {
   }
 
   timeLastActive = millis(); // initial activity starts
+
+  // set up canvas for the first time
+  console.log('reconfig bool: ' + resizeCanvasBool);
+  visual.dWidth = windowWidth;
+  visual.dHeight = windowHeight -labelSpace;
+  visual.labelSpace = labelSpace;
+  canvas = createCanvas(windowWidth, windowHeight);
+  let canvasDiv = document.getElementById('vote');
+  canvas.parent(canvasDiv);
+  resizeCanvasBool = false;
 
   console.log("end of scene-mgr.js setup");
 }
@@ -1116,10 +1139,29 @@ function keyPressed() {
     nextPane(); // . or > moves to next pane
   } else if (key == ',' || key == '<') {//else if (keyCode == LEFT_ARROW) {
     previousPane(); // , or < moves to previous pane
+  } else if (key == 'i') {
+    if (paneScene) {
+      clickedInfo();
+    }
   }
   mgr.keyPressed();
   keyCode == null;
   key = '';
+}
+
+/**
+ * Button to toggle info pane for web version
+ */
+function clickedInfo() {
+  if (!showInfoPaneBool) {
+    document.getElementById('info-div').style.display = "block";
+    showInfoPaneBool = true;
+  } else {
+    document.getElementById('info-div').style.display = "none";
+    showInfoPaneBool = false;
+  }
+  
+  console.log("clicked info");
 }
 
 /**

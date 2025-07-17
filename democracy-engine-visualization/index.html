@@ -26,14 +26,33 @@
 
       <h1 id="main-header" class="body-header"></h1>
 
+      <h2 id="main-subheader"></h2>
+
       <div id="main-page" class="body-text">
-        <h2 id="main-subheader"></h2>
         <section id="main-paragraphs">
           <p id="main-paragraph"></p>
         </section>
       </div>
 
-      <div id="end-summary" class="body-text start-display-none"></div>
+      <div id="end-summary" class="body-text start-display-none">
+        <h2 id="save-id"></h2>
+        
+        <!-- <div id="summary-p"></div> -->
+
+        <div id="summary-grid" class="summary">
+          <div id="s-ch1"></div>
+          <div id="s-ch2"></div>
+          <div id="s-ch3"></div>
+          <div id="s-vp"></div>
+          <div id="s-pres"></div>
+          <div id="s-probability"></div>
+          <div id="s-benchmark"></div>
+          <div id="s-percentage"></div>
+          <!-- <div id="s-endorsement"></div> -->
+        </div>
+
+        <div id="s-endorsement"></div>
+      </div>
 
       <div id="chart-page" class="start-display-none">
         <h2 id="chart-title"></h2>
@@ -46,7 +65,8 @@
         </section>
       </div>
 
-      <div id="main-btn-div" style="position: absolute; left: 50%; transform: translateX(-50%);"></div>
+      <div id="main-btn-div"></div>
+
     </div>
   </div>
 
@@ -73,6 +93,20 @@
     </div> <!-- end div for pane-bkg-->
 
     <div id="toggle-pane-div"></div>
+
+    <div id="info-div" class="start-display-none">
+      <div id="info-screen"></div>
+      <div id="info-pane">
+        <h2>Key Commands</h2>
+        <p>Space bar : Hide/Show pane</p>
+        <p>&lt : Previous pane</p>
+        <p>&gt :  Next pane</p>
+        <p>i : Show info pane </p>
+        <!-- <p>Enter or Return: Update</p> -->
+      </div>
+    </div>
+    <div id="info-btn-div">
+    </div>
 
   </div>
 

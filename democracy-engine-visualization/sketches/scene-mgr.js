@@ -5,9 +5,8 @@ var mgr;
 var buttonDiv;
 var togglePaneDiv;
 var toggleBtn;
-
-//loaded assets
-var helvFont;
+var infoBtnDiv;
+var infoBtn;
 
 //user input variables
 var userNumLegislative; // number of legislative bodies (1-3)
@@ -65,7 +64,10 @@ var entireSessionObj;
 var MAX_CONFIG_ATTEMPTS = 10; // 10th config is final config
 var MAX_SIM_RESULTS = 12; // run simulation 12 times for the 12 benchmarking tests
 
+// booleans for panes
 var showPanesBool = true;
+var showInfoPaneBool = false;
+var paneScene = false;
 
 // hardware tracking
 var port;
@@ -87,7 +89,6 @@ var timeLastActive; // millis since last button clicked
 var timeOutAmt = 480000; // 1 minute = 60000 milliseconds, 8 minutes = 480000 ms
 
 function preload() {
-  helvFont = loadFont('../assets/font/HelveticaNeue-Regular.otf');
   configJSON = loadJSON('../config/config.json');
   console.log(configJSON);
 }
@@ -109,6 +110,14 @@ function setup() {
     toggleBtn.class('buttons');
     toggleBtn.parent(togglePaneDiv);
     toggleBtn.mousePressed(clickedToggle);
+
+    // set up web info button
+    infoBtnDiv = document.getElementById('info-btn-div');
+    infoBtn = createButton('?');
+    infoBtn.id('info-btn');
+    infoBtn.class('buttons');
+    infoBtn.parent(infoBtnDiv);
+    infoBtn.mousePressed(clickedInfo);
   }
   
   govtConfig = configJSON.defaultConfig;
@@ -122,7 +131,6 @@ function setup() {
   rectColor2 = colorConfig.rectColor2;
   rectColor3 = colorConfig.rectColor3;
   barDark = colorConfig.barDark;
-  document.body.style.backgroundColor = bColor;
   setDefaultUserVars(); // set user vars to params from config file
   buttonDiv = document.getElementById('button-div');
 
@@ -650,7 +658,8 @@ function roundNum(value, decimals) {
 }
 
 function keyPressed() {
-  if (keyCode == RETURN) {
+  // SPACE BAR toggles panes
+  if (keyCode == 32) {
     if (showPanesBool == false) {
       showPanesBool = true;
     }
@@ -661,9 +670,28 @@ function keyPressed() {
     nextPane();
   } else if (key == ',' || key == '<') {//else if (keyCode == LEFT_ARROW) {
     previousPane();
+  } else if (key == 'i') {
+    if (paneScene) {
+      clickedInfo();
+    }
   }
   keyCode == null;
   key = '';
+}
+
+/**
+ * Button to toggle info pane for web version
+ */
+function clickedInfo() {
+  if (!showInfoPaneBool) {
+    document.getElementById('info-div').style.display = "block";
+    showInfoPaneBool = true;
+  } else {
+    document.getElementById('info-div').style.display = "none";
+    showInfoPaneBool = false;
+  }
+  
+  console.log("clicked info");
 }
 
 /**
