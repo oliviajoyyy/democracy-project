@@ -81,10 +81,13 @@ function sSessionVis() {
     // console.log("chamber ranges: " + ranges);
     // console.log("chamber values: " + values);
 
-    displayHistogram(xText, values, "NUMBER OF CHAMBERS", document.getElementById("chart"), barColors);
+    let xLabel = "Number of Chambers";
+    let yLabel = "Number of Sessions";
+
+    displayHistogram(xText, values, "LEGISLATIVE CHAMBERS", document.getElementById("chart"), barColors, xLabel, yLabel);
   }
 
-  function displayHistogram(ranges, values, title, canvasChart, barColors) {
+  function displayHistogram(ranges, values, title, canvasChart, barColors, xLabel, yLabel) {
     // delete Chart if it already exists, to make new chart w the data
     for (let chartId in Chart.instances) {
       if (Chart.instances[chartId].canvas === canvasChart) {
@@ -125,6 +128,12 @@ function sSessionVis() {
               color: textColor,
               font: { size: 40 },
               stepSize: 1
+            },
+            title: {
+              display: true,
+              text: yLabel,
+              color: textColor,
+              font: { size: 40 }
             }
           },
           x: {
@@ -132,6 +141,12 @@ function sSessionVis() {
               color: colorConfig.progressVal
             },
             ticks: {
+              color: textColor,
+              font: { size: 40 }
+            },
+            title: {
+              display: true,
+              text: xLabel,
               color: textColor,
               font: { size: 40 }
             }
@@ -165,8 +180,10 @@ function sSessionVis() {
     }
     // console.log("parties ranges: " + ranges);
     // console.log("parties values: " + values);
+    let xLabel = "Number of Parties";
+    let yLabel = "Number of Sessions";
 
-    displayHistogram(xText, values, "NUMBER OF PARTIES", document.getElementById("chart"), barColors);
+    displayHistogram(xText, values, "PARTIES", document.getElementById("chart"), barColors, xLabel, yLabel);
   }
 
   /**
@@ -199,8 +216,10 @@ function sSessionVis() {
     // console.log("total voting ranges: " + ranges);
     // console.log("total voting values: " + values);
     // console.log("bar colors members: " + barColors);
+    let xLabel = "Number of Voting Members";
+    let yLabel = "Number of Sessions";
 
-    displayHistogram(xText, values, "TOTAL VOTING MEMBERS", document.getElementById("chart"), barColors);
+    displayHistogram(xText, values, "TOTAL VOTING MEMBERS", document.getElementById("chart"), barColors, xLabel, yLabel);
   }
 
   function calcBenchScoreWhole(result) {
@@ -226,8 +245,10 @@ function sSessionVis() {
     // console.log("total voting ranges: " + ranges);
     // console.log("total voting values: " + values);
     // console.log("bar colors members: " + barColors);
+    let xLabel = "Benchmark Score";
+    let yLabel = "Number of Sessions";
 
-    displayHistogram(xText, values, "BENCHMARK SCORE", document.getElementById("chart"), barColors);
+    displayHistogram(xText, values, "BENCHMARK SCORE", document.getElementById("chart"), barColors, xLabel, yLabel);
   }
 
   function calcBenchScore(sObj) {

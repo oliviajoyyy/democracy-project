@@ -3,13 +3,6 @@
   --text-color: #f5f5f5;
 }
 
-h2 {
-  color: var(--text-color); /* blue; */
-  width: 100%;
-  font-weight: lighter;
-  margin-top: 0;
-}
-
 #charts {
   display: flex;
   flex-wrap: wrap;
@@ -19,6 +12,6 @@ h2 {
 #chart {
   width: 68vw !important;
   height: auto !important;
-  margin: 2% 2%;
+  margin: 4% 2%;
   padding: 2%;
 }
