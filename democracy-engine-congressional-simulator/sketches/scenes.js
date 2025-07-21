@@ -44,11 +44,11 @@ function startUp() {
    * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
    */
   function checkHardwareBtnInput() {
-    if (hLeftBtn == true) {
+    if (hLeftBtn) {
       clickedTest();
       hLeftBtn = false;
     } 
-    if (hRightBtn == true) {
+    if (hRightBtn) {
       clickedContinue();
       hRightBtn = false;
     }
@@ -170,15 +170,15 @@ function startSession() {
    * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
    */
   function checkHardwareBtnInput() {
-    if (hLeftBtn == true) {
+    if (hLeftBtn) {
       clickedAbout();
       hLeftBtn = false;
     } 
-    if (hMidBtn == true) {
+    if (hMidBtn) {
       clickedLoad();
       hMidBtn = false;
     }
-    if (hRightBtn == true) {
+    if (hRightBtn) {
       clickedNew();
       hRightBtn = false;
     }
@@ -352,7 +352,7 @@ function aboutProject() {
    * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
    */
   function checkHardwareBtnInput() {
-    if (hMidBtn == true) {
+    if (hMidBtn) {
       clickedBack();
       hMidBtn = false;
     }
@@ -423,12 +423,12 @@ function newSessionScene() {
    * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
    */
   function checkHardwareBtnInput() {
-    if (hLeftBtn == true) {
+    if (hLeftBtn) {
       clickedBack();
       hLeftBtn = false;
     } 
 
-    if (hRightBtn == true) {
+    if (hRightBtn) {
       clickedNext();
       hRightBtn = false;
     }
@@ -672,7 +672,7 @@ function loadSessionS1() {
    * ensures users allowed to go back when no sessions in db
    */
   function checkHardwareBtnInput() {
-    if (hLeftBtn == true) {
+    if (hLeftBtn) {
       // when no sessions in db, allow to go back
       if (sessions && sessions.length == 0) {
         clickedBack();
@@ -681,11 +681,11 @@ function loadSessionS1() {
       }
       hLeftBtn = false;
     } 
-    if (hMidBtn == true) {
+    if (hMidBtn) {
       clickedScrollDown();
       hMidBtn = false;
     }
-    if (hRightBtn == true) {
+    if (hRightBtn) {
       // only allow to proceed if there are sessions in db
       if (sessions && sessions.length > 0) {
         clickedNext();
@@ -896,7 +896,7 @@ function sBodies() {
    * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
    */
   function checkHardwareUpdateInput() {
-    if (hardwareUpdate && document.getElementById("update-btn").disabled == false) {
+    if (hardwareUpdate && !document.getElementById("update-btn").disabled) {
       clickedUpdate();
       hardwareUpdate = false;
     }
@@ -1116,7 +1116,7 @@ function sLegislative() {
    * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
    */
   function checkHardwareUpdateInput() {
-    if (hardwareUpdate && document.getElementById("update-btn").disabled == false) {
+    if (hardwareUpdate && !document.getElementById("update-btn").disabled) {
       clickedUpdate();
       hardwareUpdate = false;
     }
@@ -1412,7 +1412,7 @@ function sParties() {
  * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
  */
 function checkHardwareUpdateInput() {
-  if (hardwareUpdate && document.getElementById("update-btn").disabled == false) {
+  if (hardwareUpdate && !document.getElementById("update-btn").disabled) {
     clickedUpdate();
     hardwareUpdate = false;
   }
@@ -1713,7 +1713,7 @@ function sMembersFirstChamber() {
    * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
    */
   function checkHardwareUpdateInput() {
-    if (hardwareUpdate && document.getElementById("update-btn").disabled == false) {
+    if (hardwareUpdate && !document.getElementById("update-btn").disabled) {
       clickedUpdate();
       hardwareUpdate = false;
     }
@@ -2060,7 +2060,7 @@ function sMembersSecondChamber() {
    * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
    */
   function checkHardwareUpdateInput() {
-    if (hardwareUpdate && document.getElementById("update-btn").disabled == false) {
+    if (hardwareUpdate && !document.getElementById("update-btn").disabled) {
       clickedUpdate();
       hardwareUpdate = false;
     }
@@ -2398,7 +2398,7 @@ function sMembersThirdChamber() {
    * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
    */
   function checkHardwareUpdateInput() {
-    if (hardwareUpdate && document.getElementById("update-btn").disabled == false) {
+    if (hardwareUpdate && !document.getElementById("update-btn").disabled) {
       clickedUpdate();
       hardwareUpdate = false;
     }
@@ -2738,7 +2738,7 @@ function sMembersVP() {
    * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
    */
   function checkHardwareUpdateInput() {
-    if (hardwareUpdate && document.getElementById("update-btn").disabled == false) {
+    if (hardwareUpdate && !document.getElementById("update-btn").disabled) {
       clickedUpdate();
       hardwareUpdate = false;
     }
@@ -3077,7 +3077,7 @@ function sMembersPres() {
    * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
    */
   function checkHardwareUpdateInput() {
-    if (hardwareUpdate && document.getElementById("update-btn").disabled == false) {
+    if (hardwareUpdate && !document.getElementById("update-btn").disabled) {
       clickedUpdate();
       hardwareUpdate = false;
     }
@@ -3380,7 +3380,7 @@ function sBodyPass() {
    * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
    */
   function checkHardwareUpdateInput() {
-    if (hardwareUpdate && document.getElementById("update-btn").disabled == false) {
+    if (hardwareUpdate && !document.getElementById("update-btn").disabled) {
       clickedUpdate();
       hardwareUpdate = false;
     }
@@ -3572,7 +3572,7 @@ function sYesVotes() {
    * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
    */
   function checkHardwareUpdateInput() {
-    if (hardwareUpdate && document.getElementById("update-btn").disabled == false) {
+    if (hardwareUpdate && !document.getElementById("update-btn").disabled) {
       clickedUpdate();
       hardwareUpdate = false;
     }
@@ -3803,12 +3803,12 @@ function sVote() {
       // visual.dHeight = (windowHeight * .9)-labelSpace;
       visualizeVote = false;
       document.getElementById("vote-btn").disabled = false;
-    } else if (paramChangedBool == false && document.getElementById("vote-btn").disabled == false) {
+    } else if (!paramChangedBool && !document.getElementById("vote-btn").disabled) {
       // otherwise if no params changed but vote button not yet clicked (enabled -> disabled == false), don't visualize (display blank)
       // visual.dWidth = windowWidth * .95;
       // visual.dHeight = (windowHeight * .9)-labelSpace;
       visualizeVote = false; 
-    } else if (paramChangedBool == false && document.getElementById("vote-btn").disabled == true){
+    } else if (!paramChangedBool && document.getElementById("vote-btn").disabled){
       // visualize vote immediately when no param changed & vote button already clicked (disabled == true) when scene is entered
       // visual.dWidth = windowWidth * .95;
       visual.dHeight = windowHeight; // full height
@@ -3825,9 +3825,9 @@ function sVote() {
   }
 
   this.draw = function () {
-    if (visualizeVote == false) {
+    if (!visualizeVote) {
       visual.displayImmediateBlank(engine, false);
-    } else if (visualizeVote == true && visualizeImmediate == true) {
+    } else if (visualizeVote && visualizeImmediate) {
       visual.displayImmediateVotes(engine); // OC can move to enter if get loop working for drawing all at once?
       if (visual.userInputState) {
         setTimeout(function () {
@@ -3875,7 +3875,7 @@ function sVote() {
    * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
    */
   function checkHardwareUpdateInput() {
-    if (hardwareUpdate && document.getElementById("vote-btn").disabled == false) {
+    if (hardwareUpdate && !document.getElementById("vote-btn").disabled) {
       clickedVote();
       hardwareUpdate = false;
     }
@@ -3989,7 +3989,7 @@ function sBenchmarkPane() {
   }
 
   function checkHardwareBtnInput() {
-    if (hRightBtn == true) {
+    if (hRightBtn) {
       clickedBenchmark();
       hRightBtn = false;
     }
@@ -4005,7 +4005,7 @@ function sBenchmarkPane() {
       updateSession(); // save this config and resutls of running this configuration
       resultIX++;
     }
-    if (configIX > 0 && visualizeVote == true) {
+    if (configIX > 0 && visualizeVote) {
       configIX--; // decrement because last click for vote prepared for another config
     }
 
@@ -4151,12 +4151,12 @@ function sBenchmarkResults() {
    * checks for hardware input to trigger update, then calls function as defined in this scene
    */
   function checkHardwareBtnInput() {
-    if (hLeftBtn == true) {
+    if (hLeftBtn) {
       clickedStartOver();
       hLeftBtn = false;
     } 
 
-    if (hRightBtn == true) {
+    if (hRightBtn) {
       clickedSummary();
       hRightBtn = false;
     }
@@ -4255,15 +4255,15 @@ function sEndorse() {
    * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
    */
   function checkHardwareBtnInput() {
-    if (hLeftBtn == true) {
+    if (hLeftBtn) {
       clickedStartOver();
       hLeftBtn = false;
     } 
-    if (hMidBtn == true) {
+    if (hMidBtn) {
       clickedApprove();
       hMidBtn = false;
     }
-    if (hRightBtn == true) {
+    if (hRightBtn) {
       clickedSummarySave();
       hRightBtn = false;
     }
@@ -4443,12 +4443,12 @@ function sSaveResults() {
    * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
    */
   function checkHardwareBtnInput() {
-    if (hLeftBtn == true) {
+    if (hLeftBtn) {
       clickedStartOver();
       hLeftBtn = false;
     } 
 
-    if (hRightBtn == true) {
+    if (hRightBtn) {
       clickedSave();
       hRightBtn = false;
     }
@@ -4522,7 +4522,7 @@ function sComplete() {
    * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
    */
   function checkHardwareBtnInput() {
-    if (hMidBtn == true) {
+    if (hMidBtn) {
       clickedStartOver();
       hMidBtn = false;
     }

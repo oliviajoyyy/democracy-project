@@ -332,7 +332,7 @@ function checkHardwareInput() {
       }
 
       // after one click, allow it to do as its supposed to in the scene
-      if (hardwareLeftBtn == true) {
+      if (hardwareLeftBtn) {
         hLeftBtn = true; // indicates button was clicked once
       }
       hardwareLeftBtn = false;
@@ -357,7 +357,7 @@ function checkHardwareInput() {
       } else if (mgr.isCurrent(sEndorse)) {
         document.getElementById('approve-btn').classList.remove('btn-active');
       }
-      if (hardwareMidBtn == true) {
+      if (hardwareMidBtn) {
         hMidBtn = true; // one button click 
       }
       hardwareMidBtn = false;
@@ -382,7 +382,7 @@ function checkHardwareInput() {
       } else if (mgr.isCurrent(sEndorse)) {
         document.getElementById('save-summary-btn-c03').classList.remove('btn-active');
       }
-      if (hardwareRightBtn == true) {
+      if (hardwareRightBtn) {
         hRightBtn = true;
       }
       hardwareRightBtn = false;
@@ -408,7 +408,7 @@ function checkHardwareInput() {
       } else if (mgr.isCurrent(sComplete)) {
         document.getElementById('restart-btn-c05').classList.remove('btn-active');
       }
-      if (hardwareMidBtn == true) {
+      if (hardwareMidBtn) {
         hMidBtn = true;
       }
       hardwareMidBtn = false;
@@ -437,7 +437,7 @@ function checkHardwareInput() {
       } else if (mgr.isCurrent(sSaveResults)) {
         document.getElementById('restart-btn-c04').classList.remove('btn-active');
       }
-      if (hardwareLeftBtn == true) {
+      if (hardwareLeftBtn) {
         hLeftBtn = true;
       }
       hardwareLeftBtn = false;
@@ -462,7 +462,7 @@ function checkHardwareInput() {
       } else if (mgr.isCurrent(sSaveResults)) {
         document.getElementById('save-btn').classList.remove('btn-active');
       }
-      if (hardwareRightBtn == true) {
+      if (hardwareRightBtn) {
         hRightBtn = true;
       }
       hardwareRightBtn = false;
@@ -482,7 +482,7 @@ function checkHardwareInput() {
       document.getElementById('prev-pane-btn').classList.add('btn-active');
     } else if (arr[6] == 0 || arr[9] == 0) {
       document.getElementById('prev-pane-btn').classList.remove('btn-active');
-      if (hardwarePrevPane == true) {
+      if (hardwarePrevPane) {
         previousPane();
       }
       hardwarePrevPane = false;
@@ -501,7 +501,7 @@ function checkHardwareInput() {
       if (!mgr.isCurrent(sBenchmarkPane) && document.getElementById('next-pane-btn')) {
       document.getElementById('next-pane-btn').classList.remove('btn-active');
       }
-      if (hardwareNextPane == true) {
+      if (hardwareNextPane) {
         nextPane();
       }
       hardwareNextPane = false;
@@ -512,8 +512,8 @@ function checkHardwareInput() {
       hardwareHide = true;
       lastActive(); // track time of last activity
     } else if (arr[7] == 0) {
-      if (hardwareHide == true) {
-        if (showPanesBool == true) {
+      if (hardwareHide) {
+        if (showPanesBool) {
           showPanesBool = false;
         }
       }
@@ -525,8 +525,8 @@ function checkHardwareInput() {
       hardwareShow = true;
       lastActive(); // track time of last activity
     } else if (arr[7] == 0) {
-      if (hardwareShow == true) {
-        if (showPanesBool == false) {
+      if (hardwareShow) {
+        if (!showPanesBool) {
           showPanesBool = true;
         } 
       }
@@ -567,7 +567,7 @@ function checkHardwareInput() {
         if (document.getElementById('benchmark-btn')) {
           document.getElementById('benchmark-btn').classList.remove('btn-active');
         }
-        if (hardwareRightBtn == true) {
+        if (hardwareRightBtn) {
           hRightBtn = true;
         }
         hardwareRightBtn = false;
@@ -1123,7 +1123,7 @@ function getAllSessions() {
 function keyPressed() {
   // SPACE BAR toggles panes
   if (keyCode == 32) { // keyCode == RETURN
-    if (showPanesBool == false) {
+    if (!showPanesBool) {
       showPanesBool = true;
     }
     else {

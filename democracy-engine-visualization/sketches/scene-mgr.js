@@ -231,7 +231,7 @@ function checkHardwareInput() {
         lastActive(); // track time of last activity 
       } else if (arr[9] == 0) {
         document.getElementById('prev-pane-btn').classList.remove('btn-active');
-        if (hardwareLeftBtn == true) {
+        if (hardwareLeftBtn) {
           hLeftBtn = true;
         }
         hardwareLeftBtn = false;
@@ -243,7 +243,7 @@ function checkHardwareInput() {
         lastActive(); // track time of last activity 
       } else if (arr[10] == 0) {
         document.getElementById('middle-btn').classList.remove('btn-active');
-        if (hardwareMidBtn == true) {
+        if (hardwareMidBtn) {
           hMidBtn = true;
         }
         hardwareMidBtn = false;
@@ -255,7 +255,7 @@ function checkHardwareInput() {
         lastActive(); // track time of last activity 
       } else if (arr[10] == 0) { // right btn
         document.getElementById('next-pane-btn').classList.remove('btn-active');
-        if (hardwareRightBtn == true) {
+        if (hardwareRightBtn) {
           hRightBtn = true;
         }
         hardwareRightBtn = false;
@@ -266,7 +266,7 @@ function checkHardwareInput() {
       hardwarePrevPane = true;
       lastActive(); // track time of last activity 
     } else if (arr[6] == 0) {
-      if (hardwarePrevPane == true) {
+      if (hardwarePrevPane) {
         previousPane();
       }
       hardwarePrevPane = false;
@@ -278,7 +278,7 @@ function checkHardwareInput() {
       hardwareNextPane = true;
     } else if (arr[6] == 0) {
       document.getElementById('next-pane-btn').classList.remove('btn-active');
-      if (hardwareNextPane == true) {
+      if (hardwareNextPane) {
         nextPane();
       }
       hardwareNextPane = false;
@@ -289,8 +289,8 @@ function checkHardwareInput() {
       hardwareHide = true;
       lastActive(); // track time of last activity 
     } else if (arr[7] == 0) {
-      if (hardwareHide == true) {
-        if (showPanesBool == true) {
+      if (hardwareHide) {
+        if (showPanesBool) {
           showPanesBool = false;
         }
       }
@@ -302,8 +302,8 @@ function checkHardwareInput() {
       hardwareShow = true;
       lastActive(); // track time of last activity 
     } else if (arr[7] == 0) {
-      if (hardwareShow == true) {
-        if (showPanesBool == false) {
+      if (hardwareShow) {
+        if (!showPanesBool) {
           showPanesBool = true;
         }
       }
@@ -320,7 +320,7 @@ function checkHardwareInput() {
       lastActive(); // track time of last activity 
     } else if (arr[10] == 0) {
       document.getElementById('back-btn-a04').classList.remove('btn-active');
-      if (hardwareMidBtn == true) {
+      if (hardwareMidBtn) {
         hMidBtn = true;
       }
       hardwareMidBtn = false;
@@ -340,7 +340,7 @@ function checkHardwareInput() {
       if (mgr.isCurrent(startSession)) {
         document.getElementById('about-btn-a02').classList.remove('btn-active');
       }
-      if (hardwareLeftBtn == true) {
+      if (hardwareLeftBtn) {
         hLeftBtn = true;
       }
       hardwareLeftBtn = false;
@@ -356,7 +356,7 @@ function checkHardwareInput() {
       if (mgr.isCurrent(startSession)) {
         document.getElementById('load-session-btn-a02').classList.remove('btn-active');
       }
-      if (hardwareRightBtn == true) {
+      if (hardwareRightBtn) {
         hRightBtn = true;
       }
       hardwareRightBtn = false;
@@ -371,7 +371,7 @@ function checkHardwareInput() {
       lastActive(); // track time of last activity 
     } else if (arr[6] == 0 || arr[9] == 0) {
       document.getElementById('prev-pane-btn').classList.remove('btn-active');
-      if (hardwarePrevPane == true) {
+      if (hardwarePrevPane) {
         previousPane();
       }
       hardwarePrevPane = false;
@@ -384,7 +384,7 @@ function checkHardwareInput() {
       lastActive(); // track time of last activity 
     } else if (arr[6] == 0 || arr[11] == 0) {
       document.getElementById('next-pane-btn').classList.remove('btn-active');
-      if (hardwareNextPane == true) {
+      if (hardwareNextPane) {
         nextPane();
       }
       hardwareNextPane = false;
@@ -395,8 +395,8 @@ function checkHardwareInput() {
       hardwareHide = true;
       lastActive(); // track time of last activity 
     } else if (arr[7] == 0) {
-      if (hardwareHide == true) {
-        if (showPanesBool == true) {
+      if (hardwareHide) {
+        if (showPanesBool) {
           showPanesBool = false;
         } //else {
         //   showPanesBool = true;
@@ -410,8 +410,8 @@ function checkHardwareInput() {
       hardwareShow = true;
       lastActive(); // track time of last activity 
     } else if (arr[7] == 0) {
-      if (hardwareShow == true) {
-        if (showPanesBool == false) {
+      if (hardwareShow) {
+        if (!showPanesBool) {
           showPanesBool = true;
         }
       }
@@ -426,7 +426,7 @@ function checkHardwareInput() {
       lastActive(); // track time of last activity 
     } else if (arr[6] == 0 || arr[9] == 0) {
       document.getElementById('prev-pane-btn').classList.remove('btn-active');
-      if (hardwarePrevPane == true) {
+      if (hardwarePrevPane) {
         previousPane();
       }
       hardwarePrevPane = false;
@@ -438,7 +438,7 @@ function checkHardwareInput() {
       hardwareNextPane = true;
     } else if (arr[6] == 0) {
       // document.getElementById('next-pane-btn').classList.remove('btn-active');
-      if (hardwareNextPane == true) {
+      if (hardwareNextPane) {
         nextPane();
       }
       hardwareNextPane = false;
@@ -450,7 +450,7 @@ function checkHardwareInput() {
       lastActive(); // track time of last activity 
     } else if (arr[10] == 0) {
       document.getElementById('next-pane-btn').classList.remove('btn-active');
-      if (hardwareRightBtn == true) {
+      if (hardwareRightBtn) {
         hRightBtn = true;
       }
       hardwareRightBtn = false;
@@ -462,7 +462,7 @@ function checkHardwareInput() {
       lastActive(); // track time of last activity 
     } else if (arr[10] == 0) {
       document.getElementById('middle-btn').classList.remove('btn-active');
-      if (hardwareMidBtn == true) {
+      if (hardwareMidBtn) {
         hMidBtn = true;
       }
       hardwareMidBtn = false;
@@ -473,8 +473,8 @@ function checkHardwareInput() {
       hardwareHide = true;
       lastActive(); // track time of last activity 
     } else if (arr[7] == 0) {
-      if (hardwareHide == true) {
-        if (showPanesBool == true) {
+      if (hardwareHide) {
+        if (showPanesBool) {
           showPanesBool = false;
         }
       }
@@ -486,8 +486,8 @@ function checkHardwareInput() {
       hardwareShow = true;
       lastActive(); // track time of last activity 
     } else if (arr[7] == 0) {
-      if (hardwareShow == true) {
-        if (showPanesBool == false) {
+      if (hardwareShow) {
+        if (!showPanesBool) {
           showPanesBool = true;
         }
       }
@@ -498,7 +498,7 @@ function checkHardwareInput() {
       hardwareLeftBtn = true;
       lastActive(); // track time of last activity 
     } else if (arr[9] == 0) {
-      if (hardwareLeftBtn == true) {
+      if (hardwareLeftBtn) {
         hLeftBtn = true;
       }
       hardwareLeftBtn = false;
@@ -507,7 +507,7 @@ function checkHardwareInput() {
       hardwareRightBtn = true;
       lastActive(); // track time of last activity 
     } else if (arr[10] == 0) {
-      if (hardwareRightBtn == true) {
+      if (hardwareRightBtn) {
         hRightBtn = true;
       }
       hardwareRightBtn = false;
@@ -520,7 +520,7 @@ function checkHardwareInput() {
  * Show next pane scene, control order
  */
 function nextPane() {
-  if (mgr.isCurrent(sLoadSession) && document.getElementById('next-pane-btn').disabled == false) {
+  if (mgr.isCurrent(sLoadSession) && !document.getElementById('next-pane-btn').disabled) {
     document.getElementById('dot-p01').className = 'dot'; // deactivate dot on pane before moving to next pane
     //document.getElementById("page1").style.display = "none";
     document.getElementById("sessions-list").style.display = "none";
@@ -660,7 +660,7 @@ function roundNum(value, decimals) {
 function keyPressed() {
   // SPACE BAR toggles panes
   if (keyCode == 32) {
-    if (showPanesBool == false) {
+    if (!showPanesBool) {
       showPanesBool = true;
     }
     else {

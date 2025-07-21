@@ -51,12 +51,12 @@ function startUp() {
    * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
    */
   function checkHardwareBtnInput() {
-    if (hLeftBtn == true) {
+    if (hLeftBtn) {
       clickedTest();
       hLeftBtn = false;
     } 
 
-    if (hRightBtn == true) {
+    if (hRightBtn) {
       clickedContinue();
       hRightBtn = false;
     }
@@ -149,12 +149,12 @@ function startSession() {
    * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
    */
   function checkHardwareBtnInput() {
-    if (hLeftBtn == true) {
+    if (hLeftBtn) {
       clickedAbout();
       hLeftBtn = false;
     } 
 
-    if (hRightBtn == true) {
+    if (hRightBtn) {
       clickedLoad();
       hRightBtn = false;
     }
@@ -265,11 +265,11 @@ function hardwareTest() {
    * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
    */
   function checkHardwareBtnInput() {
-    if (hLeftBtn == true) {
+    if (hLeftBtn) {
       clickedBack();
       hLeftBtn = false;
     } 
-    if (hRightBtn == true) {
+    if (hRightBtn) {
       connectBtnClick();
       hRightBtn = false;
     }
@@ -338,7 +338,7 @@ function aboutProject() {
    * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
    */
   function checkHardwareBtnInput() {
-    if (hMidBtn == true) {
+    if (hMidBtn) {
       clickedBack();
       hMidBtn = false;
     } 
@@ -511,7 +511,7 @@ function sLoadSession() {
    * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
    */
   function checkHardwareBtnInput() {
-    if (hLeftBtn == true) {
+    if (hLeftBtn) {
       if (sessions && sessions.length == 0) {
         previousPane();
       } else {
@@ -519,11 +519,11 @@ function sLoadSession() {
       }
       hLeftBtn = false;
     } 
-    if (hMidBtn == true) {
+    if (hMidBtn) {
       clickedScrollDown();
       hMidBtn = false;
     }
-    if (hRightBtn == true) {
+    if (hRightBtn) {
       if (sessions && sessions.length > 0) {
       nextPane();
       }
@@ -1250,13 +1250,13 @@ function sPublicEndorsement() {
    * checks for hardware input to trigger update, then calls clickedUpdate() as defined in this scene
    */
   function checkHardwareBtnInput() {
-    if (hMidBtn == true) {
+    if (hMidBtn) {
       if (allowEndorse) {
         clickedPublicEndorse();
       }
       hMidBtn = false;
     }
-    if (hRightBtn == true) {
+    if (hRightBtn) {
       clickedStartOver();
       hRightBtn = false;
     }
