@@ -160,12 +160,14 @@ button:hover:enabled {
   position: fixed;
   bottom: 15px;
   width: 60%;
-  left: 20%;
+  min-width: 830px;
+  left: 50%;
+  transform: translateX(-50%); /* keeps centered horizontally */
   height: auto;
   z-index: 99;
   border-radius: 30px;
   border: 1mm solid var(--pane-border);
-  min-width: 830px;
+  
 }
 
 #pane-text {
@@ -264,6 +266,32 @@ button:hover:enabled {
   background-color: var(--bkg-color);
 }
 
+@media only screen and (max-width: 1340px) {
+  /* #toggle-pane-btn {
+    min-width: 0;
+    width: 50px;
+    text-indent: -9999px;
+    background: url('../svg/web_asset_icon.svg') no-repeat center;
+    background-color: var(--bkg-color);
+  } */
+
+  .hide-icon {
+    min-width: 0;
+    width: 50px;
+    text-indent: -9999px;
+    background: url('../svg/web_asset_icon.svg') no-repeat center;
+    background-color: var(--bkg-color);
+  }
+
+  .show-icon {
+    min-width: 0;
+    width: 50px;
+    text-indent: -9999px;
+    background: url('../svg/web_asset_off_icon.svg') no-repeat center;
+    background-color: var(--bkg-color);
+  }
+}
+
 
 /* ----------------------------------------------------------------- */
 /* INFO PANE */
@@ -271,7 +299,7 @@ button:hover:enabled {
 #info-btn-div {
   position: fixed;
   z-index: 107;
-  bottom: 3vh;
+  bottom: 2vh;
   left: 2%;
   display: none;
 }
@@ -297,8 +325,8 @@ button:hover:enabled {
   background-color: var(--pane-bkg);
   position: fixed;
   bottom: 15px;
-  width: 30%;
-  left: 2%;
+  width: auto;
+  left: 3%;
   height: auto;
   z-index: 106;
   border-radius: 30px;

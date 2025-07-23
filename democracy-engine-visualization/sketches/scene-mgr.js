@@ -712,6 +712,8 @@ function paneToggle() {
   if (showPanesBool) {
     if (!enableHardware) { // web version
         document.getElementById('toggle-pane-btn').textContent = "Hide Pane";
+        document.getElementById('toggle-pane-btn').classList.remove('show-icon');
+        document.getElementById('toggle-pane-btn').classList.add('hide-icon');
     }
 
     document.getElementById("pane-bkg").style.display = "block"; 
@@ -722,6 +724,8 @@ function paneToggle() {
   } else {
     if (!enableHardware) { // web version
       document.getElementById('toggle-pane-btn').textContent = "Show Pane";
+      document.getElementById('toggle-pane-btn').classList.remove('hide-icon');
+      document.getElementById('toggle-pane-btn').classList.add('show-icon');
     }
 
       document.getElementById("screen").style.display = "none";
