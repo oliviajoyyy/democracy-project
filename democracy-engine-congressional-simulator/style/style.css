@@ -32,7 +32,7 @@ input[type=range] {
 }
 
 #vote {
-  position: fixed;
+  position: relative; /* relative to allow moving around div wehen screen too small, fixed to prevent that */
   width: 100vw;
   height: auto;
   background-color: var(--bkg-color);

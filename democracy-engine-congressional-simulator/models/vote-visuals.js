@@ -854,7 +854,7 @@ class VoteVisual {
     noStroke();
     fill(this.tColor);
     textAlign(LEFT, TOP);
-    text(labelText, 50, 0);
+    text(labelText, 0, 0);
     pop();
   }
 

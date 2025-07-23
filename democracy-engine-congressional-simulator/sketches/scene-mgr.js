@@ -735,6 +735,10 @@ function windowResized() {
 }
 
 function resizeVisuals() {
+  // smallest window size to show p5 well is 1180x480
+  if (windowWidth < 1180 || windowHeight < 480) {
+    return;
+  }
   visual.dWidth = windowWidth;
   visual.dHeight = windowHeight - labelSpace;
   visual.labelSpace = labelSpace;
