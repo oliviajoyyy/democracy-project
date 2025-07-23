@@ -449,7 +449,7 @@ function newSessionScene() {
     visual.completeReset();
     resizeCanvasBool = true;
 
-    engine.currentCongLogic(true); // uncomment if drawing to screen real time
+    engine.currentCongLogic(); // uncomment if drawing to screen real time
   
     mgr.showScene(sBodies);
   }
@@ -565,19 +565,6 @@ function loadSessionS1() {
     }
 
     getTotalCount().then((totalCount) => {
-      console.log("total count: " + totalCount);
-      console.log("in get total count - skipAmt: " + skipAmt);
-
-      // if skipAmt goes over total count or below 0, adjust accordingly
-      // note - not needed if diabling btns (it prevents this)
-      //if (skipAmt >= totalCount) {
-      //  skipAmt = totalCount - documentsShown;
-      //} else 
-      // if (skipAmt < 0) {
-      //   skipAmt = 0;
-      // }
-
-      console.log("skipAmt before if smt: " + skipAmt);
 
       // Disable Show Next btn if skipAmt would go over totalCount next time it is clicked
       if (skipAmt + documentsShown >= totalCount) {
@@ -704,7 +691,6 @@ function loadSessionS1() {
       let radio = document.querySelector(`input[name="sessions-radio"][value="${toSelect}"]`);
       if (radio) { radio.checked = true; }
     }
-    // console.log("current selection: " + getSelectedRadioValue());
   }
 
   // move selection down the list
@@ -716,7 +702,6 @@ function loadSessionS1() {
       let radio = document.querySelector(`input[name="sessions-radio"][value="${toSelect}"]`);
       if (radio) { radio.checked = true; }
     }
-    // console.log("current selection: " + getSelectedRadioValue());
   }
 
   function clickedBack() {
@@ -737,7 +722,7 @@ function loadSessionS1() {
     visual.completeReset();
     resizeCanvasBool = true;
 
-    engine.currentCongLogic(true); // uncomment if drawing to screen real time
+    engine.currentCongLogic(); // uncomment if drawing to screen real time
     mgr.showScene(sBodies);
   }
 
@@ -783,7 +768,6 @@ function loadSessionS1() {
 
 let updateBtn, nextPaneBtn, prevPaneBtn; // main 3 buttons on the panes
 let paramChangedBool = false;
-var labelSpace = 30;
 
 /**
  * C01 P01 Number of Chambers
@@ -859,7 +843,7 @@ function sBodies() {
   }
 
   this.draw = function () {
-    visual.displayImmediateBlank(engine, false); // display visual of configuration
+    visual.displayImmediateBlank(engine); // display visual of configuration
     
     paneToggle(); // allow for pane to be toggled (continuous check)
 
@@ -1048,7 +1032,7 @@ function sLegislative() {
   }
 
   this.draw = function () {
-    visual.displayImmediateBlank(engine, false);
+    visual.displayImmediateBlank(engine);
     paneToggle();
     if (enableHardware) {
     checkHardwareInput();
@@ -1379,7 +1363,7 @@ function sParties() {
   }
 
   this.draw = function () {
-    visual.displayImmediateBlank(engine, false);
+    visual.displayImmediateBlank(engine);
     paneToggle();
     if (enableHardware) {
     checkHardwareInput();
@@ -1492,12 +1476,6 @@ function checkHardwareUpdateInput() {
     }
 
     function sliderVals() {
-      var toolTip = slider5.querySelectorAll('.noUi-tooltip');
-      // var classes = ['c-1-color', 'c-2-color', 'c-3-color', 'c-4-color', 'c-5-color'];
-
-      // for (var i = 0; i < toolTip.length; i++) {
-      //   toolTip[i].classList.add(classes[i]);
-      // }
 
       slider5.noUiSlider.on('update', function (values, handle) {
         userNumParties = values[0];
@@ -1623,7 +1601,7 @@ function sMembersFirstChamber() {
   var prevMillis1 = millis();
   var prevMillis2 = millis();
   this.draw = function () {
-    visual.displayImmediateBlank(engine, false);
+    visual.displayImmediateBlank(engine);
     paneToggle();
     if (enableHardware) {
     checkHardwareInput();
@@ -1998,7 +1976,7 @@ function sMembersSecondChamber() {
   }
 
   this.draw = function () {
-    visual.displayImmediateBlank(engine, false);
+    visual.displayImmediateBlank(engine);
     paneToggle();
     if (enableHardware) {
     checkHardwareInput();
@@ -2031,10 +2009,7 @@ function sMembersSecondChamber() {
       let s1 = map(arr[1], 10, 245, 0, maxSlider, true); // physical movement of sliders
       let s2 = map(arr[2], 10, 245, 0, maxSlider, true);
 
-      // console.log("s1: " + s1);
       slider1.noUiSlider.set(s1);
-      
-      // console.log("s2: " + s2);
       //if (s2 != userNumHouse - slider1.noUiSlider.get()) {
         slider2.noUiSlider.set(userNumHouse2 - slider1.noUiSlider.get());
       //} else {
@@ -2336,7 +2311,7 @@ function sMembersThirdChamber() {
   }
 
   this.draw = function () {
-    visual.displayImmediateBlank(engine, false);
+    visual.displayImmediateBlank(engine);
     paneToggle();
     if (enableHardware) {
     checkHardwareInput();
@@ -2369,15 +2344,8 @@ function sMembersThirdChamber() {
       let s1 = map(arr[1], 10, 245, 0, maxSlider, true); // physical movement of sliders
       let s2 = map(arr[2], 10, 245, 0, maxSlider, true);
 
-      // console.log("s1: " + s1);
       slider1.noUiSlider.set(s1);
-      
-      // console.log("s2: " + s2);
-      //if (s2 != userNumHouse - slider1.noUiSlider.get()) {
-        slider2.noUiSlider.set(userNumSenate - slider1.noUiSlider.get());
-      //} else {
-        //slider2.noUiSlider.set(s2);
-      //}
+      slider2.noUiSlider.set(userNumSenate - slider1.noUiSlider.get());
 
     } else if (userNumParties == 3 && arr[1] && arr[2] && arr[3]) {
       let s1 = map(arr[1], 10, 245, 0, maxSlider, true);
@@ -2676,7 +2644,7 @@ function sMembersVP() {
   }
 
   this.draw = function () {
-    visual.displayImmediateBlank(engine, false);
+    visual.displayImmediateBlank(engine);
     paneToggle();
     if (enableHardware) {
     checkHardwareInput();
@@ -2709,15 +2677,8 @@ function sMembersVP() {
       let s1 = map(arr[1], 10, 245, 0, maxSlider, true); // physical movement of sliders
       let s2 = map(arr[2], 10, 245, 0, maxSlider, true);
 
-      // console.log("s1: " + s1);
       slider1.noUiSlider.set(s1);
-      
-      // console.log("s2: " + s2);
-      //if (s2 != userNumHouse - slider1.noUiSlider.get()) {
         slider2.noUiSlider.set(userNumVP - slider1.noUiSlider.get());
-      //} else {
-        //slider2.noUiSlider.set(s2);
-      //}
 
     } else if (userNumParties == 3 && arr[1] && arr[2] && arr[3]) {
       let s1 = map(arr[1], 10, 245, 0, maxSlider, true);
@@ -3015,7 +2976,7 @@ function sMembersPres() {
   }
 
   this.draw = function () {
-    visual.displayImmediateBlank(engine, false);
+    visual.displayImmediateBlank(engine);
     paneToggle();
     if (enableHardware) {
     checkHardwareInput();
@@ -3048,23 +3009,14 @@ function sMembersPres() {
       let s1 = map(arr[1], 10, 245, 0, maxSlider, true); // physical movement of sliders
       let s2 = map(arr[2], 10, 245, 0, maxSlider, true);
 
-      // console.log("s1: " + s1);
       slider1.noUiSlider.set(s1);
-      
-      // console.log("s2: " + s2);
-      //if (s2 != userNumHouse - slider1.noUiSlider.get()) {
-        slider2.noUiSlider.set(userNumPres - slider1.noUiSlider.get());
-      //} else {
-        //slider2.noUiSlider.set(s2);
-      //}
+      slider2.noUiSlider.set(userNumPres - slider1.noUiSlider.get());
 
     } else if (userNumParties == 3 && arr[1] && arr[2] && arr[3]) {
       let s1 = map(arr[1], 10, 245, 0, maxSlider, true);
-      // console.log("s1: " + s1);
       slider1.noUiSlider.set(s1);
       
       let s2 = map(arr[2], 10, 245, 0, maxSlider, true);
-      // console.log("s2: " + s2);
 
       let sliderBval = ceil((userNumPres - slider1.noUiSlider.get()) / 2);
           let sliderCval = (userNumPres - slider1.noUiSlider.get()) - slider2.noUiSlider.get();
@@ -3345,7 +3297,7 @@ function sBodyPass() {
   }
 
   this.draw = function () {
-    visual.displayImmediateBlank(engine, false);
+    visual.displayImmediateBlank(engine);
     paneToggle();
     if (enableHardware) {
     checkHardwareInput();
@@ -3529,7 +3481,7 @@ function sYesVotes() {
   }
 
   this.draw = function () { 
-    visual.displayImmediateBlank(engine, false);
+    visual.displayImmediateBlank(engine);
     paneToggle();
     if (enableHardware) {
     checkHardwareInput();
@@ -3799,18 +3751,13 @@ function sVote() {
     
     // if any parameters changed, don't visualize the vote yet (display blank) & enable button
     if (paramChangedBool) {
-      // visual.dWidth = windowWidth * .95;
-      // visual.dHeight = (windowHeight * .9)-labelSpace;
       visualizeVote = false;
       document.getElementById("vote-btn").disabled = false;
     } else if (!paramChangedBool && !document.getElementById("vote-btn").disabled) {
       // otherwise if no params changed but vote button not yet clicked (enabled -> disabled == false), don't visualize (display blank)
-      // visual.dWidth = windowWidth * .95;
-      // visual.dHeight = (windowHeight * .9)-labelSpace;
       visualizeVote = false; 
     } else if (!paramChangedBool && document.getElementById("vote-btn").disabled){
       // visualize vote immediately when no param changed & vote button already clicked (disabled == true) when scene is entered
-      // visual.dWidth = windowWidth * .95;
       visual.dHeight = windowHeight; // full height
       visualizeVote = true;
       visualizeImmediate = true;
@@ -3826,22 +3773,22 @@ function sVote() {
 
   this.draw = function () {
     if (!visualizeVote) {
-      visual.displayImmediateBlank(engine, false);
+      visual.displayImmediateBlank(engine);
     } else if (visualizeVote && visualizeImmediate) {
-      visual.displayImmediateVotes(engine); // OC can move to enter if get loop working for drawing all at once?
-      if (visual.userInputState) {
+      visual.displayImmediateVotes(engine);
+      if (visual.showVoteOutcomeTxt) {
         setTimeout(function () {
           if (mgr.isCurrent(sVote)) {
           engine.bodyCount = engine.numBodies;
-          visual.finalTextDisplayUser(engine, helvFont, colorOverlay, resultIX);
+          visual.finalTextDisplay(engine, helvFont, colorOverlay);
           }
         }, 1000); // 1 second before text overlay shows
-        visual.userInputState = false;
+        visual.showVoteOutcomeTxt = false;
       }
     } else {
       visual.displayVoting(engine);
       // OC when visual display of rectangles is done, show text
-      if (visual.userInputState) {
+      if (visual.showVoteOutcomeTxt) {
         finalDisplay();
       }
     }
@@ -3860,14 +3807,14 @@ function sVote() {
     setTimeout(function () {
       if (mgr.isCurrent(sVote)) {
       engine.bodyCount = engine.numBodies;
-      visual.finalTextDisplayUser(engine, helvFont, colorOverlay, resultIX);
+      visual.finalTextDisplay(engine, helvFont, colorOverlay);
       document.getElementById("pane-description").textContent = configJSON.text.p11Config.pAfterVote;
       setTimeout(function () {
         showPanesBool = true;
       }, 1500);
     }
     }, 1500); // 1.5 seconds before text overlay shows
-    visual.userInputState = false;
+    visual.showVoteOutcomeTxt = false;
 
   }
 
@@ -3911,7 +3858,7 @@ function sVote() {
     // reset values for calculations and drawings
     engine.completeReset();
     
-    engine.currentCongLogic(true); // get results for this configuration
+    engine.currentCongLogic(); // get results for this configuration
     updateSession(); // save this config and resutls of running this configuration
     resultIX++; // saves this result
     configIX++;
@@ -3980,7 +3927,7 @@ function sBenchmarkPane() {
 
   this.draw = function () {
     //let minimalConfig = true;
-    visual.displayImmediateBlank(engine, false);
+    visual.displayImmediateBlank(engine);
     paneToggle();
     if (enableHardware) {
     checkHardwareInput();
@@ -4001,7 +3948,7 @@ function sBenchmarkPane() {
       // reset values for calculations and drawings
       engine.completeReset();
       resizeCanvasBool = true;
-      engine.currentCongLogic(true); // get results for this configuration
+      engine.currentCongLogic(); // get results for this configuration
       updateSession(); // save this config and resutls of running this configuration
       resultIX++;
     }
@@ -4030,7 +3977,7 @@ function sBenchmarkPane() {
     // create empty table rows (to be filled in on next scene)
     for (let i=resultIX; i < MAX_SIM_RESULTS+1; i++) { // + 1 because the first was the test result
       engine.completeReset();
-      engine.currentCongLogic(true);
+      engine.currentCongLogic();
       updateSession();
       let tRow = document.createElement('tr');
       tRow.id = 'trow' + i;
@@ -4074,9 +4021,6 @@ function sBenchmarkResults() {
 
   this.enter = function () {
     paneScene = false;
-
-    visual.dWidth = windowWidth * .95;
-    visual.dHeight = windowHeight * .9;
     console.log("benchmark results page");
     endGear = false;
     
@@ -4140,7 +4084,6 @@ function sBenchmarkResults() {
   }
 
   this.draw = function () {    
-    // if (endGear) { background(bColor); } else { visual.rotLoadImage2(endGear); }
     if (enableHardware) {
       checkHardwareInput();
       checkHardwareBtnInput();

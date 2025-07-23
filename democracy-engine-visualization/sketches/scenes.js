@@ -1171,7 +1171,6 @@ function calcBenchScore(sObj) {
 
 
 let paramChangedBool = false;
-var labelSpace = 30;
 var endorseVal;
 var allowEndorse = true;
 /**

@@ -189,10 +189,16 @@ function setup() {
 
   // set up canvas for the first time
   console.log('reconfig bool: ' + resizeCanvasBool);
-  visual.dWidth = windowWidth;
-  visual.dHeight = windowHeight -labelSpace;
-  visual.labelSpace = labelSpace;
-  canvas = createCanvas(windowWidth, windowHeight);
+  if (windowWidth < 1180 || windowHeight < 480) {
+    // if window size is smaller than smallest p5 display, use screen size of 13" laptop
+    visual.dWidth = 1440;
+    visual.dHeight = 725 - visual.labelSpace;
+    canvas = createCanvas(1440, 725); // use screen
+  } else {
+    visual.dWidth = windowWidth;
+    visual.dHeight = windowHeight - visual.labelSpace;
+    canvas = createCanvas(windowWidth, windowHeight);
+  }
   let canvasDiv = document.getElementById('vote');
   canvas.parent(canvasDiv);
   resizeCanvasBool = false;
@@ -724,7 +730,6 @@ function previousPane() {
 // function windowResized() {
 //   visual.dWidth = windowWidth;// * .95;
 //   visual.dHeight = (windowHeight) /* * .9)*/-labelSpace;
-//   visual.labelSpace = labelSpace;
 //   resizeCanvas(windowWidth, windowHeight);
 //   visual.completeReset();
 //   visual.displayImmediateBlank(engine, false);
@@ -740,8 +745,7 @@ function resizeVisuals() {
     return;
   }
   visual.dWidth = windowWidth;
-  visual.dHeight = windowHeight - labelSpace;
-  visual.labelSpace = labelSpace;
+  visual.dHeight = windowHeight - visual.labelSpace;
   resizeCanvas(windowWidth, windowHeight);
   visual.completeReset();
 }

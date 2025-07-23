@@ -8,22 +8,22 @@
 
 class DemocracyEngine {
 
-  //******These Can be Changed by User*********
+  //Voter Stress Variables
+  //assumes a stress level 0-10, stress level 5 is neither stressed nor not stressed and does not change likelihood of yay/nay vote.  Change stressLow & stressHigh to reflect sensor values.  
+  stressSensorval = 5; //connect this to sensor reading
+  stressLow = 0; //change this to the low stress minimum
+  stressHigh = 10; //change this to the low stress masimum
 
-//Voter Stress Variables
-//assumes a stress level 0-10, stress level 5 is neither stressed nor not stressed and does not change likelihood of yay/nay vote.  Change stressLow & stressHigh to reflect sensor values.  
-stressSensorval = 5; //connect this to sensor reading
-stressLow = 0; //change this to the low stress minimum
-stressHigh = 10; //change this to the low stress masimum
+  //Planet Stress Variables
+  //assumes a stress level 0-10, stress level 5 is neither stressed nor not stressed and does not change likelihood of yay/nay vote.  Change stressLow & stressHigh to reflect sensor values.  
+  stressPlanet = 5; //connect this to sensor reading
+  stressPlanetLow = 0; //change this to the low stress minimum
+  stressPlanetHigh = 10; //change this to the low stress masimum
 
-//Planet Stress Variables
-//assumes a stress level 0-10, stress level 5 is neither stressed nor not stressed and does not change likelihood of yay/nay vote.  Change stressLow & stressHigh to reflect sensor values.  
-stressPlanet = 5; //connect this to sensor reading
-stressPlanetLow = 0; //change this to the low stress minimum
-stressPlanetHigh = 10; //change this to the low stress masimum
+  //Offset of combined stress levels that will increase likelyhood of yes vote on any given bill (state change)
+  stressOffset;
 
-//Offset of combined stress levels that will increase likelyhood of yes vote on any given bill (state change)
-stressOffset;
+  //****** These Can be Changed by User *********
 
 //Number voting members
 numHouse; // = 435
@@ -71,7 +71,7 @@ numLegislativeBodies; // number of legislative bodies (1-3)
 
 numParties;
 
-//******These are NOT user determined*********
+//****** These are NOT user determined *********
 
 //We will use these in the setup function to map the sensor value to stress index
 stress = this.stressSensorval;
@@ -121,13 +121,6 @@ vpVote = false;
 numDem;
 numRep;
 numWild;
-
-// OC forUser: bool - true if engine is running for user configuration, false if running for original config
-forUser; // for refactoring original code into one class
-
-// OC finalDisplayBool - will be set true when ready to display calcuation results outside of class
-// OC signal used to determine when finalDisplay() runs (finalDisplay funct is in the scenes)
-//finalDisplayBool = false;
 
 voteResults = ["","","","",""];
 // OC stores decisions for each body (bill approved/not): [chamber1, chamber2, vp, pres]
@@ -205,10 +198,8 @@ historicalActs;
 
   /**
    * Setup and voting for the congressional configuration
-   * @param {boolean} forUserBool - true for running for user configuration, false for running original configuration
    */
-  currentCongLogic(forUserBool) {
-    this.forUser = forUserBool;
+  currentCongLogic() {
 
     // OC loops through number of voting bodies
     for (this.ix=0; this.ix<this.numBodies; this.ix++) {
@@ -278,16 +269,6 @@ historicalActs;
 
     //Logic for Chamber 3
     if (this.bodyCount == 2) {
-      if (!this.forUser) { // if original config, skip this part
-        // make automatically pass
-        this.bodyPass[2] = true;
-        this.superThreshIndex[2] = true;
-        this.stopVoteArr[2] = false;
-        if (this.bodyCount == 2)
-          this.yay = this.numSenate;
-        this.nextBody();
-        continue;
-        }
 
       if (this.endBody == 1) {
         this.resetCount();
@@ -430,12 +411,6 @@ historicalActs;
   vote() {
     let noVoteBool = false;
 
-    var numRepOrWild;
-    if (this.forUser) // OC forUser: bool - true if engine is running for user config, false if running default config
-      numRepOrWild = this.numRep;
-    else
-      numRepOrWild = this.numWild;
-
     if (this.test == 1) {
       this.countR = this.count1;
     } else if (this.test == 2) {
@@ -466,7 +441,7 @@ historicalActs;
 
     }
     // Independent/Party C is Voting
-    else if (this.countR >= this.numDem && this.countR < this.numDem + numRepOrWild) {
+    else if (this.countR >= this.numDem && this.countR < this.numDem + this.numRep) {
 
       let vote = random(0, 1);
 
@@ -651,8 +626,6 @@ historicalActs;
 
     // console.log("body pass: " + this.bodyPass);
 
-    if (this.forUser) { // engine running for user configuration
-
     // If voting body == 1 and yay == 50%
     // then vice president votes
     // console.log("body pass yay: " + yay + "body pass cutoff: " + numCon * perPass);
@@ -687,27 +660,6 @@ historicalActs;
         this.bodyPass[this.bodyCount] = false;
         this.superThreshIndex[this.bodyCount] = false;
       }
-    } else { // otherwise engine running for original configuration
-      // If voting body == 1 and yay == 50%
-      // then vice president votes
-      if (this.yay >= this.numCon * this.superThresh) {
-        // text('BILL PASSES ' + bodyLabel + ' WITH supermajority', votePadX, votePadY, offSet - votePadX, dHeight - votePadY);
-        this.bodyPass[this.bodyCount] = true;
-        this.superThreshIndex[this.bodyCount] = true;
-      } else if (this.yay > this.numCon / 2) {
-        // text('BILL PASSES ' + bodyLabel, votePadX, votePadY, offSet, dHeight);
-        this.bodyPass[this.bodyCount] = true;
-        this.superThreshIndex[this.bodyCount] = false;
-      } else if (this.yay == this.numCon / 2 && this.bodyLabel == "SENATE") {
-        this.bodyPass[this.bodyCount] = true;
-        this.vpVote = true;
-      } else {
-        // text('BILL DOES NOT PASS ' + bodyLabel, votePadX, votePadY, offSet, dHeight);
-        this.bodyPass[this.bodyCount] = false;
-        this.superThreshIndex[this.bodyCount] = false;
-      }
-
-    }
     
     // automatically make president pass bill if config has no presidents
     if (this.numPres == 0) {
@@ -760,18 +712,10 @@ historicalActs;
         for (let i = 0; i < this.numBodies; i++) {
           fill(255);
           if (i == 0) {
-            if (this.forUser) { // running user config
-              currentBodyLabel = 'LEGISLATIVE CHAMBER 1';
-            } else { // running original config
-              currentBodyLabel = 'HOUSE';
-            }
+            currentBodyLabel = 'LEGISLATIVE CHAMBER 1';
           } else if (i == 1) {
-            if (this.forUser) {
-              currentBodyLabel = 'LEGISLATIVE CHAMBER 2';
-            } else {
-              //currentBodyLabel = 'HOUSE 2';
-              currentBodyLabel = 'SENATE';
-            }
+            currentBodyLabel = 'LEGISLATIVE CHAMBER 2';
+
             if (this.numLegislativeBodies == 1) { // only 1 legislative chamber
               continue; // OC skip results if only 1 legislative body
             }
@@ -834,16 +778,13 @@ historicalActs;
               if (this.stopVoteArr[i] == false && this.vpVote == true) { // vp votes
                 
                 if (this.bodyPass[0] == false || this.bodyPass[1] == false || this.bodyPass[2] == false) {
-                  //text('\n\n\nBILL IS NOT APPROVED BY ALL CHAMBERS: NO VICE PRESIDENTIAL VOTE', i * dispW + padX, this.dHeight * (3 / 4), dispW - padX, dispH);
                   this.voteResults[i] = "BILL IS NOT APPROVED BY ALL CHAMBERS: NO VICE PRESIDENTIAL VOTE";
                   this.votingBodyCounts[i][0] = null;
                   this.votingBodyCounts[i][1] = null;
                 } else if (this.bodyPass[0] == true && this.bodyPass[1] == true && this.bodyPass[2] == true && this.vpVote == true) {
                   if (this.bodyPass[i] == false) {
-                    //text('\nBILL IS NOT APPROVED', (i) * dispW + padX, this.dHeight * (3 / 4), dispW - padX, dispH);
                     this.voteResults[i] = "BILL IS NOT APPROVED";
                   } else if (this.bodyPass[i] == true) {
-                    //text('\nBILL IS APPROVED', (i) * dispW + padX, this.dHeight * (3 / 4), dispW - padX, dispH);
                     this.voteResults[i] = "BILL IS APPROVED";
                   }
                 }
@@ -906,8 +847,6 @@ historicalActs;
         };
 
     }
-    // console.log(this.votingBodyCounts); 
-    //this.finalDisplayBool = true; // signal to now display final text and buttons
   }
 
 }
