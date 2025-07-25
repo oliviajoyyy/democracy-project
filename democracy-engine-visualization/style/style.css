@@ -32,6 +32,7 @@ table {
   font-weight: 350;
 }
 
+
 /* ----------------------------------------------------------------- */
 /* ENDORSEMENT TEXT */
 /* ----------------------------------------------------------------- */
@@ -49,6 +50,7 @@ table {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  min-width: 1147px;
 }
 
 /* #chart-page {
@@ -57,13 +59,13 @@ table {
   background-color: var(--bkg-color);
 } */
 
-#chart-chambers {
+#chart-chambers, #chart-parties, #chart-members, #chart-bench {
   width: 35% !important;
   height: auto !important;
   margin: 2% 4%;
 }
 
-#chart-parties {
+/* #chart-parties {
   width: 35% !important;
   height: auto !important;
   margin: 2% 4%;
@@ -79,4 +81,33 @@ table {
   width: 35% !important;
   height: auto !important;
   margin: 2% 4%;
+} */
+
+
+/* ----------------------------------------------------------------- */
+/* TITLE */
+/* ----------------------------------------------------------------- */
+
+@media only screen and (max-width: 1420px) {
+  h1 {
+    font-size: 4.2rem;
+  }
+
+  h2 {
+    font-size: 2.4rem;
+  }
+}
+
+@media only screen and (max-width: 1370px) {
+  #chart-chambers, #chart-parties, #chart-members, #chart-bench {
+    width: 50% !important;
+    margin: 4% 4%;
+  }
+
+  #charts {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%); /* keeps centered horizontally */
+  }
+
 }
