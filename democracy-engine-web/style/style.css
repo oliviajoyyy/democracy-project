@@ -1,0 +1,65 @@
+:root {
+  --bkg-color: #1c2f47;
+  --text-color: #f5f5f5;
+  --button: #8c80a8;
+}
+
+html {
+  font-size: 62.5%; /* set default to 10px */
+}
+
+html,
+body {
+  background: var(--bkg-color);
+  background-origin: content-box, padding-box;
+  color: var(--text-color);
+  text-transform: uppercase;
+  font-style: normal;
+  font-variant: normal;
+}
+
+h1, h2, h3, h4 {
+  color: var(--text-color);
+  text-align: center;
+  font-weight: lighter;
+}
+
+h1 {
+  font-size: 4.8rem;
+  margin-bottom: 10px;
+}
+
+h2 {
+  font-size: 3rem;
+  margin: 10px 0;
+}
+
+h3 {
+  font-size: 1.6rem;
+  font-weight: normal;
+}
+
+p {
+  color: var(--text-color);
+  text-align: justify;
+  font-size: 2.0rem;
+  font-weight: lighter;
+  text-transform: none;
+}
+
+
+button {
+  background: var(--button);
+  border: solid 2px var(--button);
+  color: var(--text-color);
+  border-radius: 7px;
+  padding: 4px 12px;
+  z-index: 102;
+  font-size: 1.6rem;
+  width: auto;
+  min-width: 200px;
+}
+
+button:hover {
+  border: solid 2px var(--text-color);
+}
