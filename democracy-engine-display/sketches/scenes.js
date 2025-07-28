@@ -1,6 +1,7 @@
 
 
 /**
+ * Kiosk Version
  * Session Visualizations (Graph cycles)
  */
 function sSessionVis() {
@@ -16,7 +17,6 @@ function sSessionVis() {
   ]
 
   this.setup = function () {
-    textFont(helvFont);
   }
 
   this.enter = function () {
@@ -54,218 +54,290 @@ function sSessionVis() {
     });
   }
 
-  /**
-   * Calculate values for each bracket in the #chambers histogram
-   */
-  function calcChambers(result) {
-    var brackets = 3;
-    var xText = ['1', '2', '3'];
-    var ranges = [1, 2, 3]; // 1, 2, 3
-    var values = [0, 0, 0];
-    var barColors = [, ,];
-    var bHighlight = "#cccc9d";
-    var bRest = "#e85ab4";
-    // console.log(result);
-    if (result.length == 0) {
-      return null;
-    }
-    for (let i = 0; i < result.length; i++) {
-      let sObj = result[i].finalConfig.config;
-      for (let j = 0; j < ranges.length; j++) {
-        if (sObj.numLegislativeBodies == ranges[j]) {
-          values[j]++;
-        }
-        barColors[j] = barDark;
-      }
-    }
-    // console.log("chamber ranges: " + ranges);
-    // console.log("chamber values: " + values);
+  // /**
+  //  * Calculate values for each bracket in the #chambers histogram
+  //  */
+  // function calcChambers(result) {
+  //   var brackets = 3;
+  //   var xText = ['1', '2', '3'];
+  //   var ranges = [1, 2, 3]; // 1, 2, 3
+  //   var values = [0, 0, 0];
+  //   var barColors = [, ,];
+  //   var bHighlight = "#cccc9d";
+  //   var bRest = "#e85ab4";
+  //   // console.log(result);
+  //   if (result.length == 0) {
+  //     return null;
+  //   }
+  //   for (let i = 0; i < result.length; i++) {
+  //     let sObj = result[i].finalConfig.config;
+  //     for (let j = 0; j < ranges.length; j++) {
+  //       if (sObj.numLegislativeBodies == ranges[j]) {
+  //         values[j]++;
+  //       }
+  //       barColors[j] = barDark;
+  //     }
+  //   }
+  //   // console.log("chamber ranges: " + ranges);
+  //   // console.log("chamber values: " + values);
 
-    let xLabel = "Number of Chambers";
-    let yLabel = "Number of Sessions";
+  //   let xLabel = "Number of Chambers";
+  //   let yLabel = "Number of Sessions";
 
-    displayHistogram(xText, values, "LEGISLATIVE CHAMBERS", document.getElementById("chart"), barColors, xLabel, yLabel);
-  }
+  //   displayHistogram(xText, values, "LEGISLATIVE CHAMBERS", document.getElementById("chart"), barColors, xLabel, yLabel);
+  // }
 
-  function displayHistogram(ranges, values, title, canvasChart, barColors, xLabel, yLabel) {
-    // delete Chart if it already exists, to make new chart w the data
-    for (let chartId in Chart.instances) {
-      if (Chart.instances[chartId].canvas === canvasChart) {
-        Chart.instances[chartId].destroy();
+  // function displayHistogram(ranges, values, title, canvasChart, barColors, xLabel, yLabel) {
+  //   // delete Chart if it already exists, to make new chart w the data
+  //   for (let chartId in Chart.instances) {
+  //     if (Chart.instances[chartId].canvas === canvasChart) {
+  //       Chart.instances[chartId].destroy();
+  //     }
+  //   }
+  //   new Chart(canvasChart, {
+  //     type: 'bar',
+  //     data: {
+  //       labels: ranges,
+  //       datasets: [{
+  //         data: values,
+  //         backgroundColor: barColors,
+  //         borderWidth: 1,
+  //         borderColor: textColor,
+  //         categoryPercentage: 1.0,
+  //         barPercentage: 1.0,
+  //       }]
+  //     },
+  //     options: {
+  //       plugins: {
+  //         legend: { display: false },
+  //         title: {
+  //           display: true,
+  //           text: title,
+  //           color: textColor,
+  //           font: { size: 50 },
+  //           padding: { bottom: 20 }
+  //         }
+  //       },
+  //       scales: {
+  //         y: {
+  //           beginAtZero: true,
+  //           grid: {
+  //             color: colorConfig.progressVal
+  //           },
+  //           ticks: {
+  //             color: textColor,
+  //             font: { size: 40 },
+  //             stepSize: 1
+  //           },
+  //           title: {
+  //             display: true,
+  //             text: yLabel,
+  //             color: textColor,
+  //             font: { size: 40 }
+  //           }
+  //         },
+  //         x: {
+  //           grid: {
+  //             color: colorConfig.progressVal
+  //           },
+  //           ticks: {
+  //             color: textColor,
+  //             font: { size: 40 }
+  //           },
+  //           title: {
+  //             display: true,
+  //             text: xLabel,
+  //             color: textColor,
+  //             font: { size: 40 }
+  //           }
+  //         }
+  //       }
+  //     }
+  //   });
+  // }
+
+  // /**
+  // * Calculate values for each bracket in the #parties histogram
+  // */
+  // function calcParties(result) {
+  //   var brackets = 3;
+  //   var xText = ['1', '2', '3'];
+  //   var ranges = [1, 2, 3]; // 1, 2, 3
+  //   var values = [0, 0, 0,];
+  //   var barColors = [, ,];
+  //   // console.log(result);
+  //   if (result.length == 0) {
+  //     return null;
+  //   }
+  //   for (let i = 0; i < result.length; i++) {
+  //     let sObj = result[i].finalConfig.config;
+  //     for (let j = 0; j < ranges.length; j++) {
+  //       if (sObj.numParties == ranges[j]) {
+  //         values[j]++;
+  //       }
+  //       barColors[j] = barDark;
+  //     }
+  //   }
+  //   // console.log("parties ranges: " + ranges);
+  //   // console.log("parties values: " + values);
+  //   let xLabel = "Number of Parties";
+  //   let yLabel = "Number of Sessions";
+
+  //   displayHistogram(xText, values, "PARTIES", document.getElementById("chart"), barColors, xLabel, yLabel);
+  // }
+
+  // /**
+  //  * Calculate values for each bracket in the #total members histogram
+  //  */
+  // function calcTotalMembers(result) {
+  //   var brackets = 10;
+  //   var xText = ["2-250", "250-500", "500-750", "750-1000", "1000-1250", "1250-1500", "1500-1750", "1750-2000", "2000-2250", "2250-2500"];
+  //   var ranges = [[2, 250], [250, 500], [500, 750], [750, 1000], [1000, 1250], [1250, 1500], [1500, 1750], [1750, 2000], [2000, 2250], [2250, 2501]];
+  //   // [start, end)
+  //   // min total members = 2 (1 chamber w 1 member, 1 vp, 0 pres)
+  //   // max total members = 2500 (500 * 5 bodies c1-3 vp pres)
+  //   var values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  //   var barColors = [, , , , , , , , ,];
+  //   // console.log(result);
+  //   if (result.length == 0) {
+  //     return null;
+  //   }
+  //   for (let i = 0; i < result.length; i++) {
+  //     let sObj = result[i].finalConfig.config;
+  //     let totalVoting = sObj.chamber1.totalMembers + sObj.chamber2.totalMembers + sObj.chamber3.totalMembers + sObj.vicePres.totalMembers + sObj.president.totalMembers;
+  //     for (let j = 0; j < ranges.length; j++) {
+  //       if (totalVoting >= ranges[j][0] && totalVoting < ranges[j][1]) {
+  //         values[j]++;
+  //       }
+  //       barColors[j] = barDark;
+
+  //     }
+  //   }
+  //   // console.log("total voting ranges: " + ranges);
+  //   // console.log("total voting values: " + values);
+  //   // console.log("bar colors members: " + barColors);
+  //   let xLabel = "Number of Voting Members";
+  //   let yLabel = "Number of Sessions";
+
+  //   displayHistogram(xText, values, "TOTAL VOTING MEMBERS", document.getElementById("chart"), barColors, xLabel, yLabel);
+  // }
+
+  // function calcBenchScoreWhole(result) {
+  //   var brackets = 10;
+  //   var xText = ["0-10%", "10-20%", "20-30%", "30-40%", "40-50%", "50-60%", "60-70%", "70-80%", "80-90%", "90-100%"];
+  //   var ranges = [[0, 10], [10, 20], [20, 30], [30, 40], [40, 50], [50, 60], [60, 70], [70, 80], [80, 90], [90, 101]];
+  //   var values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  //   var barColors = [, , , , , , , , ,];
+  //   // console.log(result);
+  //   if (result.length == 0) {
+  //     return null;
+  //   }
+  //   for (let i = 0; i < result.length; i++) {
+  //     let sObj = result[i].finalConfig.config;
+  //     let iBenchScore = calcBenchScore(sObj);
+  //     for (let j = 0; j < ranges.length; j++) {
+  //       if (iBenchScore >= ranges[j][0] && iBenchScore < ranges[j][1]) {
+  //         values[j]++;
+  //       }
+  //       barColors[j] = barDark;
+  //     }
+  //   }
+  //   // console.log("total voting ranges: " + ranges);
+  //   // console.log("total voting values: " + values);
+  //   // console.log("bar colors members: " + barColors);
+  //   let xLabel = "Benchmark Score";
+  //   let yLabel = "Number of Sessions";
+
+  //   displayHistogram(xText, values, "BENCHMARK SCORE", document.getElementById("chart"), barColors, xLabel, yLabel);
+  // }
+
+  // function calcBenchScore(sObj) {
+  //   var totalBills = sObj.simResults.length - 1; // -1 bc holds a test simulation
+  //   var passed = 0;
+  //   var percentagePassed = 0.0;
+  //   for (let i = 1; i < sObj.simResults.length; i++) {
+  //     if (sObj.simResults[i].billPass == true) {
+  //       passed++;
+  //     }
+  //   }
+  //   if (passed > 0) {
+  //     percentagePassed = (passed / totalBills) * 100;
+  //   } else {
+  //     percentagePassed = 0;
+  //   }
+  //   return roundNum(percentagePassed, 2); // out of 100%
+  // }
+
+}
+
+function chartChambers() {
+
+  this.setup = function () { }
+
+  this.enter = function () {
+    console.log("chambers");
+    getSessions().then((result) => {
+      if (result.length == 0) { // no data in database
+        return null;
       }
-    }
-    new Chart(canvasChart, {
-      type: 'bar',
-      data: {
-        labels: ranges,
-        datasets: [{
-          data: values,
-          backgroundColor: barColors,
-          borderWidth: 1,
-          borderColor: textColor,
-          categoryPercentage: 1.0,
-          barPercentage: 1.0,
-        }]
-      },
-      options: {
-        plugins: {
-          legend: { display: false },
-          title: {
-            display: true,
-            text: title,
-            color: textColor,
-            font: { size: 50 },
-            padding: { bottom: 20 }
-          }
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            grid: {
-              color: colorConfig.progressVal
-            },
-            ticks: {
-              color: textColor,
-              font: { size: 40 },
-              stepSize: 1
-            },
-            title: {
-              display: true,
-              text: yLabel,
-              color: textColor,
-              font: { size: 40 }
-            }
-          },
-          x: {
-            grid: {
-              color: colorConfig.progressVal
-            },
-            ticks: {
-              color: textColor,
-              font: { size: 40 }
-            },
-            title: {
-              display: true,
-              text: xLabel,
-              color: textColor,
-              font: { size: 40 }
-            }
-          }
-        }
-      }
+      calcChambers(result);
     });
   }
 
-  /**
-  * Calculate values for each bracket in the #parties histogram
-  */
-  function calcParties(result) {
-    var brackets = 3;
-    var xText = ['1', '2', '3'];
-    var ranges = [1, 2, 3]; // 1, 2, 3
-    var values = [0, 0, 0,];
-    var barColors = [, ,];
-    // console.log(result);
-    if (result.length == 0) {
-      return null;
-    }
-    for (let i = 0; i < result.length; i++) {
-      let sObj = result[i].finalConfig.config;
-      for (let j = 0; j < ranges.length; j++) {
-        if (sObj.numParties == ranges[j]) {
-          values[j]++;
-        }
-        barColors[j] = barDark;
-      }
-    }
-    // console.log("parties ranges: " + ranges);
-    // console.log("parties values: " + values);
-    let xLabel = "Number of Parties";
-    let yLabel = "Number of Sessions";
+  this.draw = function () { }
 
-    displayHistogram(xText, values, "PARTIES", document.getElementById("chart"), barColors, xLabel, yLabel);
+}
+
+function chartParties() {
+
+  this.setup = function () { }
+
+  this.enter = function () {
+    console.log("parties");
+    getSessions().then((result) => {
+      if (result.length == 0) { // no data in database
+        return null;
+      }
+      calcParties(result);
+    });
   }
 
-  /**
-   * Calculate values for each bracket in the #total members histogram
-   */
-  function calcTotalMembers(result) {
-    var brackets = 10;
-    var xText = ["2-250", "250-500", "500-750", "750-1000", "1000-1250", "1250-1500", "1500-1750", "1750-2000", "2000-2250", "2250-2500"];
-    var ranges = [[2, 250], [250, 500], [500, 750], [750, 1000], [1000, 1250], [1250, 1500], [1500, 1750], [1750, 2000], [2000, 2250], [2250, 2501]];
-    // [start, end)
-    // min total members = 2 (1 chamber w 1 member, 1 vp, 0 pres)
-    // max total members = 2500 (500 * 5 bodies c1-3 vp pres)
-    var values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    var barColors = [, , , , , , , , ,];
-    // console.log(result);
-    if (result.length == 0) {
-      return null;
-    }
-    for (let i = 0; i < result.length; i++) {
-      let sObj = result[i].finalConfig.config;
-      let totalVoting = sObj.chamber1.totalMembers + sObj.chamber2.totalMembers + sObj.chamber3.totalMembers + sObj.vicePres.totalMembers + sObj.president.totalMembers;
-      for (let j = 0; j < ranges.length; j++) {
-        if (totalVoting >= ranges[j][0] && totalVoting < ranges[j][1]) {
-          values[j]++;
-        }
-        barColors[j] = barDark;
+  this.draw = function () { }
 
+}
+
+function chartTotalMembers() {
+
+  this.setup = function () { }
+
+  this.enter = function () {
+    console.log("total members");
+    getSessions().then((result) => {
+      if (result.length == 0) { // no data in database
+        return null;
       }
-    }
-    // console.log("total voting ranges: " + ranges);
-    // console.log("total voting values: " + values);
-    // console.log("bar colors members: " + barColors);
-    let xLabel = "Number of Voting Members";
-    let yLabel = "Number of Sessions";
-
-    displayHistogram(xText, values, "TOTAL VOTING MEMBERS", document.getElementById("chart"), barColors, xLabel, yLabel);
+      calcTotalMembers(result);
+    });
   }
 
-  function calcBenchScoreWhole(result) {
-    var brackets = 10;
-    var xText = ["0-10%", "10-20%", "20-30%", "30-40%", "40-50%", "50-60%", "60-70%", "70-80%", "80-90%", "90-100%"];
-    var ranges = [[0, 10], [10, 20], [20, 30], [30, 40], [40, 50], [50, 60], [60, 70], [70, 80], [80, 90], [90, 101]];
-    var values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    var barColors = [, , , , , , , , ,];
-    // console.log(result);
-    if (result.length == 0) {
-      return null;
-    }
-    for (let i = 0; i < result.length; i++) {
-      let sObj = result[i].finalConfig.config;
-      let iBenchScore = calcBenchScore(sObj);
-      for (let j = 0; j < ranges.length; j++) {
-        if (iBenchScore >= ranges[j][0] && iBenchScore < ranges[j][1]) {
-          values[j]++;
-        }
-        barColors[j] = barDark;
-      }
-    }
-    // console.log("total voting ranges: " + ranges);
-    // console.log("total voting values: " + values);
-    // console.log("bar colors members: " + barColors);
-    let xLabel = "Benchmark Score";
-    let yLabel = "Number of Sessions";
+  this.draw = function () { }
 
-    displayHistogram(xText, values, "BENCHMARK SCORE", document.getElementById("chart"), barColors, xLabel, yLabel);
+}
+
+function chartBenchmarkScores() {
+
+  this.setup = function () { }
+
+  this.enter = function () {
+    console.log("benchmark");
+    getSessions().then((result) => {
+      if (result.length == 0) { // no data in database
+        return null;
+      }
+      calcBenchScoreWhole(result);
+    });
   }
 
-  function calcBenchScore(sObj) {
-    var totalBills = sObj.simResults.length - 1; // -1 bc holds a test simulation
-    var passed = 0;
-    var percentagePassed = 0.0;
-    for (let i = 1; i < sObj.simResults.length; i++) {
-      if (sObj.simResults[i].billPass == true) {
-        passed++;
-      }
-    }
-    if (passed > 0) {
-      percentagePassed = (passed / totalBills) * 100;
-    } else {
-      percentagePassed = 0;
-    }
-    return roundNum(percentagePassed, 2); // out of 100%
-  }
+  this.draw = function () { }
 
 }
