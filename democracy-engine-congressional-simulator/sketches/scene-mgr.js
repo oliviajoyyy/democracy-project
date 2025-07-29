@@ -203,6 +203,13 @@ function setup() {
   canvas.parent(canvasDiv);
   resizeCanvasBool = false;
 
+  // prevent space bar from scrolling page down
+  window.addEventListener('keydown', function(e) {
+    if (e.code == 'Space' || e.key == ' ') {
+      e.preventDefault();
+    }
+  })
+
   console.log("end of scene-mgr.js setup");
 }
 

@@ -168,7 +168,7 @@ button:hover:enabled {
 .pane-bkg {
   background-color: var(--pane-bkg);
   display: none;
-  position: absolute;
+  position: fixed;
   bottom: 15px;
   width: 60%;
   min-width: 830px;

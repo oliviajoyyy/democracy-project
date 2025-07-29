@@ -917,7 +917,7 @@ function sSessionVis() {
         //console.log("chamber values: " + values);
 
       let xLabel = "Number of Chambers";
-      let yLabel = "Number of Sessions";
+      let yLabel = "Total Sessions";
 
       displayHistogram(xText, values, "LEGISLATIVE CHAMBERS", document.getElementById("chart-chambers"), barColors, xLabel, yLabel);
     }
@@ -1021,7 +1021,7 @@ function sSessionVis() {
       //console.log("parties ranges: " + ranges);
       //console.log("parties values: " + values);
       let xLabel = "Number of Parties";
-      let yLabel = "Number of Sessions";
+      let yLabel = "Total Sessions";
 
       displayHistogram(xText, values, "PARTIES", document.getElementById("chart-parties"), barColors, xLabel, yLabel);
   }
@@ -1063,7 +1063,7 @@ function sSessionVis() {
         //console.log("total voting values: " + values);
         //console.log("bar colors members: " + barColors);
         let xLabel = "Number of Voting Members";
-        let yLabel = "Number of Sessions";
+        let yLabel = "Total Sessions";
 
         displayHistogram(xText, values, "TOTAL VOTING MEMBERS", document.getElementById("chart-members"), barColors, xLabel, yLabel);
     }
@@ -1100,7 +1100,7 @@ function sSessionVis() {
     // console.log("bar colors members: " + barColors);
 
     let xLabel = "Benchmark Score";
-    let yLabel = "Number of Sessions";
+    let yLabel = "Total Sessions";
 
     displayHistogram(xText, values, "BENCHMARK SCORE", document.getElementById("chart-bench"), barColors, xLabel, yLabel);
 }
