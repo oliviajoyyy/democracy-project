@@ -10,13 +10,45 @@ html {
 
 html,
 body {
-  background: var(--bkg-color);
+  background-color: var(--bkg-color);
   background-origin: content-box, padding-box;
   color: var(--text-color);
   text-transform: uppercase;
   font-style: normal;
   font-variant: normal;
 }
+
+main { /* fade in background image */
+  background: url('../../assets/svg/gridandfloorplan.svg') no-repeat center;
+  background-size: 115%;
+  background-attachment: fixed;
+  background-color: var(--bkg-color);
+  animation: fadeIn 3s forwards;
+}
+
+.content-wrap { /* background for more visibility of text over img */
+  background-color: rgba(28, 47, 71, 0.3);
+  opacity: 0;
+  animation: fadeIn 3s forwards;
+  animation-delay: 2.5s;
+}
+
+main section { /* fade in text after background img */
+  opacity: 0;
+  animation: fadeIn 3s forwards;
+  animation-delay: 2.5s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 100;
+  }
+}
+
 
 h1, h2, h3, h4 {
   color: var(--text-color);
