@@ -3800,6 +3800,12 @@ function sVote() {
     }
   }
 
+  this.keyPressed = function () {
+    if (keyCode == RETURN && !document.getElementById("vote-btn").disabled) {
+      clickedVote();
+    }
+  }
+
   /**
    * Display text results of voting over voting boxes
    */
@@ -3829,6 +3835,8 @@ function sVote() {
   }
   
   function clickedVote() {
+    document.getElementById("vote-btn").disabled = true; // disable vote button after clicked
+    
     if (resizeCanvasBool) {
       resizeVisuals();
       visual.dHeight = windowHeight; // full height
@@ -3837,8 +3845,7 @@ function sVote() {
       visual.dHeight = windowHeight; // full height
       visual.completeReset();
     }
-
-    document.getElementById("vote-btn").disabled = true; // disable vote button after clicked
+    
     showPanesBool = false; // make pane disappear so user can see voting in full view
 
     if (configIX > MAX_CONFIG_ATTEMPTS - 1) {
