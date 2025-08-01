@@ -50,9 +50,8 @@ main section { /* fade in text after background img */
 }
 
 
-h1, h2, h3, h4 {
+h1, h2 {
   color: var(--text-color);
-  text-align: center;
   font-weight: lighter;
 }
 
@@ -64,11 +63,6 @@ h1 {
 h2 {
   font-size: 3rem;
   margin: 10px 0;
-}
-
-h3 {
-  font-size: 1.6rem;
-  font-weight: normal;
 }
 
 p {
@@ -86,7 +80,6 @@ button {
   color: var(--text-color);
   border-radius: 7px;
   padding: 4px 12px;
-  z-index: 102;
   font-size: 1.6rem;
   width: auto;
   min-width: 200px;
