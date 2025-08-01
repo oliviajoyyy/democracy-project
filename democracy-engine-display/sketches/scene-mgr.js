@@ -30,7 +30,9 @@ function setup() {
 
   // check kiosk flag
   var kioskFlag = sessionStorage.getItem('kioskFlag');
-  if (kioskFlag == 'false') {
+  if (kioskFlag == 'true') {
+    webVersion = false;
+  } else {
     webVersion = true;
 
     // set up buttons for web version
@@ -45,9 +47,6 @@ function setup() {
     nextBtn.parent(buttonDiv);
     nextBtn.mousePressed(clickedNext);
     buttonDiv.style.display = "block";
-
-  } else {
-    webVersion = false;
   }
 
   mgr = new SceneManager();
