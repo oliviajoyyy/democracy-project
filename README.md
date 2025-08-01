@@ -1,3 +1,1 @@
-# democracy-project-sjsu.github.io
-repo for the us government congressional simulator
-# democracy-proj.github.io
+The Democracy Engine Software 2.0 for The Future Democracies Laboratory at SJSU
