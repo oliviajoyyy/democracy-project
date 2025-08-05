@@ -74,6 +74,7 @@ var finalConfigObj = {
   publicEndorsement: 0 };
 var sessionID;
 var versionVal; // options in config.json file (first in array is web v1.0): "web v1.0", "ICA kiosk v1.0",  ... 
+var createdFromSession = null; // session ID when loaded
 
 // to keep track of array indicies
 var configIX = 0;
@@ -946,11 +947,13 @@ function newSession() {
   // reset IX vars = 0
   configIX = 0;
   resultIX = 0;
+  createdFromSession = null; // reset ID to null
 
   // new session global var, will be passed to func that saves to db
   sessionObj = {
     "timestamp": getTimestamp(),
     "uniqueID": sessionID,
+    "createdFromID": createdFromSession, // ID of session this was created based, or null if started from new session
     "version": versionVal, // version: "ICA kiosk v1.0" or "web v1.0", etc...
     "configHistory": configs, // array of last 10 configurations
     "finalConfig": finalConfigObj
@@ -962,6 +965,7 @@ function newSession() {
  */
 function saveSession() {
   sessionObj.finalConfig.config = configs[configs.length - 1]// set final configuration in the session object
+  sessionObj.createdFromID = createdFromSession; // set created from ID
   addSession(sessionObj); // add session document/record to the database
   console.log(sessionObj);
   newSession(); // create new session

@@ -712,6 +712,7 @@ function loadSessionS1() {
   function clickedNext() {
     if (sessions) {
       loadedConfig = sessions[getSelectedRadioValue()].finalConfig.config;
+      createdFromSession = sessions[getSelectedRadioValue()].uniqueID; // ID of loaded session
     }
     setLoadedUserVars(loadedConfig);
     setEngineParams(engine); // set engine params to user vars, which were loaded
@@ -4353,6 +4354,14 @@ function sSaveResults() {
       p.textContent = text;
       return p;
     });
+
+    // if session was created from loaded session, add text to indicate so
+    if (createdFromSession != null) {
+      let p = document.createElement('p');
+      p.textContent = paragraphs[0].textContent + " This configuration was created by modifying session ID: " + createdFromSession;
+      paragraphs[0] = p;
+    }
+
     document.getElementById("summary-p").replaceChildren(...paragraphs);
     document.getElementById("end-summary").style.display = "block";
 

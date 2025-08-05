@@ -495,6 +495,10 @@ function sLoadSession() {
       finalConfigObj = sessions[i].finalConfig; // use for access to edorsements
       endorseVal = finalConfigObj.publicEndorsement; // current public endorsement val
       selectedSessionID = sessions[i].uniqueID; // session ID
+      if (sessions[i].createdFromID && sessions[i].createdFromID != null) // session has createdFromID
+        createdFromSession = sessions[i].createdFromID;
+      else
+        createdFromSession = null; // createdFromID dne or was not created from loaded session (createdFrom ID is null)
       setLoadedUserVars(loadedConfig);
       inputTxt();
     }
@@ -734,6 +738,14 @@ function sLoadSession() {
 
     let h2 = document.getElementById('save-id');
     h2.textContent = "Session ID: " + selectedSessionID;
+
+    let createdFrom = document.getElementById('created-from-id');
+    if (createdFromSession != null) {
+      createdFrom.textContent = "Created from Session ID: " + createdFromSession;
+      createdFrom.style.display = "block";
+    } else {
+      createdFrom.style.display = "none";
+    }
     
     s1 = 
       "<h3>First Legislative Chamber</h3>" +

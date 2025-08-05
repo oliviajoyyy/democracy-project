@@ -59,6 +59,7 @@ var finalConfigObj = {
   publicEndorsement: 0 };
 var selectedSessionID;
 var entireSessionObj;
+var createdFromSession = null; // id of session the selected session was created based on
 
 // to keep track of array lengths
 var MAX_CONFIG_ATTEMPTS = 10; // 10th config is final config
