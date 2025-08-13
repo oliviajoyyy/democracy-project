@@ -4345,8 +4345,8 @@ function sSaveResults() {
     document.getElementById("main-header").textContent = configJSON.text.saveSessionPage.h;
 
     // show session ID
-    let h4 = document.getElementById('save-id');
-    h4.textContent = "Session ID: " + sessionID;
+    let h3 = document.getElementById('save-id');
+    h3.textContent = "Session ID: " + sessionID;
     document.getElementById("save-id").style.display = "block";
 
     let paragraphs = configJSON.text.saveSessionPage.p.map((text) => {
@@ -4358,8 +4358,8 @@ function sSaveResults() {
     // if session was created from loaded session, add text to indicate so
     if (createdFromSession != null) {
       let p = document.createElement('p');
-      p.textContent = paragraphs[0].textContent + " This configuration was created by modifying session ID: " + createdFromSession;
-      paragraphs[0] = p;
+      p.textContent = configJSON.text.saveSessionPage.pFromLoaded + createdFromSession;
+      paragraphs.push(p);
     }
 
     document.getElementById("summary-p").replaceChildren(...paragraphs);

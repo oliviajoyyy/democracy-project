@@ -74,7 +74,7 @@ table {
   #charts {
     position: relative;
     left: 50%;
-    transform: translateX(-50%); /* keeps centered horizontally */
+    transform: translateX(-53%); /* keeps centered horizontally */
   }
 }
 
@@ -100,6 +100,14 @@ table {
 /* ----------------------------------------------------------------- */
 /* TITLE */
 /* ----------------------------------------------------------------- */
+
+#created-from-id {
+  font-weight: lighter;
+}
+
+#chart-title {
+  font-size: 2.2rem;
+}
 
 /* @media only screen and (max-width: 1420px) {
   h1 {

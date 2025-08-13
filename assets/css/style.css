@@ -35,16 +35,16 @@ h1, h2, h3, h4 {
 }
 
 h1 {
-  font-size: 4.8rem;
+  font-size: 4.4rem;
   margin-bottom: 10px;
 }
 
 h2 {
-  font-size: 3rem;
+  font-size: 2.8rem;
   margin: 10px 0;
 }
 
-@media only screen and (max-width: 1420px) {
+/* @media only screen and (max-width: 1420px) {
   h1 {
     font-size: 4.2rem;
   }
@@ -52,7 +52,7 @@ h2 {
   h2 {
     font-size: 2.7rem;
   }
-}
+} */
 
 h3 {
   font-size: 1.6rem;
@@ -433,19 +433,24 @@ td {
 #summary-grid {
   display: grid;
   grid-auto-flow: column;
-  grid-template-rows: 1fr 1fr 1fr;
-  /* grid-auto-columns: 1fr; */
+  grid-template-rows: repeat(3, 1fr);
+
+  /* c */
+  /* grid-auto-columns: 1fr; 
+  gap: 10px; */
+
+  /* b */
+  /* gap: 10px 40px; */
+
+  /* a */
+  grid-template-columns: 0.8fr 0.8fr 1.2fr;
   gap: 10px;
+
 }
 
 #s-benchmark {
   grid-row: span 2;
 }
-
-#s-endorsement {
-  margin-top: -10px;
-}
-
 
 #s-endorsement p {
   text-align: center;
@@ -454,22 +459,26 @@ td {
 }
 
 #save-id {
-  font-size: 2.2rem;
-  margin-top: -8px /* move session id up */
+  font-size: 1.8rem;
+  margin-top: -10px /* move session id up */
+}
+
+#summary-p p {
+  font-size: 1.8rem;
 }
 
 #s-endorsement {
-  margin-top: -25px; /* move endorsement text up */
+  margin-top: -20px; /* move endorsement text up */
 }
 
 .summary h3 {
-  padding-left: 20px;
+  /* padding-left: 20px; */
   text-align: left;
   text-transform: uppercase;
 }
 
 .summary p {
-  padding-left: 50px;
+  padding-left: 30px;
   font-size: 1.6rem;
 }
 
@@ -482,9 +491,10 @@ p.summary { /* p on regular final summary page */
   font-weight: bold;
 }
 
-@media only screen and (max-width: 1100px) {
+@media only screen and (max-width: 1130px) {
   #summary-grid {
     grid-template-rows: repeat(5, 1fr); /* two columns */
+    grid-template-columns: 0.8fr 1.2fr;
     /* grid-auto-columns: 1fr; */
   }
 }

@@ -275,8 +275,10 @@
         "saveSessionPage": {
             "h": "Session Upload",
             "p": [
-                "Record this code to return to your session in the future. The configuration you have created will also be available to other users for review and modification."
-            ]
+                "Record the code above to return to your session in the future. The configuration you have created will also be available to other users for review and modification."
+            ],
+            "pFromLoaded": "This configuration was created by modifying session ID: "
+            
         },
         "saveCompletePage": {
             "h": "Session Uploaded",

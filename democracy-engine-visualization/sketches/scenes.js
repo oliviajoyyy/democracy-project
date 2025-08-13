@@ -848,7 +848,7 @@ function sSessionVis() {
     document.getElementById("chart-page").style.display = "block";
     document.getElementById("main-header").textContent = configJSON.text.pSessionChartsVis.h;
 
-    document.getElementById("chart-subtitle").innerHTML = "Session ID: " + selectedSessionID;
+    document.getElementById("chart-title").innerHTML = "Session ID: " + selectedSessionID;
     document.getElementById("pane-header").textContent = configJSON.text.pSessionChartsVis.h;
     document.getElementById("pane-description").textContent = configJSON.text.pSessionChartsVis.p;
 
@@ -931,7 +931,7 @@ function sSessionVis() {
       let xLabel = "Number of Chambers";
       let yLabel = "Total Sessions";
 
-      displayHistogram(xText, values, "LEGISLATIVE CHAMBERS", document.getElementById("chart-chambers"), barColors, xLabel, yLabel);
+      displayHistogram(xText, values, "         LEGISLATIVE CHAMBERS", document.getElementById("chart-chambers"), barColors, xLabel, yLabel);
     }
 
     function displayHistogram(ranges, values, title, canvasChart, barColors, xLabel, yLabel) {
@@ -1035,7 +1035,7 @@ function sSessionVis() {
       let xLabel = "Number of Parties";
       let yLabel = "Total Sessions";
 
-      displayHistogram(xText, values, "PARTIES", document.getElementById("chart-parties"), barColors, xLabel, yLabel);
+      displayHistogram(xText, values, "         PARTIES", document.getElementById("chart-parties"), barColors, xLabel, yLabel);
   }
 
   /**
@@ -1077,7 +1077,7 @@ function sSessionVis() {
         let xLabel = "Number of Voting Members";
         let yLabel = "Total Sessions";
 
-        displayHistogram(xText, values, "TOTAL VOTING MEMBERS", document.getElementById("chart-members"), barColors, xLabel, yLabel);
+        displayHistogram(xText, values, "         TOTAL VOTING MEMBERS", document.getElementById("chart-members"), barColors, xLabel, yLabel);
     }
 
   function calcBenchScoreWhole(result) {
@@ -1114,7 +1114,7 @@ function sSessionVis() {
     let xLabel = "Benchmark Score";
     let yLabel = "Total Sessions";
 
-    displayHistogram(xText, values, "BENCHMARK SCORE", document.getElementById("chart-bench"), barColors, xLabel, yLabel);
+    displayHistogram(xText, values, "         BENCHMARK SCORE", document.getElementById("chart-bench"), barColors, xLabel, yLabel);
 }
 
 function calcBenchScore(sObj) {

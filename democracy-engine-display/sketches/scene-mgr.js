@@ -102,7 +102,7 @@ function roundNum(value, decimals) {
     let xLabel = "Number of Chambers";
     let yLabel = "Total Sessions";
 
-    displayHistogram(xText, values, "LEGISLATIVE CHAMBERS", document.getElementById("chart"), barColors, xLabel, yLabel);
+    displayHistogram(xText, values, "         LEGISLATIVE CHAMBERS", document.getElementById("chart"), barColors, xLabel, yLabel);
   }
 
   /**
@@ -130,7 +130,7 @@ function roundNum(value, decimals) {
     let xLabel = "Number of Parties";
     let yLabel = "Total Sessions";
 
-    displayHistogram(xText, values, "PARTIES", document.getElementById("chart"), barColors, xLabel, yLabel);
+    displayHistogram(xText, values, "         PARTIES", document.getElementById("chart"), barColors, xLabel, yLabel);
   }
 
   /**
@@ -164,7 +164,7 @@ function roundNum(value, decimals) {
     let xLabel = "Number of Voting Members";
     let yLabel = "Total Sessions";
 
-    displayHistogram(xText, values, "TOTAL VOTING MEMBERS", document.getElementById("chart"), barColors, xLabel, yLabel);
+    displayHistogram(xText, values, "         TOTAL VOTING MEMBERS", document.getElementById("chart"), barColors, xLabel, yLabel);
   }
 
   function calcBenchScoreWhole(result) {
@@ -190,7 +190,7 @@ function roundNum(value, decimals) {
     let xLabel = "Benchmark Score";
     let yLabel = "Total Sessions";
 
-    displayHistogram(xText, values, "BENCHMARK SCORE", document.getElementById("chart"), barColors, xLabel, yLabel);
+    displayHistogram(xText, values, "         BENCHMARK SCORE", document.getElementById("chart"), barColors, xLabel, yLabel);
   }
 
   function calcBenchScore(sObj) {
@@ -239,8 +239,8 @@ function roundNum(value, decimals) {
             display: true,
             text: title,
             color: textColor,
-            font: { size: 40 },
-            padding: { bottom: 20 }
+            font: { size: 35 },
+            padding: { bottom: 20 },
           }
         },
         scales: {
@@ -251,14 +251,14 @@ function roundNum(value, decimals) {
             },
             ticks: {
               color: textColor,
-              font: { size: 40 },
+              font: { size: 30 },
               stepSize: 1
             },
             title: {
               display: true,
               text: yLabel,
               color: textColor,
-              font: { size: 40 }
+              font: { size: 30 }
             }
           },
           x: {
@@ -267,13 +267,13 @@ function roundNum(value, decimals) {
             },
             ticks: {
               color: textColor,
-              font: { size: 40 }
+              font: { size: 30 }
             },
             title: {
               display: true,
               text: xLabel,
               color: textColor,
-              font: { size: 40 }
+              font: { size: 30 }
             }
           }
         }
